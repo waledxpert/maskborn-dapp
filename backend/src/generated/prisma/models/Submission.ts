@@ -42,6 +42,7 @@ export type SubmissionMinAggregateOutputType = {
   userId: string | null
   kind: $Enums.SubmissionKind | null
   title: string | null
+  titleClaim: string | null
   description: string | null
   generatorVersion: string | null
   pixelDataKey: string | null
@@ -66,6 +67,7 @@ export type SubmissionMaxAggregateOutputType = {
   userId: string | null
   kind: $Enums.SubmissionKind | null
   title: string | null
+  titleClaim: string | null
   description: string | null
   generatorVersion: string | null
   pixelDataKey: string | null
@@ -90,6 +92,7 @@ export type SubmissionCountAggregateOutputType = {
   userId: number
   kind: number
   title: number
+  titleClaim: number
   description: number
   generatorVersion: number
   categories: number
@@ -130,6 +133,7 @@ export type SubmissionMinAggregateInputType = {
   userId?: true
   kind?: true
   title?: true
+  titleClaim?: true
   description?: true
   generatorVersion?: true
   pixelDataKey?: true
@@ -154,6 +158,7 @@ export type SubmissionMaxAggregateInputType = {
   userId?: true
   kind?: true
   title?: true
+  titleClaim?: true
   description?: true
   generatorVersion?: true
   pixelDataKey?: true
@@ -178,6 +183,7 @@ export type SubmissionCountAggregateInputType = {
   userId?: true
   kind?: true
   title?: true
+  titleClaim?: true
   description?: true
   generatorVersion?: true
   categories?: true
@@ -293,6 +299,7 @@ export type SubmissionGroupByOutputType = {
   userId: string
   kind: $Enums.SubmissionKind
   title: string
+  titleClaim: string | null
   description: string
   generatorVersion: string
   categories: $Enums.GeneratorCategory[]
@@ -344,6 +351,7 @@ export type SubmissionWhereInput = {
   userId?: Prisma.StringFilter<"Submission"> | string
   kind?: Prisma.EnumSubmissionKindFilter<"Submission"> | $Enums.SubmissionKind
   title?: Prisma.StringFilter<"Submission"> | string
+  titleClaim?: Prisma.StringNullableFilter<"Submission"> | string | null
   description?: Prisma.StringFilter<"Submission"> | string
   generatorVersion?: Prisma.StringFilter<"Submission"> | string
   categories?: Prisma.EnumGeneratorCategoryNullableListFilter<"Submission">
@@ -378,6 +386,7 @@ export type SubmissionOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   kind?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  titleClaim?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrder
   generatorVersion?: Prisma.SortOrder
   categories?: Prisma.SortOrder
@@ -409,6 +418,7 @@ export type SubmissionOrderByWithRelationInput = {
 export type SubmissionWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   slug?: string
+  titleClaim?: string
   pixelDataKey?: string
   previewAssetKey?: string
   userId_mediaHash?: Prisma.SubmissionUserIdMediaHashCompoundUniqueInput
@@ -442,7 +452,7 @@ export type SubmissionWhereUniqueInput = Prisma.AtLeast<{
   statusEvents?: Prisma.SubmissionStatusEventListRelationFilter
   accessories?: Prisma.SubmissionAccessoryListRelationFilter
   galleryEntry?: Prisma.XOR<Prisma.GalleryEntryNullableScalarRelationFilter, Prisma.GalleryEntryWhereInput> | null
-}, "id" | "slug" | "pixelDataKey" | "previewAssetKey" | "userId_mediaHash">
+}, "id" | "slug" | "titleClaim" | "pixelDataKey" | "previewAssetKey" | "userId_mediaHash">
 
 export type SubmissionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -450,6 +460,7 @@ export type SubmissionOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   kind?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  titleClaim?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrder
   generatorVersion?: Prisma.SortOrder
   categories?: Prisma.SortOrder
@@ -486,6 +497,7 @@ export type SubmissionScalarWhereWithAggregatesInput = {
   userId?: Prisma.StringWithAggregatesFilter<"Submission"> | string
   kind?: Prisma.EnumSubmissionKindWithAggregatesFilter<"Submission"> | $Enums.SubmissionKind
   title?: Prisma.StringWithAggregatesFilter<"Submission"> | string
+  titleClaim?: Prisma.StringNullableWithAggregatesFilter<"Submission"> | string | null
   description?: Prisma.StringWithAggregatesFilter<"Submission"> | string
   generatorVersion?: Prisma.StringWithAggregatesFilter<"Submission"> | string
   categories?: Prisma.EnumGeneratorCategoryNullableListFilter<"Submission">
@@ -513,6 +525,7 @@ export type SubmissionCreateInput = {
   slug: string
   kind: $Enums.SubmissionKind
   title: string
+  titleClaim?: string | null
   description: string
   generatorVersion: string
   categories?: Prisma.SubmissionCreatecategoriesInput | $Enums.GeneratorCategory[]
@@ -547,6 +560,7 @@ export type SubmissionUncheckedCreateInput = {
   userId: string
   kind: $Enums.SubmissionKind
   title: string
+  titleClaim?: string | null
   description: string
   generatorVersion: string
   categories?: Prisma.SubmissionCreatecategoriesInput | $Enums.GeneratorCategory[]
@@ -579,6 +593,7 @@ export type SubmissionUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumSubmissionKindFieldUpdateOperationsInput | $Enums.SubmissionKind
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  titleClaim?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   generatorVersion?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.SubmissionUpdatecategoriesInput | $Enums.GeneratorCategory[]
@@ -613,6 +628,7 @@ export type SubmissionUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumSubmissionKindFieldUpdateOperationsInput | $Enums.SubmissionKind
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  titleClaim?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   generatorVersion?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.SubmissionUpdatecategoriesInput | $Enums.GeneratorCategory[]
@@ -646,6 +662,7 @@ export type SubmissionCreateManyInput = {
   userId: string
   kind: $Enums.SubmissionKind
   title: string
+  titleClaim?: string | null
   description: string
   generatorVersion: string
   categories?: Prisma.SubmissionCreatecategoriesInput | $Enums.GeneratorCategory[]
@@ -673,6 +690,7 @@ export type SubmissionUpdateManyMutationInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumSubmissionKindFieldUpdateOperationsInput | $Enums.SubmissionKind
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  titleClaim?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   generatorVersion?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.SubmissionUpdatecategoriesInput | $Enums.GeneratorCategory[]
@@ -701,6 +719,7 @@ export type SubmissionUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumSubmissionKindFieldUpdateOperationsInput | $Enums.SubmissionKind
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  titleClaim?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   generatorVersion?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.SubmissionUpdatecategoriesInput | $Enums.GeneratorCategory[]
@@ -752,6 +771,7 @@ export type SubmissionCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   kind?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  titleClaim?: Prisma.SortOrder
   description?: Prisma.SortOrder
   generatorVersion?: Prisma.SortOrder
   categories?: Prisma.SortOrder
@@ -785,6 +805,7 @@ export type SubmissionMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   kind?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  titleClaim?: Prisma.SortOrder
   description?: Prisma.SortOrder
   generatorVersion?: Prisma.SortOrder
   pixelDataKey?: Prisma.SortOrder
@@ -809,6 +830,7 @@ export type SubmissionMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   kind?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  titleClaim?: Prisma.SortOrder
   description?: Prisma.SortOrder
   generatorVersion?: Prisma.SortOrder
   pixelDataKey?: Prisma.SortOrder
@@ -967,6 +989,7 @@ export type SubmissionCreateWithoutUserInput = {
   slug: string
   kind: $Enums.SubmissionKind
   title: string
+  titleClaim?: string | null
   description: string
   generatorVersion: string
   categories?: Prisma.SubmissionCreatecategoriesInput | $Enums.GeneratorCategory[]
@@ -999,6 +1022,7 @@ export type SubmissionUncheckedCreateWithoutUserInput = {
   slug: string
   kind: $Enums.SubmissionKind
   title: string
+  titleClaim?: string | null
   description: string
   generatorVersion: string
   categories?: Prisma.SubmissionCreatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1061,6 +1085,7 @@ export type SubmissionScalarWhereInput = {
   userId?: Prisma.StringFilter<"Submission"> | string
   kind?: Prisma.EnumSubmissionKindFilter<"Submission"> | $Enums.SubmissionKind
   title?: Prisma.StringFilter<"Submission"> | string
+  titleClaim?: Prisma.StringNullableFilter<"Submission"> | string | null
   description?: Prisma.StringFilter<"Submission"> | string
   generatorVersion?: Prisma.StringFilter<"Submission"> | string
   categories?: Prisma.EnumGeneratorCategoryNullableListFilter<"Submission">
@@ -1088,6 +1113,7 @@ export type SubmissionCreateWithoutAccessoriesInput = {
   slug: string
   kind: $Enums.SubmissionKind
   title: string
+  titleClaim?: string | null
   description: string
   generatorVersion: string
   categories?: Prisma.SubmissionCreatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1121,6 +1147,7 @@ export type SubmissionUncheckedCreateWithoutAccessoriesInput = {
   userId: string
   kind: $Enums.SubmissionKind
   title: string
+  titleClaim?: string | null
   description: string
   generatorVersion: string
   categories?: Prisma.SubmissionCreatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1168,6 +1195,7 @@ export type SubmissionUpdateWithoutAccessoriesInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumSubmissionKindFieldUpdateOperationsInput | $Enums.SubmissionKind
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  titleClaim?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   generatorVersion?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.SubmissionUpdatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1201,6 +1229,7 @@ export type SubmissionUncheckedUpdateWithoutAccessoriesInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumSubmissionKindFieldUpdateOperationsInput | $Enums.SubmissionKind
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  titleClaim?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   generatorVersion?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.SubmissionUpdatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1232,6 +1261,7 @@ export type SubmissionCreateWithoutStatusEventsInput = {
   slug: string
   kind: $Enums.SubmissionKind
   title: string
+  titleClaim?: string | null
   description: string
   generatorVersion: string
   categories?: Prisma.SubmissionCreatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1265,6 +1295,7 @@ export type SubmissionUncheckedCreateWithoutStatusEventsInput = {
   userId: string
   kind: $Enums.SubmissionKind
   title: string
+  titleClaim?: string | null
   description: string
   generatorVersion: string
   categories?: Prisma.SubmissionCreatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1312,6 +1343,7 @@ export type SubmissionUpdateWithoutStatusEventsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumSubmissionKindFieldUpdateOperationsInput | $Enums.SubmissionKind
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  titleClaim?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   generatorVersion?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.SubmissionUpdatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1345,6 +1377,7 @@ export type SubmissionUncheckedUpdateWithoutStatusEventsInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumSubmissionKindFieldUpdateOperationsInput | $Enums.SubmissionKind
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  titleClaim?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   generatorVersion?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.SubmissionUpdatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1376,6 +1409,7 @@ export type SubmissionCreateWithoutVotesInput = {
   slug: string
   kind: $Enums.SubmissionKind
   title: string
+  titleClaim?: string | null
   description: string
   generatorVersion: string
   categories?: Prisma.SubmissionCreatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1409,6 +1443,7 @@ export type SubmissionUncheckedCreateWithoutVotesInput = {
   userId: string
   kind: $Enums.SubmissionKind
   title: string
+  titleClaim?: string | null
   description: string
   generatorVersion: string
   categories?: Prisma.SubmissionCreatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1456,6 +1491,7 @@ export type SubmissionUpdateWithoutVotesInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumSubmissionKindFieldUpdateOperationsInput | $Enums.SubmissionKind
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  titleClaim?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   generatorVersion?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.SubmissionUpdatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1489,6 +1525,7 @@ export type SubmissionUncheckedUpdateWithoutVotesInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumSubmissionKindFieldUpdateOperationsInput | $Enums.SubmissionKind
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  titleClaim?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   generatorVersion?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.SubmissionUpdatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1520,6 +1557,7 @@ export type SubmissionCreateWithoutVoteEventsInput = {
   slug: string
   kind: $Enums.SubmissionKind
   title: string
+  titleClaim?: string | null
   description: string
   generatorVersion: string
   categories?: Prisma.SubmissionCreatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1553,6 +1591,7 @@ export type SubmissionUncheckedCreateWithoutVoteEventsInput = {
   userId: string
   kind: $Enums.SubmissionKind
   title: string
+  titleClaim?: string | null
   description: string
   generatorVersion: string
   categories?: Prisma.SubmissionCreatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1600,6 +1639,7 @@ export type SubmissionUpdateWithoutVoteEventsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumSubmissionKindFieldUpdateOperationsInput | $Enums.SubmissionKind
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  titleClaim?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   generatorVersion?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.SubmissionUpdatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1633,6 +1673,7 @@ export type SubmissionUncheckedUpdateWithoutVoteEventsInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumSubmissionKindFieldUpdateOperationsInput | $Enums.SubmissionKind
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  titleClaim?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   generatorVersion?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.SubmissionUpdatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1664,6 +1705,7 @@ export type SubmissionCreateWithoutGalleryEntryInput = {
   slug: string
   kind: $Enums.SubmissionKind
   title: string
+  titleClaim?: string | null
   description: string
   generatorVersion: string
   categories?: Prisma.SubmissionCreatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1697,6 +1739,7 @@ export type SubmissionUncheckedCreateWithoutGalleryEntryInput = {
   userId: string
   kind: $Enums.SubmissionKind
   title: string
+  titleClaim?: string | null
   description: string
   generatorVersion: string
   categories?: Prisma.SubmissionCreatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1744,6 +1787,7 @@ export type SubmissionUpdateWithoutGalleryEntryInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumSubmissionKindFieldUpdateOperationsInput | $Enums.SubmissionKind
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  titleClaim?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   generatorVersion?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.SubmissionUpdatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1777,6 +1821,7 @@ export type SubmissionUncheckedUpdateWithoutGalleryEntryInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumSubmissionKindFieldUpdateOperationsInput | $Enums.SubmissionKind
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  titleClaim?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   generatorVersion?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.SubmissionUpdatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1808,6 +1853,7 @@ export type SubmissionCreateManyUserInput = {
   slug: string
   kind: $Enums.SubmissionKind
   title: string
+  titleClaim?: string | null
   description: string
   generatorVersion: string
   categories?: Prisma.SubmissionCreatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1835,6 +1881,7 @@ export type SubmissionUpdateWithoutUserInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumSubmissionKindFieldUpdateOperationsInput | $Enums.SubmissionKind
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  titleClaim?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   generatorVersion?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.SubmissionUpdatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1867,6 +1914,7 @@ export type SubmissionUncheckedUpdateWithoutUserInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumSubmissionKindFieldUpdateOperationsInput | $Enums.SubmissionKind
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  titleClaim?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   generatorVersion?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.SubmissionUpdatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1899,6 +1947,7 @@ export type SubmissionUncheckedUpdateManyWithoutUserInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumSubmissionKindFieldUpdateOperationsInput | $Enums.SubmissionKind
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  titleClaim?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   generatorVersion?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.SubmissionUpdatecategoriesInput | $Enums.GeneratorCategory[]
@@ -1985,6 +2034,7 @@ export type SubmissionSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   userId?: boolean
   kind?: boolean
   title?: boolean
+  titleClaim?: boolean
   description?: boolean
   generatorVersion?: boolean
   categories?: boolean
@@ -2020,6 +2070,7 @@ export type SubmissionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   userId?: boolean
   kind?: boolean
   title?: boolean
+  titleClaim?: boolean
   description?: boolean
   generatorVersion?: boolean
   categories?: boolean
@@ -2049,6 +2100,7 @@ export type SubmissionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   userId?: boolean
   kind?: boolean
   title?: boolean
+  titleClaim?: boolean
   description?: boolean
   generatorVersion?: boolean
   categories?: boolean
@@ -2078,6 +2130,7 @@ export type SubmissionSelectScalar = {
   userId?: boolean
   kind?: boolean
   title?: boolean
+  titleClaim?: boolean
   description?: boolean
   generatorVersion?: boolean
   categories?: boolean
@@ -2100,7 +2153,7 @@ export type SubmissionSelectScalar = {
   downvoteCount?: boolean
 }
 
-export type SubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "userId" | "kind" | "title" | "description" | "generatorVersion" | "categories" | "pixelData" | "pixelDataKey" | "sourceHash" | "compatibility" | "mediaHash" | "previewAssetUrl" | "previewAssetKey" | "previewVariants" | "storageProvider" | "canonicalDataKey" | "canonicalHash" | "sourcePostUrl" | "status" | "publishedAt" | "updatedAt" | "upvoteCount" | "downvoteCount", ExtArgs["result"]["submission"]>
+export type SubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "userId" | "kind" | "title" | "titleClaim" | "description" | "generatorVersion" | "categories" | "pixelData" | "pixelDataKey" | "sourceHash" | "compatibility" | "mediaHash" | "previewAssetUrl" | "previewAssetKey" | "previewVariants" | "storageProvider" | "canonicalDataKey" | "canonicalHash" | "sourcePostUrl" | "status" | "publishedAt" | "updatedAt" | "upvoteCount" | "downvoteCount", ExtArgs["result"]["submission"]>
 export type SubmissionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   votes?: boolean | Prisma.Submission$votesArgs<ExtArgs>
@@ -2133,6 +2186,7 @@ export type $SubmissionPayload<ExtArgs extends runtime.Types.Extensions.Internal
     userId: string
     kind: $Enums.SubmissionKind
     title: string
+    titleClaim: string | null
     description: string
     generatorVersion: string
     categories: $Enums.GeneratorCategory[]
@@ -2587,6 +2641,7 @@ export interface SubmissionFieldRefs {
   readonly userId: Prisma.FieldRef<"Submission", 'String'>
   readonly kind: Prisma.FieldRef<"Submission", 'SubmissionKind'>
   readonly title: Prisma.FieldRef<"Submission", 'String'>
+  readonly titleClaim: Prisma.FieldRef<"Submission", 'String'>
   readonly description: Prisma.FieldRef<"Submission", 'String'>
   readonly generatorVersion: Prisma.FieldRef<"Submission", 'String'>
   readonly categories: Prisma.FieldRef<"Submission", 'GeneratorCategory[]'>

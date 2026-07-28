@@ -450,6 +450,27 @@
   reported development warnings.
 - Frontend ESLint, 21 tests, and the production build passed.
 
+## 2026-07-28 — Submission-title uniqueness and duplicate audit
+
+- Added global normalized title claims for artwork submissions. Case differences,
+  repeated whitespace, and Unicode presentation variants now resolve to the same
+  `Submission.titleClaim`; a debounced availability check gives immediate feedback
+  in Draw, while the publish transaction and database unique constraint remain
+  authoritative under concurrent requests.
+- Publishing now returns `SUBMISSION_TITLE_TAKEN` with a clear instruction instead
+  of a generic database error. Existing rows with nullable claims remain deployable,
+  and their plain titles are also checked case-insensitively during publishing.
+- Audited every Prisma uniqueness rule. Added specific conflict responses for
+  wallets, X quote posts, applications, social identities, repeated artwork,
+  votes, draft revisions, gallery entries, on-chain tokens/events, fee accruals,
+  payouts, idempotent requests, slugs, and sessions. Compound targets work whether
+  Prisma reports a constraint name or a field array.
+- Fixed wallet linking so only an actual unique conflict is described as an already
+  claimed wallet; database/service failures now propagate correctly. Application
+  creation also handles concurrent duplicate profile or quote submissions.
+- Prisma Client/schema validation, backend TypeScript/build and 17 tests, plus
+  frontend ESLint, 21 tests, and production build all passed.
+
 ## 2026-07-28 — Unique X username claims
 
 - Added a debounced X username availability endpoint and live feedback in the account
@@ -494,3 +515,23 @@
   submissions remain unpaginated because account rules impose a small fixed maximum.
 - Backend TypeScript, build, and 16 tests passed. Frontend ESLint, 21 tests, and the
   production build passed.
+
+## 2026-07-28 — Accepted gallery card redesign
+
+- Replaced the accepted gallery's irregular 12-column mosaic, whose mixed six/four
+  column spans created holes on paginated pages, with a stable responsive grid: three
+  equal cards on desktop, two on tablet, and one on phones.
+- Cards now have consistent square artwork, restrained framed surfaces, lift/border
+  hover feedback, readable number badges, min-width-safe metadata, responsive titles,
+  and creator labels that do not distort column widths.
+- Gallery numbering now continues across pages instead of restarting at 01.
+- Frontend ESLint, 21 tests, and the production build passed.
+
+## 2026-07-28 — Display-only accepted gallery
+
+- Removed artwork-detail navigation from accepted gallery cards. Artwork, titles,
+  traits, and card surfaces are now display-only on `/gallery`; only the creator's
+  username links out to their X account.
+- Removed card-level lift/click affordances and added a clear username-only hover
+  treatment so the interaction model is visually honest.
+- Frontend ESLint, 21 tests, and the production build passed.

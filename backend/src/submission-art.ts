@@ -33,6 +33,10 @@ export function normalizeAccessoryName(value: string) {
   return value.trim().replace(/\s+/g, " ").normalize("NFKC").toLocaleLowerCase("en");
 }
 
+export function normalizeSubmissionTitle(value: string) {
+  return value.trim().replace(/\s+/g, " ").normalize("NFKC").toLocaleLowerCase("en");
+}
+
 export type CanonicalTraitPixels = {
   kind: typeof communityLayerKinds[number];
   stage: number;

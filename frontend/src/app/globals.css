@@ -1270,21 +1270,21 @@ h3 {
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 60px 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 48px 18px;
 }
 
 .gallery-item {
-  grid-column: span 4;
-}
-
-.gallery-item-1,
-.gallery-item-5 {
-  grid-column: span 6;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid var(--line-dark);
+  background: rgba(237, 234, 226, 0.38);
 }
 
 .gallery-art-wrap {
   position: relative;
+  display: block;
+  overflow: hidden;
   aspect-ratio: 1;
   border: 1px solid var(--line-dark);
   background: #d6d1c8;
@@ -1292,18 +1292,27 @@ h3 {
 
 .gallery-art-wrap > span {
   position: absolute;
-  right: 12px;
-  bottom: 10px;
+  right: 9px;
+  bottom: 9px;
+  display: grid;
+  min-width: 35px;
+  height: 35px;
+  padding-inline: 7px;
+  place-items: center;
+  background: var(--ink);
+  color: var(--bone);
   font-family: "Bebas Neue", sans-serif;
-  font-size: 21px;
+  font-size: 18px;
+  line-height: 1;
 }
 
 .gallery-item-meta {
-  display: flex;
+  display: grid;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
-  justify-content: space-between;
-  gap: 20px;
-  padding-top: 13px;
+  gap: 12px;
+  padding: 14px 2px 3px;
 }
 
 .gallery-item-meta p {
@@ -1315,7 +1324,11 @@ h3 {
 
 .gallery-item-meta h2 {
   margin: 4px 0 0;
-  font-size: 31px;
+  overflow: hidden;
+  font-size: clamp(24px, 2.2vw, 31px);
+  line-height: 0.95;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .gallery-item-meta a {
@@ -1324,6 +1337,13 @@ h3 {
   gap: 4px;
   color: var(--muted);
   font-size: 10px;
+  white-space: nowrap;
+}
+
+.gallery-item-meta a:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .application-layout {
@@ -4058,10 +4078,8 @@ body:has(.admin-shell) .site-footer {
     max-width: 580px;
   }
 
-  .gallery-item,
-  .gallery-item-1,
-  .gallery-item-5 {
-    grid-column: span 6;
+  .gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .application-steps {
@@ -4426,14 +4444,17 @@ body:has(.admin-shell) .site-footer {
     padding-inline: 11px;
   }
 
-  .gallery-item,
-  .gallery-item-1,
-  .gallery-item-5 {
-    grid-column: 1 / -1;
-  }
-
   .gallery-grid {
     grid-template-columns: 1fr;
+    gap-block: 28px;
+  }
+
+  .gallery-item {
+    padding: 8px;
+  }
+
+  .gallery-item-meta h2 {
+    font-size: 27px;
   }
 
   .builder-preview {

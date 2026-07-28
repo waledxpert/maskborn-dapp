@@ -13,6 +13,7 @@ import {
   createSubmissionPreview,
   createTraitPreviewVariants,
   normalizeAccessoryName,
+  normalizeSubmissionTitle,
   sourcePixelDataSchema,
 } from "../submission-art.js";
 import { asyncRoute, requestHash, retryOnWriteConflict, slugify } from "../utils.js";
@@ -51,6 +52,9 @@ const nameAvailabilityQuery = z.object({
   ),
   name: z.string().trim().min(2).max(40),
 });
+const titleAvailabilityQuery = z.object({
+  title: z.string().trim().min(2).max(100),
+});
 
 function getBaseMarkup() {
   baseMarkupPromise ??= readFile(path.resolve("assets", "base.svg"), "utf8")
@@ -85,9 +89,25 @@ submissionsRouter.get("/submissions/name-availability", requireVerifiedDiscord, 
   res.json({ available: !existing, normalizedName });
 }));
 
+submissionsRouter.get("/submissions/title-availability", requireVerifiedDiscord, asyncRoute(async (req, res) => {
+  const { title } = titleAvailabilityQuery.parse(req.query);
+  const normalizedTitle = normalizeSubmissionTitle(title);
+  const existing = await db.submission.findFirst({
+    where: {
+      OR: [
+        { titleClaim: normalizedTitle },
+        { title: { equals: title.trim().replace(/\s+/g, " "), mode: "insensitive" } },
+      ],
+    },
+    select: { id: true },
+  });
+  res.json({ available: !existing, normalizedTitle });
+}));
+
 submissionsRouter.post("/submissions", requireVerifiedDiscord, asyncRoute(async (req, res) => {
   const body = submissionBody.parse(req.body);
   const userId = req.auth!.userId;
+  const normalizedTitle = normalizeSubmissionTitle(body.title);
   if (body.kind === "TRAIT_EXTENSION") {
     const unsupported = body.categories.filter((category) => !communityTraitCategories.has(category));
     if (unsupported.length > 0) {
@@ -175,6 +195,18 @@ submissionsRouter.post("/submissions", requireVerifiedDiscord, asyncRoute(async 
         },
       });
       return { statusCode: 200, response };
+    }
+    const existingTitle = await tx.submission.findFirst({
+      where: {
+        OR: [
+          { titleClaim: normalizedTitle },
+          { title: { equals: body.title.trim().replace(/\s+/g, " "), mode: "insensitive" } },
+        ],
+      },
+      select: { id: true },
+    });
+    if (existingTitle) {
+      throw new ApiError(409, "SUBMISSION_TITLE_TAKEN", "That artwork title is already in use. Choose a different title.");
     }
 
     const categories = [...new Set(body.categories)];
@@ -286,6 +318,7 @@ submissionsRouter.post("/submissions", requireVerifiedDiscord, asyncRoute(async 
         slug,
         kind: body.kind,
         title: body.title,
+        titleClaim: normalizedTitle,
         description: body.description,
         generatorVersion: body.generatorVersion,
         categories,

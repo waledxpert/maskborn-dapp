@@ -2,7 +2,6 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { ArrowUpRight, ChevronDown, Search } from "lucide-react";
-import Link from "next/link";
 import { useMemo, useState } from "react";
 import { PixelArtwork } from "@/components/pixel-artwork";
 import { DotLoader } from "@/components/dot-loader";
@@ -94,10 +93,10 @@ export function GalleryBrowser() {
           const creator = username ? `@${username}` : entry.submission.user.displayName ?? "Mask Born member";
           return (
             <article className={`gallery-item gallery-item-${(index % 6) + 1}`} key={entry.id}>
-              <Link href={`/art/${entry.submission.slug}`} className="gallery-art-wrap">
+              <div className="gallery-art-wrap">
                   <PixelArtwork source={entry.previewAssetUrl} label={entry.submission.title} eager={index === 0} />
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-              </Link>
+                  <span>{String((Math.min(page, pages) - 1) * pageSize + index + 1).padStart(2, "0")}</span>
+              </div>
               <div className="gallery-item-meta">
                 <div><p>{entry.kind === "ONE_OF_ONE" ? "1/1" : entry.categories.join(" + ")}</p><h2>{entry.submission.title}</h2></div>
                 {username ? (

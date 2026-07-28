@@ -61,6 +61,7 @@ export function DrawStudio() {
   const [publishError, setPublishError] = useState("");
   const [saveStatus, setSaveStatus] = useState<"local" | "saving" | "saved" | "conflict">("local");
   const [nameChecks, setNameChecks] = useState<Record<string, "checking" | "available" | "taken" | "error">>({});
+  const [titleCheck, setTitleCheck] = useState<"idle" | "checking" | "available" | "taken" | "error">("idle");
   const lastSavedAt = useRef<string | null>(null);
   const saveInFlight = useRef(false);
   const publishAttempt = useRef<{ hash: string; key: string } | null>(null);
@@ -137,6 +138,28 @@ export function DrawStudio() {
     }, 350);
     return () => window.clearTimeout(timer);
   }, [activeLayerKind, activeLayerName, activeNameLocallyRepeated, discordVerified, draft.postType]);
+
+  useEffect(() => {
+    const title = draft.title.trim();
+    if (!discordVerified || title.length < 2 || title.length > 100) return;
+    const controller = new AbortController();
+    const timer = window.setTimeout(async () => {
+      setTitleCheck("checking");
+      try {
+        const result = await apiFetch<{ available: boolean }>(
+          `/submissions/title-availability?title=${encodeURIComponent(title)}`,
+          { signal: controller.signal },
+        );
+        setTitleCheck(result.available ? "available" : "taken");
+      } catch (error) {
+        if ((error as Error).name !== "AbortError") setTitleCheck("error");
+      }
+    }, 350);
+    return () => {
+      controller.abort();
+      window.clearTimeout(timer);
+    };
+  }, [discordVerified, draft.title]);
 
   useEffect(() => {
     const handleHistoryKey = (event: KeyboardEvent) => {
@@ -259,6 +282,16 @@ export function DrawStudio() {
       setPublishStatus("error");
       return;
     }
+    if (titleCheck === "taken") {
+      setPublishError("That artwork title is already in use. Choose a different title.");
+      setPublishStatus("error");
+      return;
+    }
+    if (titleCheck === "checking") {
+      setPublishError("Wait for the title availability check to finish.");
+      setPublishStatus("error");
+      return;
+    }
     if (descriptionWords > 50) {
       setPublishError("Description must be 50 words or fewer.");
       setPublishStatus("error");
@@ -353,7 +386,7 @@ export function DrawStudio() {
         </div>
         <button className="text-button" onClick={draft.reset}><RotateCcw size={14} /> Reset</button>
         <button className="button button-dark" onClick={download}><Download size={15} /> Download</button>
-        <button className="button button-amber" onClick={publish} disabled={publishStatus === "publishing" || repeatedDraftTraits.length > 0}>
+        <button className="button button-amber" onClick={publish} disabled={publishStatus === "publishing" || repeatedDraftTraits.length > 0 || titleCheck === "checking" || titleCheck === "taken"}>
           <Send size={15} /> {publishStatus === "publishing" ? "Publishing…" : "Publish"}
         </button>
       </div>
@@ -363,7 +396,20 @@ export function DrawStudio() {
           <aside className="pixel-controls">
             <label className="plain-field">
               <span>Title</span>
-              <input value={draft.title} onChange={(event) => draft.setTitle(event.target.value)} />
+              <input
+                value={draft.title}
+                maxLength={100}
+                aria-invalid={titleCheck === "taken"}
+                onChange={(event) => {
+                  draft.setTitle(event.target.value);
+                  setTitleCheck("idle");
+                  setPublishError("");
+                }}
+              />
+              {titleCheck === "checking" && <small className="field-hint">Checking title…</small>}
+              {titleCheck === "available" && <small className="field-hint">Title is available.</small>}
+              {titleCheck === "taken" && <small className="field-error">That title is already used by another submission.</small>}
+              {titleCheck === "error" && <small className="field-hint">Could not check now. Publishing will verify it again.</small>}
             </label>
             <label className="plain-field">
               <span>Description <small>{descriptionWords}/50 words</small></span>

@@ -50,17 +50,60 @@ export function errorHandler(error: unknown, req: Request, res: Response, _next:
   };
   if (typeof prismaError?.code === "string") {
     const target = JSON.stringify(prismaError.meta?.target ?? prismaError.meta?.constraint ?? "");
+    const hasTargetFields = (...fields: string[]) => fields.every((field) => target.includes(field));
     if (prismaError.code === "P2002") {
-      const accessoryName = target.includes("normalizedName");
-      const xUsername = target.includes("claimKey");
+      const accessoryName = hasTargetFields("category", "normalizedName");
+      const xUsername = hasTargetFields("claimKey");
+      const submissionTitle = hasTargetFields("titleClaim");
+      const knownDuplicate = hasTargetFields("chain", "normalized")
+        ? ["WALLET_ALREADY_CLAIMED", "That wallet is already attached to another profile."]
+        : hasTargetFields("quotePost")
+          ? ["QUOTE_POST_ALREADY_USED", "That X quote post has already been submitted."]
+          : hasTargetFields("provider", "providerAccountId")
+            ? ["SOCIAL_ACCOUNT_ALREADY_LINKED", "That social account is already linked to a Mask Born profile."]
+            : hasTargetFields("userId", "mediaHash") || hasTargetFields("pixelDataKey") || hasTargetFields("previewAssetKey")
+              ? ["ARTWORK_ALREADY_SUBMITTED", "This artwork has already been submitted by this account."]
+              : hasTargetFields("submissionId", "userId", "categoryKey")
+                ? ["VOTE_UPDATE_CONFLICT", "That vote was updated at the same time. Reload and try again."]
+                : hasTargetFields("draftId", "version")
+                  ? ["DRAFT_CONFLICT", "A newer draft revision already exists. Reload before saving again."]
+                  : hasTargetFields("tokenChainId", "tokenContract", "tokenId")
+                    ? ["ONCHAIN_TOKEN_ALREADY_REGISTERED", "That on-chain token is already registered in the gallery."]
+                    : hasTargetFields("chainId", "txHash", "logIndex")
+                      ? ["TRADING_EVENT_ALREADY_INDEXED", "That on-chain trading event has already been indexed."]
+                      : hasTargetFields("tradeFeeEventId", "feeShareId")
+                        ? ["ACCRUAL_ALREADY_RECORDED", "That creator fee accrual has already been recorded."]
+                        : hasTargetFields("accrualId")
+                          ? ["PAYOUT_ITEM_EXISTS", "That creator accrual is already attached to a payout."]
+                          : hasTargetFields("galleryEntryId")
+                            ? ["FEE_SHARE_EXISTS", "That gallery item already has a creator fee share."]
+                            : hasTargetFields("submissionId")
+                              ? ["GALLERY_ENTRY_EXISTS", "That submission is already in the gallery."]
+                              : hasTargetFields("userId", "scope", "key")
+                                ? ["REQUEST_ALREADY_PROCESSING", "That request is already being processed. Wait a moment and reload."]
+                                : hasTargetFields("userId")
+                                  ? ["APPLICATION_ALREADY_SUBMITTED", "This profile has already submitted its application."]
+                                  : hasTargetFields("slug")
+                                    ? ["SUBMISSION_SLUG_CONFLICT", "That submission address was just taken. Publish again to generate a new one."]
+                                    : hasTargetFields("tokenHash")
+                                      ? ["SESSION_TOKEN_CONFLICT", "A secure session could not be created. Please try signing in again."]
+                                      : null;
       res.status(409).json({
         error: {
-          code: accessoryName ? "ACCESSORY_NAME_TAKEN" : xUsername ? "X_USERNAME_TAKEN" : "DUPLICATE_RESOURCE",
+          code: accessoryName
+            ? "ACCESSORY_NAME_TAKEN"
+            : xUsername
+              ? "X_USERNAME_TAKEN"
+              : submissionTitle
+                ? "SUBMISSION_TITLE_TAKEN"
+                : knownDuplicate?.[0] ?? "DUPLICATE_RESOURCE",
           message: accessoryName
             ? "That accessory name was just taken. Choose another name and publish again."
             : xUsername
               ? "That X username is already linked to a Mask Born account."
-            : "An identical record already exists.",
+              : submissionTitle
+                ? "That artwork title is already in use. Choose a different title."
+                : knownDuplicate?.[1] ?? "An identical record already exists.",
           details: { target: prismaError.meta?.target },
           requestId: req.id,
         },

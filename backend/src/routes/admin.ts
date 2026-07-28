@@ -68,6 +68,10 @@ adminRouter.post("/submissions/:id/accept-to-gallery", asyncRoute(async (req, re
     if (["GALLERY_ADDED", "WITHDRAWN", "REJECTED"].includes(submission.status)) {
       throw new ApiError(409, "SUBMISSION_STATE_INVALID", `A ${submission.status.toLowerCase()} submission cannot be added.`);
     }
+    const existingEntry = await tx.galleryEntry.findUnique({ where: { submissionId: submission.id }, select: { id: true } });
+    if (existingEntry) {
+      throw new ApiError(409, "GALLERY_ENTRY_EXISTS", "That submission is already in the gallery.");
+    }
 
     const selectedCategories = submission.kind === "ONE_OF_ONE"
       ? submission.categories
@@ -317,6 +321,23 @@ adminRouter.post("/submissions/:id/promote", asyncRoute(async (req, res) => {
     if (!submission) throw new ApiError(404, "SUBMISSION_NOT_FOUND", "That submission was not found.");
     if (submission.status !== "ACCEPTED") {
       throw new ApiError(409, "SUBMISSION_NOT_ACCEPTED", "Accept the submission before adding it to the gallery.");
+    }
+    const existingEntry = await tx.galleryEntry.findUnique({ where: { submissionId: submission.id }, select: { id: true } });
+    if (existingEntry) {
+      throw new ApiError(409, "GALLERY_ENTRY_EXISTS", "That submission is already in the gallery.");
+    }
+    if (body.onchain) {
+      const existingToken = await tx.galleryEntry.findFirst({
+        where: {
+          tokenChainId: body.onchain.chainId,
+          tokenContract: body.onchain.contract.toLowerCase(),
+          tokenId: body.onchain.tokenId,
+        },
+        select: { id: true },
+      });
+      if (existingToken) {
+        throw new ApiError(409, "ONCHAIN_TOKEN_ALREADY_REGISTERED", "That on-chain token is already registered in the gallery.");
+      }
     }
     const selectedCategories = [...new Set(body.categories)];
     const invalidCategories = selectedCategories.filter((category) => !submission.categories.includes(category));

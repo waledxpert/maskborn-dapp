@@ -2213,6 +2213,7 @@ export const SubmissionScalarFieldEnum = {
   userId: 'userId',
   kind: 'kind',
   title: 'title',
+  titleClaim: 'titleClaim',
   description: 'description',
   generatorVersion: 'generatorVersion',
   categories: 'categories',

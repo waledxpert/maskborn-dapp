@@ -221,6 +221,7 @@ model Submission {
   userId           String
   kind             SubmissionKind
   title            String
+  titleClaim       String?                   @unique
   description      String
   generatorVersion String
   categories       GeneratorCategory[]

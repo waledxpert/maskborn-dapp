@@ -23,8 +23,11 @@ applicationsRouter.put("/wallet", requireVerifiedDiscord, asyncRoute(async (req,
         create: { userId: req.auth!.userId, chain, address: body.address, normalized, isPrimary: body.primary },
         update: { address: body.address, isPrimary: body.primary },
       });
-    } catch {
-      throw new ApiError(409, "WALLET_ALREADY_CLAIMED", "That wallet is already attached to another profile.");
+    } catch (error) {
+      if ((error as { code?: string }).code === "P2002") {
+        throw new ApiError(409, "WALLET_ALREADY_CLAIMED", "That wallet is already attached to another profile.");
+      }
+      throw error;
     }
   });
   res.json({ wallet });
@@ -49,21 +52,35 @@ applicationsRouter.post("/applications", requireVerifiedDiscord, asyncRoute(asyn
   const quotePostId = extractXPostId(body.quotePostUrl)!;
   const duplicate = await db.application.findUnique({ where: { quotePostId } });
   if (duplicate) throw new ApiError(409, "QUOTE_POST_ALREADY_USED", "That X quote post has already been submitted.");
-  const application = await db.application.create({
-    data: {
-      userId: req.auth!.userId,
-      walletId: wallet.id,
-      quotePostUrl: body.quotePostUrl,
-      quotePostId,
-      builderTraits: body.builderTraits,
-      previewAssetUrl: body.previewAssetUrl,
-      likedState: "PENDING_MANUAL",
-      repostedState: "PENDING_MANUAL",
-      commentedState: "PENDING_MANUAL",
-      quoteOwnershipState: "PENDING_MANUAL",
-      status: "PENDING",
-    },
-  });
+  let application;
+  try {
+    application = await db.application.create({
+      data: {
+        userId: req.auth!.userId,
+        walletId: wallet.id,
+        quotePostUrl: body.quotePostUrl,
+        quotePostId,
+        builderTraits: body.builderTraits,
+        previewAssetUrl: body.previewAssetUrl,
+        likedState: "PENDING_MANUAL",
+        repostedState: "PENDING_MANUAL",
+        commentedState: "PENDING_MANUAL",
+        quoteOwnershipState: "PENDING_MANUAL",
+        status: "PENDING",
+      },
+    });
+  } catch (error) {
+    if ((error as { code?: string }).code === "P2002") {
+      const target = JSON.stringify((error as { meta?: { target?: unknown; constraint?: unknown } }).meta?.target
+        ?? (error as { meta?: { constraint?: unknown } }).meta?.constraint
+        ?? "");
+      if (target.includes("quotePost")) {
+        throw new ApiError(409, "QUOTE_POST_ALREADY_USED", "That X quote post has already been submitted.");
+      }
+      throw new ApiError(409, "APPLICATION_ALREADY_SUBMITTED", "This profile has already submitted its application.");
+    }
+    throw error;
+  }
   res.status(201).json({
     application,
     message: "Application received. X activity is queued for manual review.",

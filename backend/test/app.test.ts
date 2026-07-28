@@ -5,6 +5,7 @@ import {
   createSubmissionPreview,
   createTraitPreviewVariants,
   normalizeAccessoryName,
+  normalizeSubmissionTitle,
   sourcePixelDataSchema,
 } from "../src/submission-art.js";
 
@@ -65,6 +66,14 @@ describe("X post URLs", () => {
     expect(extractXPostId("https://x.com/maskborn")).toBeNull();
     expect(extractXPostId("https://x.com.example/status/12345")).toBeNull();
     expect(extractXPostId("https://example.com/maskborn/status/12345")).toBeNull();
+  });
+});
+
+describe("submission title claims", () => {
+  it("treats case, repeated whitespace, and Unicode presentation variants as the same title", () => {
+    expect(normalizeSubmissionTitle("  Bone   Merchant  ")).toBe("bone merchant");
+    expect(normalizeSubmissionTitle("BONE MERCHANT")).toBe("bone merchant");
+    expect(normalizeSubmissionTitle("ＭＡＳＫ")).toBe("mask");
   });
 });
 
