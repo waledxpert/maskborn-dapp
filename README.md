@@ -11,6 +11,8 @@ the generator, contract-data manifest, rarity, or 1/1 set changes.
 - `frontend`: Next.js, TypeScript, Tailwind CSS, Motion, Zustand, Lenis, TanStack
   Query, and viem.
 - `backend`: Express, TypeScript, Prisma, and PostgreSQL/Neon.
+- `docs/PROJECT_OVERVIEW.md`: plain-language product vision, complete user journeys,
+  system rules, storage model, generator integration, moderation, and on-chain path.
 - `docs/STORAGE_SETUP.md`: private/public R2 setup and accepted-submission export.
 - `scripts/sync-collection.mjs`: validates the exported generator manifest and the
   portable metadata, renderer data, trait previews, fixtures, and 1/1 SVGs using JavaScript.
@@ -70,11 +72,15 @@ has drifted from the collection snapshot.
 
 ## Production configuration
 
-The frontend accepts:
+The frontend uses the website URL plus a server-only backend proxy target:
 
 ```text
-NEXT_PUBLIC_API_URL=https://api.example.com
+NEXT_PUBLIC_SITE_URL=https://maskborn.example
+BACKEND_URL=https://api.maskborn.example
 ```
+
+Browser requests stay on the website's `/api` origin. Do not add
+`NEXT_PUBLIC_API_URL`; the Next.js proxy reads `BACKEND_URL` on the server.
 
 Backend variables are documented in `backend/.env.example`. Users paste an unverified
 X username for public attribution, so the website does not call or pay for the X API.

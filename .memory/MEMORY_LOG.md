@@ -535,3 +535,17 @@
 - Removed card-level lift/click affordances and added a clear username-only hover
   treatment so the interaction model is visually honest.
 - Frontend ESLint, 21 tests, and the production build passed.
+
+## 2026-07-28 — Comprehensive project overview
+
+- Added `docs/PROJECT_OVERVIEW.md`, a plain-language and technical guide to the full
+  Mask Born Order system. It explains the pre-launch community-creation purpose,
+  creator/voter/admin journeys, identity, applications, drawing, compatibility,
+  publishing, voting, partial gallery acceptance, generator integration, source
+  format, Neon/R2 storage, duplicate protection, moderation, deployment, and operating
+  workflows.
+- Documented the honest boundary between implemented pre-launch behavior and future
+  contract, event-indexing, fee, and payout work. Included the path from accepted
+  browser pixels to canonical export, generator integration, and possible on-chain
+  rendering models.
+- Linked the guide from the repository README.
