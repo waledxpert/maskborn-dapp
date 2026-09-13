@@ -15,6 +15,9 @@ This slice adds a real onchain awakening path while keeping every value-moving a
 - Backend-prepared and Arc-simulated calldata; the server never signs or submits it.
 - A two-step frontend review and wallet confirmation flow.
 - Public ERC-8004 registration files at `/.well-known/agent-registration/maskborn/{tokenId}.json`.
+- Public Mask Born discovery profiles at `/.well-known/agent-card/maskborn/{tokenId}.json`; these honestly report A2A and x402 as disabled.
+- Durable action records scoped to the holder's current ownership period, with independent sender/target/calldata/value and receipt reconciliation.
+- Owner controls for pause/unpause, ERC-8004 URI updates, and native-USDC sends from the token-bound account.
 
 Contract source lives only in `arcOne/contracts/src/agent`. The app does not contain a second Solidity copy.
 
@@ -72,11 +75,22 @@ In `maskborn/backend/.env`:
 ```dotenv
 MASKBORN_AGENT_REGISTRY_ADDRESS=<printed MaskBornAgentRegistry address>
 AGENT_PUBLIC_ORIGIN=https://<permanent-public-frontend-domain>
+AGENT_MAX_OWNER_SEND_USDC=1000
 ```
 
 `AGENT_PUBLIC_ORIGIN` becomes part of permanent onchain identity metadata. Do not use `localhost`, a preview deployment URL, or a domain you do not control for a public testnet awakening.
 
 Restart the backend and frontend after changing environment variables. The agent monitor worker can continue running independently.
+
+Apply the new `AgentAction` table and regenerate the Prisma client before starting the API:
+
+```powershell
+cd C:\Users\Hp\Desktop\maskborn\backend
+npx prisma db push
+npx prisma generate
+```
+
+`AGENT_MAX_OWNER_SEND_USDC` is a backend/UI preparation guardrail, not an onchain spending policy. The current owner can still call the account contract directly; enforceable delegation limits arrive with scoped account permissions.
 
 ## 5. Holder test
 
@@ -85,15 +99,17 @@ Restart the backend and frontend after changing environment variables. The agent
 3. Verify Arc Testnet, the predicted account, `0 USDC` value, and the gas estimate.
 4. Choose **Confirm in wallet** and inspect the wallet transaction before signing.
 5. Wait for confirmation, refresh the token, and verify that the UI shows its ERC-8004 agent ID and ERC-6551 account.
-6. Open `/.well-known/agent-registration/maskborn/{tokenId}.json` and verify the identity record.
-7. Transfer a test NFT to another wallet and confirm the old owner cannot execute while the new owner can.
+6. Open both well-known JSON URLs and verify the registration, identity, account, and explicitly disabled protocol flags.
+7. Fund only a disposable test account, then test pause, unpause, URI update, and a tiny USDC transfer. Confirm each action appears in the current-holder history with the correct Arcscan transaction.
+8. Change one reviewed field in a local/API test and confirm reconciliation rejects the mismatched transaction.
+9. Transfer a test NFT to another wallet and confirm the old owner cannot execute while the new owner can and cannot see the prior ownership period's action history.
 
 ## Important safety boundary
 
 Never transfer the controlling Mask Born NFT into its own token-bound account. The account disables authorization if that direct ownership cycle occurs, but an unsafe ERC-721 `transferFrom` can still trap the NFT permanently because the existing collection has no transfer hook for the account registry.
 
-Do not fund accounts with meaningful value until the transfer tests, pause recovery, receipt reconciliation, external review, and selected ERC-4337/paymaster compatibility work are complete.
+Do not fund accounts with meaningful value until the transfer tests, pause recovery, receipt reconciliation, external review, and selected ERC-4337/paymaster compatibility work are complete. Prepared-action expiry is an application review window, not an onchain deadline; always inspect the wallet transaction itself.
 
 ## Next Phase 2 slice
 
-The next implementation slice is transaction receipt reconciliation plus the public Agent Card and owner control panel. After that comes scoped, non-value session permissions. ERC-4337 and sponsored gas remain last because they depend on a verified Arc bundler/paymaster combination and concurrency-safe budget accounting.
+The next implementation slice is scoped, non-value session permissions and revocation. ERC-4337 and sponsored gas remain last because they depend on a verified Arc bundler/paymaster combination and concurrency-safe budget accounting.

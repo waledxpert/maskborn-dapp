@@ -19,6 +19,7 @@ type AwakeningState = {
   constitutionHash?: string | null;
   awakenedAtBlock?: string | null;
   asOfBlock?: string;
+  accountState?: null | { nativeUsdc: string; nativeUsdcBaseUnits: string; executionPaused: boolean; state: string; asOfBlock: string };
 };
 type AgentPreview = {
   token: { tokenId: string; owner: string; revealed: boolean; asOfBlock: string };
@@ -34,6 +35,7 @@ type AgentPreview = {
   capabilities: Array<{ id: string; label: string; status: string }>;
 };
 type PreparedAwakening = {
+  id: string;
   status: "prepared";
   chainId: number;
   from: string;
@@ -45,6 +47,13 @@ type PreparedAwakening = {
   agentURI: string;
   constitutionHash: string;
   expiresAt: string;
+};
+type AgentAction = {
+  id: string; status: "prepared" | "submitted" | "confirmed" | "failed" | "expired" | "unknown";
+  type: "AWAKEN" | "SET_EXECUTION_PAUSED" | "UPDATE_AGENT_URI" | "SEND_NATIVE_USDC";
+  chainId: number; tokenId: string; account: string; from: string; to: string; data: string; value: string;
+  assetAmountBaseUnits: string | null; payload: Record<string, string | number | boolean | null>;
+  gasEstimate: string | null; expiresAt: string; txHash: string | null; failureCode: string | null; createdAt: string;
 };
 type OwnedTokens = { tokenIds: string[]; asOfBlock: string };
 type MonitorRule = {
@@ -64,6 +73,41 @@ declare global { interface Window { ethereum?: EthereumProvider } }
 
 function compact(address: string) { return `${address.slice(0, 7)}…${address.slice(-5)}`; }
 
+async function submitPrepared(provider: EthereumProvider, prepared: Pick<AgentAction, "id" | "chainId" | "from" | "to" | "data" | "value" | "expiresAt">, onSubmitted?: (hash: string) => void) {
+  if (Date.now() >= Date.parse(prepared.expiresAt)) throw new Error("This preparation expired. Prepare it again.");
+  const requiredChain = `0x${prepared.chainId.toString(16)}`;
+  const currentChain = await provider.request({ method: "eth_chainId" }) as string;
+  if (currentChain.toLowerCase() !== requiredChain.toLowerCase()) {
+    try {
+      await provider.request({ method: "wallet_switchEthereumChain", params: [{ chainId: requiredChain }] });
+    } catch {
+      await provider.request({
+        method: "wallet_addEthereumChain",
+        params: [{
+          chainId: requiredChain,
+          chainName: "Arc Testnet",
+          nativeCurrency: { name: "USDC", symbol: "USDC", decimals: 18 },
+          rpcUrls: ["https://rpc.testnet.arc.network"],
+          blockExplorerUrls: ["https://testnet.arcscan.app"],
+        }],
+      });
+    }
+  }
+  const hash = await provider.request({
+    method: "eth_sendTransaction",
+    params: [{ from: prepared.from, to: prepared.to, data: prepared.data, value: prepared.value }],
+  }) as string;
+  onSubmitted?.(hash);
+  let action = await apiFetch<AgentAction>(`/agents/actions/${prepared.id}/submitted`, {
+    method: "POST", body: JSON.stringify({ txHash: hash }),
+  });
+  for (let attempt = 0; attempt < 40 && ["submitted", "unknown"].includes(action.status); attempt += 1) {
+    await new Promise((resolve) => setTimeout(resolve, 1_500));
+    action = await apiFetch<AgentAction>(`/agents/actions/${prepared.id}`);
+  }
+  return { hash, action };
+}
+
 export function AgentsWorkspace() {
   const queryClient = useQueryClient();
   const session = useCurrentUser();
@@ -82,6 +126,12 @@ export function AgentsWorkspace() {
   const [preparedAwakening, setPreparedAwakening] = useState<PreparedAwakening | null>(null);
   const [awakeningTxHash, setAwakeningTxHash] = useState<string | null>(null);
   const [awakeningTxStatus, setAwakeningTxStatus] = useState<"idle" | "submitted" | "confirmed" | "failed" | "unknown">("idle");
+  const [preparedControl, setPreparedControl] = useState<AgentAction | null>(null);
+  const [agentURI, setAgentURI] = useState("");
+  const [sendRecipient, setSendRecipient] = useState("");
+  const [sendAmount, setSendAmount] = useState("");
+  const [controlTxHash, setControlTxHash] = useState<string | null>(null);
+  const [controlTxStatus, setControlTxStatus] = useState<AgentAction["status"] | "idle">("idle");
   const status = useQuery({ queryKey: ["agent-status"], queryFn: () => apiFetch<AgentStatus>("/agents/status") });
   const indexStatus = useQuery({ queryKey: ["agent-index-status"], queryFn: () => apiFetch<AgentIndexStatus>("/agents/index/status"), enabled: Boolean(status.data?.configured), refetchInterval: 15_000, retry: false });
   const chatStatus = useQuery({ queryKey: ["agent-chat-status"], queryFn: () => apiFetch<ChatStatus>("/agents/chat/status"), retry: false });
@@ -116,6 +166,13 @@ export function AgentsWorkspace() {
     queryKey: ["agent-conversations", tokenId],
     queryFn: () => apiFetch<{ conversations: ConversationSummary[] }>(`/agents/tokens/${tokenId}/conversations`),
     enabled: Boolean(preview && tokenId && indexStatus.data?.caughtUp),
+    retry: false,
+  });
+  const actions = useQuery({
+    queryKey: ["agent-actions", tokenId],
+    queryFn: () => apiFetch<{ actions: AgentAction[] }>(`/agents/tokens/${tokenId}/actions`),
+    enabled: Boolean(preview?.awakening.awakened && tokenId && indexStatus.data?.caughtUp),
+    refetchInterval: (query) => query.state.data?.actions.some((action) => ["submitted", "unknown"].includes(action.status)) ? 5_000 : false,
     retry: false,
   });
 
@@ -209,7 +266,7 @@ export function AgentsWorkspace() {
 
   const inspect = useMutation({
     mutationFn: (id: string) => apiFetch<AgentPreview>(`/agents/tokens/${id}/preview`),
-    onSuccess: (data) => { setPreview(data); setPreparedAwakening(null); setError(""); },
+    onSuccess: (data) => { setPreview(data); setPreparedAwakening(null); setPreparedControl(null); setError(""); },
     onError: (requestError) => { setPreview(null); setError((requestError as Error).message); },
   });
 
@@ -222,57 +279,44 @@ export function AgentsWorkspace() {
   const submitAwakening = useMutation({
     mutationFn: async () => {
       if (!window.ethereum || !preparedAwakening || !connectedAddress) throw new Error("Prepare the awakening again.");
-      if (Date.now() >= Date.parse(preparedAwakening.expiresAt)) throw new Error("This preparation expired. Prepare it again.");
       if (preparedAwakening.from.toLowerCase() !== connectedAddress.toLowerCase()) throw new Error("The connected wallet changed. Prepare again.");
-
-      const requiredChain = `0x${preparedAwakening.chainId.toString(16)}`;
-      const currentChain = await window.ethereum.request({ method: "eth_chainId" }) as string;
-      if (currentChain.toLowerCase() !== requiredChain.toLowerCase()) {
-        try {
-          await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: requiredChain }] });
-        } catch {
-          await window.ethereum.request({
-            method: "wallet_addEthereumChain",
-            params: [{
-              chainId: requiredChain,
-              chainName: "Arc Testnet",
-              nativeCurrency: { name: "USDC", symbol: "USDC", decimals: 18 },
-              rpcUrls: ["https://rpc.testnet.arc.network"],
-              blockExplorerUrls: ["https://testnet.arcscan.app"],
-            }],
-          });
-        }
-      }
-
-      const hash = await window.ethereum.request({
-        method: "eth_sendTransaction",
-        params: [{
-          from: preparedAwakening.from,
-          to: preparedAwakening.to,
-          data: preparedAwakening.data,
-          value: preparedAwakening.value,
-        }],
-      }) as string;
-      setAwakeningTxHash(hash);
       setAwakeningTxStatus("submitted");
-
-      for (let attempt = 0; attempt < 40; attempt += 1) {
-        const receipt = await window.ethereum.request({ method: "eth_getTransactionReceipt", params: [hash] }) as null | { status?: string };
-        if (receipt) {
-          if (receipt.status?.toLowerCase() === "0x1") return { hash, confirmed: true };
-          throw new Error("The awakening transaction reverted on Arc. No agent was created.");
-        }
-        await new Promise((resolve) => setTimeout(resolve, 1_500));
-      }
-      return { hash, confirmed: false };
+      const result = await submitPrepared(window.ethereum, preparedAwakening, setAwakeningTxHash);
+      return result;
     },
-    onSuccess: async ({ confirmed }) => {
+    onSuccess: async ({ action }) => {
       setPreparedAwakening(null);
       setError("");
-      setAwakeningTxStatus(confirmed ? "confirmed" : "unknown");
-      if (confirmed) inspect.mutate(tokenId);
+      setAwakeningTxStatus(action.status === "confirmed" ? "confirmed" : action.status === "failed" ? "failed" : "unknown");
+      if (action.status === "confirmed") inspect.mutate(tokenId);
     },
     onError: (requestError) => { setAwakeningTxStatus("failed"); setError((requestError as Error).message); },
+  });
+
+  const prepareControl = useMutation({
+    mutationFn: (request: { path: string; body: Record<string, string | boolean> }) => apiFetch<AgentAction>(`/agents/tokens/${tokenId}/controls/${request.path}/prepare`, {
+      method: "POST", body: JSON.stringify(request.body),
+    }),
+    onSuccess: (prepared) => { setPreparedControl(prepared); setControlTxHash(null); setControlTxStatus("idle"); setError(""); },
+    onError: (requestError) => setError((requestError as Error).message),
+  });
+
+  const submitControl = useMutation({
+    mutationFn: async () => {
+      if (!window.ethereum || !preparedControl || !connectedAddress) throw new Error("Prepare the action again.");
+      if (preparedControl.from.toLowerCase() !== connectedAddress.toLowerCase()) throw new Error("The connected wallet changed. Prepare again.");
+      setControlTxStatus("submitted");
+      const result = await submitPrepared(window.ethereum, preparedControl, setControlTxHash);
+      return result;
+    },
+    onSuccess: async ({ action }) => {
+      setPreparedControl(null);
+      setControlTxStatus(action.status);
+      setError(action.status === "failed" ? "The agent action failed on Arc." : "");
+      await queryClient.invalidateQueries({ queryKey: ["agent-actions", tokenId] });
+      if (action.status === "confirmed") inspect.mutate(tokenId);
+    },
+    onError: (requestError) => { setControlTxStatus("failed"); setError((requestError as Error).message); },
   });
 
   const image = useMemo(() => {
@@ -389,6 +433,68 @@ export function AgentsWorkspace() {
             ))}
           </div>
         </div>
+        {preview.awakening.awakened && preview.awakening.accountState && (
+          <article className="agent-control-panel">
+            <div className="agent-control-heading">
+              <div>
+                <p className="eyebrow">Owner-confirmed controls</p>
+                <h3>Agent account</h3>
+                <p>Every change is simulated, shown for review, and only sent after your wallet confirms it.</p>
+              </div>
+              <div className="agent-account-balance">
+                <span>Account balance</span>
+                <b>{preview.awakening.accountState.nativeUsdc} USDC</b>
+                <small>{preview.awakening.accountState.executionPaused ? "Execution paused" : "Execution active"}</small>
+              </div>
+            </div>
+
+            {!preparedControl ? (
+              <div className="agent-control-grid">
+                <div>
+                  <strong>Emergency execution switch</strong>
+                  <p>Pause outgoing account execution immediately. URI recovery remains available.</p>
+                  <button className="button button-amber" disabled={prepareControl.isPending} onClick={() => prepareControl.mutate({ path: "pause", body: { paused: !preview.awakening.accountState!.executionPaused } })}>
+                    {preview.awakening.accountState.executionPaused ? "Prepare unpause" : "Prepare pause"}
+                  </button>
+                </div>
+                <div>
+                  <strong>Public agent URI</strong>
+                  <p>Point the identity at a permanent HTTPS, IPFS, or data URI.</p>
+                  <input value={agentURI} onChange={(event) => setAgentURI(event.target.value)} placeholder="https://example.com/agent.json" />
+                  <button className="button button-amber" disabled={!agentURI.trim() || prepareControl.isPending} onClick={() => prepareControl.mutate({ path: "uri", body: { agentURI: agentURI.trim() } })}>Prepare URI update</button>
+                </div>
+                <div>
+                  <strong>Send native USDC</strong>
+                  <p>Transfer from the token-bound account. The transaction itself sends 0 USDC to the contract.</p>
+                  <input value={sendRecipient} onChange={(event) => setSendRecipient(event.target.value)} placeholder="Recipient 0x…" />
+                  <input value={sendAmount} onChange={(event) => setSendAmount(event.target.value)} placeholder="Amount in USDC" inputMode="decimal" />
+                  <button className="button button-amber" disabled={!sendRecipient || !sendAmount || prepareControl.isPending || preview.awakening.accountState.executionPaused} onClick={() => prepareControl.mutate({ path: "send", body: { recipient: sendRecipient, amount: sendAmount } })}>Prepare transfer</button>
+                </div>
+              </div>
+            ) : (
+              <div className="agent-control-review">
+                <p className="eyebrow">Review before wallet confirmation</p>
+                <strong>{preparedControl.type.replaceAll("_", " ").toLowerCase()}</strong>
+                <span>Network <b>{status.data?.network}</b></span>
+                <span>Account <b>{compact(preparedControl.account)}</b></span>
+                {Object.entries(preparedControl.payload).map(([key, value]) => <span key={key}>{key.replaceAll("_", " ")} <b>{String(value)}</b></span>)}
+                <span>Transaction value <b>0 USDC</b></span>
+                <span>Estimated gas <b>{preparedControl.gasEstimate}</b></span>
+                <div>
+                  <button className="button button-amber" onClick={() => submitControl.mutate()} disabled={submitControl.isPending}>{submitControl.isPending ? <LoaderCircle className="spin" size={16} /> : <Wallet size={16} />} Confirm in wallet</button>
+                  <button className="agent-revoke-consent" onClick={() => setPreparedControl(null)}>Cancel</button>
+                </div>
+              </div>
+            )}
+
+            {controlTxHash && <p className="agent-control-result">{controlTxStatus.replaceAll("_", " ")}: <a href={`https://testnet.arcscan.app/tx/${controlTxHash}`} target="_blank" rel="noreferrer">view transaction <ExternalLink size={12} /></a></p>}
+            <div className="agent-action-history">
+              <p className="eyebrow">Current holder history</p>
+              {actions.data?.actions.map((action) => <div key={action.id}><span>{action.type.replaceAll("_", " ").toLowerCase()}</span><small className={`agent-action-${action.status}`}>{action.status}</small>{action.txHash && <a href={`https://testnet.arcscan.app/tx/${action.txHash}`} target="_blank" rel="noreferrer">Arcscan <ExternalLink size={11} /></a>}</div>)}
+              {!actions.isLoading && !actions.data?.actions.length && <small>No account actions in this ownership period.</small>}
+            </div>
+          </article>
+        )}
         <div className="agent-utility-grid">
           <article className="agent-utility-card">
             <p className="eyebrow">USDC stream monitor</p>

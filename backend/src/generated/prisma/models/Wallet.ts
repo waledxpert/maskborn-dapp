@@ -222,6 +222,7 @@ export type WalletWhereInput = {
   monitorRules?: Prisma.MonitorRuleListRelationFilter
   ownershipPeriods?: Prisma.OwnershipPeriodListRelationFilter
   modelDataConsents?: Prisma.ModelDataConsentListRelationFilter
+  agentActions?: Prisma.AgentActionListRelationFilter
 }
 
 export type WalletOrderByWithRelationInput = {
@@ -242,6 +243,7 @@ export type WalletOrderByWithRelationInput = {
   monitorRules?: Prisma.MonitorRuleOrderByRelationAggregateInput
   ownershipPeriods?: Prisma.OwnershipPeriodOrderByRelationAggregateInput
   modelDataConsents?: Prisma.ModelDataConsentOrderByRelationAggregateInput
+  agentActions?: Prisma.AgentActionOrderByRelationAggregateInput
 }
 
 export type WalletWhereUniqueInput = Prisma.AtLeast<{
@@ -266,6 +268,7 @@ export type WalletWhereUniqueInput = Prisma.AtLeast<{
   monitorRules?: Prisma.MonitorRuleListRelationFilter
   ownershipPeriods?: Prisma.OwnershipPeriodListRelationFilter
   modelDataConsents?: Prisma.ModelDataConsentListRelationFilter
+  agentActions?: Prisma.AgentActionListRelationFilter
 }, "id" | "chain_normalized">
 
 export type WalletOrderByWithAggregationInput = {
@@ -315,6 +318,7 @@ export type WalletCreateInput = {
   monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutWalletInput
   ownershipPeriods?: Prisma.OwnershipPeriodCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutWalletInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutWalletInput
 }
 
 export type WalletUncheckedCreateInput = {
@@ -334,6 +338,7 @@ export type WalletUncheckedCreateInput = {
   monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutWalletInput
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutWalletInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutWalletInput
 }
 
 export type WalletUpdateInput = {
@@ -353,6 +358,7 @@ export type WalletUpdateInput = {
   monitorRules?: Prisma.MonitorRuleUpdateManyWithoutWalletNestedInput
   ownershipPeriods?: Prisma.OwnershipPeriodUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutWalletNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletUncheckedUpdateInput = {
@@ -372,6 +378,7 @@ export type WalletUncheckedUpdateInput = {
   monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutWalletNestedInput
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutWalletNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletCreateManyInput = {
@@ -540,6 +547,20 @@ export type WalletUpdateOneWithoutOwnershipPeriodsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.WalletUpdateToOneWithWhereWithoutOwnershipPeriodsInput, Prisma.WalletUpdateWithoutOwnershipPeriodsInput>, Prisma.WalletUncheckedUpdateWithoutOwnershipPeriodsInput>
 }
 
+export type WalletCreateNestedOneWithoutAgentActionsInput = {
+  create?: Prisma.XOR<Prisma.WalletCreateWithoutAgentActionsInput, Prisma.WalletUncheckedCreateWithoutAgentActionsInput>
+  connectOrCreate?: Prisma.WalletCreateOrConnectWithoutAgentActionsInput
+  connect?: Prisma.WalletWhereUniqueInput
+}
+
+export type WalletUpdateOneRequiredWithoutAgentActionsNestedInput = {
+  create?: Prisma.XOR<Prisma.WalletCreateWithoutAgentActionsInput, Prisma.WalletUncheckedCreateWithoutAgentActionsInput>
+  connectOrCreate?: Prisma.WalletCreateOrConnectWithoutAgentActionsInput
+  upsert?: Prisma.WalletUpsertWithoutAgentActionsInput
+  connect?: Prisma.WalletWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.WalletUpdateToOneWithWhereWithoutAgentActionsInput, Prisma.WalletUpdateWithoutAgentActionsInput>, Prisma.WalletUncheckedUpdateWithoutAgentActionsInput>
+}
+
 export type WalletCreateNestedOneWithoutModelDataConsentsInput = {
   create?: Prisma.XOR<Prisma.WalletCreateWithoutModelDataConsentsInput, Prisma.WalletUncheckedCreateWithoutModelDataConsentsInput>
   connectOrCreate?: Prisma.WalletCreateOrConnectWithoutModelDataConsentsInput
@@ -640,6 +661,7 @@ export type WalletCreateWithoutUserInput = {
   monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutWalletInput
   ownershipPeriods?: Prisma.OwnershipPeriodCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutWalletInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutWalletInput
 }
 
 export type WalletUncheckedCreateWithoutUserInput = {
@@ -658,6 +680,7 @@ export type WalletUncheckedCreateWithoutUserInput = {
   monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutWalletInput
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutWalletInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutWalletInput
 }
 
 export type WalletCreateOrConnectWithoutUserInput = {
@@ -717,6 +740,7 @@ export type WalletCreateWithoutOwnershipPeriodsInput = {
   walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutWalletInput
   monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutWalletInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutWalletInput
 }
 
 export type WalletUncheckedCreateWithoutOwnershipPeriodsInput = {
@@ -735,6 +759,7 @@ export type WalletUncheckedCreateWithoutOwnershipPeriodsInput = {
   walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutWalletInput
   monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutWalletInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutWalletInput
 }
 
 export type WalletCreateOrConnectWithoutOwnershipPeriodsInput = {
@@ -769,6 +794,7 @@ export type WalletUpdateWithoutOwnershipPeriodsInput = {
   walletSessions?: Prisma.WalletSessionUpdateManyWithoutWalletNestedInput
   monitorRules?: Prisma.MonitorRuleUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutWalletNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletUncheckedUpdateWithoutOwnershipPeriodsInput = {
@@ -786,6 +812,99 @@ export type WalletUncheckedUpdateWithoutOwnershipPeriodsInput = {
   payouts?: Prisma.PayoutUncheckedUpdateManyWithoutWalletNestedInput
   walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutWalletNestedInput
   monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutWalletNestedInput
+  modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutWalletNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutWalletNestedInput
+}
+
+export type WalletCreateWithoutAgentActionsInput = {
+  id?: string
+  chain: $Enums.WalletChain
+  address: string
+  normalized: string
+  isPrimary?: boolean
+  verifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutWalletsInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutWalletInput
+  feeShares?: Prisma.FeeShareCreateNestedManyWithoutWalletInput
+  payouts?: Prisma.PayoutCreateNestedManyWithoutWalletInput
+  walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutWalletInput
+  monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutWalletInput
+  ownershipPeriods?: Prisma.OwnershipPeriodCreateNestedManyWithoutWalletInput
+  modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutWalletInput
+}
+
+export type WalletUncheckedCreateWithoutAgentActionsInput = {
+  id?: string
+  userId: string
+  chain: $Enums.WalletChain
+  address: string
+  normalized: string
+  isPrimary?: boolean
+  verifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutWalletInput
+  feeShares?: Prisma.FeeShareUncheckedCreateNestedManyWithoutWalletInput
+  payouts?: Prisma.PayoutUncheckedCreateNestedManyWithoutWalletInput
+  walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutWalletInput
+  monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutWalletInput
+  ownershipPeriods?: Prisma.OwnershipPeriodUncheckedCreateNestedManyWithoutWalletInput
+  modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutWalletInput
+}
+
+export type WalletCreateOrConnectWithoutAgentActionsInput = {
+  where: Prisma.WalletWhereUniqueInput
+  create: Prisma.XOR<Prisma.WalletCreateWithoutAgentActionsInput, Prisma.WalletUncheckedCreateWithoutAgentActionsInput>
+}
+
+export type WalletUpsertWithoutAgentActionsInput = {
+  update: Prisma.XOR<Prisma.WalletUpdateWithoutAgentActionsInput, Prisma.WalletUncheckedUpdateWithoutAgentActionsInput>
+  create: Prisma.XOR<Prisma.WalletCreateWithoutAgentActionsInput, Prisma.WalletUncheckedCreateWithoutAgentActionsInput>
+  where?: Prisma.WalletWhereInput
+}
+
+export type WalletUpdateToOneWithWhereWithoutAgentActionsInput = {
+  where?: Prisma.WalletWhereInput
+  data: Prisma.XOR<Prisma.WalletUpdateWithoutAgentActionsInput, Prisma.WalletUncheckedUpdateWithoutAgentActionsInput>
+}
+
+export type WalletUpdateWithoutAgentActionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  chain?: Prisma.EnumWalletChainFieldUpdateOperationsInput | $Enums.WalletChain
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  normalized?: Prisma.StringFieldUpdateOperationsInput | string
+  isPrimary?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutWalletsNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutWalletNestedInput
+  feeShares?: Prisma.FeeShareUpdateManyWithoutWalletNestedInput
+  payouts?: Prisma.PayoutUpdateManyWithoutWalletNestedInput
+  walletSessions?: Prisma.WalletSessionUpdateManyWithoutWalletNestedInput
+  monitorRules?: Prisma.MonitorRuleUpdateManyWithoutWalletNestedInput
+  ownershipPeriods?: Prisma.OwnershipPeriodUpdateManyWithoutWalletNestedInput
+  modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutWalletNestedInput
+}
+
+export type WalletUncheckedUpdateWithoutAgentActionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  chain?: Prisma.EnumWalletChainFieldUpdateOperationsInput | $Enums.WalletChain
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  normalized?: Prisma.StringFieldUpdateOperationsInput | string
+  isPrimary?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutWalletNestedInput
+  feeShares?: Prisma.FeeShareUncheckedUpdateManyWithoutWalletNestedInput
+  payouts?: Prisma.PayoutUncheckedUpdateManyWithoutWalletNestedInput
+  walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutWalletNestedInput
+  monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutWalletNestedInput
+  ownershipPeriods?: Prisma.OwnershipPeriodUncheckedUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutWalletNestedInput
 }
 
@@ -805,6 +924,7 @@ export type WalletCreateWithoutModelDataConsentsInput = {
   walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutWalletInput
   monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutWalletInput
   ownershipPeriods?: Prisma.OwnershipPeriodCreateNestedManyWithoutWalletInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutWalletInput
 }
 
 export type WalletUncheckedCreateWithoutModelDataConsentsInput = {
@@ -823,6 +943,7 @@ export type WalletUncheckedCreateWithoutModelDataConsentsInput = {
   walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutWalletInput
   monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutWalletInput
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedCreateNestedManyWithoutWalletInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutWalletInput
 }
 
 export type WalletCreateOrConnectWithoutModelDataConsentsInput = {
@@ -857,6 +978,7 @@ export type WalletUpdateWithoutModelDataConsentsInput = {
   walletSessions?: Prisma.WalletSessionUpdateManyWithoutWalletNestedInput
   monitorRules?: Prisma.MonitorRuleUpdateManyWithoutWalletNestedInput
   ownershipPeriods?: Prisma.OwnershipPeriodUpdateManyWithoutWalletNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletUncheckedUpdateWithoutModelDataConsentsInput = {
@@ -875,6 +997,7 @@ export type WalletUncheckedUpdateWithoutModelDataConsentsInput = {
   walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutWalletNestedInput
   monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutWalletNestedInput
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedUpdateManyWithoutWalletNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletCreateWithoutMonitorRulesInput = {
@@ -893,6 +1016,7 @@ export type WalletCreateWithoutMonitorRulesInput = {
   walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutWalletInput
   ownershipPeriods?: Prisma.OwnershipPeriodCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutWalletInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutWalletInput
 }
 
 export type WalletUncheckedCreateWithoutMonitorRulesInput = {
@@ -911,6 +1035,7 @@ export type WalletUncheckedCreateWithoutMonitorRulesInput = {
   walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutWalletInput
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutWalletInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutWalletInput
 }
 
 export type WalletCreateOrConnectWithoutMonitorRulesInput = {
@@ -945,6 +1070,7 @@ export type WalletUpdateWithoutMonitorRulesInput = {
   walletSessions?: Prisma.WalletSessionUpdateManyWithoutWalletNestedInput
   ownershipPeriods?: Prisma.OwnershipPeriodUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutWalletNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletUncheckedUpdateWithoutMonitorRulesInput = {
@@ -963,6 +1089,7 @@ export type WalletUncheckedUpdateWithoutMonitorRulesInput = {
   walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutWalletNestedInput
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutWalletNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletCreateWithoutWalletSessionsInput = {
@@ -981,6 +1108,7 @@ export type WalletCreateWithoutWalletSessionsInput = {
   monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutWalletInput
   ownershipPeriods?: Prisma.OwnershipPeriodCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutWalletInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutWalletInput
 }
 
 export type WalletUncheckedCreateWithoutWalletSessionsInput = {
@@ -999,6 +1127,7 @@ export type WalletUncheckedCreateWithoutWalletSessionsInput = {
   monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutWalletInput
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutWalletInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutWalletInput
 }
 
 export type WalletCreateOrConnectWithoutWalletSessionsInput = {
@@ -1033,6 +1162,7 @@ export type WalletUpdateWithoutWalletSessionsInput = {
   monitorRules?: Prisma.MonitorRuleUpdateManyWithoutWalletNestedInput
   ownershipPeriods?: Prisma.OwnershipPeriodUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutWalletNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletUncheckedUpdateWithoutWalletSessionsInput = {
@@ -1051,6 +1181,7 @@ export type WalletUncheckedUpdateWithoutWalletSessionsInput = {
   monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutWalletNestedInput
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutWalletNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletCreateWithoutApplicationsInput = {
@@ -1069,6 +1200,7 @@ export type WalletCreateWithoutApplicationsInput = {
   monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutWalletInput
   ownershipPeriods?: Prisma.OwnershipPeriodCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutWalletInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutWalletInput
 }
 
 export type WalletUncheckedCreateWithoutApplicationsInput = {
@@ -1087,6 +1219,7 @@ export type WalletUncheckedCreateWithoutApplicationsInput = {
   monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutWalletInput
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutWalletInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutWalletInput
 }
 
 export type WalletCreateOrConnectWithoutApplicationsInput = {
@@ -1121,6 +1254,7 @@ export type WalletUpdateWithoutApplicationsInput = {
   monitorRules?: Prisma.MonitorRuleUpdateManyWithoutWalletNestedInput
   ownershipPeriods?: Prisma.OwnershipPeriodUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutWalletNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletUncheckedUpdateWithoutApplicationsInput = {
@@ -1139,6 +1273,7 @@ export type WalletUncheckedUpdateWithoutApplicationsInput = {
   monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutWalletNestedInput
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutWalletNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletCreateWithoutFeeSharesInput = {
@@ -1157,6 +1292,7 @@ export type WalletCreateWithoutFeeSharesInput = {
   monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutWalletInput
   ownershipPeriods?: Prisma.OwnershipPeriodCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutWalletInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutWalletInput
 }
 
 export type WalletUncheckedCreateWithoutFeeSharesInput = {
@@ -1175,6 +1311,7 @@ export type WalletUncheckedCreateWithoutFeeSharesInput = {
   monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutWalletInput
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutWalletInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutWalletInput
 }
 
 export type WalletCreateOrConnectWithoutFeeSharesInput = {
@@ -1209,6 +1346,7 @@ export type WalletUpdateWithoutFeeSharesInput = {
   monitorRules?: Prisma.MonitorRuleUpdateManyWithoutWalletNestedInput
   ownershipPeriods?: Prisma.OwnershipPeriodUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutWalletNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletUncheckedUpdateWithoutFeeSharesInput = {
@@ -1227,6 +1365,7 @@ export type WalletUncheckedUpdateWithoutFeeSharesInput = {
   monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutWalletNestedInput
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutWalletNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletCreateWithoutPayoutsInput = {
@@ -1245,6 +1384,7 @@ export type WalletCreateWithoutPayoutsInput = {
   monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutWalletInput
   ownershipPeriods?: Prisma.OwnershipPeriodCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutWalletInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutWalletInput
 }
 
 export type WalletUncheckedCreateWithoutPayoutsInput = {
@@ -1263,6 +1403,7 @@ export type WalletUncheckedCreateWithoutPayoutsInput = {
   monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutWalletInput
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutWalletInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutWalletInput
 }
 
 export type WalletCreateOrConnectWithoutPayoutsInput = {
@@ -1297,6 +1438,7 @@ export type WalletUpdateWithoutPayoutsInput = {
   monitorRules?: Prisma.MonitorRuleUpdateManyWithoutWalletNestedInput
   ownershipPeriods?: Prisma.OwnershipPeriodUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutWalletNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletUncheckedUpdateWithoutPayoutsInput = {
@@ -1315,6 +1457,7 @@ export type WalletUncheckedUpdateWithoutPayoutsInput = {
   monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutWalletNestedInput
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutWalletNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletCreateManyUserInput = {
@@ -1344,6 +1487,7 @@ export type WalletUpdateWithoutUserInput = {
   monitorRules?: Prisma.MonitorRuleUpdateManyWithoutWalletNestedInput
   ownershipPeriods?: Prisma.OwnershipPeriodUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutWalletNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletUncheckedUpdateWithoutUserInput = {
@@ -1362,6 +1506,7 @@ export type WalletUncheckedUpdateWithoutUserInput = {
   monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutWalletNestedInput
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutWalletNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletUncheckedUpdateManyWithoutUserInput = {
@@ -1388,6 +1533,7 @@ export type WalletCountOutputType = {
   monitorRules: number
   ownershipPeriods: number
   modelDataConsents: number
+  agentActions: number
 }
 
 export type WalletCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1398,6 +1544,7 @@ export type WalletCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   monitorRules?: boolean | WalletCountOutputTypeCountMonitorRulesArgs
   ownershipPeriods?: boolean | WalletCountOutputTypeCountOwnershipPeriodsArgs
   modelDataConsents?: boolean | WalletCountOutputTypeCountModelDataConsentsArgs
+  agentActions?: boolean | WalletCountOutputTypeCountAgentActionsArgs
 }
 
 /**
@@ -1459,6 +1606,13 @@ export type WalletCountOutputTypeCountModelDataConsentsArgs<ExtArgs extends runt
   where?: Prisma.ModelDataConsentWhereInput
 }
 
+/**
+ * WalletCountOutputType without action
+ */
+export type WalletCountOutputTypeCountAgentActionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AgentActionWhereInput
+}
+
 
 export type WalletSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1478,6 +1632,7 @@ export type WalletSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   monitorRules?: boolean | Prisma.Wallet$monitorRulesArgs<ExtArgs>
   ownershipPeriods?: boolean | Prisma.Wallet$ownershipPeriodsArgs<ExtArgs>
   modelDataConsents?: boolean | Prisma.Wallet$modelDataConsentsArgs<ExtArgs>
+  agentActions?: boolean | Prisma.Wallet$agentActionsArgs<ExtArgs>
   _count?: boolean | Prisma.WalletCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["wallet"]>
 
@@ -1529,6 +1684,7 @@ export type WalletInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   monitorRules?: boolean | Prisma.Wallet$monitorRulesArgs<ExtArgs>
   ownershipPeriods?: boolean | Prisma.Wallet$ownershipPeriodsArgs<ExtArgs>
   modelDataConsents?: boolean | Prisma.Wallet$modelDataConsentsArgs<ExtArgs>
+  agentActions?: boolean | Prisma.Wallet$agentActionsArgs<ExtArgs>
   _count?: boolean | Prisma.WalletCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type WalletIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1549,6 +1705,7 @@ export type $WalletPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     monitorRules: Prisma.$MonitorRulePayload<ExtArgs>[]
     ownershipPeriods: Prisma.$OwnershipPeriodPayload<ExtArgs>[]
     modelDataConsents: Prisma.$ModelDataConsentPayload<ExtArgs>[]
+    agentActions: Prisma.$AgentActionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1962,6 +2119,7 @@ export interface Prisma__WalletClient<T, Null = never, ExtArgs extends runtime.T
   monitorRules<T extends Prisma.Wallet$monitorRulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wallet$monitorRulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MonitorRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   ownershipPeriods<T extends Prisma.Wallet$ownershipPeriodsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wallet$ownershipPeriodsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OwnershipPeriodPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   modelDataConsents<T extends Prisma.Wallet$modelDataConsentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wallet$modelDataConsentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ModelDataConsentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  agentActions<T extends Prisma.Wallet$agentActionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wallet$agentActionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AgentActionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2566,6 +2724,30 @@ export type Wallet$modelDataConsentsArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.ModelDataConsentScalarFieldEnum | Prisma.ModelDataConsentScalarFieldEnum[]
+}
+
+/**
+ * Wallet.agentActions
+ */
+export type Wallet$agentActionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AgentAction
+   */
+  select?: Prisma.AgentActionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AgentAction
+   */
+  omit?: Prisma.AgentActionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AgentActionInclude<ExtArgs> | null
+  where?: Prisma.AgentActionWhereInput
+  orderBy?: Prisma.AgentActionOrderByWithRelationInput | Prisma.AgentActionOrderByWithRelationInput[]
+  cursor?: Prisma.AgentActionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AgentActionScalarFieldEnum | Prisma.AgentActionScalarFieldEnum[]
 }
 
 /**

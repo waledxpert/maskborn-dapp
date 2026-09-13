@@ -4715,6 +4715,28 @@ body:has(.admin-shell) .site-footer {
 .agent-awakening-review > span { display: flex; justify-content: space-between; gap: 15px; font-size: .84rem; }
 .agent-awakening-review > span b { overflow-wrap: anywhere; text-align: right; }
 .agent-awakening-review .agent-revoke-consent { justify-self: start; margin: 0; }
+.agent-control-panel { border: 1px solid var(--line); border-top: 0; padding: clamp(24px, 4vw, 48px); }
+.agent-control-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 28px; margin-bottom: 28px; }
+.agent-control-heading h3 { margin: 10px 0 8px; font-size: clamp(30px, 4vw, 48px); }
+.agent-control-heading p:not(.eyebrow), .agent-control-grid p { color: var(--muted); line-height: 1.5; }
+.agent-account-balance { min-width: 240px; padding: 18px; border: 1px solid var(--line); display: grid; gap: 5px; }
+.agent-account-balance span, .agent-account-balance small { color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: 11px; }
+.agent-account-balance b { color: var(--amber); font-size: 20px; }
+.agent-control-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--line); }
+.agent-control-grid > div { padding: 22px; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.agent-control-grid > div + div { border-left: 1px solid var(--line); }
+.agent-control-grid input { width: 100%; border: 1px solid var(--line); background: var(--background); color: var(--text); padding: 11px; font: inherit; }
+.agent-control-review { max-width: 700px; padding: 22px; border: 1px solid color-mix(in srgb, var(--amber) 35%, var(--line)); display: grid; gap: 10px; }
+.agent-control-review > span { display: flex; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 13px; }
+.agent-control-review > span b { color: var(--text); text-align: right; overflow-wrap: anywhere; }
+.agent-control-review > div { display: flex; align-items: center; gap: 14px; margin-top: 8px; }
+.agent-control-result { color: var(--muted); }
+.agent-control-result a, .agent-action-history a { color: var(--amber); display: inline-flex; align-items: center; gap: 4px; }
+.agent-action-history { margin-top: 28px; display: grid; gap: 8px; }
+.agent-action-history > div { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); font-size: 13px; }
+.agent-action-history small { text-transform: uppercase; letter-spacing: .06em; }
+.agent-action-confirmed { color: #69c882; }
+.agent-action-failed, .agent-action-expired { color: #e26f6f; }
 .agent-traits { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px; }
 .agent-traits span { padding: 7px 10px; border: 1px solid var(--line); font-size: 12px; }
 .agent-capabilities { border-left: 1px solid var(--line); }
@@ -4787,6 +4809,10 @@ body:has(.admin-shell) .site-footer {
   .agent-profile-panel { grid-template-columns: 1fr; }
   .agent-profile-panel > .pixel-art { min-height: min(85vw, 520px); border-right: 0; border-bottom: 1px solid var(--line); }
   .agent-capabilities { border-left: 0; border-top: 1px solid var(--line); }
+  .agent-control-heading { flex-direction: column; }
+  .agent-account-balance { width: 100%; }
+  .agent-control-grid { grid-template-columns: 1fr; }
+  .agent-control-grid > div + div { border-left: 0; border-top: 1px solid var(--line); }
   .agent-utility-grid { grid-template-columns: 1fr; }
   .agent-utility-card + .agent-utility-card { border-left: 0; border-top: 1px solid var(--line); }
   .agent-chat-shell { grid-template-columns: 1fr; }

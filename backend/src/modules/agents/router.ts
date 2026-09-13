@@ -1,5 +1,5 @@
-import { Router } from "express";
-import { encodeFunctionData, formatUnits, getAddress } from "viem";
+import { Router, type Request } from "express";
+import { encodeFunctionData, formatUnits, getAddress, parseUnits, zeroAddress, type Address, type Hex } from "viem";
 import { z } from "zod";
 import { config } from "../../config.js";
 import { ApiError } from "../../errors.js";
@@ -8,9 +8,11 @@ import { asyncRoute } from "../../utils.js";
 import {
   arcClient,
   maskBornAddress,
+  maskBornAccountV1Abi,
   maskBornAgentRegistryAbi,
   maskBornAgentRegistryAddress,
   readAgentBinding,
+  readAgentAccount,
   readNativeUsdc,
   readOwnedTokenIds,
   readToken,
@@ -19,9 +21,20 @@ import {
 import { buildConstitution, buildPersona } from "./persona.js";
 import { collectionIndexStatus } from "../chain/collection-indexer.js";
 import { db } from "../../db.js";
+import { getAgentAction, listAgentActions, savePreparedAction, serializeAgentAction, submitAgentAction } from "./actions.js";
 
 export const agentsRouter = Router();
 const tokenParams = z.object({ tokenId: z.coerce.bigint().refine((value) => value > 0n && value <= 10_000n) });
+const actionParams = z.object({ actionId: z.string().cuid() });
+const transactionBody = z.object({ txHash: z.string().regex(/^0x[a-fA-F0-9]{64}$/) });
+const pauseBody = z.object({ paused: z.boolean() });
+const uriBody = z.object({ agentURI: z.string().trim().min(1).max(2048).refine((value) => {
+  try { return ["https:", "ipfs:", "data:"].includes(new URL(value).protocol); } catch { return false; }
+}, "Use an HTTPS, IPFS, or data URI.") });
+const sendBody = z.object({
+  recipient: z.string().regex(/^0x[a-fA-F0-9]{40}$/),
+  amount: z.string().regex(/^\d+(\.\d{1,18})?$/),
+});
 
 agentsRouter.get("/agents/status", (_req, res) => {
   res.json({
@@ -89,11 +102,23 @@ agentsRouter.get("/agents/tokens/:tokenId/preview", requireWalletAuth, asyncRout
   const wallet = await readNativeUsdc(getAddress(req.auth!.walletAddress!)).catch(() => null);
   const persona = token.traits ? buildPersona(tokenId, token.traits.map(Number)) : null;
   const awakening = await readAgentBinding(tokenId).catch(() => null);
+  const account = awakening?.configured && awakening.awakened
+    ? await readAgentAccount(awakening.account).catch(() => null)
+    : null;
   res.json({
     token: { tokenId: tokenId.toString(), owner: token.owner, revealed: token.revealed, collectionAddress: maskBornAddress, chainId: config.ARC_CHAIN_ID, asOfBlock: token.blockNumber.toString() },
     persona,
     wallet: wallet ? { nativeUsdc: formatUnits(wallet.balance, 18), nativeUsdcBaseUnits: wallet.balance.toString(), asOfBlock: wallet.blockNumber.toString() } : { unavailable: true },
-    awakening: awakening?.configured ? serializeBinding(awakening) : { configured: false },
+    awakening: awakening?.configured ? {
+      ...serializeBinding(awakening),
+      accountState: account ? {
+        nativeUsdc: formatUnits(account.balance, 18),
+        nativeUsdcBaseUnits: account.balance.toString(),
+        executionPaused: account.paused,
+        state: account.state.toString(),
+        asOfBlock: account.blockNumber.toString(),
+      } : null,
+    } : { configured: false },
     capabilities: [
       { id: "traits", label: "Explain traits", status: persona ? "available" : "waiting_for_reveal" },
       { id: "wallet", label: "Read wallet balance", status: wallet ? "available" : "unavailable" },
@@ -149,20 +174,93 @@ agentsRouter.post("/agents/tokens/:tokenId/awakening/prepare", requireWalletAuth
     throw new ApiError(422, "AWAKENING_SIMULATION_FAILED", "Arc rejected the awakening simulation. No transaction was submitted.");
   });
 
-  res.json({
-    status: "prepared",
-    chainId: config.ARC_CHAIN_ID,
-    from: walletAddress,
-    to: maskBornAgentRegistryAddress,
+  const saved = await savePreparedAction(actionAuth(req), {
+    tokenId,
+    accountAddress: existing.account,
+    type: "AWAKEN",
+    targetAddress: maskBornAgentRegistryAddress,
     data,
-    value: "0x0",
-    gasEstimate: gas.toString(),
+    sourceBlock: existing.blockNumber,
+    gasEstimate: gas,
+    payload: { agentURI, constitutionHash: constitution.hash, predictedAccount: existing.account },
+  });
+
+  res.json({
+    ...serializeAgentAction(saved.action, saved.gasEstimate),
     predictedAccount: existing.account,
     agentURI,
     constitutionHash: constitution.hash,
     simulationReturnedData: simulation.data ?? null,
-    expiresAt: new Date(Date.now() + 5 * 60_000).toISOString(),
   });
+}));
+
+agentsRouter.post("/agents/tokens/:tokenId/controls/pause/prepare", requireWalletAuth, asyncRoute(async (req, res) => {
+  const { tokenId } = tokenParams.parse(req.params);
+  const { paused } = pauseBody.parse(req.body);
+  const { walletAddress, binding, account } = await requireAwakenedOwner(tokenId, req.auth!.walletAddress!);
+  if (account.paused === paused) throw new ApiError(409, "PAUSE_STATE_UNCHANGED", `Agent execution is already ${paused ? "paused" : "active"}.`);
+  const data = encodeFunctionData({ abi: maskBornAccountV1Abi, functionName: "setExecutionPaused", args: [paused] });
+  const gas = await simulateOwnerAction(walletAddress, binding.account, data);
+  const saved = await savePreparedAction(actionAuth(req), {
+    tokenId, accountAddress: binding.account, type: "SET_EXECUTION_PAUSED", targetAddress: binding.account,
+    data, sourceBlock: account.blockNumber, gasEstimate: gas, payload: { paused },
+  });
+  res.json(serializeAgentAction(saved.action, saved.gasEstimate));
+}));
+
+agentsRouter.post("/agents/tokens/:tokenId/controls/uri/prepare", requireWalletAuth, asyncRoute(async (req, res) => {
+  const { tokenId } = tokenParams.parse(req.params);
+  const { agentURI } = uriBody.parse(req.body);
+  const { walletAddress, binding, account } = await requireAwakenedOwner(tokenId, req.auth!.walletAddress!);
+  const data = encodeFunctionData({ abi: maskBornAccountV1Abi, functionName: "updateAgentURI", args: [agentURI] });
+  const gas = await simulateOwnerAction(walletAddress, binding.account, data);
+  const saved = await savePreparedAction(actionAuth(req), {
+    tokenId, accountAddress: binding.account, type: "UPDATE_AGENT_URI", targetAddress: binding.account,
+    data, sourceBlock: account.blockNumber, gasEstimate: gas, payload: { agentURI },
+  });
+  res.json(serializeAgentAction(saved.action, saved.gasEstimate));
+}));
+
+agentsRouter.post("/agents/tokens/:tokenId/controls/send/prepare", requireWalletAuth, asyncRoute(async (req, res) => {
+  const { tokenId } = tokenParams.parse(req.params);
+  const body = sendBody.parse(req.body);
+  const recipient = getAddress(body.recipient);
+  const amount = parseUnits(body.amount, 18);
+  const maximum = parseUnits(config.AGENT_MAX_OWNER_SEND_USDC, 18);
+  if (amount <= 0n) throw new ApiError(422, "INVALID_SEND_AMOUNT", "The USDC amount must be greater than zero.");
+  if (amount > maximum) throw new ApiError(422, "OWNER_SEND_LIMIT", `This interface prepares at most ${config.AGENT_MAX_OWNER_SEND_USDC} USDC per action.`);
+  const { walletAddress, binding, account } = await requireAwakenedOwner(tokenId, req.auth!.walletAddress!);
+  const protectedAddresses = [zeroAddress, binding.account, binding.identityRegistry, maskBornAddress, maskBornAgentRegistryAddress].filter(Boolean).map((value) => value!.toLowerCase());
+  if (protectedAddresses.includes(recipient.toLowerCase())) throw new ApiError(422, "PROTECTED_RECIPIENT", "That recipient is protected and cannot receive an owner-send action.");
+  if (amount > account.balance) throw new ApiError(422, "INSUFFICIENT_AGENT_BALANCE", "The agent account does not have enough USDC for this transfer.");
+  const data = encodeFunctionData({ abi: maskBornAccountV1Abi, functionName: "execute", args: [recipient, amount, "0x", 0] });
+  const gas = await simulateOwnerAction(walletAddress, binding.account, data);
+  const saved = await savePreparedAction(actionAuth(req), {
+    tokenId, accountAddress: binding.account, type: "SEND_NATIVE_USDC", targetAddress: binding.account,
+    data, sourceBlock: account.blockNumber, gasEstimate: gas, assetAmountBaseUnits: amount,
+    payload: { recipient, amount: body.amount, asset: "native USDC", decimals: 18 },
+  });
+  res.json(serializeAgentAction(saved.action, saved.gasEstimate));
+}));
+
+agentsRouter.post("/agents/actions/:actionId/submitted", requireWalletAuth, asyncRoute(async (req, res) => {
+  const { actionId } = actionParams.parse(req.params);
+  const { txHash } = transactionBody.parse(req.body);
+  const action = await submitAgentAction(actionId, txHash as Hex, actionAuth(req));
+  res.json(serializeAgentAction(action));
+}));
+
+agentsRouter.get("/agents/actions/:actionId", requireWalletAuth, asyncRoute(async (req, res) => {
+  const { actionId } = actionParams.parse(req.params);
+  const action = await getAgentAction(actionId, actionAuth(req));
+  res.json(serializeAgentAction(action));
+}));
+
+agentsRouter.get("/agents/tokens/:tokenId/actions", requireWalletAuth, asyncRoute(async (req, res) => {
+  const { tokenId } = tokenParams.parse(req.params);
+  await requireCurrentTokenOwner(tokenId, req.auth!.walletAddress!);
+  const actions = await listAgentActions(tokenId, actionAuth(req));
+  res.json({ actions: actions.map((action) => serializeAgentAction(action)) });
 }));
 
 agentsRouter.get("/agents/public/tokens/:tokenId/registration", asyncRoute(async (req, res) => {
@@ -199,6 +297,44 @@ agentsRouter.get("/agents/public/tokens/:tokenId/registration", asyncRoute(async
   });
 }));
 
+agentsRouter.get("/agents/public/tokens/:tokenId/card", asyncRoute(async (req, res) => {
+  const { tokenId } = tokenParams.parse(req.params);
+  const token = await readToken(tokenId).catch(() => {
+    throw new ApiError(404, "TOKEN_NOT_FOUND", "That Mask Born token was not found.");
+  });
+  if (!token.configured || !token.traits) throw new ApiError(404, "AGENT_NOT_AVAILABLE", "This Mask Born agent is not available.");
+  const binding = await readAgentBinding(tokenId).catch(() => null);
+  if (!binding?.configured || !binding.awakened) throw new ApiError(404, "AGENT_NOT_AWAKENED", "This Mask Born has not awakened.");
+  const [account, metadata] = await Promise.all([
+    readAgentAccount(binding.account).catch(() => null),
+    readTokenURI(tokenId, token.blockNumber).catch(() => null),
+  ]);
+  const persona = buildPersona(tokenId, token.traits.map(Number));
+  const publicOrigin = (config.AGENT_PUBLIC_ORIGIN ?? config.FRONTEND_URL).replace(/\/$/, "");
+  res.setHeader("Cache-Control", "public, max-age=30, stale-while-revalidate=120");
+  res.json({
+    schema: "https://maskborn.art/schemas/agent-discovery-profile-v1",
+    profileType: "maskborn-agent-discovery",
+    name: persona.name,
+    description: persona.summary,
+    ...(metadata?.configured ? { image: imageFromTokenURI(metadata.tokenURI) } : {}),
+    nft: { chainId: config.ARC_CHAIN_ID, collection: maskBornAddress, tokenId: tokenId.toString(), owner: token.owner },
+    identity: { standard: "ERC-8004", registry: binding.identityRegistry, agentId: binding.agentId.toString() },
+    account: { standard: "ERC-6551", address: binding.account, nativeCurrency: "USDC", balance: account ? formatUnits(account.balance, 18) : null, executionPaused: account?.paused ?? null },
+    constitutionHash: binding.constitutionHash,
+    endpoints: {
+      registration: `${publicOrigin}/.well-known/agent-registration/maskborn/${tokenId}.json`,
+      web: `${publicOrigin}/agents?tokenId=${tokenId}`,
+    },
+    protocols: { a2a: { enabled: false }, x402: { enabled: false } },
+    capabilities: [
+      { id: "public-persona", available: true },
+      { id: "public-account-state", available: Boolean(account) },
+      { id: "autonomous-execution", available: false },
+    ],
+  });
+}));
+
 async function requireCurrentTokenOwner(tokenId: bigint, expectedOwner: string) {
   const token = await readToken(tokenId).catch(() => {
     throw new ApiError(503, "ARC_READ_UNAVAILABLE", "Arc data is temporarily unavailable.");
@@ -208,6 +344,40 @@ async function requireCurrentTokenOwner(tokenId: bigint, expectedOwner: string) 
     throw new ApiError(403, "TOKEN_NOT_OWNED", "This wallet does not currently own that Mask Born.");
   }
   return token;
+}
+
+async function requireAwakenedOwner(tokenId: bigint, expectedOwner: string) {
+  const walletAddress = getAddress(expectedOwner);
+  await requireCurrentTokenOwner(tokenId, walletAddress);
+  const binding = await readAgentBinding(tokenId).catch(() => {
+    throw new ApiError(503, "ARC_READ_UNAVAILABLE", "The awakening registry is temporarily unavailable.");
+  });
+  if (!binding.configured) throw new ApiError(503, "AWAKENING_NOT_DEPLOYED", "The awakening registry is not configured.");
+  if (!binding.awakened) throw new ApiError(409, "AGENT_NOT_AWAKENED", "Awaken this Mask Born before using owner controls.");
+  const account = await readAgentAccount(binding.account).catch(() => {
+    throw new ApiError(503, "ARC_READ_UNAVAILABLE", "The agent account is temporarily unavailable.");
+  });
+  if (account.agentId !== binding.agentId || account.agentURIHash.toLowerCase() !== binding.agentURIHash.toLowerCase()) {
+    throw new ApiError(503, "AGENT_BINDING_MISMATCH", "The agent registry and account identity do not agree. Owner actions are disabled.");
+  }
+  return { walletAddress, binding, account };
+}
+
+async function simulateOwnerAction(walletAddress: Address, target: Address, data: Hex) {
+  return Promise.all([
+    arcClient.call({ account: walletAddress, to: target, data }),
+    arcClient.estimateGas({ account: walletAddress, to: target, data }),
+  ]).then(([, gas]) => gas).catch(() => {
+    throw new ApiError(422, "AGENT_ACTION_SIMULATION_FAILED", "Arc rejected this agent action simulation. No transaction was submitted.");
+  });
+}
+
+function actionAuth(req: Request) {
+  return {
+    userId: req.auth!.userId,
+    walletId: req.auth!.walletId!,
+    walletAddress: req.auth!.walletAddress!,
+  };
 }
 
 function serializeBinding(binding: Awaited<ReturnType<typeof readAgentBinding>> & { configured: true }) {

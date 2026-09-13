@@ -77,6 +77,11 @@ export type ChainEvent = Prisma.ChainEventModel
  */
 export type OwnershipPeriod = Prisma.OwnershipPeriodModel
 /**
+ * Model AgentAction
+ * 
+ */
+export type AgentAction = Prisma.AgentActionModel
+/**
  * Model Conversation
  * 
  */

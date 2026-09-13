@@ -327,6 +327,7 @@ export type OwnershipPeriodWhereInput = {
   wallet?: Prisma.XOR<Prisma.WalletNullableScalarRelationFilter, Prisma.WalletWhereInput> | null
   conversations?: Prisma.ConversationListRelationFilter
   modelDataConsents?: Prisma.ModelDataConsentListRelationFilter
+  agentActions?: Prisma.AgentActionListRelationFilter
 }
 
 export type OwnershipPeriodOrderByWithRelationInput = {
@@ -349,6 +350,7 @@ export type OwnershipPeriodOrderByWithRelationInput = {
   wallet?: Prisma.WalletOrderByWithRelationInput
   conversations?: Prisma.ConversationOrderByRelationAggregateInput
   modelDataConsents?: Prisma.ModelDataConsentOrderByRelationAggregateInput
+  agentActions?: Prisma.AgentActionOrderByRelationAggregateInput
 }
 
 export type OwnershipPeriodWhereUniqueInput = Prisma.AtLeast<{
@@ -375,6 +377,7 @@ export type OwnershipPeriodWhereUniqueInput = Prisma.AtLeast<{
   wallet?: Prisma.XOR<Prisma.WalletNullableScalarRelationFilter, Prisma.WalletWhereInput> | null
   conversations?: Prisma.ConversationListRelationFilter
   modelDataConsents?: Prisma.ModelDataConsentListRelationFilter
+  agentActions?: Prisma.AgentActionListRelationFilter
 }, "id" | "chainId_collectionAddress_tokenId_sequence">
 
 export type OwnershipPeriodOrderByWithAggregationInput = {
@@ -442,6 +445,7 @@ export type OwnershipPeriodCreateInput = {
   wallet?: Prisma.WalletCreateNestedOneWithoutOwnershipPeriodsInput
   conversations?: Prisma.ConversationCreateNestedManyWithoutOwnershipPeriodInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutOwnershipPeriodInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutOwnershipPeriodInput
 }
 
 export type OwnershipPeriodUncheckedCreateInput = {
@@ -463,6 +467,7 @@ export type OwnershipPeriodUncheckedCreateInput = {
   createdAt?: Date | string
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutOwnershipPeriodInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutOwnershipPeriodInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutOwnershipPeriodInput
 }
 
 export type OwnershipPeriodUpdateInput = {
@@ -484,6 +489,7 @@ export type OwnershipPeriodUpdateInput = {
   wallet?: Prisma.WalletUpdateOneWithoutOwnershipPeriodsNestedInput
   conversations?: Prisma.ConversationUpdateManyWithoutOwnershipPeriodNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutOwnershipPeriodNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutOwnershipPeriodNestedInput
 }
 
 export type OwnershipPeriodUncheckedUpdateInput = {
@@ -505,6 +511,7 @@ export type OwnershipPeriodUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
 }
 
 export type OwnershipPeriodCreateManyInput = {
@@ -718,6 +725,20 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type OwnershipPeriodCreateNestedOneWithoutAgentActionsInput = {
+  create?: Prisma.XOR<Prisma.OwnershipPeriodCreateWithoutAgentActionsInput, Prisma.OwnershipPeriodUncheckedCreateWithoutAgentActionsInput>
+  connectOrCreate?: Prisma.OwnershipPeriodCreateOrConnectWithoutAgentActionsInput
+  connect?: Prisma.OwnershipPeriodWhereUniqueInput
+}
+
+export type OwnershipPeriodUpdateOneRequiredWithoutAgentActionsNestedInput = {
+  create?: Prisma.XOR<Prisma.OwnershipPeriodCreateWithoutAgentActionsInput, Prisma.OwnershipPeriodUncheckedCreateWithoutAgentActionsInput>
+  connectOrCreate?: Prisma.OwnershipPeriodCreateOrConnectWithoutAgentActionsInput
+  upsert?: Prisma.OwnershipPeriodUpsertWithoutAgentActionsInput
+  connect?: Prisma.OwnershipPeriodWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OwnershipPeriodUpdateToOneWithWhereWithoutAgentActionsInput, Prisma.OwnershipPeriodUpdateWithoutAgentActionsInput>, Prisma.OwnershipPeriodUncheckedUpdateWithoutAgentActionsInput>
+}
+
 export type OwnershipPeriodCreateNestedOneWithoutConversationsInput = {
   create?: Prisma.XOR<Prisma.OwnershipPeriodCreateWithoutConversationsInput, Prisma.OwnershipPeriodUncheckedCreateWithoutConversationsInput>
   connectOrCreate?: Prisma.OwnershipPeriodCreateOrConnectWithoutConversationsInput
@@ -764,6 +785,7 @@ export type OwnershipPeriodCreateWithoutWalletInput = {
   createdAt?: Date | string
   conversations?: Prisma.ConversationCreateNestedManyWithoutOwnershipPeriodInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutOwnershipPeriodInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutOwnershipPeriodInput
 }
 
 export type OwnershipPeriodUncheckedCreateWithoutWalletInput = {
@@ -784,6 +806,7 @@ export type OwnershipPeriodUncheckedCreateWithoutWalletInput = {
   createdAt?: Date | string
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutOwnershipPeriodInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutOwnershipPeriodInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutOwnershipPeriodInput
 }
 
 export type OwnershipPeriodCreateOrConnectWithoutWalletInput = {
@@ -834,6 +857,106 @@ export type OwnershipPeriodScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"OwnershipPeriod"> | Date | string
 }
 
+export type OwnershipPeriodCreateWithoutAgentActionsInput = {
+  id?: string
+  chainId: number
+  collectionAddress: string
+  tokenId: string
+  sequence: number
+  ownerAddress: string
+  startedBlock: bigint | number
+  startedTxHash: string
+  startedLogIndex: number
+  startedAt?: Date | string | null
+  endedBlock?: bigint | number | null
+  endedTxHash?: string | null
+  endedLogIndex?: number | null
+  endedAt?: Date | string | null
+  createdAt?: Date | string
+  wallet?: Prisma.WalletCreateNestedOneWithoutOwnershipPeriodsInput
+  conversations?: Prisma.ConversationCreateNestedManyWithoutOwnershipPeriodInput
+  modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutOwnershipPeriodInput
+}
+
+export type OwnershipPeriodUncheckedCreateWithoutAgentActionsInput = {
+  id?: string
+  chainId: number
+  collectionAddress: string
+  tokenId: string
+  sequence: number
+  ownerAddress: string
+  walletId?: string | null
+  startedBlock: bigint | number
+  startedTxHash: string
+  startedLogIndex: number
+  startedAt?: Date | string | null
+  endedBlock?: bigint | number | null
+  endedTxHash?: string | null
+  endedLogIndex?: number | null
+  endedAt?: Date | string | null
+  createdAt?: Date | string
+  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutOwnershipPeriodInput
+  modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutOwnershipPeriodInput
+}
+
+export type OwnershipPeriodCreateOrConnectWithoutAgentActionsInput = {
+  where: Prisma.OwnershipPeriodWhereUniqueInput
+  create: Prisma.XOR<Prisma.OwnershipPeriodCreateWithoutAgentActionsInput, Prisma.OwnershipPeriodUncheckedCreateWithoutAgentActionsInput>
+}
+
+export type OwnershipPeriodUpsertWithoutAgentActionsInput = {
+  update: Prisma.XOR<Prisma.OwnershipPeriodUpdateWithoutAgentActionsInput, Prisma.OwnershipPeriodUncheckedUpdateWithoutAgentActionsInput>
+  create: Prisma.XOR<Prisma.OwnershipPeriodCreateWithoutAgentActionsInput, Prisma.OwnershipPeriodUncheckedCreateWithoutAgentActionsInput>
+  where?: Prisma.OwnershipPeriodWhereInput
+}
+
+export type OwnershipPeriodUpdateToOneWithWhereWithoutAgentActionsInput = {
+  where?: Prisma.OwnershipPeriodWhereInput
+  data: Prisma.XOR<Prisma.OwnershipPeriodUpdateWithoutAgentActionsInput, Prisma.OwnershipPeriodUncheckedUpdateWithoutAgentActionsInput>
+}
+
+export type OwnershipPeriodUpdateWithoutAgentActionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  chainId?: Prisma.IntFieldUpdateOperationsInput | number
+  collectionAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  tokenId?: Prisma.StringFieldUpdateOperationsInput | string
+  sequence?: Prisma.IntFieldUpdateOperationsInput | number
+  ownerAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  startedBlock?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  startedTxHash?: Prisma.StringFieldUpdateOperationsInput | string
+  startedLogIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endedBlock?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  endedTxHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedLogIndex?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  wallet?: Prisma.WalletUpdateOneWithoutOwnershipPeriodsNestedInput
+  conversations?: Prisma.ConversationUpdateManyWithoutOwnershipPeriodNestedInput
+  modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutOwnershipPeriodNestedInput
+}
+
+export type OwnershipPeriodUncheckedUpdateWithoutAgentActionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  chainId?: Prisma.IntFieldUpdateOperationsInput | number
+  collectionAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  tokenId?: Prisma.StringFieldUpdateOperationsInput | string
+  sequence?: Prisma.IntFieldUpdateOperationsInput | number
+  ownerAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  walletId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startedBlock?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  startedTxHash?: Prisma.StringFieldUpdateOperationsInput | string
+  startedLogIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endedBlock?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  endedTxHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedLogIndex?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
+  modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
+}
+
 export type OwnershipPeriodCreateWithoutConversationsInput = {
   id?: string
   chainId: number
@@ -852,6 +975,7 @@ export type OwnershipPeriodCreateWithoutConversationsInput = {
   createdAt?: Date | string
   wallet?: Prisma.WalletCreateNestedOneWithoutOwnershipPeriodsInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutOwnershipPeriodInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutOwnershipPeriodInput
 }
 
 export type OwnershipPeriodUncheckedCreateWithoutConversationsInput = {
@@ -872,6 +996,7 @@ export type OwnershipPeriodUncheckedCreateWithoutConversationsInput = {
   endedAt?: Date | string | null
   createdAt?: Date | string
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutOwnershipPeriodInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutOwnershipPeriodInput
 }
 
 export type OwnershipPeriodCreateOrConnectWithoutConversationsInput = {
@@ -908,6 +1033,7 @@ export type OwnershipPeriodUpdateWithoutConversationsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   wallet?: Prisma.WalletUpdateOneWithoutOwnershipPeriodsNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutOwnershipPeriodNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutOwnershipPeriodNestedInput
 }
 
 export type OwnershipPeriodUncheckedUpdateWithoutConversationsInput = {
@@ -928,6 +1054,7 @@ export type OwnershipPeriodUncheckedUpdateWithoutConversationsInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
 }
 
 export type OwnershipPeriodCreateWithoutModelDataConsentsInput = {
@@ -948,6 +1075,7 @@ export type OwnershipPeriodCreateWithoutModelDataConsentsInput = {
   createdAt?: Date | string
   wallet?: Prisma.WalletCreateNestedOneWithoutOwnershipPeriodsInput
   conversations?: Prisma.ConversationCreateNestedManyWithoutOwnershipPeriodInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutOwnershipPeriodInput
 }
 
 export type OwnershipPeriodUncheckedCreateWithoutModelDataConsentsInput = {
@@ -968,6 +1096,7 @@ export type OwnershipPeriodUncheckedCreateWithoutModelDataConsentsInput = {
   endedAt?: Date | string | null
   createdAt?: Date | string
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutOwnershipPeriodInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutOwnershipPeriodInput
 }
 
 export type OwnershipPeriodCreateOrConnectWithoutModelDataConsentsInput = {
@@ -1004,6 +1133,7 @@ export type OwnershipPeriodUpdateWithoutModelDataConsentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   wallet?: Prisma.WalletUpdateOneWithoutOwnershipPeriodsNestedInput
   conversations?: Prisma.ConversationUpdateManyWithoutOwnershipPeriodNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutOwnershipPeriodNestedInput
 }
 
 export type OwnershipPeriodUncheckedUpdateWithoutModelDataConsentsInput = {
@@ -1024,6 +1154,7 @@ export type OwnershipPeriodUncheckedUpdateWithoutModelDataConsentsInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
 }
 
 export type OwnershipPeriodCreateManyWalletInput = {
@@ -1062,6 +1193,7 @@ export type OwnershipPeriodUpdateWithoutWalletInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conversations?: Prisma.ConversationUpdateManyWithoutOwnershipPeriodNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutOwnershipPeriodNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutOwnershipPeriodNestedInput
 }
 
 export type OwnershipPeriodUncheckedUpdateWithoutWalletInput = {
@@ -1082,6 +1214,7 @@ export type OwnershipPeriodUncheckedUpdateWithoutWalletInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
 }
 
 export type OwnershipPeriodUncheckedUpdateManyWithoutWalletInput = {
@@ -1110,11 +1243,13 @@ export type OwnershipPeriodUncheckedUpdateManyWithoutWalletInput = {
 export type OwnershipPeriodCountOutputType = {
   conversations: number
   modelDataConsents: number
+  agentActions: number
 }
 
 export type OwnershipPeriodCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   conversations?: boolean | OwnershipPeriodCountOutputTypeCountConversationsArgs
   modelDataConsents?: boolean | OwnershipPeriodCountOutputTypeCountModelDataConsentsArgs
+  agentActions?: boolean | OwnershipPeriodCountOutputTypeCountAgentActionsArgs
 }
 
 /**
@@ -1141,6 +1276,13 @@ export type OwnershipPeriodCountOutputTypeCountModelDataConsentsArgs<ExtArgs ext
   where?: Prisma.ModelDataConsentWhereInput
 }
 
+/**
+ * OwnershipPeriodCountOutputType without action
+ */
+export type OwnershipPeriodCountOutputTypeCountAgentActionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AgentActionWhereInput
+}
+
 
 export type OwnershipPeriodSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1162,6 +1304,7 @@ export type OwnershipPeriodSelect<ExtArgs extends runtime.Types.Extensions.Inter
   wallet?: boolean | Prisma.OwnershipPeriod$walletArgs<ExtArgs>
   conversations?: boolean | Prisma.OwnershipPeriod$conversationsArgs<ExtArgs>
   modelDataConsents?: boolean | Prisma.OwnershipPeriod$modelDataConsentsArgs<ExtArgs>
+  agentActions?: boolean | Prisma.OwnershipPeriod$agentActionsArgs<ExtArgs>
   _count?: boolean | Prisma.OwnershipPeriodCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["ownershipPeriod"]>
 
@@ -1229,6 +1372,7 @@ export type OwnershipPeriodInclude<ExtArgs extends runtime.Types.Extensions.Inte
   wallet?: boolean | Prisma.OwnershipPeriod$walletArgs<ExtArgs>
   conversations?: boolean | Prisma.OwnershipPeriod$conversationsArgs<ExtArgs>
   modelDataConsents?: boolean | Prisma.OwnershipPeriod$modelDataConsentsArgs<ExtArgs>
+  agentActions?: boolean | Prisma.OwnershipPeriod$agentActionsArgs<ExtArgs>
   _count?: boolean | Prisma.OwnershipPeriodCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OwnershipPeriodIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1244,6 +1388,7 @@ export type $OwnershipPeriodPayload<ExtArgs extends runtime.Types.Extensions.Int
     wallet: Prisma.$WalletPayload<ExtArgs> | null
     conversations: Prisma.$ConversationPayload<ExtArgs>[]
     modelDataConsents: Prisma.$ModelDataConsentPayload<ExtArgs>[]
+    agentActions: Prisma.$AgentActionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1659,6 +1804,7 @@ export interface Prisma__OwnershipPeriodClient<T, Null = never, ExtArgs extends 
   wallet<T extends Prisma.OwnershipPeriod$walletArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OwnershipPeriod$walletArgs<ExtArgs>>): Prisma.Prisma__WalletClient<runtime.Types.Result.GetResult<Prisma.$WalletPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   conversations<T extends Prisma.OwnershipPeriod$conversationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OwnershipPeriod$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   modelDataConsents<T extends Prisma.OwnershipPeriod$modelDataConsentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OwnershipPeriod$modelDataConsentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ModelDataConsentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  agentActions<T extends Prisma.OwnershipPeriod$agentActionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OwnershipPeriod$agentActionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AgentActionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2169,6 +2315,30 @@ export type OwnershipPeriod$modelDataConsentsArgs<ExtArgs extends runtime.Types.
   take?: number
   skip?: number
   distinct?: Prisma.ModelDataConsentScalarFieldEnum | Prisma.ModelDataConsentScalarFieldEnum[]
+}
+
+/**
+ * OwnershipPeriod.agentActions
+ */
+export type OwnershipPeriod$agentActionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AgentAction
+   */
+  select?: Prisma.AgentActionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AgentAction
+   */
+  omit?: Prisma.AgentActionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AgentActionInclude<ExtArgs> | null
+  where?: Prisma.AgentActionWhereInput
+  orderBy?: Prisma.AgentActionOrderByWithRelationInput | Prisma.AgentActionOrderByWithRelationInput[]
+  cursor?: Prisma.AgentActionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AgentActionScalarFieldEnum | Prisma.AgentActionScalarFieldEnum[]
 }
 
 /**

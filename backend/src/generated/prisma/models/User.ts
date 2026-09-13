@@ -210,6 +210,7 @@ export type UserWhereInput = {
   conversations?: Prisma.ConversationListRelationFilter
   usageMeters?: Prisma.UsageMeterListRelationFilter
   modelDataConsents?: Prisma.ModelDataConsentListRelationFilter
+  agentActions?: Prisma.AgentActionListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -239,6 +240,7 @@ export type UserOrderByWithRelationInput = {
   conversations?: Prisma.ConversationOrderByRelationAggregateInput
   usageMeters?: Prisma.UsageMeterOrderByRelationAggregateInput
   modelDataConsents?: Prisma.ModelDataConsentOrderByRelationAggregateInput
+  agentActions?: Prisma.AgentActionOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -271,6 +273,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   conversations?: Prisma.ConversationListRelationFilter
   usageMeters?: Prisma.UsageMeterListRelationFilter
   modelDataConsents?: Prisma.ModelDataConsentListRelationFilter
+  agentActions?: Prisma.AgentActionListRelationFilter
 }, "id">
 
 export type UserOrderByWithAggregationInput = {
@@ -324,6 +327,7 @@ export type UserCreateInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -353,6 +357,7 @@ export type UserUncheckedCreateInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -382,6 +387,7 @@ export type UserUpdateInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -411,6 +417,7 @@ export type UserUncheckedUpdateInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -533,6 +540,20 @@ export type UserUpdateOneRequiredWithoutWalletsNestedInput = {
   upsert?: Prisma.UserUpsertWithoutWalletsInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWalletsInput, Prisma.UserUpdateWithoutWalletsInput>, Prisma.UserUncheckedUpdateWithoutWalletsInput>
+}
+
+export type UserCreateNestedOneWithoutAgentActionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAgentActionsInput, Prisma.UserUncheckedCreateWithoutAgentActionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAgentActionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAgentActionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAgentActionsInput, Prisma.UserUncheckedCreateWithoutAgentActionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAgentActionsInput
+  upsert?: Prisma.UserUpsertWithoutAgentActionsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAgentActionsInput, Prisma.UserUpdateWithoutAgentActionsInput>, Prisma.UserUncheckedUpdateWithoutAgentActionsInput>
 }
 
 export type UserCreateNestedOneWithoutConversationsInput = {
@@ -803,6 +824,7 @@ export type UserCreateWithoutSocialAccountsInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSocialAccountsInput = {
@@ -831,6 +853,7 @@ export type UserUncheckedCreateWithoutSocialAccountsInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSocialAccountsInput = {
@@ -875,6 +898,7 @@ export type UserUpdateWithoutSocialAccountsInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSocialAccountsInput = {
@@ -903,6 +927,7 @@ export type UserUncheckedUpdateWithoutSocialAccountsInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSessionsInput = {
@@ -931,6 +956,7 @@ export type UserCreateWithoutSessionsInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -959,6 +985,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -1003,6 +1030,7 @@ export type UserUpdateWithoutSessionsInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -1031,6 +1059,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutWalletsInput = {
@@ -1059,6 +1088,7 @@ export type UserCreateWithoutWalletsInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWalletsInput = {
@@ -1087,6 +1117,7 @@ export type UserUncheckedCreateWithoutWalletsInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWalletsInput = {
@@ -1131,6 +1162,7 @@ export type UserUpdateWithoutWalletsInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWalletsInput = {
@@ -1142,6 +1174,139 @@ export type UserUncheckedUpdateWithoutWalletsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   socialAccounts?: Prisma.SocialAccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutUserNestedInput
+  drafts?: Prisma.DraftUncheckedUpdateManyWithoutUserNestedInput
+  submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutUserNestedInput
+  votes?: Prisma.VoteUncheckedUpdateManyWithoutUserNestedInput
+  voteEvents?: Prisma.VoteEventUncheckedUpdateManyWithoutUserNestedInput
+  restrictions?: Prisma.VoteRestrictionUncheckedUpdateManyWithoutUserNestedInput
+  riskEvents?: Prisma.RiskEventUncheckedUpdateManyWithoutUserNestedInput
+  statusEventsAuthored?: Prisma.SubmissionStatusEventUncheckedUpdateManyWithoutActorNestedInput
+  adminAudits?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutUserNestedInput
+  payouts?: Prisma.PayoutUncheckedUpdateManyWithoutUserNestedInput
+  walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedUpdateManyWithoutUserNestedInput
+  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
+  usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
+  modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutAgentActionsInput = {
+  id?: string
+  role?: $Enums.Role
+  displayName?: string | null
+  avatarUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  socialAccounts?: Prisma.SocialAccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutUserInput
+  drafts?: Prisma.DraftCreateNestedManyWithoutUserInput
+  submissions?: Prisma.SubmissionCreateNestedManyWithoutUserInput
+  votes?: Prisma.VoteCreateNestedManyWithoutUserInput
+  voteEvents?: Prisma.VoteEventCreateNestedManyWithoutUserInput
+  restrictions?: Prisma.VoteRestrictionCreateNestedManyWithoutUserInput
+  riskEvents?: Prisma.RiskEventCreateNestedManyWithoutUserInput
+  statusEventsAuthored?: Prisma.SubmissionStatusEventCreateNestedManyWithoutActorInput
+  adminAudits?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutUserInput
+  payouts?: Prisma.PayoutCreateNestedManyWithoutUserInput
+  walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationCreateNestedManyWithoutUserInput
+  conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
+  usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
+  modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAgentActionsInput = {
+  id?: string
+  role?: $Enums.Role
+  displayName?: string | null
+  avatarUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  socialAccounts?: Prisma.SocialAccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutUserInput
+  drafts?: Prisma.DraftUncheckedCreateNestedManyWithoutUserInput
+  submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutUserInput
+  votes?: Prisma.VoteUncheckedCreateNestedManyWithoutUserInput
+  voteEvents?: Prisma.VoteEventUncheckedCreateNestedManyWithoutUserInput
+  restrictions?: Prisma.VoteRestrictionUncheckedCreateNestedManyWithoutUserInput
+  riskEvents?: Prisma.RiskEventUncheckedCreateNestedManyWithoutUserInput
+  statusEventsAuthored?: Prisma.SubmissionStatusEventUncheckedCreateNestedManyWithoutActorInput
+  adminAudits?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutUserInput
+  payouts?: Prisma.PayoutUncheckedCreateNestedManyWithoutUserInput
+  walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedCreateNestedManyWithoutUserInput
+  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
+  usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
+  modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAgentActionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAgentActionsInput, Prisma.UserUncheckedCreateWithoutAgentActionsInput>
+}
+
+export type UserUpsertWithoutAgentActionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAgentActionsInput, Prisma.UserUncheckedUpdateWithoutAgentActionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAgentActionsInput, Prisma.UserUncheckedCreateWithoutAgentActionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAgentActionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAgentActionsInput, Prisma.UserUncheckedUpdateWithoutAgentActionsInput>
+}
+
+export type UserUpdateWithoutAgentActionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  socialAccounts?: Prisma.SocialAccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutUserNestedInput
+  drafts?: Prisma.DraftUpdateManyWithoutUserNestedInput
+  submissions?: Prisma.SubmissionUpdateManyWithoutUserNestedInput
+  votes?: Prisma.VoteUpdateManyWithoutUserNestedInput
+  voteEvents?: Prisma.VoteEventUpdateManyWithoutUserNestedInput
+  restrictions?: Prisma.VoteRestrictionUpdateManyWithoutUserNestedInput
+  riskEvents?: Prisma.RiskEventUpdateManyWithoutUserNestedInput
+  statusEventsAuthored?: Prisma.SubmissionStatusEventUpdateManyWithoutActorNestedInput
+  adminAudits?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutUserNestedInput
+  payouts?: Prisma.PayoutUpdateManyWithoutUserNestedInput
+  walletSessions?: Prisma.WalletSessionUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUpdateManyWithoutUserNestedInput
+  conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
+  usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
+  modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAgentActionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  socialAccounts?: Prisma.SocialAccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutUserNestedInput
   drafts?: Prisma.DraftUncheckedUpdateManyWithoutUserNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutUserNestedInput
@@ -1187,6 +1352,7 @@ export type UserCreateWithoutConversationsInput = {
   agentNotifications?: Prisma.AgentNotificationCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutConversationsInput = {
@@ -1215,6 +1381,7 @@ export type UserUncheckedCreateWithoutConversationsInput = {
   agentNotifications?: Prisma.AgentNotificationUncheckedCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutConversationsInput = {
@@ -1259,6 +1426,7 @@ export type UserUpdateWithoutConversationsInput = {
   agentNotifications?: Prisma.AgentNotificationUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutConversationsInput = {
@@ -1287,6 +1455,7 @@ export type UserUncheckedUpdateWithoutConversationsInput = {
   agentNotifications?: Prisma.AgentNotificationUncheckedUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutUsageMetersInput = {
@@ -1315,6 +1484,7 @@ export type UserCreateWithoutUsageMetersInput = {
   agentNotifications?: Prisma.AgentNotificationCreateNestedManyWithoutUserInput
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUsageMetersInput = {
@@ -1343,6 +1513,7 @@ export type UserUncheckedCreateWithoutUsageMetersInput = {
   agentNotifications?: Prisma.AgentNotificationUncheckedCreateNestedManyWithoutUserInput
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUsageMetersInput = {
@@ -1387,6 +1558,7 @@ export type UserUpdateWithoutUsageMetersInput = {
   agentNotifications?: Prisma.AgentNotificationUpdateManyWithoutUserNestedInput
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUsageMetersInput = {
@@ -1415,6 +1587,7 @@ export type UserUncheckedUpdateWithoutUsageMetersInput = {
   agentNotifications?: Prisma.AgentNotificationUncheckedUpdateManyWithoutUserNestedInput
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutModelDataConsentsInput = {
@@ -1443,6 +1616,7 @@ export type UserCreateWithoutModelDataConsentsInput = {
   agentNotifications?: Prisma.AgentNotificationCreateNestedManyWithoutUserInput
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutModelDataConsentsInput = {
@@ -1471,6 +1645,7 @@ export type UserUncheckedCreateWithoutModelDataConsentsInput = {
   agentNotifications?: Prisma.AgentNotificationUncheckedCreateNestedManyWithoutUserInput
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutModelDataConsentsInput = {
@@ -1515,6 +1690,7 @@ export type UserUpdateWithoutModelDataConsentsInput = {
   agentNotifications?: Prisma.AgentNotificationUpdateManyWithoutUserNestedInput
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutModelDataConsentsInput = {
@@ -1543,6 +1719,7 @@ export type UserUncheckedUpdateWithoutModelDataConsentsInput = {
   agentNotifications?: Prisma.AgentNotificationUncheckedUpdateManyWithoutUserNestedInput
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutMonitorRulesInput = {
@@ -1571,6 +1748,7 @@ export type UserCreateWithoutMonitorRulesInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMonitorRulesInput = {
@@ -1599,6 +1777,7 @@ export type UserUncheckedCreateWithoutMonitorRulesInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMonitorRulesInput = {
@@ -1643,6 +1822,7 @@ export type UserUpdateWithoutMonitorRulesInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMonitorRulesInput = {
@@ -1671,6 +1851,7 @@ export type UserUncheckedUpdateWithoutMonitorRulesInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAgentNotificationsInput = {
@@ -1699,6 +1880,7 @@ export type UserCreateWithoutAgentNotificationsInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAgentNotificationsInput = {
@@ -1727,6 +1909,7 @@ export type UserUncheckedCreateWithoutAgentNotificationsInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAgentNotificationsInput = {
@@ -1771,6 +1954,7 @@ export type UserUpdateWithoutAgentNotificationsInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAgentNotificationsInput = {
@@ -1799,6 +1983,7 @@ export type UserUncheckedUpdateWithoutAgentNotificationsInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutWalletSessionsInput = {
@@ -1827,6 +2012,7 @@ export type UserCreateWithoutWalletSessionsInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWalletSessionsInput = {
@@ -1855,6 +2041,7 @@ export type UserUncheckedCreateWithoutWalletSessionsInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWalletSessionsInput = {
@@ -1899,6 +2086,7 @@ export type UserUpdateWithoutWalletSessionsInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWalletSessionsInput = {
@@ -1927,6 +2115,7 @@ export type UserUncheckedUpdateWithoutWalletSessionsInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutApplicationsInput = {
@@ -1955,6 +2144,7 @@ export type UserCreateWithoutApplicationsInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutApplicationsInput = {
@@ -1983,6 +2173,7 @@ export type UserUncheckedCreateWithoutApplicationsInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutApplicationsInput = {
@@ -2027,6 +2218,7 @@ export type UserUpdateWithoutApplicationsInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutApplicationsInput = {
@@ -2055,6 +2247,7 @@ export type UserUncheckedUpdateWithoutApplicationsInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutDraftsInput = {
@@ -2083,6 +2276,7 @@ export type UserCreateWithoutDraftsInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDraftsInput = {
@@ -2111,6 +2305,7 @@ export type UserUncheckedCreateWithoutDraftsInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDraftsInput = {
@@ -2155,6 +2350,7 @@ export type UserUpdateWithoutDraftsInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDraftsInput = {
@@ -2183,6 +2379,7 @@ export type UserUncheckedUpdateWithoutDraftsInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSubmissionsInput = {
@@ -2211,6 +2408,7 @@ export type UserCreateWithoutSubmissionsInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSubmissionsInput = {
@@ -2239,6 +2437,7 @@ export type UserUncheckedCreateWithoutSubmissionsInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSubmissionsInput = {
@@ -2283,6 +2482,7 @@ export type UserUpdateWithoutSubmissionsInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSubmissionsInput = {
@@ -2311,6 +2511,7 @@ export type UserUncheckedUpdateWithoutSubmissionsInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutStatusEventsAuthoredInput = {
@@ -2339,6 +2540,7 @@ export type UserCreateWithoutStatusEventsAuthoredInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutStatusEventsAuthoredInput = {
@@ -2367,6 +2569,7 @@ export type UserUncheckedCreateWithoutStatusEventsAuthoredInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutStatusEventsAuthoredInput = {
@@ -2411,6 +2614,7 @@ export type UserUpdateWithoutStatusEventsAuthoredInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStatusEventsAuthoredInput = {
@@ -2439,6 +2643,7 @@ export type UserUncheckedUpdateWithoutStatusEventsAuthoredInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutVotesInput = {
@@ -2467,6 +2672,7 @@ export type UserCreateWithoutVotesInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutVotesInput = {
@@ -2495,6 +2701,7 @@ export type UserUncheckedCreateWithoutVotesInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutVotesInput = {
@@ -2539,6 +2746,7 @@ export type UserUpdateWithoutVotesInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutVotesInput = {
@@ -2567,6 +2775,7 @@ export type UserUncheckedUpdateWithoutVotesInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutVoteEventsInput = {
@@ -2595,6 +2804,7 @@ export type UserCreateWithoutVoteEventsInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutVoteEventsInput = {
@@ -2623,6 +2833,7 @@ export type UserUncheckedCreateWithoutVoteEventsInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutVoteEventsInput = {
@@ -2667,6 +2878,7 @@ export type UserUpdateWithoutVoteEventsInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutVoteEventsInput = {
@@ -2695,6 +2907,7 @@ export type UserUncheckedUpdateWithoutVoteEventsInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRestrictionsInput = {
@@ -2723,6 +2936,7 @@ export type UserCreateWithoutRestrictionsInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRestrictionsInput = {
@@ -2751,6 +2965,7 @@ export type UserUncheckedCreateWithoutRestrictionsInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRestrictionsInput = {
@@ -2795,6 +3010,7 @@ export type UserUpdateWithoutRestrictionsInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRestrictionsInput = {
@@ -2823,6 +3039,7 @@ export type UserUncheckedUpdateWithoutRestrictionsInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRiskEventsInput = {
@@ -2851,6 +3068,7 @@ export type UserCreateWithoutRiskEventsInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRiskEventsInput = {
@@ -2879,6 +3097,7 @@ export type UserUncheckedCreateWithoutRiskEventsInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRiskEventsInput = {
@@ -2923,6 +3142,7 @@ export type UserUpdateWithoutRiskEventsInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRiskEventsInput = {
@@ -2951,6 +3171,7 @@ export type UserUncheckedUpdateWithoutRiskEventsInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPayoutsInput = {
@@ -2979,6 +3200,7 @@ export type UserCreateWithoutPayoutsInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPayoutsInput = {
@@ -3007,6 +3229,7 @@ export type UserUncheckedCreateWithoutPayoutsInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPayoutsInput = {
@@ -3051,6 +3274,7 @@ export type UserUpdateWithoutPayoutsInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPayoutsInput = {
@@ -3079,6 +3303,7 @@ export type UserUncheckedUpdateWithoutPayoutsInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutIdempotencyRecordsInput = {
@@ -3107,6 +3332,7 @@ export type UserCreateWithoutIdempotencyRecordsInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutIdempotencyRecordsInput = {
@@ -3135,6 +3361,7 @@ export type UserUncheckedCreateWithoutIdempotencyRecordsInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutIdempotencyRecordsInput = {
@@ -3179,6 +3406,7 @@ export type UserUpdateWithoutIdempotencyRecordsInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutIdempotencyRecordsInput = {
@@ -3207,6 +3435,7 @@ export type UserUncheckedUpdateWithoutIdempotencyRecordsInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAdminAuditsInput = {
@@ -3235,6 +3464,7 @@ export type UserCreateWithoutAdminAuditsInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAdminAuditsInput = {
@@ -3263,6 +3493,7 @@ export type UserUncheckedCreateWithoutAdminAuditsInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAdminAuditsInput = {
@@ -3307,6 +3538,7 @@ export type UserUpdateWithoutAdminAuditsInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAdminAuditsInput = {
@@ -3335,6 +3567,7 @@ export type UserUncheckedUpdateWithoutAdminAuditsInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -3363,6 +3596,7 @@ export type UserCountOutputType = {
   conversations: number
   usageMeters: number
   modelDataConsents: number
+  agentActions: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3386,6 +3620,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   conversations?: boolean | UserCountOutputTypeCountConversationsArgs
   usageMeters?: boolean | UserCountOutputTypeCountUsageMetersArgs
   modelDataConsents?: boolean | UserCountOutputTypeCountModelDataConsentsArgs
+  agentActions?: boolean | UserCountOutputTypeCountAgentActionsArgs
 }
 
 /**
@@ -3538,6 +3773,13 @@ export type UserCountOutputTypeCountModelDataConsentsArgs<ExtArgs extends runtim
   where?: Prisma.ModelDataConsentWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAgentActionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AgentActionWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -3566,6 +3808,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   conversations?: boolean | Prisma.User$conversationsArgs<ExtArgs>
   usageMeters?: boolean | Prisma.User$usageMetersArgs<ExtArgs>
   modelDataConsents?: boolean | Prisma.User$modelDataConsentsArgs<ExtArgs>
+  agentActions?: boolean | Prisma.User$agentActionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -3618,6 +3861,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   conversations?: boolean | Prisma.User$conversationsArgs<ExtArgs>
   usageMeters?: boolean | Prisma.User$usageMetersArgs<ExtArgs>
   modelDataConsents?: boolean | Prisma.User$modelDataConsentsArgs<ExtArgs>
+  agentActions?: boolean | Prisma.User$agentActionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -3646,6 +3890,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     conversations: Prisma.$ConversationPayload<ExtArgs>[]
     usageMeters: Prisma.$UsageMeterPayload<ExtArgs>[]
     modelDataConsents: Prisma.$ModelDataConsentPayload<ExtArgs>[]
+    agentActions: Prisma.$AgentActionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -4068,6 +4313,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   conversations<T extends Prisma.User$conversationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   usageMeters<T extends Prisma.User$usageMetersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$usageMetersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UsageMeterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   modelDataConsents<T extends Prisma.User$modelDataConsentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$modelDataConsentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ModelDataConsentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  agentActions<T extends Prisma.User$agentActionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$agentActionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AgentActionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4973,6 +5219,30 @@ export type User$modelDataConsentsArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.ModelDataConsentScalarFieldEnum | Prisma.ModelDataConsentScalarFieldEnum[]
+}
+
+/**
+ * User.agentActions
+ */
+export type User$agentActionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AgentAction
+   */
+  select?: Prisma.AgentActionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AgentAction
+   */
+  omit?: Prisma.AgentActionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AgentActionInclude<ExtArgs> | null
+  where?: Prisma.AgentActionWhereInput
+  orderBy?: Prisma.AgentActionOrderByWithRelationInput | Prisma.AgentActionOrderByWithRelationInput[]
+  cursor?: Prisma.AgentActionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AgentActionScalarFieldEnum | Prisma.AgentActionScalarFieldEnum[]
 }
 
 /**

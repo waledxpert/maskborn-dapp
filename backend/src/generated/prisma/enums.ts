@@ -175,3 +175,25 @@ export const AgentRunStatus = {
 } as const
 
 export type AgentRunStatus = (typeof AgentRunStatus)[keyof typeof AgentRunStatus]
+
+
+export const AgentActionType = {
+  AWAKEN: 'AWAKEN',
+  SET_EXECUTION_PAUSED: 'SET_EXECUTION_PAUSED',
+  UPDATE_AGENT_URI: 'UPDATE_AGENT_URI',
+  SEND_NATIVE_USDC: 'SEND_NATIVE_USDC'
+} as const
+
+export type AgentActionType = (typeof AgentActionType)[keyof typeof AgentActionType]
+
+
+export const AgentActionStatus = {
+  PREPARED: 'PREPARED',
+  SUBMITTED: 'SUBMITTED',
+  CONFIRMED: 'CONFIRMED',
+  FAILED: 'FAILED',
+  EXPIRED: 'EXPIRED',
+  UNKNOWN: 'UNKNOWN'
+} as const
+
+export type AgentActionStatus = (typeof AgentActionStatus)[keyof typeof AgentActionStatus]

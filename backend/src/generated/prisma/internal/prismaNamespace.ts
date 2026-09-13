@@ -404,6 +404,7 @@ export const ModelName = {
   ChainCursor: 'ChainCursor',
   ChainEvent: 'ChainEvent',
   OwnershipPeriod: 'OwnershipPeriod',
+  AgentAction: 'AgentAction',
   Conversation: 'Conversation',
   ConversationMessage: 'ConversationMessage',
   ToolRun: 'ToolRun',
@@ -448,7 +449,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "socialAccount" | "session" | "wallet" | "chainCursor" | "chainEvent" | "ownershipPeriod" | "conversation" | "conversationMessage" | "toolRun" | "usageMeter" | "modelDataConsent" | "monitorRule" | "observedPayment" | "monitorMatch" | "agentNotification" | "walletChallenge" | "walletSession" | "application" | "draft" | "draftRevision" | "submission" | "submissionAccessory" | "submissionStatusEvent" | "vote" | "voteEvent" | "voteRestriction" | "riskEvent" | "galleryEntry" | "feeShare" | "tradeFeeEvent" | "creatorAccrual" | "payout" | "payoutItem" | "idempotencyRecord" | "adminAuditLog"
+    modelProps: "user" | "socialAccount" | "session" | "wallet" | "chainCursor" | "chainEvent" | "ownershipPeriod" | "agentAction" | "conversation" | "conversationMessage" | "toolRun" | "usageMeter" | "modelDataConsent" | "monitorRule" | "observedPayment" | "monitorMatch" | "agentNotification" | "walletChallenge" | "walletSession" | "application" | "draft" | "draftRevision" | "submission" | "submissionAccessory" | "submissionStatusEvent" | "vote" | "voteEvent" | "voteRestriction" | "riskEvent" | "galleryEntry" | "feeShare" | "tradeFeeEvent" | "creatorAccrual" | "payout" | "payoutItem" | "idempotencyRecord" | "adminAuditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -967,6 +968,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.OwnershipPeriodCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.OwnershipPeriodCountAggregateOutputType> | number
+        }
+      }
+    }
+    AgentAction: {
+      payload: Prisma.$AgentActionPayload<ExtArgs>
+      fields: Prisma.AgentActionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AgentActionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AgentActionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AgentActionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AgentActionPayload>
+        }
+        findFirst: {
+          args: Prisma.AgentActionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AgentActionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AgentActionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AgentActionPayload>
+        }
+        findMany: {
+          args: Prisma.AgentActionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AgentActionPayload>[]
+        }
+        create: {
+          args: Prisma.AgentActionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AgentActionPayload>
+        }
+        createMany: {
+          args: Prisma.AgentActionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AgentActionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AgentActionPayload>[]
+        }
+        delete: {
+          args: Prisma.AgentActionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AgentActionPayload>
+        }
+        update: {
+          args: Prisma.AgentActionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AgentActionPayload>
+        }
+        deleteMany: {
+          args: Prisma.AgentActionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AgentActionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AgentActionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AgentActionPayload>[]
+        }
+        upsert: {
+          args: Prisma.AgentActionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AgentActionPayload>
+        }
+        aggregate: {
+          args: Prisma.AgentActionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAgentAction>
+        }
+        groupBy: {
+          args: Prisma.AgentActionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AgentActionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AgentActionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AgentActionCountAggregateOutputType> | number
         }
       }
     }
@@ -3267,6 +3342,39 @@ export const OwnershipPeriodScalarFieldEnum = {
 export type OwnershipPeriodScalarFieldEnum = (typeof OwnershipPeriodScalarFieldEnum)[keyof typeof OwnershipPeriodScalarFieldEnum]
 
 
+export const AgentActionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  walletId: 'walletId',
+  ownershipPeriodId: 'ownershipPeriodId',
+  chainId: 'chainId',
+  collectionAddress: 'collectionAddress',
+  tokenId: 'tokenId',
+  accountAddress: 'accountAddress',
+  type: 'type',
+  status: 'status',
+  senderAddress: 'senderAddress',
+  targetAddress: 'targetAddress',
+  transactionValueBaseUnits: 'transactionValueBaseUnits',
+  assetAmountBaseUnits: 'assetAmountBaseUnits',
+  callData: 'callData',
+  calldataHash: 'calldataHash',
+  payload: 'payload',
+  sourceBlock: 'sourceBlock',
+  expiresAt: 'expiresAt',
+  txHash: 'txHash',
+  submittedAt: 'submittedAt',
+  receiptBlock: 'receiptBlock',
+  receiptBlockHash: 'receiptBlockHash',
+  failureCode: 'failureCode',
+  confirmedAt: 'confirmedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AgentActionScalarFieldEnum = (typeof AgentActionScalarFieldEnum)[keyof typeof AgentActionScalarFieldEnum]
+
+
 export const ConversationScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -3730,19 +3838,19 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
 export const NullableJsonNullValueInput = {
   DbNull: DbNull,
   JsonNull: JsonNull
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
-
-
-export const JsonNullValueInput = {
-  JsonNull: JsonNull
-} as const
-
-export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -3882,6 +3990,62 @@ export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
+ * Reference to a field of type 'AgentActionType'
+ */
+export type EnumAgentActionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AgentActionType'>
+    
+
+
+/**
+ * Reference to a field of type 'AgentActionType[]'
+ */
+export type ListEnumAgentActionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AgentActionType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AgentActionStatus'
+ */
+export type EnumAgentActionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AgentActionStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'AgentActionStatus[]'
+ */
+export type ListEnumAgentActionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AgentActionStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
  * Reference to a field of type 'ConversationRole'
  */
 export type EnumConversationRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ConversationRole'>
@@ -3910,20 +4074,6 @@ export type ListEnumAgentRunStatusFieldRefInput<$PrismaModel> = FieldRefInputTyp
 
 
 /**
- * Reference to a field of type 'Json'
- */
-export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-/**
- * Reference to a field of type 'QueryMode'
- */
-export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
-    
-
-
-/**
  * Reference to a field of type 'MonitorDirection'
  */
 export type EnumMonitorDirectionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MonitorDirection'>
@@ -3934,20 +4084,6 @@ export type EnumMonitorDirectionFieldRefInput<$PrismaModel> = FieldRefInputType<
  * Reference to a field of type 'MonitorDirection[]'
  */
 export type ListEnumMonitorDirectionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MonitorDirection[]'>
-    
-
-
-/**
- * Reference to a field of type 'Decimal'
- */
-export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
-    
-
-
-/**
- * Reference to a field of type 'Decimal[]'
- */
-export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
     
 
 
@@ -4290,6 +4426,7 @@ export type GlobalOmitConfig = {
   chainCursor?: Prisma.ChainCursorOmit
   chainEvent?: Prisma.ChainEventOmit
   ownershipPeriod?: Prisma.OwnershipPeriodOmit
+  agentAction?: Prisma.AgentActionOmit
   conversation?: Prisma.ConversationOmit
   conversationMessage?: Prisma.ConversationMessageOmit
   toolRun?: Prisma.ToolRunOmit

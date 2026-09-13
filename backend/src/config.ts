@@ -43,6 +43,7 @@ const schema = z.object({
   AGENT_MODEL_NAME: z.string().optional(),
   AGENT_MODEL_BASE_URL: z.string().url().default("https://api.openai.com/v1"),
   AGENT_DAILY_REQUEST_LIMIT: z.coerce.number().int().min(1).max(1_000).default(25),
+  AGENT_MAX_OWNER_SEND_USDC: z.string().regex(/^\d+(\.\d{1,18})?$/).default("1000"),
 }).superRefine((value, ctx) => {
   const r2Values = [
     value.R2_ACCOUNT_ID,

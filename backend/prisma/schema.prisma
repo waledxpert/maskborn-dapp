@@ -121,6 +121,22 @@ enum AgentRunStatus {
   FAILED
 }
 
+enum AgentActionType {
+  AWAKEN
+  SET_EXECUTION_PAUSED
+  UPDATE_AGENT_URI
+  SEND_NATIVE_USDC
+}
+
+enum AgentActionStatus {
+  PREPARED
+  SUBMITTED
+  CONFIRMED
+  FAILED
+  EXPIRED
+  UNKNOWN
+}
+
 model User {
   id                  String                   @id @default(cuid())
   role                Role                     @default(USER)
@@ -148,6 +164,7 @@ model User {
   conversations       Conversation[]
   usageMeters         UsageMeter[]
   modelDataConsents   ModelDataConsent[]
+  agentActions        AgentAction[]
 }
 
 model SocialAccount {
@@ -198,6 +215,7 @@ model Wallet {
   monitorRules   MonitorRule[]
   ownershipPeriods OwnershipPeriod[]
   modelDataConsents ModelDataConsent[]
+  agentActions      AgentAction[]
 
   @@unique([chain, normalized])
   @@index([userId])
@@ -259,11 +277,51 @@ model OwnershipPeriod {
   wallet            Wallet?  @relation(fields: [walletId], references: [id], onDelete: SetNull)
   conversations     Conversation[]
   modelDataConsents ModelDataConsent[]
+  agentActions      AgentAction[]
 
   @@unique([chainId, collectionAddress, tokenId, sequence])
   @@index([chainId, collectionAddress, tokenId, endedBlock])
   @@index([ownerAddress, endedBlock])
   @@index([walletId, endedBlock])
+}
+
+model AgentAction {
+  id                String            @id @default(cuid())
+  userId            String
+  walletId          String
+  ownershipPeriodId String
+  chainId           Int
+  collectionAddress String
+  tokenId           String
+  accountAddress    String
+  type              AgentActionType
+  status            AgentActionStatus @default(PREPARED)
+  senderAddress     String
+  targetAddress     String
+  transactionValueBaseUnits Decimal   @db.Decimal(78, 0)
+  assetAmountBaseUnits Decimal?       @db.Decimal(78, 0)
+  callData          String
+  calldataHash      String
+  payload           Json
+  sourceBlock       BigInt
+  expiresAt         DateTime
+  txHash            String?
+  submittedAt       DateTime?
+  receiptBlock      BigInt?
+  receiptBlockHash  String?
+  failureCode       String?
+  confirmedAt       DateTime?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  user              User              @relation(fields: [userId], references: [id], onDelete: Restrict)
+  wallet            Wallet            @relation(fields: [walletId], references: [id], onDelete: Restrict)
+  ownershipPeriod   OwnershipPeriod   @relation(fields: [ownershipPeriodId], references: [id], onDelete: Restrict)
+
+  @@unique([chainId, txHash])
+  @@index([userId, tokenId, createdAt])
+  @@index([walletId, status, createdAt])
+  @@index([ownershipPeriodId, createdAt])
+  @@index([status, expiresAt])
 }
 
 model Conversation {

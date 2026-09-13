@@ -1,8 +1,8 @@
 import { createPublicClient, defineChain, getAddress, http, parseAbiItem, type Address, type Hex } from "viem";
 import { config } from "../../config.js";
-import { maskBornAgentRegistryAbi } from "../../generated/agent-contracts.js";
+import { maskBornAccountV1Abi, maskBornAgentRegistryAbi } from "../../generated/agent-contracts.js";
 
-export { maskBornAgentRegistryAbi };
+export { maskBornAccountV1Abi, maskBornAgentRegistryAbi };
 
 export const arcChain = defineChain({
   id: config.ARC_CHAIN_ID,
@@ -109,4 +109,16 @@ export async function readNativeUsdc(address: Address) {
   const blockNumber = await arcClient.getBlockNumber();
   const balance = await arcClient.getBalance({ address, blockNumber });
   return { balance, blockNumber };
+}
+
+export async function readAgentAccount(account: Address) {
+  const blockNumber = await arcClient.getBlockNumber();
+  const [balance, paused, state, agentId, agentURIHash] = await Promise.all([
+    arcClient.getBalance({ address: account, blockNumber }),
+    arcClient.readContract({ address: account, abi: maskBornAccountV1Abi, functionName: "executionPaused", blockNumber }),
+    arcClient.readContract({ address: account, abi: maskBornAccountV1Abi, functionName: "state", blockNumber }),
+    arcClient.readContract({ address: account, abi: maskBornAccountV1Abi, functionName: "agentId", blockNumber }),
+    arcClient.readContract({ address: account, abi: maskBornAccountV1Abi, functionName: "agentURIHash", blockNumber }),
+  ]);
+  return { balance, paused, state, agentId, agentURIHash, blockNumber };
 }
