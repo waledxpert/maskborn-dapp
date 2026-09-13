@@ -12,6 +12,8 @@ import {
 process.env.DATABASE_URL = "postgresql://user:pass@localhost:5432/maskborn";
 process.env.DATABASE_URL_UNPOOLED = process.env.DATABASE_URL;
 process.env.NODE_ENV = "test";
+process.env.MASKBORN_CONTRACT_ADDRESS = "";
+process.env.MASKBORN_NAMES_ADDRESS = "";
 
 let app: Awaited<typeof import("../src/app.js")>["app"];
 let extractXPostId: Awaited<typeof import("../src/utils.js")>["extractXPostId"];

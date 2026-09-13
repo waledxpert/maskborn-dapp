@@ -546,22 +546,6 @@ export type TradeFeeEventScalarRelationFilter = {
   isNot?: Prisma.TradeFeeEventWhereInput
 }
 
-export type DecimalFieldUpdateOperationsInput = {
-  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
-}
-
-export type BigIntFieldUpdateOperationsInput = {
-  set?: bigint | number
-  increment?: bigint | number
-  decrement?: bigint | number
-  multiply?: bigint | number
-  divide?: bigint | number
-}
-
 export type TradeFeeEventCreateNestedOneWithoutAccrualsInput = {
   create?: Prisma.XOR<Prisma.TradeFeeEventCreateWithoutAccrualsInput, Prisma.TradeFeeEventUncheckedCreateWithoutAccrualsInput>
   connectOrCreate?: Prisma.TradeFeeEventCreateOrConnectWithoutAccrualsInput

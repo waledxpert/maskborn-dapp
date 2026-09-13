@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ArrowRight, CheckCircle2, LoaderCircle, ShieldCheck, Wallet } from "lucide-react";
+import { ArrowRight, Bell, CheckCircle2, LoaderCircle, RefreshCw, ShieldCheck, Wallet } from "lucide-react";
 import { FormEvent, useMemo, useState } from "react";
 import { apiFetch } from "@/lib/api";
 import { composeMaskbornDataUrl, type TraitSelection } from "@/lib/maskborn-renderer";
@@ -22,6 +22,15 @@ type AgentPreview = {
   wallet: { nativeUsdc?: string; asOfBlock?: string; unavailable?: boolean };
   capabilities: Array<{ id: string; label: string; status: string }>;
 };
+type OwnedTokens = { tokenIds: string[]; asOfBlock: string };
+type MonitorRule = {
+  id: string; direction: "INCOMING" | "OUTGOING" | "BOTH"; minimumAmount: string;
+  expectedAmount: string | null; cadence: "CONTINUOUS" | "DAILY" | "WEEKLY";
+  nextExpectedAt: string | null; isActive: boolean; lastCheckedAt: string | null;
+};
+type AgentNotification = {
+  id: string; type: string; title: string; body: string; readAt: string | null; createdAt: string;
+};
 
 declare global { interface Window { ethereum?: EthereumProvider } }
 
@@ -34,10 +43,32 @@ export function AgentsWorkspace() {
   const [tokenId, setTokenId] = useState("");
   const [preview, setPreview] = useState<AgentPreview | null>(null);
   const [error, setError] = useState("");
+  const [minimumAmount, setMinimumAmount] = useState("0");
+  const [expectedAmount, setExpectedAmount] = useState("");
+  const [cadence, setCadence] = useState<"CONTINUOUS" | "DAILY" | "WEEKLY">("CONTINUOUS");
+  const [nextExpectedAt, setNextExpectedAt] = useState("");
   const status = useQuery({ queryKey: ["agent-status"], queryFn: () => apiFetch<AgentStatus>("/agents/status") });
   const connectedAddress = walletAddress ?? session.data?.user?.wallets.find(
     (wallet) => wallet.chain === "EVM" && wallet.verifiedAt,
   )?.address ?? null;
+  const owned = useQuery({
+    queryKey: ["agent-owned", connectedAddress],
+    queryFn: () => apiFetch<OwnedTokens>("/agents/owned"),
+    enabled: Boolean(connectedAddress && status.data?.configured),
+    retry: false,
+  });
+  const monitors = useQuery({
+    queryKey: ["agent-monitors", tokenId],
+    queryFn: () => apiFetch<{ rules: MonitorRule[] }>(`/agents/tokens/${tokenId}/monitors`),
+    enabled: Boolean(preview && tokenId),
+    retry: false,
+  });
+  const notifications = useQuery({
+    queryKey: ["agent-notifications", connectedAddress],
+    queryFn: () => apiFetch<{ notifications: AgentNotification[] }>("/notifications"),
+    enabled: Boolean(connectedAddress && preview),
+    retry: false,
+  });
 
   const signIn = useMutation({
     mutationFn: async () => {
@@ -58,6 +89,35 @@ export function AgentsWorkspace() {
       setWalletAddress(address);
       setError("");
       await queryClient.invalidateQueries({ queryKey: ["session"] });
+      await queryClient.invalidateQueries({ queryKey: ["agent-owned"] });
+    },
+    onError: (requestError) => setError((requestError as Error).message),
+  });
+
+  const createMonitor = useMutation({
+    mutationFn: () => apiFetch(`/agents/tokens/${tokenId}/monitors`, {
+      method: "POST",
+      body: JSON.stringify({
+        direction: "INCOMING",
+        minimumAmount,
+        cadence,
+        ...(cadence === "CONTINUOUS" ? {} : { expectedAmount, nextExpectedAt: new Date(nextExpectedAt).toISOString() }),
+      }),
+    }),
+    onSuccess: async () => {
+      setError("");
+      await queryClient.invalidateQueries({ queryKey: ["agent-monitors", tokenId] });
+    },
+    onError: (requestError) => setError((requestError as Error).message),
+  });
+
+  const syncMonitor = useMutation({
+    mutationFn: (id: string) => apiFetch(`/agents/tokens/${tokenId}/monitors/${id}/sync`, { method: "POST" }),
+    onSuccess: async () => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["agent-monitors", tokenId] }),
+        queryClient.invalidateQueries({ queryKey: ["agent-notifications"] }),
+      ]);
     },
     onError: (requestError) => setError((requestError as Error).message),
   });
@@ -107,6 +167,11 @@ export function AgentsWorkspace() {
               {inspect.isPending ? <LoaderCircle className="spin" size={17} /> : <ArrowRight size={17} />}
             </button>
           </form>
+          {owned.data?.tokenIds.length ? (
+            <div className="agent-owned-tokens" aria-label="Owned Mask Born tokens">
+              {owned.data.tokenIds.map((id) => <button key={id} onClick={() => { setTokenId(id); inspect.mutate(id); }}>#{id}</button>)}
+            </div>
+          ) : connectedAddress && !owned.isLoading ? <small>No Mask Born tokens found in this wallet.</small> : null}
         </article>
 
         <article className="agent-step-card agent-status-card">
@@ -123,6 +188,7 @@ export function AgentsWorkspace() {
       {error && <p className="agent-error" role="alert">{error}</p>}
 
       {preview && (
+        <>
         <div className="agent-profile-panel">
           <PixelArtwork source={image} variant={Number(preview.token.tokenId)} label={`Mask Born #${preview.token.tokenId}`} eager />
           <div className="agent-profile-copy">
@@ -145,6 +211,32 @@ export function AgentsWorkspace() {
             ))}
           </div>
         </div>
+        <div className="agent-utility-grid">
+          <article className="agent-utility-card">
+            <p className="eyebrow">USDC stream monitor</p>
+            <h3>Watch incoming payments</h3>
+            <label>Minimum payment<input value={minimumAmount} onChange={(event) => setMinimumAmount(event.target.value)} inputMode="decimal" /></label>
+            <label>Schedule<select value={cadence} onChange={(event) => setCadence(event.target.value as typeof cadence)}><option value="CONTINUOUS">Every payment</option><option value="DAILY">Expected daily</option><option value="WEEKLY">Expected weekly</option></select></label>
+            {cadence !== "CONTINUOUS" && <>
+              <label>Expected USDC<input value={expectedAmount} onChange={(event) => setExpectedAmount(event.target.value)} inputMode="decimal" /></label>
+              <label>Next due<input type="datetime-local" value={nextExpectedAt} onChange={(event) => setNextExpectedAt(event.target.value)} /></label>
+            </>}
+            <button className="button button-amber" onClick={() => createMonitor.mutate()} disabled={createMonitor.isPending || (cadence !== "CONTINUOUS" && (!expectedAmount || !nextExpectedAt))}>Create monitor</button>
+            <div className="agent-monitor-list">
+              {monitors.data?.rules.filter((rule) => rule.isActive).map((rule) => <div key={rule.id}><span>{rule.cadence.toLowerCase()} · ≥ {rule.minimumAmount} USDC</span><button onClick={() => syncMonitor.mutate(rule.id)} disabled={syncMonitor.isPending}><RefreshCw size={14} /> Sync</button></div>)}
+              {!monitors.isLoading && !monitors.data?.rules.some((rule) => rule.isActive) && <small>No active monitors.</small>}
+            </div>
+          </article>
+          <article className="agent-utility-card">
+            <p className="eyebrow"><Bell size={14} /> Inbox</p>
+            <h3>Payment activity</h3>
+            <div className="agent-inbox">
+              {notifications.data?.notifications.map((notification) => <div key={notification.id} className={notification.readAt ? "read" : ""}><strong>{notification.title}</strong><p>{notification.body}</p><small>{new Date(notification.createdAt).toLocaleString()}</small></div>)}
+              {!notifications.isLoading && !notifications.data?.notifications.length && <small>No payment alerts yet.</small>}
+            </div>
+          </article>
+        </div>
+        </>
       )}
     </section>
   );

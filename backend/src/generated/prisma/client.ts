@@ -62,6 +62,26 @@ export type Session = Prisma.SessionModel
  */
 export type Wallet = Prisma.WalletModel
 /**
+ * Model MonitorRule
+ * 
+ */
+export type MonitorRule = Prisma.MonitorRuleModel
+/**
+ * Model ObservedPayment
+ * 
+ */
+export type ObservedPayment = Prisma.ObservedPaymentModel
+/**
+ * Model MonitorMatch
+ * 
+ */
+export type MonitorMatch = Prisma.MonitorMatchModel
+/**
+ * Model AgentNotification
+ * 
+ */
+export type AgentNotification = Prisma.AgentNotificationModel
+/**
  * Model WalletChallenge
  * 
  */

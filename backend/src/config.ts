@@ -31,6 +31,7 @@ const schema = z.object({
   ARC_DEPLOYMENT_BLOCK: z.coerce.number().int().nonnegative().default(0),
   MASKBORN_CONTRACT_ADDRESS: optionalAddress,
   MASKBORN_NAMES_ADDRESS: optionalAddress,
+  AGENT_MONITOR_INTERVAL_MS: z.coerce.number().int().min(5_000).max(300_000).default(15_000),
 }).superRefine((value, ctx) => {
   const r2Values = [
     value.R2_ACCOUNT_ID,

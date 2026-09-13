@@ -130,3 +130,31 @@ export const PayoutStatus = {
 } as const
 
 export type PayoutStatus = (typeof PayoutStatus)[keyof typeof PayoutStatus]
+
+
+export const MonitorDirection = {
+  INCOMING: 'INCOMING',
+  OUTGOING: 'OUTGOING',
+  BOTH: 'BOTH'
+} as const
+
+export type MonitorDirection = (typeof MonitorDirection)[keyof typeof MonitorDirection]
+
+
+export const MonitorCadence = {
+  CONTINUOUS: 'CONTINUOUS',
+  DAILY: 'DAILY',
+  WEEKLY: 'WEEKLY'
+} as const
+
+export type MonitorCadence = (typeof MonitorCadence)[keyof typeof MonitorCadence]
+
+
+export const AgentNotificationType = {
+  PAYMENT_RECEIVED: 'PAYMENT_RECEIVED',
+  PAYMENT_SENT: 'PAYMENT_SENT',
+  PAYMENT_LATE: 'PAYMENT_LATE',
+  MONITOR_ERROR: 'MONITOR_ERROR'
+} as const
+
+export type AgentNotificationType = (typeof AgentNotificationType)[keyof typeof AgentNotificationType]

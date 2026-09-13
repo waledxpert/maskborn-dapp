@@ -2,6 +2,8 @@
 
 The first implementation slice adds wallet proof and ownership-checked Mask Born persona previews at `/agents`.
 
+The second slice adds live owned-token discovery, unified Arc USDC monitoring, recurring expected-payment rules, and an in-app alert inbox. Monitoring is read-only and uses Arc's canonical USDC `Transfer` event for native and ERC-20-style sends.
+
 ## Backend configuration
 
 Add these values to `backend/.env`:
@@ -24,6 +26,19 @@ npx prisma db push
 npx prisma generate
 ```
 
+Run the API and monitor worker in separate processes:
+
+```powershell
+cd backend
+npm run dev
+
+# In another terminal
+cd backend
+npm run dev:agent-worker
+```
+
+The worker polls every 15 seconds by default. Set `AGENT_MONITOR_INTERVAL_MS` to a value from 5000 through 300000 milliseconds when needed. Payment and notification identities are unique, so restarts do not create duplicate alerts.
+
 For production, create and review a migration against the production schema instead of using `db push`.
 
 ## Current endpoints
@@ -35,6 +50,15 @@ For production, create and review a migration against the production schema inst
 - `GET /api/agents/tokens/:tokenId/preview` — verifies current ownership, reads reveal/traits and returns the deterministic persona and Arc USDC balance.
 
 Wallet authentication is distinct from the existing pasted payout wallet. The signed wallet is marked verified. A wallet already linked to another profile cannot be silently reassigned.
+
+Additional endpoints in the second slice:
+
+- `GET /api/agents/owned`
+- `GET/POST /api/agents/tokens/:tokenId/monitors`
+- `POST /api/agents/tokens/:tokenId/monitors/:id/sync`
+- `DELETE /api/agents/tokens/:tokenId/monitors/:id`
+- `GET /api/notifications`
+- `POST /api/notifications/:id/read`
 
 ## Collection snapshot
 
@@ -58,4 +82,4 @@ npm test
 npm run build
 ```
 
-The page is functional once the schema is applied and the collection address is configured. Onchain awakening, token-bound accounts, paymasters, monitors and Payday contracts remain later implementation slices described by the system design.
+The page is functional once the schema is applied and the collection address is configured. Onchain awakening, token-bound accounts, paymasters and Payday contracts remain later implementation slices described by the system design.

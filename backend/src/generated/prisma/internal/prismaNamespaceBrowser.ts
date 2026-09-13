@@ -55,6 +55,10 @@ export const ModelName = {
   SocialAccount: 'SocialAccount',
   Session: 'Session',
   Wallet: 'Wallet',
+  MonitorRule: 'MonitorRule',
+  ObservedPayment: 'ObservedPayment',
+  MonitorMatch: 'MonitorMatch',
+  AgentNotification: 'AgentNotification',
   WalletChallenge: 'WalletChallenge',
   WalletSession: 'WalletSession',
   Application: 'Application',
@@ -145,6 +149,75 @@ export const WalletScalarFieldEnum = {
 } as const
 
 export type WalletScalarFieldEnum = (typeof WalletScalarFieldEnum)[keyof typeof WalletScalarFieldEnum]
+
+
+export const MonitorRuleScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  walletId: 'walletId',
+  chainId: 'chainId',
+  collectionAddress: 'collectionAddress',
+  tokenId: 'tokenId',
+  watchedAddress: 'watchedAddress',
+  direction: 'direction',
+  counterparty: 'counterparty',
+  minimumAmount: 'minimumAmount',
+  expectedAmount: 'expectedAmount',
+  cadence: 'cadence',
+  timezone: 'timezone',
+  graceMinutes: 'graceMinutes',
+  nextExpectedAt: 'nextExpectedAt',
+  cursorBlock: 'cursorBlock',
+  isActive: 'isActive',
+  lastCheckedAt: 'lastCheckedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MonitorRuleScalarFieldEnum = (typeof MonitorRuleScalarFieldEnum)[keyof typeof MonitorRuleScalarFieldEnum]
+
+
+export const ObservedPaymentScalarFieldEnum = {
+  id: 'id',
+  chainId: 'chainId',
+  txHash: 'txHash',
+  logIndex: 'logIndex',
+  fromAddress: 'fromAddress',
+  toAddress: 'toAddress',
+  amount: 'amount',
+  blockNumber: 'blockNumber',
+  blockTime: 'blockTime',
+  observedAt: 'observedAt'
+} as const
+
+export type ObservedPaymentScalarFieldEnum = (typeof ObservedPaymentScalarFieldEnum)[keyof typeof ObservedPaymentScalarFieldEnum]
+
+
+export const MonitorMatchScalarFieldEnum = {
+  monitorRuleId: 'monitorRuleId',
+  observedPaymentId: 'observedPaymentId',
+  direction: 'direction',
+  createdAt: 'createdAt'
+} as const
+
+export type MonitorMatchScalarFieldEnum = (typeof MonitorMatchScalarFieldEnum)[keyof typeof MonitorMatchScalarFieldEnum]
+
+
+export const AgentNotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  monitorRuleId: 'monitorRuleId',
+  observedPaymentId: 'observedPaymentId',
+  type: 'type',
+  title: 'title',
+  body: 'body',
+  data: 'data',
+  deliveryKey: 'deliveryKey',
+  readAt: 'readAt',
+  createdAt: 'createdAt'
+} as const
+
+export type AgentNotificationScalarFieldEnum = (typeof AgentNotificationScalarFieldEnum)[keyof typeof AgentNotificationScalarFieldEnum]
 
 
 export const WalletChallengeScalarFieldEnum = {
@@ -463,19 +536,19 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
-export const JsonNullValueInput = {
-  JsonNull: JsonNull
-} as const
-
-export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
-
-
 export const NullableJsonNullValueInput = {
   DbNull: DbNull,
   JsonNull: JsonNull
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {

@@ -205,6 +205,8 @@ export type UserWhereInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordListRelationFilter
   payouts?: Prisma.PayoutListRelationFilter
   walletSessions?: Prisma.WalletSessionListRelationFilter
+  monitorRules?: Prisma.MonitorRuleListRelationFilter
+  agentNotifications?: Prisma.AgentNotificationListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -229,6 +231,8 @@ export type UserOrderByWithRelationInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordOrderByRelationAggregateInput
   payouts?: Prisma.PayoutOrderByRelationAggregateInput
   walletSessions?: Prisma.WalletSessionOrderByRelationAggregateInput
+  monitorRules?: Prisma.MonitorRuleOrderByRelationAggregateInput
+  agentNotifications?: Prisma.AgentNotificationOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -256,6 +260,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   idempotencyRecords?: Prisma.IdempotencyRecordListRelationFilter
   payouts?: Prisma.PayoutListRelationFilter
   walletSessions?: Prisma.WalletSessionListRelationFilter
+  monitorRules?: Prisma.MonitorRuleListRelationFilter
+  agentNotifications?: Prisma.AgentNotificationListRelationFilter
 }, "id">
 
 export type UserOrderByWithAggregationInput = {
@@ -304,6 +310,8 @@ export type UserCreateInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -328,6 +336,8 @@ export type UserUncheckedCreateInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutUncheckedCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -352,6 +362,8 @@ export type UserUpdateInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -376,6 +388,8 @@ export type UserUncheckedUpdateInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUncheckedUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -498,6 +512,34 @@ export type UserUpdateOneRequiredWithoutWalletsNestedInput = {
   upsert?: Prisma.UserUpsertWithoutWalletsInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWalletsInput, Prisma.UserUpdateWithoutWalletsInput>, Prisma.UserUncheckedUpdateWithoutWalletsInput>
+}
+
+export type UserCreateNestedOneWithoutMonitorRulesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMonitorRulesInput, Prisma.UserUncheckedCreateWithoutMonitorRulesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMonitorRulesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutMonitorRulesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMonitorRulesInput, Prisma.UserUncheckedCreateWithoutMonitorRulesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMonitorRulesInput
+  upsert?: Prisma.UserUpsertWithoutMonitorRulesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMonitorRulesInput, Prisma.UserUpdateWithoutMonitorRulesInput>, Prisma.UserUncheckedUpdateWithoutMonitorRulesInput>
+}
+
+export type UserCreateNestedOneWithoutAgentNotificationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAgentNotificationsInput, Prisma.UserUncheckedCreateWithoutAgentNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAgentNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAgentNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAgentNotificationsInput, Prisma.UserUncheckedCreateWithoutAgentNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAgentNotificationsInput
+  upsert?: Prisma.UserUpsertWithoutAgentNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAgentNotificationsInput, Prisma.UserUpdateWithoutAgentNotificationsInput>, Prisma.UserUncheckedUpdateWithoutAgentNotificationsInput>
 }
 
 export type UserCreateNestedOneWithoutWalletSessionsInput = {
@@ -693,6 +735,8 @@ export type UserCreateWithoutSocialAccountsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSocialAccountsInput = {
@@ -716,6 +760,8 @@ export type UserUncheckedCreateWithoutSocialAccountsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutUncheckedCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSocialAccountsInput = {
@@ -755,6 +801,8 @@ export type UserUpdateWithoutSocialAccountsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSocialAccountsInput = {
@@ -778,6 +826,8 @@ export type UserUncheckedUpdateWithoutSocialAccountsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUncheckedUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSessionsInput = {
@@ -801,6 +851,8 @@ export type UserCreateWithoutSessionsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -824,6 +876,8 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutUncheckedCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -863,6 +917,8 @@ export type UserUpdateWithoutSessionsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -886,6 +942,8 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUncheckedUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutWalletsInput = {
@@ -909,6 +967,8 @@ export type UserCreateWithoutWalletsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWalletsInput = {
@@ -932,6 +992,8 @@ export type UserUncheckedCreateWithoutWalletsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutUncheckedCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWalletsInput = {
@@ -971,6 +1033,8 @@ export type UserUpdateWithoutWalletsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWalletsInput = {
@@ -994,6 +1058,240 @@ export type UserUncheckedUpdateWithoutWalletsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUncheckedUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutMonitorRulesInput = {
+  id?: string
+  role?: $Enums.Role
+  displayName?: string | null
+  avatarUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  socialAccounts?: Prisma.SocialAccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutUserInput
+  drafts?: Prisma.DraftCreateNestedManyWithoutUserInput
+  submissions?: Prisma.SubmissionCreateNestedManyWithoutUserInput
+  votes?: Prisma.VoteCreateNestedManyWithoutUserInput
+  voteEvents?: Prisma.VoteEventCreateNestedManyWithoutUserInput
+  restrictions?: Prisma.VoteRestrictionCreateNestedManyWithoutUserInput
+  riskEvents?: Prisma.RiskEventCreateNestedManyWithoutUserInput
+  statusEventsAuthored?: Prisma.SubmissionStatusEventCreateNestedManyWithoutActorInput
+  adminAudits?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutUserInput
+  payouts?: Prisma.PayoutCreateNestedManyWithoutUserInput
+  walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutMonitorRulesInput = {
+  id?: string
+  role?: $Enums.Role
+  displayName?: string | null
+  avatarUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  socialAccounts?: Prisma.SocialAccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutUserInput
+  drafts?: Prisma.DraftUncheckedCreateNestedManyWithoutUserInput
+  submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutUserInput
+  votes?: Prisma.VoteUncheckedCreateNestedManyWithoutUserInput
+  voteEvents?: Prisma.VoteEventUncheckedCreateNestedManyWithoutUserInput
+  restrictions?: Prisma.VoteRestrictionUncheckedCreateNestedManyWithoutUserInput
+  riskEvents?: Prisma.RiskEventUncheckedCreateNestedManyWithoutUserInput
+  statusEventsAuthored?: Prisma.SubmissionStatusEventUncheckedCreateNestedManyWithoutActorInput
+  adminAudits?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutUserInput
+  payouts?: Prisma.PayoutUncheckedCreateNestedManyWithoutUserInput
+  walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutMonitorRulesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutMonitorRulesInput, Prisma.UserUncheckedCreateWithoutMonitorRulesInput>
+}
+
+export type UserUpsertWithoutMonitorRulesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutMonitorRulesInput, Prisma.UserUncheckedUpdateWithoutMonitorRulesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMonitorRulesInput, Prisma.UserUncheckedCreateWithoutMonitorRulesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutMonitorRulesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutMonitorRulesInput, Prisma.UserUncheckedUpdateWithoutMonitorRulesInput>
+}
+
+export type UserUpdateWithoutMonitorRulesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  socialAccounts?: Prisma.SocialAccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutUserNestedInput
+  drafts?: Prisma.DraftUpdateManyWithoutUserNestedInput
+  submissions?: Prisma.SubmissionUpdateManyWithoutUserNestedInput
+  votes?: Prisma.VoteUpdateManyWithoutUserNestedInput
+  voteEvents?: Prisma.VoteEventUpdateManyWithoutUserNestedInput
+  restrictions?: Prisma.VoteRestrictionUpdateManyWithoutUserNestedInput
+  riskEvents?: Prisma.RiskEventUpdateManyWithoutUserNestedInput
+  statusEventsAuthored?: Prisma.SubmissionStatusEventUpdateManyWithoutActorNestedInput
+  adminAudits?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutUserNestedInput
+  payouts?: Prisma.PayoutUpdateManyWithoutUserNestedInput
+  walletSessions?: Prisma.WalletSessionUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutMonitorRulesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  socialAccounts?: Prisma.SocialAccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutUserNestedInput
+  drafts?: Prisma.DraftUncheckedUpdateManyWithoutUserNestedInput
+  submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutUserNestedInput
+  votes?: Prisma.VoteUncheckedUpdateManyWithoutUserNestedInput
+  voteEvents?: Prisma.VoteEventUncheckedUpdateManyWithoutUserNestedInput
+  restrictions?: Prisma.VoteRestrictionUncheckedUpdateManyWithoutUserNestedInput
+  riskEvents?: Prisma.RiskEventUncheckedUpdateManyWithoutUserNestedInput
+  statusEventsAuthored?: Prisma.SubmissionStatusEventUncheckedUpdateManyWithoutActorNestedInput
+  adminAudits?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutUserNestedInput
+  payouts?: Prisma.PayoutUncheckedUpdateManyWithoutUserNestedInput
+  walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutAgentNotificationsInput = {
+  id?: string
+  role?: $Enums.Role
+  displayName?: string | null
+  avatarUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  socialAccounts?: Prisma.SocialAccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutUserInput
+  drafts?: Prisma.DraftCreateNestedManyWithoutUserInput
+  submissions?: Prisma.SubmissionCreateNestedManyWithoutUserInput
+  votes?: Prisma.VoteCreateNestedManyWithoutUserInput
+  voteEvents?: Prisma.VoteEventCreateNestedManyWithoutUserInput
+  restrictions?: Prisma.VoteRestrictionCreateNestedManyWithoutUserInput
+  riskEvents?: Prisma.RiskEventCreateNestedManyWithoutUserInput
+  statusEventsAuthored?: Prisma.SubmissionStatusEventCreateNestedManyWithoutActorInput
+  adminAudits?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutUserInput
+  payouts?: Prisma.PayoutCreateNestedManyWithoutUserInput
+  walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAgentNotificationsInput = {
+  id?: string
+  role?: $Enums.Role
+  displayName?: string | null
+  avatarUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  socialAccounts?: Prisma.SocialAccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutUserInput
+  drafts?: Prisma.DraftUncheckedCreateNestedManyWithoutUserInput
+  submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutUserInput
+  votes?: Prisma.VoteUncheckedCreateNestedManyWithoutUserInput
+  voteEvents?: Prisma.VoteEventUncheckedCreateNestedManyWithoutUserInput
+  restrictions?: Prisma.VoteRestrictionUncheckedCreateNestedManyWithoutUserInput
+  riskEvents?: Prisma.RiskEventUncheckedCreateNestedManyWithoutUserInput
+  statusEventsAuthored?: Prisma.SubmissionStatusEventUncheckedCreateNestedManyWithoutActorInput
+  adminAudits?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutUserInput
+  payouts?: Prisma.PayoutUncheckedCreateNestedManyWithoutUserInput
+  walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAgentNotificationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAgentNotificationsInput, Prisma.UserUncheckedCreateWithoutAgentNotificationsInput>
+}
+
+export type UserUpsertWithoutAgentNotificationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAgentNotificationsInput, Prisma.UserUncheckedUpdateWithoutAgentNotificationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAgentNotificationsInput, Prisma.UserUncheckedCreateWithoutAgentNotificationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAgentNotificationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAgentNotificationsInput, Prisma.UserUncheckedUpdateWithoutAgentNotificationsInput>
+}
+
+export type UserUpdateWithoutAgentNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  socialAccounts?: Prisma.SocialAccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutUserNestedInput
+  drafts?: Prisma.DraftUpdateManyWithoutUserNestedInput
+  submissions?: Prisma.SubmissionUpdateManyWithoutUserNestedInput
+  votes?: Prisma.VoteUpdateManyWithoutUserNestedInput
+  voteEvents?: Prisma.VoteEventUpdateManyWithoutUserNestedInput
+  restrictions?: Prisma.VoteRestrictionUpdateManyWithoutUserNestedInput
+  riskEvents?: Prisma.RiskEventUpdateManyWithoutUserNestedInput
+  statusEventsAuthored?: Prisma.SubmissionStatusEventUpdateManyWithoutActorNestedInput
+  adminAudits?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutUserNestedInput
+  payouts?: Prisma.PayoutUpdateManyWithoutUserNestedInput
+  walletSessions?: Prisma.WalletSessionUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAgentNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  socialAccounts?: Prisma.SocialAccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutUserNestedInput
+  drafts?: Prisma.DraftUncheckedUpdateManyWithoutUserNestedInput
+  submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutUserNestedInput
+  votes?: Prisma.VoteUncheckedUpdateManyWithoutUserNestedInput
+  voteEvents?: Prisma.VoteEventUncheckedUpdateManyWithoutUserNestedInput
+  restrictions?: Prisma.VoteRestrictionUncheckedUpdateManyWithoutUserNestedInput
+  riskEvents?: Prisma.RiskEventUncheckedUpdateManyWithoutUserNestedInput
+  statusEventsAuthored?: Prisma.SubmissionStatusEventUncheckedUpdateManyWithoutActorNestedInput
+  adminAudits?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutUserNestedInput
+  payouts?: Prisma.PayoutUncheckedUpdateManyWithoutUserNestedInput
+  walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutWalletSessionsInput = {
@@ -1017,6 +1315,8 @@ export type UserCreateWithoutWalletSessionsInput = {
   adminAudits?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
   idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWalletSessionsInput = {
@@ -1040,6 +1340,8 @@ export type UserUncheckedCreateWithoutWalletSessionsInput = {
   adminAudits?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutUncheckedCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWalletSessionsInput = {
@@ -1079,6 +1381,8 @@ export type UserUpdateWithoutWalletSessionsInput = {
   adminAudits?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
   idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWalletSessionsInput = {
@@ -1102,6 +1406,8 @@ export type UserUncheckedUpdateWithoutWalletSessionsInput = {
   adminAudits?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUncheckedUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutApplicationsInput = {
@@ -1125,6 +1431,8 @@ export type UserCreateWithoutApplicationsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutApplicationsInput = {
@@ -1148,6 +1456,8 @@ export type UserUncheckedCreateWithoutApplicationsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutUncheckedCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutApplicationsInput = {
@@ -1187,6 +1497,8 @@ export type UserUpdateWithoutApplicationsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutApplicationsInput = {
@@ -1210,6 +1522,8 @@ export type UserUncheckedUpdateWithoutApplicationsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUncheckedUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutDraftsInput = {
@@ -1233,6 +1547,8 @@ export type UserCreateWithoutDraftsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDraftsInput = {
@@ -1256,6 +1572,8 @@ export type UserUncheckedCreateWithoutDraftsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutUncheckedCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDraftsInput = {
@@ -1295,6 +1613,8 @@ export type UserUpdateWithoutDraftsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDraftsInput = {
@@ -1318,6 +1638,8 @@ export type UserUncheckedUpdateWithoutDraftsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUncheckedUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSubmissionsInput = {
@@ -1341,6 +1663,8 @@ export type UserCreateWithoutSubmissionsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSubmissionsInput = {
@@ -1364,6 +1688,8 @@ export type UserUncheckedCreateWithoutSubmissionsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutUncheckedCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSubmissionsInput = {
@@ -1403,6 +1729,8 @@ export type UserUpdateWithoutSubmissionsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSubmissionsInput = {
@@ -1426,6 +1754,8 @@ export type UserUncheckedUpdateWithoutSubmissionsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUncheckedUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutStatusEventsAuthoredInput = {
@@ -1449,6 +1779,8 @@ export type UserCreateWithoutStatusEventsAuthoredInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutStatusEventsAuthoredInput = {
@@ -1472,6 +1804,8 @@ export type UserUncheckedCreateWithoutStatusEventsAuthoredInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutUncheckedCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutStatusEventsAuthoredInput = {
@@ -1511,6 +1845,8 @@ export type UserUpdateWithoutStatusEventsAuthoredInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStatusEventsAuthoredInput = {
@@ -1534,6 +1870,8 @@ export type UserUncheckedUpdateWithoutStatusEventsAuthoredInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUncheckedUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutVotesInput = {
@@ -1557,6 +1895,8 @@ export type UserCreateWithoutVotesInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutVotesInput = {
@@ -1580,6 +1920,8 @@ export type UserUncheckedCreateWithoutVotesInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutUncheckedCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutVotesInput = {
@@ -1619,6 +1961,8 @@ export type UserUpdateWithoutVotesInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutVotesInput = {
@@ -1642,6 +1986,8 @@ export type UserUncheckedUpdateWithoutVotesInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUncheckedUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutVoteEventsInput = {
@@ -1665,6 +2011,8 @@ export type UserCreateWithoutVoteEventsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutVoteEventsInput = {
@@ -1688,6 +2036,8 @@ export type UserUncheckedCreateWithoutVoteEventsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutUncheckedCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutVoteEventsInput = {
@@ -1727,6 +2077,8 @@ export type UserUpdateWithoutVoteEventsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutVoteEventsInput = {
@@ -1750,6 +2102,8 @@ export type UserUncheckedUpdateWithoutVoteEventsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUncheckedUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRestrictionsInput = {
@@ -1773,6 +2127,8 @@ export type UserCreateWithoutRestrictionsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRestrictionsInput = {
@@ -1796,6 +2152,8 @@ export type UserUncheckedCreateWithoutRestrictionsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutUncheckedCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRestrictionsInput = {
@@ -1835,6 +2193,8 @@ export type UserUpdateWithoutRestrictionsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRestrictionsInput = {
@@ -1858,6 +2218,8 @@ export type UserUncheckedUpdateWithoutRestrictionsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUncheckedUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRiskEventsInput = {
@@ -1881,6 +2243,8 @@ export type UserCreateWithoutRiskEventsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRiskEventsInput = {
@@ -1904,6 +2268,8 @@ export type UserUncheckedCreateWithoutRiskEventsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutUncheckedCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRiskEventsInput = {
@@ -1943,6 +2309,8 @@ export type UserUpdateWithoutRiskEventsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRiskEventsInput = {
@@ -1966,6 +2334,8 @@ export type UserUncheckedUpdateWithoutRiskEventsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUncheckedUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPayoutsInput = {
@@ -1989,6 +2359,8 @@ export type UserCreateWithoutPayoutsInput = {
   adminAudits?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
   idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPayoutsInput = {
@@ -2012,6 +2384,8 @@ export type UserUncheckedCreateWithoutPayoutsInput = {
   adminAudits?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPayoutsInput = {
@@ -2051,6 +2425,8 @@ export type UserUpdateWithoutPayoutsInput = {
   adminAudits?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
   idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPayoutsInput = {
@@ -2074,6 +2450,8 @@ export type UserUncheckedUpdateWithoutPayoutsInput = {
   adminAudits?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutIdempotencyRecordsInput = {
@@ -2097,6 +2475,8 @@ export type UserCreateWithoutIdempotencyRecordsInput = {
   adminAudits?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
   payouts?: Prisma.PayoutCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutIdempotencyRecordsInput = {
@@ -2120,6 +2500,8 @@ export type UserUncheckedCreateWithoutIdempotencyRecordsInput = {
   adminAudits?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
   payouts?: Prisma.PayoutUncheckedCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutIdempotencyRecordsInput = {
@@ -2159,6 +2541,8 @@ export type UserUpdateWithoutIdempotencyRecordsInput = {
   adminAudits?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
   payouts?: Prisma.PayoutUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutIdempotencyRecordsInput = {
@@ -2182,6 +2566,8 @@ export type UserUncheckedUpdateWithoutIdempotencyRecordsInput = {
   adminAudits?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
   payouts?: Prisma.PayoutUncheckedUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAdminAuditsInput = {
@@ -2205,6 +2591,8 @@ export type UserCreateWithoutAdminAuditsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAdminAuditsInput = {
@@ -2228,6 +2616,8 @@ export type UserUncheckedCreateWithoutAdminAuditsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutUserInput
   payouts?: Prisma.PayoutUncheckedCreateNestedManyWithoutUserInput
   walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAdminAuditsInput = {
@@ -2267,6 +2657,8 @@ export type UserUpdateWithoutAdminAuditsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAdminAuditsInput = {
@@ -2290,6 +2682,8 @@ export type UserUncheckedUpdateWithoutAdminAuditsInput = {
   idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutUserNestedInput
   payouts?: Prisma.PayoutUncheckedUpdateManyWithoutUserNestedInput
   walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -2313,6 +2707,8 @@ export type UserCountOutputType = {
   idempotencyRecords: number
   payouts: number
   walletSessions: number
+  monitorRules: number
+  agentNotifications: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2331,6 +2727,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   idempotencyRecords?: boolean | UserCountOutputTypeCountIdempotencyRecordsArgs
   payouts?: boolean | UserCountOutputTypeCountPayoutsArgs
   walletSessions?: boolean | UserCountOutputTypeCountWalletSessionsArgs
+  monitorRules?: boolean | UserCountOutputTypeCountMonitorRulesArgs
+  agentNotifications?: boolean | UserCountOutputTypeCountAgentNotificationsArgs
 }
 
 /**
@@ -2448,6 +2846,20 @@ export type UserCountOutputTypeCountWalletSessionsArgs<ExtArgs extends runtime.T
   where?: Prisma.WalletSessionWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountMonitorRulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MonitorRuleWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAgentNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AgentNotificationWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2471,6 +2883,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   idempotencyRecords?: boolean | Prisma.User$idempotencyRecordsArgs<ExtArgs>
   payouts?: boolean | Prisma.User$payoutsArgs<ExtArgs>
   walletSessions?: boolean | Prisma.User$walletSessionsArgs<ExtArgs>
+  monitorRules?: boolean | Prisma.User$monitorRulesArgs<ExtArgs>
+  agentNotifications?: boolean | Prisma.User$agentNotificationsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -2518,6 +2932,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   idempotencyRecords?: boolean | Prisma.User$idempotencyRecordsArgs<ExtArgs>
   payouts?: boolean | Prisma.User$payoutsArgs<ExtArgs>
   walletSessions?: boolean | Prisma.User$walletSessionsArgs<ExtArgs>
+  monitorRules?: boolean | Prisma.User$monitorRulesArgs<ExtArgs>
+  agentNotifications?: boolean | Prisma.User$agentNotificationsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2541,6 +2957,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     idempotencyRecords: Prisma.$IdempotencyRecordPayload<ExtArgs>[]
     payouts: Prisma.$PayoutPayload<ExtArgs>[]
     walletSessions: Prisma.$WalletSessionPayload<ExtArgs>[]
+    monitorRules: Prisma.$MonitorRulePayload<ExtArgs>[]
+    agentNotifications: Prisma.$AgentNotificationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2958,6 +3376,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   idempotencyRecords<T extends Prisma.User$idempotencyRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$idempotencyRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IdempotencyRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payouts<T extends Prisma.User$payoutsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$payoutsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PayoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   walletSessions<T extends Prisma.User$walletSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$walletSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WalletSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  monitorRules<T extends Prisma.User$monitorRulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$monitorRulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MonitorRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  agentNotifications<T extends Prisma.User$agentNotificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$agentNotificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AgentNotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3743,6 +4163,54 @@ export type User$walletSessionsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.WalletSessionScalarFieldEnum | Prisma.WalletSessionScalarFieldEnum[]
+}
+
+/**
+ * User.monitorRules
+ */
+export type User$monitorRulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MonitorRule
+   */
+  select?: Prisma.MonitorRuleSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MonitorRule
+   */
+  omit?: Prisma.MonitorRuleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MonitorRuleInclude<ExtArgs> | null
+  where?: Prisma.MonitorRuleWhereInput
+  orderBy?: Prisma.MonitorRuleOrderByWithRelationInput | Prisma.MonitorRuleOrderByWithRelationInput[]
+  cursor?: Prisma.MonitorRuleWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MonitorRuleScalarFieldEnum | Prisma.MonitorRuleScalarFieldEnum[]
+}
+
+/**
+ * User.agentNotifications
+ */
+export type User$agentNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AgentNotification
+   */
+  select?: Prisma.AgentNotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AgentNotification
+   */
+  omit?: Prisma.AgentNotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AgentNotificationInclude<ExtArgs> | null
+  where?: Prisma.AgentNotificationWhereInput
+  orderBy?: Prisma.AgentNotificationOrderByWithRelationInput | Prisma.AgentNotificationOrderByWithRelationInput[]
+  cursor?: Prisma.AgentNotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AgentNotificationScalarFieldEnum | Prisma.AgentNotificationScalarFieldEnum[]
 }
 
 /**

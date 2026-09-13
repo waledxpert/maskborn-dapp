@@ -401,6 +401,10 @@ export const ModelName = {
   SocialAccount: 'SocialAccount',
   Session: 'Session',
   Wallet: 'Wallet',
+  MonitorRule: 'MonitorRule',
+  ObservedPayment: 'ObservedPayment',
+  MonitorMatch: 'MonitorMatch',
+  AgentNotification: 'AgentNotification',
   WalletChallenge: 'WalletChallenge',
   WalletSession: 'WalletSession',
   Application: 'Application',
@@ -436,7 +440,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "socialAccount" | "session" | "wallet" | "walletChallenge" | "walletSession" | "application" | "draft" | "draftRevision" | "submission" | "submissionAccessory" | "submissionStatusEvent" | "vote" | "voteEvent" | "voteRestriction" | "riskEvent" | "galleryEntry" | "feeShare" | "tradeFeeEvent" | "creatorAccrual" | "payout" | "payoutItem" | "idempotencyRecord" | "adminAuditLog"
+    modelProps: "user" | "socialAccount" | "session" | "wallet" | "monitorRule" | "observedPayment" | "monitorMatch" | "agentNotification" | "walletChallenge" | "walletSession" | "application" | "draft" | "draftRevision" | "submission" | "submissionAccessory" | "submissionStatusEvent" | "vote" | "voteEvent" | "voteRestriction" | "riskEvent" | "galleryEntry" | "feeShare" | "tradeFeeEvent" | "creatorAccrual" | "payout" | "payoutItem" | "idempotencyRecord" | "adminAuditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -733,6 +737,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.WalletCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.WalletCountAggregateOutputType> | number
+        }
+      }
+    }
+    MonitorRule: {
+      payload: Prisma.$MonitorRulePayload<ExtArgs>
+      fields: Prisma.MonitorRuleFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MonitorRuleFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonitorRulePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MonitorRuleFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonitorRulePayload>
+        }
+        findFirst: {
+          args: Prisma.MonitorRuleFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonitorRulePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MonitorRuleFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonitorRulePayload>
+        }
+        findMany: {
+          args: Prisma.MonitorRuleFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonitorRulePayload>[]
+        }
+        create: {
+          args: Prisma.MonitorRuleCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonitorRulePayload>
+        }
+        createMany: {
+          args: Prisma.MonitorRuleCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MonitorRuleCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonitorRulePayload>[]
+        }
+        delete: {
+          args: Prisma.MonitorRuleDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonitorRulePayload>
+        }
+        update: {
+          args: Prisma.MonitorRuleUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonitorRulePayload>
+        }
+        deleteMany: {
+          args: Prisma.MonitorRuleDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MonitorRuleUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MonitorRuleUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonitorRulePayload>[]
+        }
+        upsert: {
+          args: Prisma.MonitorRuleUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonitorRulePayload>
+        }
+        aggregate: {
+          args: Prisma.MonitorRuleAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMonitorRule>
+        }
+        groupBy: {
+          args: Prisma.MonitorRuleGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MonitorRuleGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MonitorRuleCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MonitorRuleCountAggregateOutputType> | number
+        }
+      }
+    }
+    ObservedPayment: {
+      payload: Prisma.$ObservedPaymentPayload<ExtArgs>
+      fields: Prisma.ObservedPaymentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ObservedPaymentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ObservedPaymentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ObservedPaymentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ObservedPaymentPayload>
+        }
+        findFirst: {
+          args: Prisma.ObservedPaymentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ObservedPaymentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ObservedPaymentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ObservedPaymentPayload>
+        }
+        findMany: {
+          args: Prisma.ObservedPaymentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ObservedPaymentPayload>[]
+        }
+        create: {
+          args: Prisma.ObservedPaymentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ObservedPaymentPayload>
+        }
+        createMany: {
+          args: Prisma.ObservedPaymentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ObservedPaymentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ObservedPaymentPayload>[]
+        }
+        delete: {
+          args: Prisma.ObservedPaymentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ObservedPaymentPayload>
+        }
+        update: {
+          args: Prisma.ObservedPaymentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ObservedPaymentPayload>
+        }
+        deleteMany: {
+          args: Prisma.ObservedPaymentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ObservedPaymentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ObservedPaymentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ObservedPaymentPayload>[]
+        }
+        upsert: {
+          args: Prisma.ObservedPaymentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ObservedPaymentPayload>
+        }
+        aggregate: {
+          args: Prisma.ObservedPaymentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateObservedPayment>
+        }
+        groupBy: {
+          args: Prisma.ObservedPaymentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ObservedPaymentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ObservedPaymentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ObservedPaymentCountAggregateOutputType> | number
+        }
+      }
+    }
+    MonitorMatch: {
+      payload: Prisma.$MonitorMatchPayload<ExtArgs>
+      fields: Prisma.MonitorMatchFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MonitorMatchFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonitorMatchPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MonitorMatchFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonitorMatchPayload>
+        }
+        findFirst: {
+          args: Prisma.MonitorMatchFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonitorMatchPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MonitorMatchFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonitorMatchPayload>
+        }
+        findMany: {
+          args: Prisma.MonitorMatchFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonitorMatchPayload>[]
+        }
+        create: {
+          args: Prisma.MonitorMatchCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonitorMatchPayload>
+        }
+        createMany: {
+          args: Prisma.MonitorMatchCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MonitorMatchCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonitorMatchPayload>[]
+        }
+        delete: {
+          args: Prisma.MonitorMatchDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonitorMatchPayload>
+        }
+        update: {
+          args: Prisma.MonitorMatchUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonitorMatchPayload>
+        }
+        deleteMany: {
+          args: Prisma.MonitorMatchDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MonitorMatchUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MonitorMatchUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonitorMatchPayload>[]
+        }
+        upsert: {
+          args: Prisma.MonitorMatchUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonitorMatchPayload>
+        }
+        aggregate: {
+          args: Prisma.MonitorMatchAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMonitorMatch>
+        }
+        groupBy: {
+          args: Prisma.MonitorMatchGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MonitorMatchGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MonitorMatchCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MonitorMatchCountAggregateOutputType> | number
+        }
+      }
+    }
+    AgentNotification: {
+      payload: Prisma.$AgentNotificationPayload<ExtArgs>
+      fields: Prisma.AgentNotificationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AgentNotificationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AgentNotificationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AgentNotificationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AgentNotificationPayload>
+        }
+        findFirst: {
+          args: Prisma.AgentNotificationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AgentNotificationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AgentNotificationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AgentNotificationPayload>
+        }
+        findMany: {
+          args: Prisma.AgentNotificationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AgentNotificationPayload>[]
+        }
+        create: {
+          args: Prisma.AgentNotificationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AgentNotificationPayload>
+        }
+        createMany: {
+          args: Prisma.AgentNotificationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AgentNotificationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AgentNotificationPayload>[]
+        }
+        delete: {
+          args: Prisma.AgentNotificationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AgentNotificationPayload>
+        }
+        update: {
+          args: Prisma.AgentNotificationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AgentNotificationPayload>
+        }
+        deleteMany: {
+          args: Prisma.AgentNotificationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AgentNotificationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AgentNotificationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AgentNotificationPayload>[]
+        }
+        upsert: {
+          args: Prisma.AgentNotificationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AgentNotificationPayload>
+        }
+        aggregate: {
+          args: Prisma.AgentNotificationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAgentNotification>
+        }
+        groupBy: {
+          args: Prisma.AgentNotificationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AgentNotificationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AgentNotificationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AgentNotificationCountAggregateOutputType> | number
         }
       }
     }
@@ -2309,6 +2609,75 @@ export const WalletScalarFieldEnum = {
 export type WalletScalarFieldEnum = (typeof WalletScalarFieldEnum)[keyof typeof WalletScalarFieldEnum]
 
 
+export const MonitorRuleScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  walletId: 'walletId',
+  chainId: 'chainId',
+  collectionAddress: 'collectionAddress',
+  tokenId: 'tokenId',
+  watchedAddress: 'watchedAddress',
+  direction: 'direction',
+  counterparty: 'counterparty',
+  minimumAmount: 'minimumAmount',
+  expectedAmount: 'expectedAmount',
+  cadence: 'cadence',
+  timezone: 'timezone',
+  graceMinutes: 'graceMinutes',
+  nextExpectedAt: 'nextExpectedAt',
+  cursorBlock: 'cursorBlock',
+  isActive: 'isActive',
+  lastCheckedAt: 'lastCheckedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MonitorRuleScalarFieldEnum = (typeof MonitorRuleScalarFieldEnum)[keyof typeof MonitorRuleScalarFieldEnum]
+
+
+export const ObservedPaymentScalarFieldEnum = {
+  id: 'id',
+  chainId: 'chainId',
+  txHash: 'txHash',
+  logIndex: 'logIndex',
+  fromAddress: 'fromAddress',
+  toAddress: 'toAddress',
+  amount: 'amount',
+  blockNumber: 'blockNumber',
+  blockTime: 'blockTime',
+  observedAt: 'observedAt'
+} as const
+
+export type ObservedPaymentScalarFieldEnum = (typeof ObservedPaymentScalarFieldEnum)[keyof typeof ObservedPaymentScalarFieldEnum]
+
+
+export const MonitorMatchScalarFieldEnum = {
+  monitorRuleId: 'monitorRuleId',
+  observedPaymentId: 'observedPaymentId',
+  direction: 'direction',
+  createdAt: 'createdAt'
+} as const
+
+export type MonitorMatchScalarFieldEnum = (typeof MonitorMatchScalarFieldEnum)[keyof typeof MonitorMatchScalarFieldEnum]
+
+
+export const AgentNotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  monitorRuleId: 'monitorRuleId',
+  observedPaymentId: 'observedPaymentId',
+  type: 'type',
+  title: 'title',
+  body: 'body',
+  data: 'data',
+  deliveryKey: 'deliveryKey',
+  readAt: 'readAt',
+  createdAt: 'createdAt'
+} as const
+
+export type AgentNotificationScalarFieldEnum = (typeof AgentNotificationScalarFieldEnum)[keyof typeof AgentNotificationScalarFieldEnum]
+
+
 export const WalletChallengeScalarFieldEnum = {
   id: 'id',
   address: 'address',
@@ -2625,19 +2994,19 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
-export const JsonNullValueInput = {
-  JsonNull: JsonNull
-} as const
-
-export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
-
-
 export const NullableJsonNullValueInput = {
   DbNull: DbNull,
   JsonNull: JsonNull
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -2759,6 +3128,76 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'MonitorDirection'
+ */
+export type EnumMonitorDirectionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MonitorDirection'>
+    
+
+
+/**
+ * Reference to a field of type 'MonitorDirection[]'
+ */
+export type ListEnumMonitorDirectionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MonitorDirection[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+/**
+ * Reference to a field of type 'MonitorCadence'
+ */
+export type EnumMonitorCadenceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MonitorCadence'>
+    
+
+
+/**
+ * Reference to a field of type 'MonitorCadence[]'
+ */
+export type ListEnumMonitorCadenceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MonitorCadence[]'>
+    
+
+
+/**
+ * Reference to a field of type 'BigInt'
+ */
+export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt'>
+    
+
+
+/**
+ * Reference to a field of type 'BigInt[]'
+ */
+export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AgentNotificationType'
+ */
+export type EnumAgentNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AgentNotificationType'>
+    
+
+
+/**
+ * Reference to a field of type 'AgentNotificationType[]'
+ */
+export type ListEnumAgentNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AgentNotificationType[]'>
     
 
 
@@ -2885,34 +3324,6 @@ export type EnumPublicationStateFieldRefInput<$PrismaModel> = FieldRefInputType<
  * Reference to a field of type 'PublicationState[]'
  */
 export type ListEnumPublicationStateFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PublicationState[]'>
-    
-
-
-/**
- * Reference to a field of type 'Decimal'
- */
-export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
-    
-
-
-/**
- * Reference to a field of type 'Decimal[]'
- */
-export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
-    
-
-
-/**
- * Reference to a field of type 'BigInt'
- */
-export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt'>
-    
-
-
-/**
- * Reference to a field of type 'BigInt[]'
- */
-export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt[]'>
     
 
 
@@ -3112,6 +3523,10 @@ export type GlobalOmitConfig = {
   socialAccount?: Prisma.SocialAccountOmit
   session?: Prisma.SessionOmit
   wallet?: Prisma.WalletOmit
+  monitorRule?: Prisma.MonitorRuleOmit
+  observedPayment?: Prisma.ObservedPaymentOmit
+  monitorMatch?: Prisma.MonitorMatchOmit
+  agentNotification?: Prisma.AgentNotificationOmit
   walletChallenge?: Prisma.WalletChallengeOmit
   walletSession?: Prisma.WalletSessionOmit
   application?: Prisma.ApplicationOmit

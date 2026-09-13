@@ -4683,6 +4683,9 @@ body:has(.admin-shell) .site-footer {
 }
 
 .agent-token-form button:disabled { opacity: .38; }
+.agent-owned-tokens { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+.agent-owned-tokens button { border: 1px solid var(--line); background: transparent; color: var(--text); padding: 7px 9px; cursor: pointer; }
+.agent-owned-tokens button:hover { border-color: var(--amber); color: var(--amber); }
 .agent-status-dot { width: 14px; height: 14px; border-radius: 50%; background: #8c887d; box-shadow: 0 0 0 7px rgb(140 136 125 / 12%); }
 .agent-status-dot.ready { background: #2f8a58; box-shadow: 0 0 0 7px rgb(47 138 88 / 12%); }
 .agent-status-card small { text-transform: uppercase; letter-spacing: .09em; color: var(--muted); }
@@ -4709,6 +4712,19 @@ body:has(.admin-shell) .site-footer {
 .agent-capabilities { border-left: 1px solid var(--line); }
 .agent-capabilities > div { padding: 16px 0; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 15px; }
 .agent-capabilities small { text-transform: uppercase; text-align: right; color: var(--muted); }
+.agent-utility-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1px solid var(--line); border-top: 0; }
+.agent-utility-card { padding: clamp(24px, 4vw, 48px); }
+.agent-utility-card + .agent-utility-card { border-left: 1px solid var(--line); }
+.agent-utility-card h3 { margin: 12px 0 24px; font-size: clamp(26px, 3vw, 38px); }
+.agent-utility-card label { display: grid; gap: 7px; margin: 13px 0; color: var(--muted); font-size: 13px; text-transform: uppercase; letter-spacing: .06em; }
+.agent-utility-card input, .agent-utility-card select { width: 100%; border: 1px solid var(--line); background: var(--background); color: var(--text); padding: 12px; font: inherit; }
+.agent-monitor-list, .agent-inbox { display: grid; gap: 10px; margin-top: 22px; max-height: 360px; overflow: auto; }
+.agent-monitor-list > div { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); }
+.agent-monitor-list button { display: inline-flex; align-items: center; gap: 6px; border: 0; background: transparent; color: var(--amber); cursor: pointer; }
+.agent-inbox > div { padding: 15px; border: 1px solid var(--line); }
+.agent-inbox > div.read { opacity: .62; }
+.agent-inbox p { margin: 6px 0; color: var(--muted); }
+.agent-inbox small { color: var(--muted); }
 
 @keyframes agent-spin { to { transform: rotate(360deg); } }
 
@@ -4719,4 +4735,6 @@ body:has(.admin-shell) .site-footer {
   .agent-profile-panel { grid-template-columns: 1fr; }
   .agent-profile-panel > .pixel-art { min-height: min(85vw, 520px); border-right: 0; border-bottom: 1px solid var(--line); }
   .agent-capabilities { border-left: 0; border-top: 1px solid var(--line); }
+  .agent-utility-grid { grid-template-columns: 1fr; }
+  .agent-utility-card + .agent-utility-card { border-left: 0; border-top: 1px solid var(--line); }
 }

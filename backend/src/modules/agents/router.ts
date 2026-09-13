@@ -5,7 +5,7 @@ import { config } from "../../config.js";
 import { ApiError } from "../../errors.js";
 import { requireWalletAuth } from "../../middleware/auth.js";
 import { asyncRoute } from "../../utils.js";
-import { maskBornAddress, readNativeUsdc, readToken } from "../chain/client.js";
+import { maskBornAddress, readNativeUsdc, readOwnedTokenIds, readToken } from "../chain/client.js";
 import { buildPersona } from "./persona.js";
 
 export const agentsRouter = Router();
@@ -21,6 +21,23 @@ agentsRouter.get("/agents/status", (_req, res) => {
     awakening: "preview",
   });
 });
+
+agentsRouter.get("/agents/owned", requireWalletAuth, asyncRoute(async (req, res) => {
+  const walletAddress = getAddress(req.auth!.walletAddress!);
+  const result = await readOwnedTokenIds(walletAddress).catch(() => {
+    throw new ApiError(503, "ARC_READ_UNAVAILABLE", "Owned Mask Born tokens are temporarily unavailable.");
+  });
+  if (!result.configured) {
+    throw new ApiError(503, "COLLECTION_NOT_CONFIGURED", "The canonical Mask Born deployment is not configured yet.");
+  }
+  res.json({
+    owner: walletAddress,
+    tokenIds: result.tokenIds.map(String),
+    chainId: config.ARC_CHAIN_ID,
+    collectionAddress: maskBornAddress,
+    asOfBlock: result.blockNumber.toString(),
+  });
+}));
 
 agentsRouter.get("/agents/tokens/:tokenId/preview", requireWalletAuth, asyncRoute(async (req, res) => {
   const { tokenId } = tokenParams.parse(req.params);

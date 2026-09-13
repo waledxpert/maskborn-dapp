@@ -91,6 +91,25 @@ enum PayoutStatus {
   FAILED
 }
 
+enum MonitorDirection {
+  INCOMING
+  OUTGOING
+  BOTH
+}
+
+enum MonitorCadence {
+  CONTINUOUS
+  DAILY
+  WEEKLY
+}
+
+enum AgentNotificationType {
+  PAYMENT_RECEIVED
+  PAYMENT_SENT
+  PAYMENT_LATE
+  MONITOR_ERROR
+}
+
 model User {
   id                  String                   @id @default(cuid())
   role                Role                     @default(USER)
@@ -113,6 +132,8 @@ model User {
   idempotencyRecords  IdempotencyRecord[]
   payouts             Payout[]
   walletSessions      WalletSession[]
+  monitorRules        MonitorRule[]
+  agentNotifications  AgentNotification[]
 }
 
 model SocialAccount {
@@ -160,9 +181,92 @@ model Wallet {
   feeShares    FeeShare[]
   payouts      Payout[]
   walletSessions WalletSession[]
+  monitorRules   MonitorRule[]
 
   @@unique([chain, normalized])
   @@index([userId])
+}
+
+model MonitorRule {
+  id               String           @id @default(cuid())
+  userId           String
+  walletId         String
+  chainId          Int
+  collectionAddress String
+  tokenId          String
+  watchedAddress   String
+  direction        MonitorDirection @default(INCOMING)
+  counterparty     String?
+  minimumAmount    Decimal          @default(0) @db.Decimal(78, 0)
+  expectedAmount   Decimal?         @db.Decimal(78, 0)
+  cadence          MonitorCadence   @default(CONTINUOUS)
+  timezone         String           @default("UTC")
+  graceMinutes     Int              @default(60)
+  nextExpectedAt   DateTime?
+  cursorBlock      BigInt
+  isActive         Boolean          @default(true)
+  lastCheckedAt    DateTime?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  user             User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wallet           Wallet           @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  matches          MonitorMatch[]
+  notifications    AgentNotification[]
+
+  @@index([userId, isActive])
+  @@index([walletId, isActive])
+  @@index([chainId, collectionAddress, tokenId])
+}
+
+model ObservedPayment {
+  id          String   @id @default(cuid())
+  chainId     Int
+  txHash      String
+  logIndex    Int
+  fromAddress String
+  toAddress   String
+  amount      Decimal  @db.Decimal(78, 0)
+  blockNumber BigInt
+  blockTime   DateTime?
+  observedAt  DateTime @default(now())
+  matches     MonitorMatch[]
+  notifications AgentNotification[]
+
+  @@unique([chainId, txHash, logIndex])
+  @@index([chainId, toAddress, blockNumber])
+  @@index([chainId, fromAddress, blockNumber])
+}
+
+model MonitorMatch {
+  monitorRuleId    String
+  observedPaymentId String
+  direction        MonitorDirection
+  createdAt        DateTime        @default(now())
+  monitorRule      MonitorRule      @relation(fields: [monitorRuleId], references: [id], onDelete: Cascade)
+  observedPayment  ObservedPayment  @relation(fields: [observedPaymentId], references: [id], onDelete: Restrict)
+
+  @@id([monitorRuleId, observedPaymentId])
+  @@index([observedPaymentId])
+}
+
+model AgentNotification {
+  id                String                    @id @default(cuid())
+  userId            String
+  monitorRuleId     String?
+  observedPaymentId String?
+  type              AgentNotificationType
+  title             String
+  body              String
+  data              Json?
+  deliveryKey       String                    @unique
+  readAt            DateTime?
+  createdAt         DateTime                  @default(now())
+  user              User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  monitorRule       MonitorRule?               @relation(fields: [monitorRuleId], references: [id], onDelete: SetNull)
+  observedPayment   ObservedPayment?           @relation(fields: [observedPaymentId], references: [id], onDelete: SetNull)
+
+  @@index([userId, readAt, createdAt])
+  @@index([monitorRuleId, createdAt])
 }
 
 model WalletChallenge {
