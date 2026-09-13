@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ArrowRight, Bell, CheckCircle2, LoaderCircle, MessageSquare, RefreshCw, ShieldCheck, Wallet } from "lucide-react";
+import { ArrowRight, Bell, CheckCircle2, ExternalLink, LoaderCircle, MessageSquare, RefreshCw, ShieldCheck, Sparkles, Wallet } from "lucide-react";
 import { FormEvent, useMemo, useState } from "react";
 import { apiFetch } from "@/lib/api";
 import { composeMaskbornDataUrl, type TraitSelection } from "@/lib/maskborn-renderer";
@@ -9,8 +9,17 @@ import { PixelArtwork } from "@/components/pixel-artwork";
 import { useCurrentUser } from "@/hooks/use-current-user";
 
 type EthereumProvider = { request(args: { method: string; params?: unknown[] }): Promise<unknown> };
-type AgentStatus = { configured: boolean; network: string; chainId: number; collectionAddress: string | null; phase: number };
+type AgentStatus = { configured: boolean; network: string; chainId: number; collectionAddress: string | null; agentRegistryAddress?: string | null; phase: number; awakening?: string };
 type AgentIndexStatus = { configured: boolean; latestBlock?: string; indexedThrough?: string | null; caughtUp?: boolean; lastError?: string | null };
+type AwakeningState = {
+  configured: boolean;
+  awakened?: boolean;
+  account?: string;
+  agentId?: string | null;
+  constitutionHash?: string | null;
+  awakenedAtBlock?: string | null;
+  asOfBlock?: string;
+};
 type AgentPreview = {
   token: { tokenId: string; owner: string; revealed: boolean; asOfBlock: string };
   persona: null | {
@@ -21,7 +30,21 @@ type AgentPreview = {
     traits: Array<{ category: string; index: number; name: string; tier: string }>;
   };
   wallet: { nativeUsdc?: string; asOfBlock?: string; unavailable?: boolean };
+  awakening: AwakeningState;
   capabilities: Array<{ id: string; label: string; status: string }>;
+};
+type PreparedAwakening = {
+  status: "prepared";
+  chainId: number;
+  from: string;
+  to: string;
+  data: string;
+  value: string;
+  gasEstimate: string;
+  predictedAccount: string;
+  agentURI: string;
+  constitutionHash: string;
+  expiresAt: string;
 };
 type OwnedTokens = { tokenIds: string[]; asOfBlock: string };
 type MonitorRule = {
@@ -56,6 +79,9 @@ export function AgentsWorkspace() {
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [chatMessages, setChatMessages] = useState<ConversationMessage[]>([]);
   const [consentChecked, setConsentChecked] = useState(false);
+  const [preparedAwakening, setPreparedAwakening] = useState<PreparedAwakening | null>(null);
+  const [awakeningTxHash, setAwakeningTxHash] = useState<string | null>(null);
+  const [awakeningTxStatus, setAwakeningTxStatus] = useState<"idle" | "submitted" | "confirmed" | "failed" | "unknown">("idle");
   const status = useQuery({ queryKey: ["agent-status"], queryFn: () => apiFetch<AgentStatus>("/agents/status") });
   const indexStatus = useQuery({ queryKey: ["agent-index-status"], queryFn: () => apiFetch<AgentIndexStatus>("/agents/index/status"), enabled: Boolean(status.data?.configured), refetchInterval: 15_000, retry: false });
   const chatStatus = useQuery({ queryKey: ["agent-chat-status"], queryFn: () => apiFetch<ChatStatus>("/agents/chat/status"), retry: false });
@@ -183,8 +209,70 @@ export function AgentsWorkspace() {
 
   const inspect = useMutation({
     mutationFn: (id: string) => apiFetch<AgentPreview>(`/agents/tokens/${id}/preview`),
-    onSuccess: (data) => { setPreview(data); setError(""); },
+    onSuccess: (data) => { setPreview(data); setPreparedAwakening(null); setError(""); },
     onError: (requestError) => { setPreview(null); setError((requestError as Error).message); },
+  });
+
+  const prepareAwakening = useMutation({
+    mutationFn: () => apiFetch<PreparedAwakening>(`/agents/tokens/${tokenId}/awakening/prepare`, { method: "POST" }),
+    onSuccess: (prepared) => { setPreparedAwakening(prepared); setAwakeningTxHash(null); setAwakeningTxStatus("idle"); setError(""); },
+    onError: (requestError) => setError((requestError as Error).message),
+  });
+
+  const submitAwakening = useMutation({
+    mutationFn: async () => {
+      if (!window.ethereum || !preparedAwakening || !connectedAddress) throw new Error("Prepare the awakening again.");
+      if (Date.now() >= Date.parse(preparedAwakening.expiresAt)) throw new Error("This preparation expired. Prepare it again.");
+      if (preparedAwakening.from.toLowerCase() !== connectedAddress.toLowerCase()) throw new Error("The connected wallet changed. Prepare again.");
+
+      const requiredChain = `0x${preparedAwakening.chainId.toString(16)}`;
+      const currentChain = await window.ethereum.request({ method: "eth_chainId" }) as string;
+      if (currentChain.toLowerCase() !== requiredChain.toLowerCase()) {
+        try {
+          await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: requiredChain }] });
+        } catch {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [{
+              chainId: requiredChain,
+              chainName: "Arc Testnet",
+              nativeCurrency: { name: "USDC", symbol: "USDC", decimals: 18 },
+              rpcUrls: ["https://rpc.testnet.arc.network"],
+              blockExplorerUrls: ["https://testnet.arcscan.app"],
+            }],
+          });
+        }
+      }
+
+      const hash = await window.ethereum.request({
+        method: "eth_sendTransaction",
+        params: [{
+          from: preparedAwakening.from,
+          to: preparedAwakening.to,
+          data: preparedAwakening.data,
+          value: preparedAwakening.value,
+        }],
+      }) as string;
+      setAwakeningTxHash(hash);
+      setAwakeningTxStatus("submitted");
+
+      for (let attempt = 0; attempt < 40; attempt += 1) {
+        const receipt = await window.ethereum.request({ method: "eth_getTransactionReceipt", params: [hash] }) as null | { status?: string };
+        if (receipt) {
+          if (receipt.status?.toLowerCase() === "0x1") return { hash, confirmed: true };
+          throw new Error("The awakening transaction reverted on Arc. No agent was created.");
+        }
+        await new Promise((resolve) => setTimeout(resolve, 1_500));
+      }
+      return { hash, confirmed: false };
+    },
+    onSuccess: async ({ confirmed }) => {
+      setPreparedAwakening(null);
+      setError("");
+      setAwakeningTxStatus(confirmed ? "confirmed" : "unknown");
+      if (confirmed) inspect.mutate(tokenId);
+    },
+    onError: (requestError) => { setAwakeningTxStatus("failed"); setError((requestError as Error).message); },
   });
 
   const image = useMemo(() => {
@@ -258,6 +346,37 @@ export function AgentsWorkspace() {
             <div className="agent-balance">
               <span>Wallet balance</span>
               <b>{preview.wallet.nativeUsdc === undefined ? "Unavailable" : `${preview.wallet.nativeUsdc} USDC`}</b>
+            </div>
+            <div className="agent-awakening">
+              <p className="eyebrow"><Sparkles size={14} /> Onchain identity</p>
+              {!preview.awakening.configured ? (
+                <p>The awakening contracts are not deployed in this environment yet.</p>
+              ) : preview.awakening.awakened ? (
+                <div>
+                  <strong>Awakened as ERC-8004 agent #{preview.awakening.agentId}</strong>
+                  <p>Its ERC-6551 account is <a href={`https://testnet.arcscan.app/address/${preview.awakening.account}`} target="_blank" rel="noreferrer">{compact(preview.awakening.account!)} <ExternalLink size={12} /></a>.</p>
+                </div>
+              ) : !preparedAwakening ? (
+                <div>
+                  <p>One wallet-confirmed transaction creates the account and registers the identity. The NFT and art do not change.</p>
+                  <button className="button button-amber" onClick={() => prepareAwakening.mutate()} disabled={!preview.persona || prepareAwakening.isPending}>
+                    {prepareAwakening.isPending ? <LoaderCircle className="spin" size={16} /> : <Sparkles size={16} />} Prepare awakening
+                  </button>
+                </div>
+              ) : (
+                <div className="agent-awakening-review">
+                  <strong>Review before wallet confirmation</strong>
+                  <span>Network <b>{status.data?.network}</b></span>
+                  <span>Creates account <b>{compact(preparedAwakening.predictedAccount)}</b></span>
+                  <span>Value <b>0 USDC</b></span>
+                  <span>Estimated gas <b>{preparedAwakening.gasEstimate}</b></span>
+                  <button className="button button-amber" onClick={() => submitAwakening.mutate()} disabled={submitAwakening.isPending}>
+                    {submitAwakening.isPending ? <LoaderCircle className="spin" size={16} /> : <Wallet size={16} />} Confirm in wallet
+                  </button>
+                  <button className="agent-revoke-consent" onClick={() => setPreparedAwakening(null)}>Cancel</button>
+                </div>
+              )}
+              {awakeningTxHash && <p>{awakeningTxStatus === "submitted" ? "Submitted; waiting for confirmation" : awakeningTxStatus === "confirmed" ? "Confirmed on Arc" : awakeningTxStatus === "unknown" ? "Confirmation timed out; check Arcscan before retrying" : "Transaction failed"}: <a href={`https://testnet.arcscan.app/tx/${awakeningTxHash}`} target="_blank" rel="noreferrer">view transaction <ExternalLink size={12} /></a>.</p>}
             </div>
             {preview.persona && <div className="agent-traits">
               {preview.persona.traits.map((trait) => <span key={trait.category}>{trait.category}: <b>{trait.name}</b></span>)}

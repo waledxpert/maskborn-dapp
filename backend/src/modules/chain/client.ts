@@ -1,5 +1,8 @@
-import { createPublicClient, defineChain, getAddress, http, parseAbiItem, type Address } from "viem";
+import { createPublicClient, defineChain, getAddress, http, parseAbiItem, type Address, type Hex } from "viem";
 import { config } from "../../config.js";
+import { maskBornAgentRegistryAbi } from "../../generated/agent-contracts.js";
+
+export { maskBornAgentRegistryAbi };
 
 export const arcChain = defineChain({
   id: config.ARC_CHAIN_ID,
@@ -12,6 +15,9 @@ export const arcClient = createPublicClient({ chain: arcChain, transport: http(c
 export const maskBornAddress = config.MASKBORN_CONTRACT_ADDRESS
   ? getAddress(config.MASKBORN_CONTRACT_ADDRESS)
   : null;
+export const maskBornAgentRegistryAddress = config.MASKBORN_AGENT_REGISTRY_ADDRESS
+  ? getAddress(config.MASKBORN_AGENT_REGISTRY_ADDRESS)
+  : null;
 export const arcUsdcAddress = getAddress("0x3600000000000000000000000000000000000000");
 export const transferEvent = parseAbiItem("event Transfer(address indexed from, address indexed to, uint256 value)");
 
@@ -20,7 +26,47 @@ const maskBornAbi = [
   { type: "function", name: "traitsOf", stateMutability: "view", inputs: [{ name: "tokenId", type: "uint256" }], outputs: [{ type: "uint16[8]" }] },
   { type: "function", name: "isRevealed", stateMutability: "view", inputs: [], outputs: [{ type: "bool" }] },
   { type: "function", name: "tokensOfOwner", stateMutability: "view", inputs: [{ name: "owner", type: "address" }], outputs: [{ type: "uint256[]" }] },
+  { type: "function", name: "tokenURI", stateMutability: "view", inputs: [{ name: "tokenId", type: "uint256" }], outputs: [{ type: "string" }] },
 ] as const;
+
+export async function readAgentBinding(tokenId: bigint) {
+  if (!maskBornAgentRegistryAddress) return { configured: false as const };
+  const blockNumber = await arcClient.getBlockNumber();
+  const [binding, identityRegistry, account] = await Promise.all([
+    arcClient.readContract({
+      address: maskBornAgentRegistryAddress,
+      abi: maskBornAgentRegistryAbi,
+      functionName: "bindingOf",
+      args: [tokenId],
+      blockNumber,
+    }),
+    arcClient.readContract({
+      address: maskBornAgentRegistryAddress,
+      abi: maskBornAgentRegistryAbi,
+      functionName: "identityRegistry",
+      blockNumber,
+    }),
+    arcClient.readContract({
+      address: maskBornAgentRegistryAddress,
+      abi: maskBornAgentRegistryAbi,
+      functionName: "accountOf",
+      args: [tokenId],
+      blockNumber,
+    }),
+  ]);
+  const { account: boundAccount, agentId, constitutionHash, agentURIHash, awakenedAtBlock } = binding;
+  return {
+    configured: true as const,
+    awakened: boundAccount !== "0x0000000000000000000000000000000000000000",
+    account: getAddress(boundAccount === "0x0000000000000000000000000000000000000000" ? account : boundAccount),
+    agentId,
+    constitutionHash: constitutionHash as Hex,
+    agentURIHash: agentURIHash as Hex,
+    awakenedAtBlock,
+    identityRegistry: getAddress(identityRegistry),
+    blockNumber,
+  };
+}
 
 export async function readOwnedTokenIds(owner: Address) {
   if (!maskBornAddress) return { configured: false as const };
@@ -44,6 +90,19 @@ export async function readToken(tokenId: bigint) {
     ? await arcClient.readContract({ address: maskBornAddress, abi: maskBornAbi, functionName: "traitsOf", args: [tokenId], blockNumber })
     : null;
   return { configured: true as const, owner: getAddress(owner), revealed, traits, blockNumber };
+}
+
+export async function readTokenURI(tokenId: bigint, blockNumber?: bigint) {
+  if (!maskBornAddress) return { configured: false as const };
+  const sourceBlock = blockNumber ?? await arcClient.getBlockNumber();
+  const tokenURI = await arcClient.readContract({
+    address: maskBornAddress,
+    abi: maskBornAbi,
+    functionName: "tokenURI",
+    args: [tokenId],
+    blockNumber: sourceBlock,
+  });
+  return { configured: true as const, tokenURI, blockNumber: sourceBlock };
 }
 
 export async function readNativeUsdc(address: Address) {

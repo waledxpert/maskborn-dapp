@@ -1,4 +1,5 @@
 import collection from "../../generated/collection.json" with { type: "json" };
+import { keccak256, toBytes } from "viem";
 
 type Trait = { name: string; tier: string };
 type Category = { name: string; traits: Trait[] };
@@ -27,4 +28,17 @@ export function buildPersona(tokenId: bigint, traitIndexes: readonly number[]) {
     traits,
     constitutionVersion: 1,
   };
+}
+
+export function buildConstitution(tokenId: bigint, traitIndexes: readonly number[]) {
+  const persona = buildPersona(tokenId, traitIndexes);
+  const document = JSON.stringify({
+    schema: "maskborn-constitution-v1",
+    tokenId: tokenId.toString(),
+    constitutionVersion: persona.constitutionVersion,
+    role: persona.role,
+    communicationStyle: persona.communicationStyle,
+    traits: persona.traits.map(({ category, index, name, tier }) => ({ category, index, name, tier })),
+  });
+  return { document, hash: keccak256(toBytes(document)) };
 }

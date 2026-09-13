@@ -31,6 +31,11 @@ const schema = z.object({
   ARC_DEPLOYMENT_BLOCK: z.coerce.number().int().nonnegative().default(0),
   MASKBORN_CONTRACT_ADDRESS: optionalAddress,
   MASKBORN_NAMES_ADDRESS: optionalAddress,
+  MASKBORN_AGENT_REGISTRY_ADDRESS: optionalAddress,
+  AGENT_PUBLIC_ORIGIN: z.preprocess(
+    (value) => value === "" ? undefined : value,
+    z.string().url().optional(),
+  ),
   AGENT_MONITOR_INTERVAL_MS: z.coerce.number().int().min(5_000).max(300_000).default(15_000),
   ARC_INDEX_BATCH_SIZE: z.coerce.number().int().min(100).max(10_000).default(2_000),
   AGENT_MODEL_PROVIDER: z.enum(["disabled", "openai"]).default("disabled"),
@@ -73,6 +78,15 @@ const schema = z.object({
         message: `DISCORD_CALLBACK_URL must use ${value.NODE_ENV === "production" ? "FRONTEND_URL" : "BACKEND_PUBLIC_URL"} and end with /api/auth/discord/callback.`,
         path: ["DISCORD_CALLBACK_URL"],
       });
+    }
+  }
+  if (value.AGENT_PUBLIC_ORIGIN) {
+    const origin = new URL(value.AGENT_PUBLIC_ORIGIN);
+    if (origin.pathname !== "/" || origin.search || origin.hash) {
+      ctx.addIssue({ code: "custom", message: "AGENT_PUBLIC_ORIGIN must be an origin without a path, query, or fragment.", path: ["AGENT_PUBLIC_ORIGIN"] });
+    }
+    if (value.NODE_ENV === "production" && origin.protocol !== "https:") {
+      ctx.addIssue({ code: "custom", message: "AGENT_PUBLIC_ORIGIN must use HTTPS in production.", path: ["AGENT_PUBLIC_ORIGIN"] });
     }
   }
   if (value.AGENT_MODEL_PROVIDER === "openai") {

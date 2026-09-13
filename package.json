@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "sync:collection": "node scripts/sync-collection.mjs"
+    "sync:collection": "node scripts/sync-collection.mjs",
+    "sync:agent-contracts": "node scripts/sync-agent-contracts.mjs"
   }
 }

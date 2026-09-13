@@ -4707,6 +4707,14 @@ body:has(.admin-shell) .site-footer {
 .agent-profile-copy > strong { color: var(--amber); text-transform: uppercase; letter-spacing: .08em; }
 .agent-profile-copy > p:not(.eyebrow) { max-width: 48ch; line-height: 1.65; color: var(--muted); }
 .agent-balance { width: 100%; margin-top: auto; padding-top: 22px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 18px; }
+.agent-awakening { width: 100%; margin-top: 22px; padding: 18px; border: 1px solid color-mix(in srgb, var(--amber) 32%, var(--line)); background: color-mix(in srgb, var(--amber) 5%, transparent); }
+.agent-awakening .eyebrow { display: flex; align-items: center; gap: 7px; margin-bottom: 10px; }
+.agent-awakening p { margin: 7px 0 13px; color: var(--muted); line-height: 1.5; }
+.agent-awakening a { display: inline-flex; align-items: center; gap: 4px; color: var(--amber); }
+.agent-awakening-review { display: grid; gap: 9px; }
+.agent-awakening-review > span { display: flex; justify-content: space-between; gap: 15px; font-size: .84rem; }
+.agent-awakening-review > span b { overflow-wrap: anywhere; text-align: right; }
+.agent-awakening-review .agent-revoke-consent { justify-self: start; margin: 0; }
 .agent-traits { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px; }
 .agent-traits span { padding: 7px 10px; border: 1px solid var(--line); font-size: 12px; }
 .agent-capabilities { border-left: 1px solid var(--line); }

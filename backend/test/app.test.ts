@@ -50,7 +50,8 @@ describe("API shell", () => {
       collectionAddress: null,
       chainId: 5042002,
       phase: 1,
-      awakening: "preview",
+      awakening: "not_deployed",
+      agentRegistryAddress: null,
     });
   });
 
