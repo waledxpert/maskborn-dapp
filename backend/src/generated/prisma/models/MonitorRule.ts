@@ -825,14 +825,6 @@ export type MonitorRuleUncheckedUpdateManyWithoutWalletNestedInput = {
   deleteMany?: Prisma.MonitorRuleScalarWhereInput | Prisma.MonitorRuleScalarWhereInput[]
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type EnumMonitorDirectionFieldUpdateOperationsInput = {
   set?: $Enums.MonitorDirection
 }
@@ -855,14 +847,6 @@ export type NullableDecimalFieldUpdateOperationsInput = {
 
 export type EnumMonitorCadenceFieldUpdateOperationsInput = {
   set?: $Enums.MonitorCadence
-}
-
-export type BigIntFieldUpdateOperationsInput = {
-  set?: bigint | number
-  increment?: bigint | number
-  decrement?: bigint | number
-  multiply?: bigint | number
-  divide?: bigint | number
 }
 
 export type MonitorRuleCreateNestedOneWithoutMatchesInput = {

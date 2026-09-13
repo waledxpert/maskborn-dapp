@@ -578,14 +578,6 @@ export type GalleryEntryUpdatecategoriesInput = {
   push?: $Enums.GeneratorCategory | $Enums.GeneratorCategory[]
 }
 
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type GalleryEntryCreateNestedOneWithoutFeeShareInput = {
   create?: Prisma.XOR<Prisma.GalleryEntryCreateWithoutFeeShareInput, Prisma.GalleryEntryUncheckedCreateWithoutFeeShareInput>
   connectOrCreate?: Prisma.GalleryEntryCreateOrConnectWithoutFeeShareInput

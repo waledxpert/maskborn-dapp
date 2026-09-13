@@ -4,6 +4,8 @@ The first implementation slice adds wallet proof and ownership-checked Mask Born
 
 The second slice adds live owned-token discovery, unified Arc USDC monitoring, recurring expected-payment rules, and an in-app alert inbox. Monitoring is read-only and uses Arc's canonical USDC `Transfer` event for native and ERC-20-style sends.
 
+The third slice adds the collection-wide ownership index and ownership-isolated persistent assistant conversations. Private chat remains disabled until an external provider is explicitly configured and each holder accepts the displayed data-sharing disclosure for the current ownership period.
+
 ## Backend configuration
 
 Add these values to `backend/.env`:
@@ -14,6 +16,7 @@ ARC_CHAIN_ID=5042002
 ARC_DEPLOYMENT_BLOCK=<canonical collection deployment block>
 MASKBORN_CONTRACT_ADDRESS=<canonical collection address>
 MASKBORN_NAMES_ADDRESS=<optional names contract address>
+AGENT_MODEL_PROVIDER=disabled
 ```
 
 Leave `MASKBORN_CONTRACT_ADDRESS` empty before the canonical deployment is selected. The Agents page will show a truthful waiting state and the protected preview endpoint returns `COLLECTION_NOT_CONFIGURED`.
@@ -39,6 +42,20 @@ npm run dev:agent-worker
 
 The worker polls every 15 seconds by default. Set `AGENT_MONITOR_INTERVAL_MS` to a value from 5000 through 300000 milliseconds when needed. Payment and notification identities are unique, so restarts do not create duplicate alerts.
 
+The same worker indexes all collection `Transfer` events in bounded ranges. With `ARC_DEPLOYMENT_BLOCK=0`, it attempts to discover the first block containing the configured contract bytecode. Set the exact deployment block in production to make startup deterministic.
+
+To enable the optional OpenAI Responses API adapter, configure these backend-only values:
+
+```text
+AGENT_MODEL_PROVIDER=openai
+AGENT_MODEL_API_KEY=<server-side key>
+AGENT_MODEL_NAME=<explicit model name>
+AGENT_MODEL_BASE_URL=https://api.openai.com/v1
+AGENT_DAILY_REQUEST_LIMIT=25
+```
+
+The API key must never be prefixed with `NEXT_PUBLIC_` or exposed to the browser. Model requests use `store: false`. The UI names the destination and fields that may be shared, records consent per ownership period, and provides immediate revocation. No provider call occurs without active consent plus a per-request sharing assertion.
+
 For production, create and review a migration against the production schema instead of using `db push`.
 
 ## Current endpoints
@@ -59,6 +76,12 @@ Additional endpoints in the second slice:
 - `DELETE /api/agents/tokens/:tokenId/monitors/:id`
 - `GET /api/notifications`
 - `POST /api/notifications/:id/read`
+- `GET /api/agents/index/status`
+- `GET /api/agents/chat/status`
+- `GET/POST/DELETE /api/agents/tokens/:tokenId/model-consent`
+- `GET /api/agents/tokens/:tokenId/conversations`
+- `GET /api/agents/tokens/:tokenId/conversations/:conversationId`
+- `POST /api/agents/tokens/:tokenId/chat`
 
 ## Collection snapshot
 

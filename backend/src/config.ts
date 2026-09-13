@@ -32,6 +32,12 @@ const schema = z.object({
   MASKBORN_CONTRACT_ADDRESS: optionalAddress,
   MASKBORN_NAMES_ADDRESS: optionalAddress,
   AGENT_MONITOR_INTERVAL_MS: z.coerce.number().int().min(5_000).max(300_000).default(15_000),
+  ARC_INDEX_BATCH_SIZE: z.coerce.number().int().min(100).max(10_000).default(2_000),
+  AGENT_MODEL_PROVIDER: z.enum(["disabled", "openai"]).default("disabled"),
+  AGENT_MODEL_API_KEY: z.string().optional(),
+  AGENT_MODEL_NAME: z.string().optional(),
+  AGENT_MODEL_BASE_URL: z.string().url().default("https://api.openai.com/v1"),
+  AGENT_DAILY_REQUEST_LIMIT: z.coerce.number().int().min(1).max(1_000).default(25),
 }).superRefine((value, ctx) => {
   const r2Values = [
     value.R2_ACCOUNT_ID,
@@ -68,6 +74,10 @@ const schema = z.object({
         path: ["DISCORD_CALLBACK_URL"],
       });
     }
+  }
+  if (value.AGENT_MODEL_PROVIDER === "openai") {
+    if (!value.AGENT_MODEL_API_KEY) ctx.addIssue({ code: "custom", message: "AGENT_MODEL_API_KEY is required when the agent model provider is enabled.", path: ["AGENT_MODEL_API_KEY"] });
+    if (!value.AGENT_MODEL_NAME) ctx.addIssue({ code: "custom", message: "AGENT_MODEL_NAME must explicitly select a model.", path: ["AGENT_MODEL_NAME"] });
   }
 });
 

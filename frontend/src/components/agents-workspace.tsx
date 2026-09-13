@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ArrowRight, Bell, CheckCircle2, LoaderCircle, RefreshCw, ShieldCheck, Wallet } from "lucide-react";
+import { ArrowRight, Bell, CheckCircle2, LoaderCircle, MessageSquare, RefreshCw, ShieldCheck, Wallet } from "lucide-react";
 import { FormEvent, useMemo, useState } from "react";
 import { apiFetch } from "@/lib/api";
 import { composeMaskbornDataUrl, type TraitSelection } from "@/lib/maskborn-renderer";
@@ -10,6 +10,7 @@ import { useCurrentUser } from "@/hooks/use-current-user";
 
 type EthereumProvider = { request(args: { method: string; params?: unknown[] }): Promise<unknown> };
 type AgentStatus = { configured: boolean; network: string; chainId: number; collectionAddress: string | null; phase: number };
+type AgentIndexStatus = { configured: boolean; latestBlock?: string; indexedThrough?: string | null; caughtUp?: boolean; lastError?: string | null };
 type AgentPreview = {
   token: { tokenId: string; owner: string; revealed: boolean; asOfBlock: string };
   persona: null | {
@@ -31,6 +32,10 @@ type MonitorRule = {
 type AgentNotification = {
   id: string; type: string; title: string; body: string; readAt: string | null; createdAt: string;
 };
+type ChatStatus = { configured: boolean; provider: string; model: string | null; destinationOrigin: string | null; dailyRequestLimit: number; readOnly: boolean; sharedFields: string[] };
+type ModelConsent = { consented: boolean; provider: ChatStatus; sharedFields: string[] };
+type ConversationSummary = { id: string; title: string | null; updatedAt: string };
+type ConversationMessage = { id: string; role: "USER" | "ASSISTANT"; content: string; createdAt: string };
 
 declare global { interface Window { ethereum?: EthereumProvider } }
 
@@ -47,7 +52,13 @@ export function AgentsWorkspace() {
   const [expectedAmount, setExpectedAmount] = useState("");
   const [cadence, setCadence] = useState<"CONTINUOUS" | "DAILY" | "WEEKLY">("CONTINUOUS");
   const [nextExpectedAt, setNextExpectedAt] = useState("");
+  const [chatText, setChatText] = useState("");
+  const [conversationId, setConversationId] = useState<string | null>(null);
+  const [chatMessages, setChatMessages] = useState<ConversationMessage[]>([]);
+  const [consentChecked, setConsentChecked] = useState(false);
   const status = useQuery({ queryKey: ["agent-status"], queryFn: () => apiFetch<AgentStatus>("/agents/status") });
+  const indexStatus = useQuery({ queryKey: ["agent-index-status"], queryFn: () => apiFetch<AgentIndexStatus>("/agents/index/status"), enabled: Boolean(status.data?.configured), refetchInterval: 15_000, retry: false });
+  const chatStatus = useQuery({ queryKey: ["agent-chat-status"], queryFn: () => apiFetch<ChatStatus>("/agents/chat/status"), retry: false });
   const connectedAddress = walletAddress ?? session.data?.user?.wallets.find(
     (wallet) => wallet.chain === "EVM" && wallet.verifiedAt,
   )?.address ?? null;
@@ -67,6 +78,18 @@ export function AgentsWorkspace() {
     queryKey: ["agent-notifications", connectedAddress],
     queryFn: () => apiFetch<{ notifications: AgentNotification[] }>("/notifications"),
     enabled: Boolean(connectedAddress && preview),
+    retry: false,
+  });
+  const modelConsent = useQuery({
+    queryKey: ["agent-model-consent", tokenId],
+    queryFn: () => apiFetch<ModelConsent>(`/agents/tokens/${tokenId}/model-consent`),
+    enabled: Boolean(preview && tokenId && indexStatus.data?.caughtUp),
+    retry: false,
+  });
+  const conversations = useQuery({
+    queryKey: ["agent-conversations", tokenId],
+    queryFn: () => apiFetch<{ conversations: ConversationSummary[] }>(`/agents/tokens/${tokenId}/conversations`),
+    enabled: Boolean(preview && tokenId && indexStatus.data?.caughtUp),
     retry: false,
   });
 
@@ -121,6 +144,42 @@ export function AgentsWorkspace() {
     },
     onError: (requestError) => setError((requestError as Error).message),
   });
+
+  const acceptModelConsent = useMutation({
+    mutationFn: () => apiFetch(`/agents/tokens/${tokenId}/model-consent`, { method: "POST", body: JSON.stringify({ acknowledgePrivateDataSharing: true }) }),
+    onSuccess: async () => { setConsentChecked(false); await queryClient.invalidateQueries({ queryKey: ["agent-model-consent", tokenId] }); },
+    onError: (requestError) => setError((requestError as Error).message),
+  });
+
+  const revokeModelConsent = useMutation({
+    mutationFn: () => apiFetch(`/agents/tokens/${tokenId}/model-consent`, { method: "DELETE" }),
+    onSuccess: async () => { await queryClient.invalidateQueries({ queryKey: ["agent-model-consent", tokenId] }); },
+    onError: (requestError) => setError((requestError as Error).message),
+  });
+
+  const sendChat = useMutation({
+    mutationFn: () => apiFetch<{ conversationId: string; userMessage: ConversationMessage; assistantMessage: ConversationMessage }>(`/agents/tokens/${tokenId}/chat`, {
+      method: "POST",
+      body: JSON.stringify({ message: chatText, conversationId: conversationId ?? undefined, sharePrivateContext: true }),
+    }),
+    onSuccess: async (result) => {
+      setConversationId(result.conversationId);
+      setChatMessages((current) => [...current, result.userMessage, result.assistantMessage]);
+      setChatText("");
+      setError("");
+      await queryClient.invalidateQueries({ queryKey: ["agent-conversations", tokenId] });
+    },
+    onError: (requestError) => setError((requestError as Error).message),
+  });
+
+  const openConversation = async (id: string) => {
+    try {
+      const result = await apiFetch<{ conversation: { messages: ConversationMessage[] } }>(`/agents/tokens/${tokenId}/conversations/${id}`);
+      setConversationId(id);
+      setChatMessages(result.conversation.messages);
+      setError("");
+    } catch (requestError) { setError((requestError as Error).message); }
+  };
 
   const inspect = useMutation({
     mutationFn: (id: string) => apiFetch<AgentPreview>(`/agents/tokens/${id}/preview`),
@@ -179,7 +238,7 @@ export function AgentsWorkspace() {
           <span className={`agent-status-dot ${status.data?.configured ? "ready" : "waiting"}`} />
           <h2>Network status</h2>
           <p>{status.data?.configured
-            ? `Collection connected on ${status.data.network}.`
+            ? `Collection connected on ${status.data.network}. ${indexStatus.data?.caughtUp ? `Ownership indexed through block ${indexStatus.data.indexedThrough}.` : "Ownership index is catching up."}`
             : "Waiting for the canonical collection deployment address."}</p>
           <small>Phase {status.data?.phase ?? 1} · awakening preview</small>
         </article>
@@ -234,6 +293,29 @@ export function AgentsWorkspace() {
               {notifications.data?.notifications.map((notification) => <div key={notification.id} className={notification.readAt ? "read" : ""}><strong>{notification.title}</strong><p>{notification.body}</p><small>{new Date(notification.createdAt).toLocaleString()}</small></div>)}
               {!notifications.isLoading && !notifications.data?.notifications.length && <small>No payment alerts yet.</small>}
             </div>
+          </article>
+          <article className="agent-utility-card agent-chat-card">
+            <p className="eyebrow"><MessageSquare size={14} /> Read-only assistant</p>
+            {!chatStatus.data?.configured ? <p>The model provider is not configured. Wallet reads and monitoring continue without it.</p> : !indexStatus.data?.caughtUp ? <p>Private chat unlocks after the ownership index catches up.</p> : !modelConsent.data?.consented ? <div className="agent-consent">
+              <h3>Choose whether to share private context</h3>
+              <p>Each request goes to <b>{chatStatus.data.destinationOrigin}</b> using <b>{chatStatus.data.model}</b>. It may include:</p>
+              <ul>{chatStatus.data.sharedFields.map((field) => <li key={field}>{field}</li>)}</ul>
+              <label className="agent-consent-check"><input type="checkbox" checked={consentChecked} onChange={(event) => setConsentChecked(event.target.checked)} /> I understand and authorize this data sharing for the current ownership period.</label>
+              <button className="button button-amber" disabled={!consentChecked || acceptModelConsent.isPending} onClick={() => acceptModelConsent.mutate()}>Enable assistant</button>
+            </div> : <div className="agent-chat-shell">
+              <div className="agent-conversation-list">
+                <button onClick={() => { setConversationId(null); setChatMessages([]); }}>+ New conversation</button>
+                {conversations.data?.conversations.map((conversation) => <button key={conversation.id} onClick={() => void openConversation(conversation.id)}>{conversation.title ?? "Conversation"}</button>)}
+              </div>
+              <div className="agent-chat-main">
+                <div className="agent-chat-messages">
+                  {chatMessages.map((message) => <div key={message.id} className={message.role.toLowerCase()}><small>{message.role === "USER" ? "You" : preview.persona?.name ?? "Mask Born"}</small><p>{message.content}</p></div>)}
+                  {!chatMessages.length && <p className="agent-chat-empty">Ask about traits, balances, recent USDC activity, monitors, or Payday status.</p>}
+                </div>
+                <form onSubmit={(event) => { event.preventDefault(); if (chatText.trim()) sendChat.mutate(); }}><textarea value={chatText} onChange={(event) => setChatText(event.target.value)} maxLength={2000} placeholder="Ask your Mask Born…" /><button className="button button-amber" disabled={!chatText.trim() || sendChat.isPending}>{sendChat.isPending ? <LoaderCircle className="spin" size={16} /> : "Send"}</button></form>
+                <button className="agent-revoke-consent" onClick={() => revokeModelConsent.mutate()}>Revoke model data access</button>
+              </div>
+            </div>}
           </article>
         </div>
         </>

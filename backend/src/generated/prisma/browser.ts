@@ -38,6 +38,46 @@ export type Session = Prisma.SessionModel
  */
 export type Wallet = Prisma.WalletModel
 /**
+ * Model ChainCursor
+ * 
+ */
+export type ChainCursor = Prisma.ChainCursorModel
+/**
+ * Model ChainEvent
+ * 
+ */
+export type ChainEvent = Prisma.ChainEventModel
+/**
+ * Model OwnershipPeriod
+ * 
+ */
+export type OwnershipPeriod = Prisma.OwnershipPeriodModel
+/**
+ * Model Conversation
+ * 
+ */
+export type Conversation = Prisma.ConversationModel
+/**
+ * Model ConversationMessage
+ * 
+ */
+export type ConversationMessage = Prisma.ConversationMessageModel
+/**
+ * Model ToolRun
+ * 
+ */
+export type ToolRun = Prisma.ToolRunModel
+/**
+ * Model UsageMeter
+ * 
+ */
+export type UsageMeter = Prisma.UsageMeterModel
+/**
+ * Model ModelDataConsent
+ * 
+ */
+export type ModelDataConsent = Prisma.ModelDataConsentModel
+/**
  * Model MonitorRule
  * 
  */

@@ -55,6 +55,14 @@ export const ModelName = {
   SocialAccount: 'SocialAccount',
   Session: 'Session',
   Wallet: 'Wallet',
+  ChainCursor: 'ChainCursor',
+  ChainEvent: 'ChainEvent',
+  OwnershipPeriod: 'OwnershipPeriod',
+  Conversation: 'Conversation',
+  ConversationMessage: 'ConversationMessage',
+  ToolRun: 'ToolRun',
+  UsageMeter: 'UsageMeter',
+  ModelDataConsent: 'ModelDataConsent',
   MonitorRule: 'MonitorRule',
   ObservedPayment: 'ObservedPayment',
   MonitorMatch: 'MonitorMatch',
@@ -149,6 +157,138 @@ export const WalletScalarFieldEnum = {
 } as const
 
 export type WalletScalarFieldEnum = (typeof WalletScalarFieldEnum)[keyof typeof WalletScalarFieldEnum]
+
+
+export const ChainCursorScalarFieldEnum = {
+  id: 'id',
+  chainId: 'chainId',
+  collectionAddress: 'collectionAddress',
+  stream: 'stream',
+  nextBlock: 'nextBlock',
+  lastBlockHash: 'lastBlockHash',
+  lastError: 'lastError',
+  lastErrorAt: 'lastErrorAt',
+  updatedAt: 'updatedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type ChainCursorScalarFieldEnum = (typeof ChainCursorScalarFieldEnum)[keyof typeof ChainCursorScalarFieldEnum]
+
+
+export const ChainEventScalarFieldEnum = {
+  id: 'id',
+  chainId: 'chainId',
+  collectionAddress: 'collectionAddress',
+  txHash: 'txHash',
+  logIndex: 'logIndex',
+  transactionIndex: 'transactionIndex',
+  blockNumber: 'blockNumber',
+  blockHash: 'blockHash',
+  eventName: 'eventName',
+  tokenId: 'tokenId',
+  fromAddress: 'fromAddress',
+  toAddress: 'toAddress',
+  blockTime: 'blockTime',
+  indexedAt: 'indexedAt'
+} as const
+
+export type ChainEventScalarFieldEnum = (typeof ChainEventScalarFieldEnum)[keyof typeof ChainEventScalarFieldEnum]
+
+
+export const OwnershipPeriodScalarFieldEnum = {
+  id: 'id',
+  chainId: 'chainId',
+  collectionAddress: 'collectionAddress',
+  tokenId: 'tokenId',
+  sequence: 'sequence',
+  ownerAddress: 'ownerAddress',
+  walletId: 'walletId',
+  startedBlock: 'startedBlock',
+  startedTxHash: 'startedTxHash',
+  startedLogIndex: 'startedLogIndex',
+  startedAt: 'startedAt',
+  endedBlock: 'endedBlock',
+  endedTxHash: 'endedTxHash',
+  endedLogIndex: 'endedLogIndex',
+  endedAt: 'endedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type OwnershipPeriodScalarFieldEnum = (typeof OwnershipPeriodScalarFieldEnum)[keyof typeof OwnershipPeriodScalarFieldEnum]
+
+
+export const ConversationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  ownershipPeriodId: 'ownershipPeriodId',
+  title: 'title',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ConversationScalarFieldEnum = (typeof ConversationScalarFieldEnum)[keyof typeof ConversationScalarFieldEnum]
+
+
+export const ConversationMessageScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  role: 'role',
+  content: 'content',
+  status: 'status',
+  sources: 'sources',
+  providerResponseId: 'providerResponseId',
+  inputTokens: 'inputTokens',
+  outputTokens: 'outputTokens',
+  errorCode: 'errorCode',
+  createdAt: 'createdAt'
+} as const
+
+export type ConversationMessageScalarFieldEnum = (typeof ConversationMessageScalarFieldEnum)[keyof typeof ConversationMessageScalarFieldEnum]
+
+
+export const ToolRunScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  messageId: 'messageId',
+  toolName: 'toolName',
+  status: 'status',
+  output: 'output',
+  errorCode: 'errorCode',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt'
+} as const
+
+export type ToolRunScalarFieldEnum = (typeof ToolRunScalarFieldEnum)[keyof typeof ToolRunScalarFieldEnum]
+
+
+export const UsageMeterScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  day: 'day',
+  requestCount: 'requestCount',
+  inputTokens: 'inputTokens',
+  outputTokens: 'outputTokens',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UsageMeterScalarFieldEnum = (typeof UsageMeterScalarFieldEnum)[keyof typeof UsageMeterScalarFieldEnum]
+
+
+export const ModelDataConsentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  walletId: 'walletId',
+  ownershipPeriodId: 'ownershipPeriodId',
+  provider: 'provider',
+  modelName: 'modelName',
+  destinationOrigin: 'destinationOrigin',
+  disclosureVersion: 'disclosureVersion',
+  acceptedAt: 'acceptedAt',
+  revokedAt: 'revokedAt'
+} as const
+
+export type ModelDataConsentScalarFieldEnum = (typeof ModelDataConsentScalarFieldEnum)[keyof typeof ModelDataConsentScalarFieldEnum]
 
 
 export const MonitorRuleScalarFieldEnum = {

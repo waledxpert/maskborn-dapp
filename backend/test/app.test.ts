@@ -14,6 +14,9 @@ process.env.DATABASE_URL_UNPOOLED = process.env.DATABASE_URL;
 process.env.NODE_ENV = "test";
 process.env.MASKBORN_CONTRACT_ADDRESS = "";
 process.env.MASKBORN_NAMES_ADDRESS = "";
+process.env.AGENT_MODEL_PROVIDER = "disabled";
+process.env.AGENT_MODEL_API_KEY = "";
+process.env.AGENT_MODEL_NAME = "";
 
 let app: Awaited<typeof import("../src/app.js")>["app"];
 let extractXPostId: Awaited<typeof import("../src/utils.js")>["extractXPostId"];
@@ -49,6 +52,17 @@ describe("API shell", () => {
       phase: 1,
       awakening: "preview",
     });
+  });
+
+  it("keeps the model disabled by default and protects private chat", async () => {
+    const status = await request(app).get("/api/agents/chat/status");
+    expect(status.status).toBe(200);
+    expect(status.body).toMatchObject({ configured: false, provider: "disabled", readOnly: true });
+    expect(status.body.sharedFields).toContain("wallet address and balance");
+
+    const chat = await request(app).post("/api/agents/tokens/1/chat").send({ message: "Balance?", sharePrivateContext: true });
+    expect(chat.status).toBe(401);
+    expect(chat.body.error.code).toBe("WALLET_AUTH_REQUIRED");
   });
 
   it("keeps public viewing open but rejects unauthenticated actions", async () => {

@@ -158,3 +158,20 @@ export const AgentNotificationType = {
 } as const
 
 export type AgentNotificationType = (typeof AgentNotificationType)[keyof typeof AgentNotificationType]
+
+
+export const ConversationRole = {
+  USER: 'USER',
+  ASSISTANT: 'ASSISTANT'
+} as const
+
+export type ConversationRole = (typeof ConversationRole)[keyof typeof ConversationRole]
+
+
+export const AgentRunStatus = {
+  RUNNING: 'RUNNING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED'
+} as const
+
+export type AgentRunStatus = (typeof AgentRunStatus)[keyof typeof AgentRunStatus]

@@ -7,6 +7,8 @@ import { requireWalletAuth } from "../../middleware/auth.js";
 import { asyncRoute } from "../../utils.js";
 import { maskBornAddress, readNativeUsdc, readOwnedTokenIds, readToken } from "../chain/client.js";
 import { buildPersona } from "./persona.js";
+import { collectionIndexStatus } from "../chain/collection-indexer.js";
+import { db } from "../../db.js";
 
 export const agentsRouter = Router();
 const tokenParams = z.object({ tokenId: z.coerce.bigint().refine((value) => value > 0n && value <= 10_000n) });
@@ -22,6 +24,18 @@ agentsRouter.get("/agents/status", (_req, res) => {
   });
 });
 
+agentsRouter.get("/agents/index/status", asyncRoute(async (_req, res) => {
+  const status = await collectionIndexStatus().catch(() => {
+    throw new ApiError(503, "ARC_INDEX_UNAVAILABLE", "The ownership index status is temporarily unavailable.");
+  });
+  res.json(status.configured ? {
+    ...status,
+    latestBlock: status.latestBlock.toString(),
+    nextBlock: status.nextBlock?.toString() ?? null,
+    indexedThrough: status.indexedThrough?.toString() ?? null,
+  } : status);
+}));
+
 agentsRouter.get("/agents/owned", requireWalletAuth, asyncRoute(async (req, res) => {
   const walletAddress = getAddress(req.auth!.walletAddress!);
   const result = await readOwnedTokenIds(walletAddress).catch(() => {
@@ -30,9 +44,24 @@ agentsRouter.get("/agents/owned", requireWalletAuth, asyncRoute(async (req, res)
   if (!result.configured) {
     throw new ApiError(503, "COLLECTION_NOT_CONFIGURED", "The canonical Mask Born deployment is not configured yet.");
   }
+  const periods = await db.ownershipPeriod.findMany({
+    where: {
+      chainId: config.ARC_CHAIN_ID,
+      collectionAddress: maskBornAddress!.toLowerCase(),
+      tokenId: { in: result.tokenIds.map(String) },
+      ownerAddress: walletAddress.toLowerCase(),
+      endedBlock: null,
+    },
+    select: { id: true, tokenId: true, sequence: true, startedBlock: true },
+  });
+  const periodByToken = new Map(periods.map((period) => [period.tokenId, period]));
   res.json({
     owner: walletAddress,
     tokenIds: result.tokenIds.map(String),
+    tokens: result.tokenIds.map(String).map((id) => {
+      const period = periodByToken.get(id);
+      return { tokenId: id, ownershipPeriodId: period?.id ?? null, ownershipSequence: period?.sequence ?? null, ownedSinceBlock: period?.startedBlock.toString() ?? null };
+    }),
     chainId: config.ARC_CHAIN_ID,
     collectionAddress: maskBornAddress,
     asOfBlock: result.blockNumber.toString(),

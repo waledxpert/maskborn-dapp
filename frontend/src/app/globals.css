@@ -4725,6 +4725,24 @@ body:has(.admin-shell) .site-footer {
 .agent-inbox > div.read { opacity: .62; }
 .agent-inbox p { margin: 6px 0; color: var(--muted); }
 .agent-inbox small { color: var(--muted); }
+.agent-chat-card { grid-column: 1 / -1; border-top: 1px solid var(--line); }
+.agent-consent { max-width: 760px; }
+.agent-consent > p, .agent-consent li { color: var(--muted); line-height: 1.55; }
+.agent-consent-check { grid-template-columns: auto 1fr !important; align-items: start; text-transform: none !important; letter-spacing: 0 !important; color: var(--text) !important; }
+.agent-consent-check input { width: auto; margin-top: 3px; }
+.agent-chat-shell { display: grid; grid-template-columns: minmax(180px, 260px) minmax(0, 1fr); border: 1px solid var(--line); min-height: 480px; }
+.agent-conversation-list { display: flex; flex-direction: column; gap: 1px; border-right: 1px solid var(--line); background: var(--line); }
+.agent-conversation-list button { padding: 13px; border: 0; background: var(--background); color: var(--text); text-align: left; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.agent-chat-main { display: flex; flex-direction: column; min-width: 0; }
+.agent-chat-messages { flex: 1; display: flex; flex-direction: column; gap: 12px; padding: 20px; max-height: 520px; overflow: auto; }
+.agent-chat-messages > div { max-width: min(82%, 680px); padding: 13px 15px; border: 1px solid var(--line); }
+.agent-chat-messages > div.user { align-self: flex-end; border-color: color-mix(in srgb, var(--amber) 42%, var(--line)); }
+.agent-chat-messages small { color: var(--amber); text-transform: uppercase; }
+.agent-chat-messages p { margin: 6px 0 0; white-space: pre-wrap; line-height: 1.55; }
+.agent-chat-empty { margin: auto; max-width: 44ch; color: var(--muted); text-align: center; }
+.agent-chat-main form { display: grid; grid-template-columns: 1fr auto; gap: 10px; padding: 15px; border-top: 1px solid var(--line); }
+.agent-chat-main textarea { min-height: 74px; resize: vertical; border: 1px solid var(--line); background: var(--background); color: var(--text); padding: 12px; font: inherit; }
+.agent-revoke-consent { align-self: flex-end; margin: 0 15px 15px; border: 0; background: transparent; color: var(--muted); text-decoration: underline; cursor: pointer; }
 
 @keyframes agent-spin { to { transform: rotate(360deg); } }
 
@@ -4737,4 +4755,6 @@ body:has(.admin-shell) .site-footer {
   .agent-capabilities { border-left: 0; border-top: 1px solid var(--line); }
   .agent-utility-grid { grid-template-columns: 1fr; }
   .agent-utility-card + .agent-utility-card { border-left: 0; border-top: 1px solid var(--line); }
+  .agent-chat-shell { grid-template-columns: 1fr; }
+  .agent-conversation-list { border-right: 0; border-bottom: 1px solid var(--line); max-height: 150px; overflow: auto; }
 }
