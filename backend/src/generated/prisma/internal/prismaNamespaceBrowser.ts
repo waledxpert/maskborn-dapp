@@ -55,6 +55,8 @@ export const ModelName = {
   SocialAccount: 'SocialAccount',
   Session: 'Session',
   Wallet: 'Wallet',
+  WalletChallenge: 'WalletChallenge',
+  WalletSession: 'WalletSession',
   Application: 'Application',
   Draft: 'Draft',
   DraftRevision: 'DraftRevision',
@@ -143,6 +145,35 @@ export const WalletScalarFieldEnum = {
 } as const
 
 export type WalletScalarFieldEnum = (typeof WalletScalarFieldEnum)[keyof typeof WalletScalarFieldEnum]
+
+
+export const WalletChallengeScalarFieldEnum = {
+  id: 'id',
+  address: 'address',
+  normalized: 'normalized',
+  chainId: 'chainId',
+  nonceHash: 'nonceHash',
+  messageHash: 'messageHash',
+  expiresAt: 'expiresAt',
+  usedAt: 'usedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type WalletChallengeScalarFieldEnum = (typeof WalletChallengeScalarFieldEnum)[keyof typeof WalletChallengeScalarFieldEnum]
+
+
+export const WalletSessionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  walletId: 'walletId',
+  tokenHash: 'tokenHash',
+  expiresAt: 'expiresAt',
+  revokedAt: 'revokedAt',
+  lastSeenAt: 'lastSeenAt',
+  createdAt: 'createdAt'
+} as const
+
+export type WalletSessionScalarFieldEnum = (typeof WalletSessionScalarFieldEnum)[keyof typeof WalletSessionScalarFieldEnum]
 
 
 export const ApplicationScalarFieldEnum = {

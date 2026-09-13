@@ -15,6 +15,8 @@ import { publicRouter } from "./routes/public.js";
 import { sessionRouter } from "./routes/session.js";
 import { submissionsRouter } from "./routes/submissions.js";
 import { votesRouter } from "./routes/votes.js";
+import { agentsRouter } from "./modules/agents/router.js";
+import { walletAuthRouter } from "./modules/wallet-auth/router.js";
 
 export const app = express();
 
@@ -39,6 +41,8 @@ app.use("/api", applicationsRouter);
 app.use("/api", draftsRouter);
 app.use("/api", submissionsRouter);
 app.use("/api", votesRouter);
+app.use("/api", walletAuthRouter);
+app.use("/api", agentsRouter);
 app.use("/api/mboadmin", adminRouter);
 
 app.use(notFound);

@@ -7,6 +7,8 @@ declare global {
       auth?: {
         userId: string;
         role: Role;
+        walletId?: string;
+        walletAddress?: string;
       };
     }
   }

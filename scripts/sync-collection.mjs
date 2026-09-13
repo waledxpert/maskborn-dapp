@@ -7,6 +7,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const arcRoot = path.resolve(process.env.ARCONE_PATH ?? path.join(root, "..", "arcOne"));
 const manifestPath = path.join(arcRoot, "contracts", "data", "manifest.json");
 const collectionPath = path.join(root, "frontend", "src", "generated", "collection.json");
+const backendCollectionPath = path.join(root, "backend", "src", "generated", "collection.json");
 const rendererPath = path.join(root, "frontend", "src", "generated", "renderer.json");
 const publicRoot = path.join(root, "frontend", "public");
 
@@ -42,6 +43,7 @@ if (renderer.canvas.width !== 32 || renderer.canvas.height !== 32) {
 collection.status = "PRELAUNCH";
 delete collection.arcTestnet;
 await writeFile(collectionPath, `${JSON.stringify(collection, null, 2)}\n`, "utf8");
+await writeFile(backendCollectionPath, `${JSON.stringify(collection, null, 2)}\n`, "utf8");
 
 console.log(
   `Verified JS snapshot: ${collection.categories.reduce((sum, category) => sum + category.count, 0)} traits, `

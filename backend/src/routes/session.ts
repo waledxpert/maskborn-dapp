@@ -17,7 +17,7 @@ sessionRouter.get("/session", requireAuth, asyncRoute(async (req, res) => {
         where: { provider: { in: ["X_MANUAL", "DISCORD"] } },
         select: { provider: true, username: true, verificationState: true },
       },
-      wallets: { orderBy: { isPrimary: "desc" }, select: { id: true, chain: true, address: true, isPrimary: true } },
+      wallets: { orderBy: { isPrimary: "desc" }, select: { id: true, chain: true, address: true, isPrimary: true, verifiedAt: true } },
     },
   });
   res.json({ user });

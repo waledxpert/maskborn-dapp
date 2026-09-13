@@ -112,6 +112,7 @@ model User {
   adminAudits         AdminAuditLog[]          @relation("AdminAuditActor")
   idempotencyRecords  IdempotencyRecord[]
   payouts             Payout[]
+  walletSessions      WalletSession[]
 }
 
 model SocialAccount {
@@ -158,9 +159,42 @@ model Wallet {
   applications Application[]
   feeShares    FeeShare[]
   payouts      Payout[]
+  walletSessions WalletSession[]
 
   @@unique([chain, normalized])
   @@index([userId])
+}
+
+model WalletChallenge {
+  id          String   @id @default(cuid())
+  address     String
+  normalized  String
+  chainId     Int
+  nonceHash   String
+  messageHash String
+  expiresAt   DateTime
+  usedAt      DateTime?
+  createdAt   DateTime @default(now())
+
+  @@index([normalized, expiresAt])
+  @@index([expiresAt])
+}
+
+model WalletSession {
+  id         String   @id @default(cuid())
+  userId     String
+  walletId   String
+  tokenHash  String   @unique
+  expiresAt  DateTime
+  revokedAt  DateTime?
+  lastSeenAt DateTime @default(now())
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wallet     Wallet   @relation(fields: [walletId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([walletId])
+  @@index([expiresAt])
 }
 
 model Application {

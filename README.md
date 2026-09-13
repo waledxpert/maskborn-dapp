@@ -14,6 +14,7 @@ the generator, contract-data manifest, rarity, or 1/1 set changes.
 - `docs/PROJECT_OVERVIEW.md`: plain-language product vision, complete user journeys,
   system rules, storage model, generator integration, moderation, and on-chain path.
 - `docs/STORAGE_SETUP.md`: private/public R2 setup and accepted-submission export.
+- `docs/AGENT_PHASE_1_SETUP.md`: wallet proof, Arc deployment configuration, and the first agent preview endpoints.
 - `scripts/sync-collection.mjs`: validates the exported generator manifest and the
   portable metadata, renderer data, trait previews, fixtures, and 1/1 SVGs using JavaScript.
 - `PLAN.md`: product rules, generator pipeline, API boundaries, abuse handling, and

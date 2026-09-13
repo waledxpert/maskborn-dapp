@@ -20,6 +20,21 @@ export async function optionalAuth(req: Request, _res: Response, next: NextFunct
       }
     }
 
+    const walletToken = req.cookies?.mbo_wallet_session;
+    if (walletToken) {
+      const walletSession = await db.walletSession.findUnique({
+        where: { tokenHash: tokenHash(walletToken) },
+        include: { user: { select: { id: true, role: true } }, wallet: { select: { id: true, address: true } } },
+      });
+      if (walletSession && !walletSession.revokedAt && walletSession.expiresAt > new Date()) {
+        req.auth = {
+          userId: walletSession.user.id,
+          role: walletSession.user.role,
+          walletId: walletSession.wallet.id,
+          walletAddress: walletSession.wallet.address,
+        };
+      }
+    }
     const bearer = req.header("authorization")?.match(/^Bearer (.+)$/i)?.[1];
     const token = bearer ?? req.cookies?.mbo_session;
     if (!token) {
@@ -32,12 +47,20 @@ export async function optionalAuth(req: Request, _res: Response, next: NextFunct
       include: { user: { select: { id: true, role: true } } },
     });
     if (session && session.expiresAt > new Date()) {
-      req.auth = { userId: session.user.id, role: session.user.role };
+      if (!req.auth) req.auth = { userId: session.user.id, role: session.user.role };
     }
     next();
   } catch (error) {
     next(error);
   }
+}
+
+export function requireWalletAuth(req: Request, _res: Response, next: NextFunction) {
+  if (!req.auth?.walletId || !req.auth.walletAddress) {
+    next(new ApiError(401, "WALLET_AUTH_REQUIRED", "Sign in with the wallet that owns this Mask Born."));
+    return;
+  }
+  next();
 }
 
 export function requireAuth(req: Request, _res: Response, next: NextFunction) {

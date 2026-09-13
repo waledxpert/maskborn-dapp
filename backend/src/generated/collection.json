@@ -1,0 +1,2359 @@
+{
+  "schemaVersion": 1,
+  "canvas": {
+    "width": 32,
+    "height": 32,
+    "yShift": 2
+  },
+  "supply": 10000,
+  "rolledSupply": 9981,
+  "legendaryCount": 19,
+  "layerOrder": [
+    "Background",
+    "Fur",
+    "Eyes",
+    "Ears",
+    "Tails",
+    "Masks",
+    "Hats",
+    "Special"
+  ],
+  "categories": [
+    {
+      "index": 0,
+      "name": "Background",
+      "count": 32,
+      "traits": [
+        {
+          "index": 0,
+          "name": "Onyx",
+          "slug": "onyx",
+          "weightBp": 313,
+          "tier": "Common",
+          "expectedCount": 312.4053,
+          "preview": "/collection/traits/background/onyx.svg"
+        },
+        {
+          "index": 1,
+          "name": "Seafoam",
+          "slug": "seafoam",
+          "weightBp": 412,
+          "tier": "Common",
+          "expectedCount": 411.2172,
+          "preview": "/collection/traits/background/seafoam.svg"
+        },
+        {
+          "index": 2,
+          "name": "Plum",
+          "slug": "plum",
+          "weightBp": 411,
+          "tier": "Common",
+          "expectedCount": 410.2191,
+          "preview": "/collection/traits/background/plum.svg"
+        },
+        {
+          "index": 3,
+          "name": "Forest",
+          "slug": "forest",
+          "weightBp": 209,
+          "tier": "Common",
+          "expectedCount": 208.6029,
+          "preview": "/collection/traits/background/forest.svg"
+        },
+        {
+          "index": 4,
+          "name": "Coral",
+          "slug": "coral",
+          "weightBp": 408,
+          "tier": "Common",
+          "expectedCount": 407.2248,
+          "preview": "/collection/traits/background/coral.svg"
+        },
+        {
+          "index": 5,
+          "name": "Olive",
+          "slug": "olive",
+          "weightBp": 407,
+          "tier": "Common",
+          "expectedCount": 406.2267,
+          "preview": "/collection/traits/background/olive.svg"
+        },
+        {
+          "index": 6,
+          "name": "Sage",
+          "slug": "sage",
+          "weightBp": 456,
+          "tier": "Common",
+          "expectedCount": 455.1336,
+          "preview": "/collection/traits/background/sage.svg"
+        },
+        {
+          "index": 7,
+          "name": "Aqua",
+          "slug": "aqua",
+          "weightBp": 455,
+          "tier": "Common",
+          "expectedCount": 454.1355,
+          "preview": "/collection/traits/background/aqua.svg"
+        },
+        {
+          "index": 8,
+          "name": "Sky Blue",
+          "slug": "sky-blue",
+          "weightBp": 454,
+          "tier": "Common",
+          "expectedCount": 453.1374,
+          "preview": "/collection/traits/background/sky-blue.svg"
+        },
+        {
+          "index": 9,
+          "name": "Cream",
+          "slug": "cream",
+          "weightBp": 453,
+          "tier": "Common",
+          "expectedCount": 452.1393,
+          "preview": "/collection/traits/background/cream.svg"
+        },
+        {
+          "index": 10,
+          "name": "Lavender",
+          "slug": "lavender",
+          "weightBp": 402,
+          "tier": "Common",
+          "expectedCount": 401.2362,
+          "preview": "/collection/traits/background/lavender.svg"
+        },
+        {
+          "index": 11,
+          "name": "Blush",
+          "slug": "blush",
+          "weightBp": 421,
+          "tier": "Common",
+          "expectedCount": 420.2001,
+          "preview": "/collection/traits/background/blush.svg"
+        },
+        {
+          "index": 12,
+          "name": "Sand",
+          "slug": "sand",
+          "weightBp": 450,
+          "tier": "Common",
+          "expectedCount": 449.145,
+          "preview": "/collection/traits/background/sand.svg"
+        },
+        {
+          "index": 13,
+          "name": "Rust",
+          "slug": "rust",
+          "weightBp": 419,
+          "tier": "Common",
+          "expectedCount": 418.2039,
+          "preview": "/collection/traits/background/rust.svg"
+        },
+        {
+          "index": 14,
+          "name": "Steel",
+          "slug": "steel",
+          "weightBp": 498,
+          "tier": "Common",
+          "expectedCount": 497.0538,
+          "preview": "/collection/traits/background/steel.svg"
+        },
+        {
+          "index": 15,
+          "name": "Grape",
+          "slug": "grape",
+          "weightBp": 397,
+          "tier": "Common",
+          "expectedCount": 396.2457,
+          "preview": "/collection/traits/background/grape.svg"
+        },
+        {
+          "index": 16,
+          "name": "Blood",
+          "slug": "blood",
+          "weightBp": 396,
+          "tier": "Common",
+          "expectedCount": 395.2476,
+          "preview": "/collection/traits/background/blood.svg"
+        },
+        {
+          "index": 17,
+          "name": "Navy",
+          "slug": "navy",
+          "weightBp": 345,
+          "tier": "Common",
+          "expectedCount": 344.3445,
+          "preview": "/collection/traits/background/navy.svg"
+        },
+        {
+          "index": 18,
+          "name": "Teal",
+          "slug": "teal",
+          "weightBp": 394,
+          "tier": "Common",
+          "expectedCount": 393.2514,
+          "preview": "/collection/traits/background/teal.svg"
+        },
+        {
+          "index": 19,
+          "name": "Mustard",
+          "slug": "mustard",
+          "weightBp": 393,
+          "tier": "Common",
+          "expectedCount": 392.2533,
+          "preview": "/collection/traits/background/mustard.svg"
+        },
+        {
+          "index": 20,
+          "name": "Stone",
+          "slug": "stone",
+          "weightBp": 292,
+          "tier": "Common",
+          "expectedCount": 291.4452,
+          "preview": "/collection/traits/background/stone.svg"
+        },
+        {
+          "index": 21,
+          "name": "Cocoa",
+          "slug": "cocoa",
+          "weightBp": 391,
+          "tier": "Common",
+          "expectedCount": 390.2571,
+          "preview": "/collection/traits/background/cocoa.svg"
+        },
+        {
+          "index": 22,
+          "name": "Chalk",
+          "slug": "chalk",
+          "weightBp": 290,
+          "tier": "Common",
+          "expectedCount": 289.449,
+          "preview": "/collection/traits/background/chalk.svg"
+        },
+        {
+          "index": 23,
+          "name": "Cobalt",
+          "slug": "cobalt",
+          "weightBp": 389,
+          "tier": "Common",
+          "expectedCount": 388.2609,
+          "preview": "/collection/traits/background/cobalt.svg"
+        },
+        {
+          "index": 24,
+          "name": "Sewer",
+          "slug": "sewer",
+          "weightBp": 134,
+          "tier": "Mini Grail",
+          "expectedCount": 133.7454,
+          "preview": "/collection/traits/background/sewer.svg"
+        },
+        {
+          "index": 25,
+          "name": "Spotlight",
+          "slug": "spotlight",
+          "weightBp": 72,
+          "tier": "Mini Grail",
+          "expectedCount": 71.8632,
+          "preview": "/collection/traits/background/spotlight.svg"
+        },
+        {
+          "index": 26,
+          "name": "Humid",
+          "slug": "humid",
+          "weightBp": 64,
+          "tier": "Mini Grail",
+          "expectedCount": 63.8784,
+          "preview": "/collection/traits/background/humid.svg"
+        },
+        {
+          "index": 27,
+          "name": "Dusk",
+          "slug": "dusk",
+          "weightBp": 86,
+          "tier": "Mini Grail",
+          "expectedCount": 85.8366,
+          "preview": "/collection/traits/background/dusk.svg"
+        },
+        {
+          "index": 28,
+          "name": "Moonlit",
+          "slug": "moonlit",
+          "weightBp": 94,
+          "tier": "Mini Grail",
+          "expectedCount": 93.8214,
+          "preview": "/collection/traits/background/moonlit.svg"
+        },
+        {
+          "index": 29,
+          "name": "Toxic",
+          "slug": "toxic",
+          "weightBp": 50,
+          "tier": "Mini Grail",
+          "expectedCount": 49.905,
+          "preview": "/collection/traits/background/toxic.svg"
+        },
+        {
+          "index": 30,
+          "name": "Alit",
+          "slug": "alit",
+          "weightBp": 25,
+          "tier": "Grail",
+          "expectedCount": 24.9525,
+          "preview": "/collection/traits/background/alit.svg"
+        },
+        {
+          "index": 31,
+          "name": "Gold",
+          "slug": "gold",
+          "weightBp": 20,
+          "tier": "Grail",
+          "expectedCount": 19.962,
+          "preview": "/collection/traits/background/gold.svg"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "name": "Fur",
+      "count": 18,
+      "traits": [
+        {
+          "index": 0,
+          "name": "Grey",
+          "slug": "grey",
+          "weightBp": 971,
+          "tier": "Common",
+          "expectedCount": 969.1551,
+          "preview": "/collection/traits/fur/grey.svg"
+        },
+        {
+          "index": 1,
+          "name": "Brown",
+          "slug": "brown",
+          "weightBp": 970,
+          "tier": "Common",
+          "expectedCount": 968.157,
+          "preview": "/collection/traits/fur/brown.svg"
+        },
+        {
+          "index": 2,
+          "name": "Charcoal",
+          "slug": "charcoal",
+          "weightBp": 969,
+          "tier": "Common",
+          "expectedCount": 967.1589,
+          "preview": "/collection/traits/fur/charcoal.svg"
+        },
+        {
+          "index": 3,
+          "name": "Cream",
+          "slug": "cream",
+          "weightBp": 968,
+          "tier": "Common",
+          "expectedCount": 966.1608,
+          "preview": "/collection/traits/fur/cream.svg"
+        },
+        {
+          "index": 4,
+          "name": "Albino",
+          "slug": "albino",
+          "weightBp": 967,
+          "tier": "Common",
+          "expectedCount": 965.1627,
+          "preview": "/collection/traits/fur/albino.svg"
+        },
+        {
+          "index": 5,
+          "name": "Spotted Fawn",
+          "slug": "spotted-fawn",
+          "weightBp": 966,
+          "tier": "Common",
+          "expectedCount": 964.1646,
+          "preview": "/collection/traits/fur/spotted-fawn.svg"
+        },
+        {
+          "index": 6,
+          "name": "Spotted Snow",
+          "slug": "spotted-snow",
+          "weightBp": 965,
+          "tier": "Common",
+          "expectedCount": 963.1665,
+          "preview": "/collection/traits/fur/spotted-snow.svg"
+        },
+        {
+          "index": 7,
+          "name": "Spotted Ink",
+          "slug": "spotted-ink",
+          "weightBp": 964,
+          "tier": "Common",
+          "expectedCount": 962.1684,
+          "preview": "/collection/traits/fur/spotted-ink.svg"
+        },
+        {
+          "index": 8,
+          "name": "Patched",
+          "slug": "patched",
+          "weightBp": 961,
+          "tier": "Common",
+          "expectedCount": 959.1741,
+          "preview": "/collection/traits/fur/patched.svg"
+        },
+        {
+          "index": 9,
+          "name": "Trash",
+          "slug": "trash",
+          "weightBp": 300,
+          "tier": "Mini Grail",
+          "expectedCount": 299.43,
+          "preview": "/collection/traits/fur/trash.svg"
+        },
+        {
+          "index": 10,
+          "name": "Tiger",
+          "slug": "tiger",
+          "weightBp": 260,
+          "tier": "Mini Grail",
+          "expectedCount": 259.506,
+          "preview": "/collection/traits/fur/tiger.svg"
+        },
+        {
+          "index": 11,
+          "name": "Robot",
+          "slug": "robot",
+          "weightBp": 220,
+          "tier": "Mini Grail",
+          "expectedCount": 219.582,
+          "preview": "/collection/traits/fur/robot.svg"
+        },
+        {
+          "index": 12,
+          "name": "Zombie",
+          "slug": "zombie",
+          "weightBp": 180,
+          "tier": "Mini Grail",
+          "expectedCount": 179.658,
+          "preview": "/collection/traits/fur/zombie.svg"
+        },
+        {
+          "index": 13,
+          "name": "Frost",
+          "slug": "frost",
+          "weightBp": 140,
+          "tier": "Mini Grail",
+          "expectedCount": 139.734,
+          "preview": "/collection/traits/fur/frost.svg"
+        },
+        {
+          "index": 14,
+          "name": "Alien",
+          "slug": "alien",
+          "weightBp": 100,
+          "tier": "Mini Grail",
+          "expectedCount": 99.81,
+          "preview": "/collection/traits/fur/alien.svg"
+        },
+        {
+          "index": 15,
+          "name": "Gold",
+          "slug": "gold",
+          "weightBp": 45,
+          "tier": "Grail",
+          "expectedCount": 44.9145,
+          "preview": "/collection/traits/fur/gold.svg"
+        },
+        {
+          "index": 16,
+          "name": "Molten",
+          "slug": "molten",
+          "weightBp": 30,
+          "tier": "Grail",
+          "expectedCount": 29.943,
+          "preview": "/collection/traits/fur/molten.svg"
+        },
+        {
+          "index": 17,
+          "name": "Cosmic",
+          "slug": "cosmic",
+          "weightBp": 24,
+          "tier": "Grail",
+          "expectedCount": 23.9544,
+          "preview": "/collection/traits/fur/cosmic.svg"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "name": "Eyes",
+      "count": 46,
+      "traits": [
+        {
+          "index": 0,
+          "name": "Amber",
+          "slug": "amber",
+          "weightBp": 318,
+          "tier": "Common",
+          "expectedCount": 317.3958,
+          "preview": "/collection/traits/eyes/amber.svg"
+        },
+        {
+          "index": 1,
+          "name": "Bandit",
+          "slug": "bandit",
+          "weightBp": 317,
+          "tier": "Common",
+          "expectedCount": 316.3977,
+          "preview": "/collection/traits/eyes/bandit.svg"
+        },
+        {
+          "index": 2,
+          "name": "Ash",
+          "slug": "ash",
+          "weightBp": 316,
+          "tier": "Common",
+          "expectedCount": 315.3996,
+          "preview": "/collection/traits/eyes/ash.svg"
+        },
+        {
+          "index": 3,
+          "name": "Ghost",
+          "slug": "ghost",
+          "weightBp": 315,
+          "tier": "Common",
+          "expectedCount": 314.4015,
+          "preview": "/collection/traits/eyes/ghost.svg"
+        },
+        {
+          "index": 4,
+          "name": "Wonky",
+          "slug": "wonky",
+          "weightBp": 314,
+          "tier": "Common",
+          "expectedCount": 313.4034,
+          "preview": "/collection/traits/eyes/wonky.svg"
+        },
+        {
+          "index": 5,
+          "name": "Sleepy",
+          "slug": "sleepy",
+          "weightBp": 313,
+          "tier": "Common",
+          "expectedCount": 312.4053,
+          "preview": "/collection/traits/eyes/sleepy.svg"
+        },
+        {
+          "index": 6,
+          "name": "Wink",
+          "slug": "wink",
+          "weightBp": 312,
+          "tier": "Common",
+          "expectedCount": 311.4072,
+          "preview": "/collection/traits/eyes/wink.svg"
+        },
+        {
+          "index": 7,
+          "name": "Emerald",
+          "slug": "emerald",
+          "weightBp": 311,
+          "tier": "Common",
+          "expectedCount": 310.4091,
+          "preview": "/collection/traits/eyes/emerald.svg"
+        },
+        {
+          "index": 8,
+          "name": "Ice",
+          "slug": "ice",
+          "weightBp": 310,
+          "tier": "Common",
+          "expectedCount": 309.411,
+          "preview": "/collection/traits/eyes/ice.svg"
+        },
+        {
+          "index": 9,
+          "name": "Rage",
+          "slug": "rage",
+          "weightBp": 308,
+          "tier": "Common",
+          "expectedCount": 307.4148,
+          "preview": "/collection/traits/eyes/rage.svg"
+        },
+        {
+          "index": 10,
+          "name": "Void",
+          "slug": "void",
+          "weightBp": 307,
+          "tier": "Common",
+          "expectedCount": 306.4167,
+          "preview": "/collection/traits/eyes/void.svg"
+        },
+        {
+          "index": 11,
+          "name": "Violet",
+          "slug": "violet",
+          "weightBp": 306,
+          "tier": "Common",
+          "expectedCount": 305.4186,
+          "preview": "/collection/traits/eyes/violet.svg"
+        },
+        {
+          "index": 12,
+          "name": "Visor",
+          "slug": "visor",
+          "weightBp": 304,
+          "tier": "Common",
+          "expectedCount": 303.4224,
+          "preview": "/collection/traits/eyes/visor.svg"
+        },
+        {
+          "index": 13,
+          "name": "3D",
+          "slug": "3d",
+          "weightBp": 303,
+          "tier": "Common",
+          "expectedCount": 302.4243,
+          "preview": "/collection/traits/eyes/3d.svg"
+        },
+        {
+          "index": 14,
+          "name": "VR Lazy Rainbow",
+          "slug": "vr-lazy-rainbow",
+          "weightBp": 302,
+          "tier": "Common",
+          "expectedCount": 301.4262,
+          "preview": "/collection/traits/eyes/vr-lazy-rainbow.svg"
+        },
+        {
+          "index": 15,
+          "name": "Classic",
+          "slug": "classic",
+          "weightBp": 301,
+          "tier": "Common",
+          "expectedCount": 300.4281,
+          "preview": "/collection/traits/eyes/classic.svg"
+        },
+        {
+          "index": 16,
+          "name": "Bonzi",
+          "slug": "bonzi",
+          "weightBp": 300,
+          "tier": "Common",
+          "expectedCount": 299.43,
+          "preview": "/collection/traits/eyes/bonzi.svg"
+        },
+        {
+          "index": 17,
+          "name": "Cool",
+          "slug": "cool",
+          "weightBp": 299,
+          "tier": "Common",
+          "expectedCount": 298.4319,
+          "preview": "/collection/traits/eyes/cool.svg"
+        },
+        {
+          "index": 18,
+          "name": "Crying",
+          "slug": "crying",
+          "weightBp": 298,
+          "tier": "Common",
+          "expectedCount": 297.4338,
+          "preview": "/collection/traits/eyes/crying.svg"
+        },
+        {
+          "index": 19,
+          "name": "Vintage Shades",
+          "slug": "vintage-shades",
+          "weightBp": 297,
+          "tier": "Common",
+          "expectedCount": 296.4357,
+          "preview": "/collection/traits/eyes/vintage-shades.svg"
+        },
+        {
+          "index": 20,
+          "name": "Checkmate",
+          "slug": "checkmate",
+          "weightBp": 296,
+          "tier": "Common",
+          "expectedCount": 295.4376,
+          "preview": "/collection/traits/eyes/checkmate.svg"
+        },
+        {
+          "index": 21,
+          "name": "Nerd",
+          "slug": "nerd",
+          "weightBp": 295,
+          "tier": "Common",
+          "expectedCount": 294.4395,
+          "preview": "/collection/traits/eyes/nerd.svg"
+        },
+        {
+          "index": 22,
+          "name": "Patch",
+          "slug": "patch",
+          "weightBp": 294,
+          "tier": "Common",
+          "expectedCount": 293.4414,
+          "preview": "/collection/traits/eyes/patch.svg"
+        },
+        {
+          "index": 23,
+          "name": "Shades",
+          "slug": "shades",
+          "weightBp": 293,
+          "tier": "Common",
+          "expectedCount": 292.4433,
+          "preview": "/collection/traits/eyes/shades.svg"
+        },
+        {
+          "index": 24,
+          "name": "Shocked",
+          "slug": "shocked",
+          "weightBp": 292,
+          "tier": "Common",
+          "expectedCount": 291.4452,
+          "preview": "/collection/traits/eyes/shocked.svg"
+        },
+        {
+          "index": 25,
+          "name": "Ski",
+          "slug": "ski",
+          "weightBp": 291,
+          "tier": "Common",
+          "expectedCount": 290.4471,
+          "preview": "/collection/traits/eyes/ski.svg"
+        },
+        {
+          "index": 26,
+          "name": "Sports",
+          "slug": "sports",
+          "weightBp": 290,
+          "tier": "Common",
+          "expectedCount": 289.449,
+          "preview": "/collection/traits/eyes/sports.svg"
+        },
+        {
+          "index": 27,
+          "name": "Stylish",
+          "slug": "stylish",
+          "weightBp": 289,
+          "tier": "Common",
+          "expectedCount": 288.4509,
+          "preview": "/collection/traits/eyes/stylish.svg"
+        },
+        {
+          "index": 28,
+          "name": "Yeeti",
+          "slug": "yeeti",
+          "weightBp": 288,
+          "tier": "Common",
+          "expectedCount": 287.4528,
+          "preview": "/collection/traits/eyes/yeeti.svg"
+        },
+        {
+          "index": 29,
+          "name": "Closed",
+          "slug": "closed",
+          "weightBp": 143,
+          "tier": "Mini Grail",
+          "expectedCount": 142.7283,
+          "preview": "/collection/traits/eyes/closed.svg"
+        },
+        {
+          "index": 30,
+          "name": "Borg",
+          "slug": "borg",
+          "weightBp": 135,
+          "tier": "Mini Grail",
+          "expectedCount": 134.7435,
+          "preview": "/collection/traits/eyes/borg.svg"
+        },
+        {
+          "index": 31,
+          "name": "Hearts",
+          "slug": "hearts",
+          "weightBp": 127,
+          "tier": "Mini Grail",
+          "expectedCount": 126.7587,
+          "preview": "/collection/traits/eyes/hearts.svg"
+        },
+        {
+          "index": 32,
+          "name": "Googly",
+          "slug": "googly",
+          "weightBp": 111,
+          "tier": "Mini Grail",
+          "expectedCount": 110.7891,
+          "preview": "/collection/traits/eyes/googly.svg"
+        },
+        {
+          "index": 33,
+          "name": "Stoned",
+          "slug": "stoned",
+          "weightBp": 103,
+          "tier": "Mini Grail",
+          "expectedCount": 102.8043,
+          "preview": "/collection/traits/eyes/stoned.svg"
+        },
+        {
+          "index": 34,
+          "name": "Vipers",
+          "slug": "vipers",
+          "weightBp": 95,
+          "tier": "Mini Grail",
+          "expectedCount": 94.8195,
+          "preview": "/collection/traits/eyes/vipers.svg"
+        },
+        {
+          "index": 35,
+          "name": "Banger Goggles",
+          "slug": "banger-goggles",
+          "weightBp": 87,
+          "tier": "Mini Grail",
+          "expectedCount": 86.8347,
+          "preview": "/collection/traits/eyes/banger-goggles.svg"
+        },
+        {
+          "index": 36,
+          "name": "Neon Visor",
+          "slug": "neon-visor",
+          "weightBp": 79,
+          "tier": "Mini Grail",
+          "expectedCount": 78.8499,
+          "preview": "/collection/traits/eyes/neon-visor.svg"
+        },
+        {
+          "index": 37,
+          "name": "Purple Trip",
+          "slug": "purple-trip",
+          "weightBp": 71,
+          "tier": "Mini Grail",
+          "expectedCount": 70.8651,
+          "preview": "/collection/traits/eyes/purple-trip.svg"
+        },
+        {
+          "index": 38,
+          "name": "Blindfold",
+          "slug": "blindfold",
+          "weightBp": 63,
+          "tier": "Mini Grail",
+          "expectedCount": 62.8803,
+          "preview": "/collection/traits/eyes/blindfold.svg"
+        },
+        {
+          "index": 39,
+          "name": "VR",
+          "slug": "vr",
+          "weightBp": 55,
+          "tier": "Mini Grail",
+          "expectedCount": 54.8955,
+          "preview": "/collection/traits/eyes/vr.svg"
+        },
+        {
+          "index": 40,
+          "name": "Gold",
+          "slug": "gold",
+          "weightBp": 40,
+          "tier": "Grail",
+          "expectedCount": 39.924,
+          "preview": "/collection/traits/eyes/gold.svg"
+        },
+        {
+          "index": 41,
+          "name": "Noggles",
+          "slug": "noggles",
+          "weightBp": 33,
+          "tier": "Grail",
+          "expectedCount": 32.9373,
+          "preview": "/collection/traits/eyes/noggles.svg"
+        },
+        {
+          "index": 42,
+          "name": "Mask",
+          "slug": "mask",
+          "weightBp": 26,
+          "tier": "Grail",
+          "expectedCount": 25.9506,
+          "preview": "/collection/traits/eyes/mask.svg"
+        },
+        {
+          "index": 43,
+          "name": "VR Retro",
+          "slug": "vr-retro",
+          "weightBp": 19,
+          "tier": "Grail",
+          "expectedCount": 18.9639,
+          "preview": "/collection/traits/eyes/vr-retro.svg"
+        },
+        {
+          "index": 44,
+          "name": "Laser",
+          "slug": "laser",
+          "weightBp": 12,
+          "tier": "Grail",
+          "expectedCount": 11.9772,
+          "preview": "/collection/traits/eyes/laser.svg"
+        },
+        {
+          "index": 45,
+          "name": "Blind",
+          "slug": "blind",
+          "weightBp": 22,
+          "tier": "Grail",
+          "expectedCount": 21.9582,
+          "preview": "/collection/traits/eyes/blind.svg"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "name": "Ears",
+      "count": 10,
+      "traits": [
+        {
+          "index": 0,
+          "name": "Up",
+          "slug": "up",
+          "weightBp": 1913,
+          "tier": "Common",
+          "expectedCount": 1909.3653,
+          "preview": "/collection/traits/ears/up.svg"
+        },
+        {
+          "index": 1,
+          "name": "Down",
+          "slug": "down",
+          "weightBp": 1840,
+          "tier": "Common",
+          "expectedCount": 1836.504,
+          "preview": "/collection/traits/ears/down.svg"
+        },
+        {
+          "index": 2,
+          "name": "Half Cocked",
+          "slug": "half-cocked",
+          "weightBp": 1627,
+          "tier": "Common",
+          "expectedCount": 1623.9087,
+          "preview": "/collection/traits/ears/half-cocked.svg"
+        },
+        {
+          "index": 3,
+          "name": "Perked",
+          "slug": "perked",
+          "weightBp": 1490,
+          "tier": "Common",
+          "expectedCount": 1487.169,
+          "preview": "/collection/traits/ears/perked.svg"
+        },
+        {
+          "index": 4,
+          "name": "Pinned",
+          "slug": "pinned",
+          "weightBp": 1418,
+          "tier": "Common",
+          "expectedCount": 1415.3058,
+          "preview": "/collection/traits/ears/pinned.svg"
+        },
+        {
+          "index": 5,
+          "name": "Pink",
+          "slug": "pink",
+          "weightBp": 1379,
+          "tier": "Common",
+          "expectedCount": 1376.3799,
+          "preview": "/collection/traits/ears/pink.svg"
+        },
+        {
+          "index": 6,
+          "name": "Bandaged",
+          "slug": "bandaged",
+          "weightBp": 118,
+          "tier": "Mini Grail",
+          "expectedCount": 117.7758,
+          "preview": "/collection/traits/ears/bandaged.svg"
+        },
+        {
+          "index": 7,
+          "name": "Tufted",
+          "slug": "tufted",
+          "weightBp": 105,
+          "tier": "Mini Grail",
+          "expectedCount": 104.8005,
+          "preview": "/collection/traits/ears/tufted.svg"
+        },
+        {
+          "index": 8,
+          "name": "Torn",
+          "slug": "torn",
+          "weightBp": 60,
+          "tier": "Mini Grail",
+          "expectedCount": 59.886,
+          "preview": "/collection/traits/ears/torn.svg"
+        },
+        {
+          "index": 9,
+          "name": "Pierced",
+          "slug": "pierced",
+          "weightBp": 50,
+          "tier": "Grail",
+          "expectedCount": 49.905,
+          "preview": "/collection/traits/ears/pierced.svg"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "name": "Tails",
+      "count": 10,
+      "traits": [
+        {
+          "index": 0,
+          "name": "Ringed",
+          "slug": "ringed",
+          "weightBp": 2636,
+          "tier": "Common",
+          "expectedCount": 2630.9916,
+          "preview": "/collection/traits/tails/ringed.svg"
+        },
+        {
+          "index": 1,
+          "name": "Bushy",
+          "slug": "bushy",
+          "weightBp": 2419,
+          "tier": "Common",
+          "expectedCount": 2414.4039,
+          "preview": "/collection/traits/tails/bushy.svg"
+        },
+        {
+          "index": 2,
+          "name": "Mangy",
+          "slug": "mangy",
+          "weightBp": 2286,
+          "tier": "Common",
+          "expectedCount": 2281.6566,
+          "preview": "/collection/traits/tails/mangy.svg"
+        },
+        {
+          "index": 3,
+          "name": "Droop",
+          "slug": "droop",
+          "weightBp": 2118,
+          "tier": "Common",
+          "expectedCount": 2113.9758,
+          "preview": "/collection/traits/tails/droop.svg"
+        },
+        {
+          "index": 4,
+          "name": "Bandaged",
+          "slug": "bandaged",
+          "weightBp": 191,
+          "tier": "Mini Grail",
+          "expectedCount": 190.6371,
+          "preview": "/collection/traits/tails/bandaged.svg"
+        },
+        {
+          "index": 5,
+          "name": "Gold Band",
+          "slug": "gold-band",
+          "weightBp": 156,
+          "tier": "Mini Grail",
+          "expectedCount": 155.7036,
+          "preview": "/collection/traits/tails/gold-band.svg"
+        },
+        {
+          "index": 6,
+          "name": "Bobbed",
+          "slug": "bobbed",
+          "weightBp": 128,
+          "tier": "Mini Grail",
+          "expectedCount": 127.7568,
+          "preview": "/collection/traits/tails/bobbed.svg"
+        },
+        {
+          "index": 7,
+          "name": "Flame",
+          "slug": "flame",
+          "weightBp": 30,
+          "tier": "Grail",
+          "expectedCount": 29.943,
+          "preview": "/collection/traits/tails/flame.svg"
+        },
+        {
+          "index": 8,
+          "name": "Bone",
+          "slug": "bone",
+          "weightBp": 23,
+          "tier": "Grail",
+          "expectedCount": 22.9563,
+          "preview": "/collection/traits/tails/bone.svg"
+        },
+        {
+          "index": 9,
+          "name": "Glitch",
+          "slug": "glitch",
+          "weightBp": 13,
+          "tier": "Grail",
+          "expectedCount": 12.9753,
+          "preview": "/collection/traits/tails/glitch.svg"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "name": "Masks",
+      "count": 13,
+      "traits": [
+        {
+          "index": 0,
+          "name": "Bandit",
+          "slug": "bandit",
+          "weightBp": 1947,
+          "tier": "Common",
+          "expectedCount": 1943.3007,
+          "preview": "/collection/traits/masks/bandit.svg"
+        },
+        {
+          "index": 1,
+          "name": "Domino",
+          "slug": "domino",
+          "weightBp": 1838,
+          "tier": "Common",
+          "expectedCount": 1834.5078,
+          "preview": "/collection/traits/masks/domino.svg"
+        },
+        {
+          "index": 2,
+          "name": "Heavy",
+          "slug": "heavy",
+          "weightBp": 1731,
+          "tier": "Common",
+          "expectedCount": 1727.7111,
+          "preview": "/collection/traits/masks/heavy.svg"
+        },
+        {
+          "index": 3,
+          "name": "Split",
+          "slug": "split",
+          "weightBp": 1634,
+          "tier": "Common",
+          "expectedCount": 1630.8954,
+          "preview": "/collection/traits/masks/split.svg"
+        },
+        {
+          "index": 4,
+          "name": "Warpaint",
+          "slug": "warpaint",
+          "weightBp": 1450,
+          "tier": "Common",
+          "expectedCount": 1447.245,
+          "preview": "/collection/traits/masks/warpaint.svg"
+        },
+        {
+          "index": 5,
+          "name": "Cracked",
+          "slug": "cracked",
+          "weightBp": 330,
+          "tier": "Mini Grail",
+          "expectedCount": 329.373,
+          "preview": "/collection/traits/masks/cracked.svg"
+        },
+        {
+          "index": 6,
+          "name": "Violet",
+          "slug": "violet",
+          "weightBp": 280,
+          "tier": "Mini Grail",
+          "expectedCount": 279.468,
+          "preview": "/collection/traits/masks/violet.svg"
+        },
+        {
+          "index": 7,
+          "name": "Neon",
+          "slug": "neon",
+          "weightBp": 230,
+          "tier": "Mini Grail",
+          "expectedCount": 229.563,
+          "preview": "/collection/traits/masks/neon.svg"
+        },
+        {
+          "index": 8,
+          "name": "Gilded",
+          "slug": "gilded",
+          "weightBp": 190,
+          "tier": "Mini Grail",
+          "expectedCount": 189.639,
+          "preview": "/collection/traits/masks/gilded.svg"
+        },
+        {
+          "index": 9,
+          "name": "Full",
+          "slug": "full",
+          "weightBp": 170,
+          "tier": "Mini Grail",
+          "expectedCount": 169.677,
+          "preview": "/collection/traits/masks/full.svg"
+        },
+        {
+          "index": 10,
+          "name": "Void",
+          "slug": "void",
+          "weightBp": 120,
+          "tier": "Grail",
+          "expectedCount": 119.772,
+          "preview": "/collection/traits/masks/void.svg"
+        },
+        {
+          "index": 11,
+          "name": "Inverse",
+          "slug": "inverse",
+          "weightBp": 74,
+          "tier": "Grail",
+          "expectedCount": 73.8594,
+          "preview": "/collection/traits/masks/inverse.svg"
+        },
+        {
+          "index": 12,
+          "name": "Unmasked",
+          "slug": "unmasked",
+          "weightBp": 6,
+          "tier": "Grail",
+          "expectedCount": 5.9886,
+          "preview": "/collection/traits/masks/unmasked.svg"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "name": "Hats",
+      "count": 65,
+      "traits": [
+        {
+          "index": 0,
+          "name": "Bare",
+          "slug": "bare",
+          "weightBp": 1320,
+          "tier": "Common",
+          "expectedCount": 1317.492,
+          "preview": "/collection/traits/hats/bare.svg"
+        },
+        {
+          "index": 1,
+          "name": "Backcap",
+          "slug": "backcap",
+          "weightBp": 182,
+          "tier": "Common",
+          "expectedCount": 181.6542,
+          "preview": "/collection/traits/hats/backcap.svg"
+        },
+        {
+          "index": 2,
+          "name": "Band",
+          "slug": "band",
+          "weightBp": 181,
+          "tier": "Common",
+          "expectedCount": 180.6561,
+          "preview": "/collection/traits/hats/band.svg"
+        },
+        {
+          "index": 3,
+          "name": "Bandana",
+          "slug": "bandana",
+          "weightBp": 180,
+          "tier": "Common",
+          "expectedCount": 179.658,
+          "preview": "/collection/traits/hats/bandana.svg"
+        },
+        {
+          "index": 4,
+          "name": "Baseball",
+          "slug": "baseball",
+          "weightBp": 179,
+          "tier": "Common",
+          "expectedCount": 178.6599,
+          "preview": "/collection/traits/hats/baseball.svg"
+        },
+        {
+          "index": 5,
+          "name": "Beanie",
+          "slug": "beanie",
+          "weightBp": 178,
+          "tier": "Common",
+          "expectedCount": 177.6618,
+          "preview": "/collection/traits/hats/beanie.svg"
+        },
+        {
+          "index": 6,
+          "name": "Bow",
+          "slug": "bow",
+          "weightBp": 177,
+          "tier": "Common",
+          "expectedCount": 176.6637,
+          "preview": "/collection/traits/hats/bow.svg"
+        },
+        {
+          "index": 7,
+          "name": "Degen",
+          "slug": "degen",
+          "weightBp": 176,
+          "tier": "Common",
+          "expectedCount": 175.6656,
+          "preview": "/collection/traits/hats/degen.svg"
+        },
+        {
+          "index": 8,
+          "name": "Doo",
+          "slug": "doo",
+          "weightBp": 175,
+          "tier": "Common",
+          "expectedCount": 174.6675,
+          "preview": "/collection/traits/hats/doo.svg"
+        },
+        {
+          "index": 9,
+          "name": "Fez",
+          "slug": "fez",
+          "weightBp": 174,
+          "tier": "Common",
+          "expectedCount": 173.6694,
+          "preview": "/collection/traits/hats/fez.svg"
+        },
+        {
+          "index": 10,
+          "name": "Flip",
+          "slug": "flip",
+          "weightBp": 173,
+          "tier": "Common",
+          "expectedCount": 172.6713,
+          "preview": "/collection/traits/hats/flip.svg"
+        },
+        {
+          "index": 11,
+          "name": "Heart",
+          "slug": "heart",
+          "weightBp": 172,
+          "tier": "Common",
+          "expectedCount": 171.6732,
+          "preview": "/collection/traits/hats/heart.svg"
+        },
+        {
+          "index": 12,
+          "name": "Jeff",
+          "slug": "jeff",
+          "weightBp": 171,
+          "tier": "Common",
+          "expectedCount": 170.6751,
+          "preview": "/collection/traits/hats/jeff.svg"
+        },
+        {
+          "index": 13,
+          "name": "Knit",
+          "slug": "knit",
+          "weightBp": 170,
+          "tier": "Common",
+          "expectedCount": 169.677,
+          "preview": "/collection/traits/hats/knit.svg"
+        },
+        {
+          "index": 14,
+          "name": "Liono",
+          "slug": "liono",
+          "weightBp": 169,
+          "tier": "Common",
+          "expectedCount": 168.6789,
+          "preview": "/collection/traits/hats/liono.svg"
+        },
+        {
+          "index": 15,
+          "name": "Miner",
+          "slug": "miner",
+          "weightBp": 168,
+          "tier": "Common",
+          "expectedCount": 167.6808,
+          "preview": "/collection/traits/hats/miner.svg"
+        },
+        {
+          "index": 16,
+          "name": "Mohawk",
+          "slug": "mohawk",
+          "weightBp": 167,
+          "tier": "Common",
+          "expectedCount": 166.6827,
+          "preview": "/collection/traits/hats/mohawk.svg"
+        },
+        {
+          "index": 17,
+          "name": "Party",
+          "slug": "party",
+          "weightBp": 166,
+          "tier": "Common",
+          "expectedCount": 165.6846,
+          "preview": "/collection/traits/hats/party.svg"
+        },
+        {
+          "index": 18,
+          "name": "Pilot",
+          "slug": "pilot",
+          "weightBp": 165,
+          "tier": "Common",
+          "expectedCount": 164.6865,
+          "preview": "/collection/traits/hats/pilot.svg"
+        },
+        {
+          "index": 19,
+          "name": "Pirate",
+          "slug": "pirate",
+          "weightBp": 164,
+          "tier": "Common",
+          "expectedCount": 163.6884,
+          "preview": "/collection/traits/hats/pirate.svg"
+        },
+        {
+          "index": 20,
+          "name": "Punk",
+          "slug": "punk",
+          "weightBp": 163,
+          "tier": "Common",
+          "expectedCount": 162.6903,
+          "preview": "/collection/traits/hats/punk.svg"
+        },
+        {
+          "index": 21,
+          "name": "Rain",
+          "slug": "rain",
+          "weightBp": 162,
+          "tier": "Common",
+          "expectedCount": 161.6922,
+          "preview": "/collection/traits/hats/rain.svg"
+        },
+        {
+          "index": 22,
+          "name": "Rekt",
+          "slug": "rekt",
+          "weightBp": 161,
+          "tier": "Common",
+          "expectedCount": 160.6941,
+          "preview": "/collection/traits/hats/rekt.svg"
+        },
+        {
+          "index": 23,
+          "name": "Rooster",
+          "slug": "rooster",
+          "weightBp": 160,
+          "tier": "Common",
+          "expectedCount": 159.696,
+          "preview": "/collection/traits/hats/rooster.svg"
+        },
+        {
+          "index": 24,
+          "name": "Safari",
+          "slug": "safari",
+          "weightBp": 159,
+          "tier": "Common",
+          "expectedCount": 158.6979,
+          "preview": "/collection/traits/hats/safari.svg"
+        },
+        {
+          "index": 25,
+          "name": "Santa",
+          "slug": "santa",
+          "weightBp": 158,
+          "tier": "Common",
+          "expectedCount": 157.6998,
+          "preview": "/collection/traits/hats/santa.svg"
+        },
+        {
+          "index": 26,
+          "name": "Sombrero",
+          "slug": "sombrero",
+          "weightBp": 157,
+          "tier": "Common",
+          "expectedCount": 156.7017,
+          "preview": "/collection/traits/hats/sombrero.svg"
+        },
+        {
+          "index": 27,
+          "name": "Sprout",
+          "slug": "sprout",
+          "weightBp": 156,
+          "tier": "Common",
+          "expectedCount": 155.7036,
+          "preview": "/collection/traits/hats/sprout.svg"
+        },
+        {
+          "index": 28,
+          "name": "Tassle",
+          "slug": "tassle",
+          "weightBp": 155,
+          "tier": "Common",
+          "expectedCount": 154.7055,
+          "preview": "/collection/traits/hats/tassle.svg"
+        },
+        {
+          "index": 29,
+          "name": "Trash Lid",
+          "slug": "trash-lid",
+          "weightBp": 154,
+          "tier": "Common",
+          "expectedCount": 153.7074,
+          "preview": "/collection/traits/hats/trash-lid.svg"
+        },
+        {
+          "index": 30,
+          "name": "Bin Bag",
+          "slug": "bin-bag",
+          "weightBp": 153,
+          "tier": "Common",
+          "expectedCount": 152.7093,
+          "preview": "/collection/traits/hats/bin-bag.svg"
+        },
+        {
+          "index": 31,
+          "name": "Takeout",
+          "slug": "takeout",
+          "weightBp": 152,
+          "tier": "Common",
+          "expectedCount": 151.7112,
+          "preview": "/collection/traits/hats/takeout.svg"
+        },
+        {
+          "index": 32,
+          "name": "Newspaper",
+          "slug": "newspaper",
+          "weightBp": 151,
+          "tier": "Common",
+          "expectedCount": 150.7131,
+          "preview": "/collection/traits/hats/newspaper.svg"
+        },
+        {
+          "index": 33,
+          "name": "Banana Peel",
+          "slug": "banana-peel",
+          "weightBp": 150,
+          "tier": "Common",
+          "expectedCount": 149.715,
+          "preview": "/collection/traits/hats/banana-peel.svg"
+        },
+        {
+          "index": 34,
+          "name": "Traffic Cone",
+          "slug": "traffic-cone",
+          "weightBp": 149,
+          "tier": "Common",
+          "expectedCount": 148.7169,
+          "preview": "/collection/traits/hats/traffic-cone.svg"
+        },
+        {
+          "index": 35,
+          "name": "Headphones Red",
+          "slug": "headphones-red",
+          "weightBp": 148,
+          "tier": "Common",
+          "expectedCount": 147.7188,
+          "preview": "/collection/traits/hats/headphones-red.svg"
+        },
+        {
+          "index": 36,
+          "name": "Headphones Blue",
+          "slug": "headphones-blue",
+          "weightBp": 147,
+          "tier": "Common",
+          "expectedCount": 146.7207,
+          "preview": "/collection/traits/hats/headphones-blue.svg"
+        },
+        {
+          "index": 37,
+          "name": "Knit Lazy Rainbow",
+          "slug": "knit-lazy-rainbow",
+          "weightBp": 146,
+          "tier": "Common",
+          "expectedCount": 145.7226,
+          "preview": "/collection/traits/hats/knit-lazy-rainbow.svg"
+        },
+        {
+          "index": 38,
+          "name": "Top Hat",
+          "slug": "top-hat",
+          "weightBp": 144,
+          "tier": "Common",
+          "expectedCount": 143.7264,
+          "preview": "/collection/traits/hats/top-hat.svg"
+        },
+        {
+          "index": 39,
+          "name": "Half Shaved Cap",
+          "slug": "half-shaved-cap",
+          "weightBp": 143,
+          "tier": "Common",
+          "expectedCount": 142.7283,
+          "preview": "/collection/traits/hats/half-shaved-cap.svg"
+        },
+        {
+          "index": 40,
+          "name": "Cowboy",
+          "slug": "cowboy",
+          "weightBp": 142,
+          "tier": "Common",
+          "expectedCount": 141.7302,
+          "preview": "/collection/traits/hats/cowboy.svg"
+        },
+        {
+          "index": 41,
+          "name": "Military Olive",
+          "slug": "military-olive",
+          "weightBp": 141,
+          "tier": "Common",
+          "expectedCount": 140.7321,
+          "preview": "/collection/traits/hats/military-olive.svg"
+        },
+        {
+          "index": 42,
+          "name": "McD Cap",
+          "slug": "mcd-cap",
+          "weightBp": 140,
+          "tier": "Common",
+          "expectedCount": 139.734,
+          "preview": "/collection/traits/hats/mcd-cap.svg"
+        },
+        {
+          "index": 43,
+          "name": "Green Frog Beanie",
+          "slug": "green-frog-beanie",
+          "weightBp": 139,
+          "tier": "Common",
+          "expectedCount": 138.7359,
+          "preview": "/collection/traits/hats/green-frog-beanie.svg"
+        },
+        {
+          "index": 44,
+          "name": "Bucket",
+          "slug": "bucket",
+          "weightBp": 138,
+          "tier": "Common",
+          "expectedCount": 137.7378,
+          "preview": "/collection/traits/hats/bucket.svg"
+        },
+        {
+          "index": 45,
+          "name": "Faux Fur",
+          "slug": "faux-fur",
+          "weightBp": 137,
+          "tier": "Common",
+          "expectedCount": 136.7397,
+          "preview": "/collection/traits/hats/faux-fur.svg"
+        },
+        {
+          "index": 46,
+          "name": "Backwards Cap Leather",
+          "slug": "backwards-cap-leather",
+          "weightBp": 136,
+          "tier": "Common",
+          "expectedCount": 135.7416,
+          "preview": "/collection/traits/hats/backwards-cap-leather.svg"
+        },
+        {
+          "index": 47,
+          "name": "Knit Yellow",
+          "slug": "knit-yellow",
+          "weightBp": 135,
+          "tier": "Common",
+          "expectedCount": 134.7435,
+          "preview": "/collection/traits/hats/knit-yellow.svg"
+        },
+        {
+          "index": 48,
+          "name": "Knit White",
+          "slug": "knit-white",
+          "weightBp": 134,
+          "tier": "Common",
+          "expectedCount": 133.7454,
+          "preview": "/collection/traits/hats/knit-white.svg"
+        },
+        {
+          "index": 49,
+          "name": "Backwards Cap White",
+          "slug": "backwards-cap-white",
+          "weightBp": 133,
+          "tier": "Common",
+          "expectedCount": 132.7473,
+          "preview": "/collection/traits/hats/backwards-cap-white.svg"
+        },
+        {
+          "index": 50,
+          "name": "Bandana Front",
+          "slug": "bandana-front",
+          "weightBp": 115,
+          "tier": "Mini Grail",
+          "expectedCount": 114.7815,
+          "preview": "/collection/traits/hats/bandana-front.svg"
+        },
+        {
+          "index": 51,
+          "name": "Punk Black",
+          "slug": "punk-black",
+          "weightBp": 108,
+          "tier": "Mini Grail",
+          "expectedCount": 107.7948,
+          "preview": "/collection/traits/hats/punk-black.svg"
+        },
+        {
+          "index": 52,
+          "name": "Gaming Headset",
+          "slug": "gaming-headset",
+          "weightBp": 101,
+          "tier": "Mini Grail",
+          "expectedCount": 100.8081,
+          "preview": "/collection/traits/hats/gaming-headset.svg"
+        },
+        {
+          "index": 53,
+          "name": "Wizard",
+          "slug": "wizard",
+          "weightBp": 94,
+          "tier": "Mini Grail",
+          "expectedCount": 93.8214,
+          "preview": "/collection/traits/hats/wizard.svg"
+        },
+        {
+          "index": 54,
+          "name": "Crown",
+          "slug": "crown",
+          "weightBp": 87,
+          "tier": "Mini Grail",
+          "expectedCount": 86.8347,
+          "preview": "/collection/traits/hats/crown.svg"
+        },
+        {
+          "index": 55,
+          "name": "Halo",
+          "slug": "halo",
+          "weightBp": 80,
+          "tier": "Mini Grail",
+          "expectedCount": 79.848,
+          "preview": "/collection/traits/hats/halo.svg"
+        },
+        {
+          "index": 56,
+          "name": "A Cap White",
+          "slug": "a-cap-white",
+          "weightBp": 73,
+          "tier": "Mini Grail",
+          "expectedCount": 72.8613,
+          "preview": "/collection/traits/hats/a-cap-white.svg"
+        },
+        {
+          "index": 57,
+          "name": "A Cap",
+          "slug": "a-cap",
+          "weightBp": 66,
+          "tier": "Mini Grail",
+          "expectedCount": 65.8746,
+          "preview": "/collection/traits/hats/a-cap.svg"
+        },
+        {
+          "index": 58,
+          "name": "Football Orange",
+          "slug": "football-orange",
+          "weightBp": 59,
+          "tier": "Mini Grail",
+          "expectedCount": 58.8879,
+          "preview": "/collection/traits/hats/football-orange.svg"
+        },
+        {
+          "index": 59,
+          "name": "Football Green",
+          "slug": "football-green",
+          "weightBp": 52,
+          "tier": "Mini Grail",
+          "expectedCount": 51.9012,
+          "preview": "/collection/traits/hats/football-green.svg"
+        },
+        {
+          "index": 60,
+          "name": "Hulk",
+          "slug": "hulk",
+          "weightBp": 45,
+          "tier": "Mini Grail",
+          "expectedCount": 44.9145,
+          "preview": "/collection/traits/hats/hulk.svg"
+        },
+        {
+          "index": 61,
+          "name": "Spartan Helmet",
+          "slug": "spartan-helmet",
+          "weightBp": 25,
+          "tier": "Grail",
+          "expectedCount": 24.9525,
+          "preview": "/collection/traits/hats/spartan-helmet.svg"
+        },
+        {
+          "index": 62,
+          "name": "Captain America",
+          "slug": "captain-america",
+          "weightBp": 20,
+          "tier": "Grail",
+          "expectedCount": 19.962,
+          "preview": "/collection/traits/hats/captain-america.svg"
+        },
+        {
+          "index": 63,
+          "name": "Batman",
+          "slug": "batman",
+          "weightBp": 15,
+          "tier": "Grail",
+          "expectedCount": 14.9715,
+          "preview": "/collection/traits/hats/batman.svg"
+        },
+        {
+          "index": 64,
+          "name": "Spidey",
+          "slug": "spidey",
+          "weightBp": 10,
+          "tier": "Grail",
+          "expectedCount": 9.981,
+          "preview": "/collection/traits/hats/spidey.svg"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "name": "Special",
+      "count": 16,
+      "traits": [
+        {
+          "index": 0,
+          "name": "None",
+          "slug": "none",
+          "weightBp": 2772,
+          "tier": "Common",
+          "expectedCount": 2766.7332,
+          "preview": "/collection/traits/special/none.svg"
+        },
+        {
+          "index": 1,
+          "name": "Bubble",
+          "slug": "bubble",
+          "weightBp": 930,
+          "tier": "Common",
+          "expectedCount": 928.233,
+          "preview": "/collection/traits/special/bubble.svg"
+        },
+        {
+          "index": 2,
+          "name": "Cig",
+          "slug": "cig",
+          "weightBp": 925,
+          "tier": "Common",
+          "expectedCount": 923.2425,
+          "preview": "/collection/traits/special/cig.svg"
+        },
+        {
+          "index": 3,
+          "name": "Pipe",
+          "slug": "pipe",
+          "weightBp": 920,
+          "tier": "Common",
+          "expectedCount": 918.252,
+          "preview": "/collection/traits/special/pipe.svg"
+        },
+        {
+          "index": 4,
+          "name": "Puke",
+          "slug": "puke",
+          "weightBp": 915,
+          "tier": "Common",
+          "expectedCount": 913.2615,
+          "preview": "/collection/traits/special/puke.svg"
+        },
+        {
+          "index": 5,
+          "name": "Vape",
+          "slug": "vape",
+          "weightBp": 910,
+          "tier": "Common",
+          "expectedCount": 908.271,
+          "preview": "/collection/traits/special/vape.svg"
+        },
+        {
+          "index": 6,
+          "name": "Toothpick",
+          "slug": "toothpick",
+          "weightBp": 900,
+          "tier": "Common",
+          "expectedCount": 898.29,
+          "preview": "/collection/traits/special/toothpick.svg"
+        },
+        {
+          "index": 7,
+          "name": "Matchstick",
+          "slug": "matchstick",
+          "weightBp": 941,
+          "tier": "Common",
+          "expectedCount": 939.2121,
+          "preview": "/collection/traits/special/matchstick.svg"
+        },
+        {
+          "index": 8,
+          "name": "Tongue Out",
+          "slug": "tongue-out",
+          "weightBp": 160,
+          "tier": "Mini Grail",
+          "expectedCount": 159.696,
+          "preview": "/collection/traits/special/tongue-out.svg"
+        },
+        {
+          "index": 9,
+          "name": "Cigar",
+          "slug": "cigar",
+          "weightBp": 212,
+          "tier": "Mini Grail",
+          "expectedCount": 211.5972,
+          "preview": "/collection/traits/special/cigar.svg"
+        },
+        {
+          "index": 10,
+          "name": "Rose",
+          "slug": "rose",
+          "weightBp": 94,
+          "tier": "Mini Grail",
+          "expectedCount": 93.8214,
+          "preview": "/collection/traits/special/rose.svg"
+        },
+        {
+          "index": 11,
+          "name": "Gold Grill",
+          "slug": "gold-grill",
+          "weightBp": 83,
+          "tier": "Mini Grail",
+          "expectedCount": 82.8423,
+          "preview": "/collection/traits/special/gold-grill.svg"
+        },
+        {
+          "index": 12,
+          "name": "Loot Sack",
+          "slug": "loot-sack",
+          "weightBp": 55,
+          "tier": "Mini Grail",
+          "expectedCount": 54.8955,
+          "preview": "/collection/traits/special/loot-sack.svg"
+        },
+        {
+          "index": 13,
+          "name": "Pigeon Companion",
+          "slug": "pigeon-companion",
+          "weightBp": 90,
+          "tier": "Mini Grail",
+          "expectedCount": 89.829,
+          "preview": "/collection/traits/special/pigeon-companion.svg"
+        },
+        {
+          "index": 14,
+          "name": "Trash Can",
+          "slug": "trash-can",
+          "weightBp": 45,
+          "tier": "Grail",
+          "expectedCount": 44.9145,
+          "preview": "/collection/traits/special/trash-can.svg"
+        },
+        {
+          "index": 15,
+          "name": "Rat Companion",
+          "slug": "rat-companion",
+          "weightBp": 48,
+          "tier": "Grail",
+          "expectedCount": 47.9088,
+          "preview": "/collection/traits/special/rat-companion.svg"
+        }
+      ]
+    }
+  ],
+  "legends": [
+    {
+      "index": 0,
+      "name": "Red Panda",
+      "slug": "red-panda",
+      "preview": "/collection/legends/01-red-panda.svg",
+      "note": "The cousin. Rust coat, cream face with rust tear-marks, ringed tail."
+    },
+    {
+      "index": 1,
+      "name": "Panda",
+      "slug": "panda",
+      "preview": "/collection/legends/02-panda.svg",
+      "note": "The mask at max contrast — black tear-drop patches on a white face."
+    },
+    {
+      "index": 2,
+      "name": "Pomeranian",
+      "slug": "pomeranian",
+      "preview": "/collection/legends/03-pomeranian.svg",
+      "note": "Fluffy WHITE pup in the blue Arc cap with a curled plume tail. Our chain, worn by a dog."
+    },
+    {
+      "index": 3,
+      "name": "Skunk",
+      "slug": "skunk",
+      "preview": "/collection/legends/04-skunk.svg",
+      "note": "Black coat, white blaze splitting the face, twin dorsal stripes, plume tail."
+    },
+    {
+      "index": 4,
+      "name": "Badger",
+      "slug": "badger",
+      "preview": "/collection/legends/05-badger.svg",
+      "note": "White head, twin black stripes through the eyes — the double mask."
+    },
+    {
+      "index": 5,
+      "name": "Cheetah",
+      "slug": "cheetah",
+      "preview": "/collection/legends/06-cheetah.svg",
+      "note": "Tan spotted coat, black tear-lines from the eyes — the mask, by biology."
+    },
+    {
+      "index": 6,
+      "name": "Fox",
+      "slug": "fox",
+      "preview": "/collection/legends/07-fox.svg",
+      "note": "Orange coat, black ears + socks, white cheeks, white-tipped bushy tail."
+    },
+    {
+      "index": 7,
+      "name": "Wolf",
+      "slug": "wolf",
+      "preview": "/collection/legends/08-wolf.svg",
+      "note": "Slate coat, dark eye-mask, light muzzle + fuller ruff, pointed ears."
+    },
+    {
+      "index": 8,
+      "name": "Silver",
+      "slug": "silver",
+      "preview": "/collection/legends/09-silver.svg",
+      "note": "The raccoon in chrome — bright silver coat with sheen, bandit mask intact."
+    },
+    {
+      "index": 9,
+      "name": "Chestnut",
+      "slug": "chestnut",
+      "preview": "/collection/legends/10-chestnut.svg",
+      "note": "The raccoon in a rich reddish-brown morph. Mask intact."
+    },
+    {
+      "index": 10,
+      "name": "THC Mix",
+      "slug": "thc-mix",
+      "preview": "/collection/legends/11-thc-mix.svg",
+      "note": "The crossover — our masked, ring-tailed base with cat ears + whiskers."
+    },
+    {
+      "index": 11,
+      "name": "Schnoodle",
+      "slug": "schnoodle",
+      "preview": "/collection/legends/12-schnoodle.svg",
+      "note": "Brown curly pup, floppy ears, scruffy beard, wiry curled tail, eyepatch + pirate hat."
+    },
+    {
+      "index": 12,
+      "name": "Circle",
+      "slug": "circle",
+      "preview": "/collection/legends/13-circle.svg",
+      "note": "The raccoon carrying the Circle gradient end to end — cyan through mint into violet."
+    },
+    {
+      "index": 13,
+      "name": "CatBatHatRat",
+      "slug": "catbathatrat",
+      "preview": "/collection/legends/14-catbathatrat.svg",
+      "note": "White rat with a grey face in a blue beanie, a bat flying overhead."
+    },
+    {
+      "index": 14,
+      "name": "Blueprint",
+      "slug": "blueprint",
+      "preview": "/collection/legends/15-blueprint.svg",
+      "note": "The raccoon as a technical drawing — pale blueprint blues on deep royal blue. After OCAS #157."
+    },
+    {
+      "index": 15,
+      "name": "Spidey",
+      "slug": "spidey",
+      "preview": "/collection/legends/16-spidey.svg",
+      "note": "Full Spider-Man costume — red torso, blue legs, web lines, and our full-face web mask. After Suited Riot #1208."
+    },
+    {
+      "index": 16,
+      "name": "Holy",
+      "slug": "holy",
+      "preview": "/collection/legends/17-holy.svg",
+      "note": "The saint. Warm white coat, golden inner ears, a glowing halo, and a soft golden aura — floating just off the ground."
+    },
+    {
+      "index": 17,
+      "name": "Candy Cane",
+      "slug": "candy-cane",
+      "preview": "/collection/legends/18-candy-cane.svg",
+      "note": "White coat under bright-red VERTICAL stripes — the one colourway that runs top-to-bottom. Mask + amber eyes intact."
+    },
+    {
+      "index": 18,
+      "name": "Mr A",
+      "slug": "mr-a",
+      "preview": "/collection/legends/19-mr-a.svg",
+      "note": "The CEO. A big round bald HUMAN head on the raccoon body, bandit mask worn as skin pigment, brownish-gray old-man hair at the temples over a shining dome. Light-purple fur on the Aurora Wash."
+    }
+  ],
+  "compatibility": {
+    "noEarsHatIndices": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64
+    ],
+    "leftOnlyHatIndices": [
+      9,
+      38,
+      39,
+      41,
+      42,
+      43,
+      44,
+      47,
+      48
+    ],
+    "noEarsPairs": [
+      [
+        54,
+        4
+      ]
+    ]
+  },
+  "fixtures": [
+    {
+      "id": 1,
+      "traits": [
+        6,
+        10,
+        30,
+        5,
+        1,
+        2,
+        30,
+        0
+      ],
+      "preview": "/collection/fixtures/token-0001.svg"
+    },
+    {
+      "id": 2,
+      "traits": [
+        22,
+        1,
+        14,
+        1,
+        2,
+        6,
+        61,
+        0
+      ],
+      "preview": "/collection/fixtures/token-0002.svg"
+    },
+    {
+      "id": 3,
+      "traits": [
+        20,
+        6,
+        16,
+        2,
+        3,
+        2,
+        0,
+        0
+      ],
+      "preview": "/collection/fixtures/token-0003.svg"
+    },
+    {
+      "id": 4,
+      "traits": [
+        2,
+        4,
+        4,
+        3,
+        0,
+        1,
+        0,
+        1
+      ],
+      "preview": "/collection/fixtures/token-0004.svg"
+    },
+    {
+      "id": 5,
+      "traits": [
+        9,
+        8,
+        28,
+        1,
+        3,
+        2,
+        0,
+        0
+      ],
+      "preview": "/collection/fixtures/token-0005.svg"
+    },
+    {
+      "id": 6,
+      "traits": [
+        14,
+        4,
+        37,
+        1,
+        0,
+        4,
+        45,
+        7
+      ],
+      "preview": "/collection/fixtures/token-0006.svg"
+    },
+    {
+      "id": 7,
+      "traits": [
+        17,
+        6,
+        25,
+        1,
+        7,
+        2,
+        21,
+        1
+      ],
+      "preview": "/collection/fixtures/token-0007.svg"
+    },
+    {
+      "id": 8,
+      "traits": [
+        23,
+        7,
+        5,
+        0,
+        3,
+        0,
+        26,
+        5
+      ],
+      "preview": "/collection/fixtures/token-0008.svg"
+    },
+    {
+      "id": 9,
+      "traits": [
+        12,
+        5,
+        6,
+        4,
+        5,
+        4,
+        35,
+        0
+      ],
+      "preview": "/collection/fixtures/token-0009.svg"
+    },
+    {
+      "id": 10,
+      "traits": [
+        4,
+        7,
+        8,
+        5,
+        3,
+        1,
+        0,
+        7
+      ],
+      "preview": "/collection/fixtures/token-0010.svg"
+    },
+    {
+      "id": 11,
+      "traits": [
+        24,
+        4,
+        11,
+        3,
+        0,
+        1,
+        34,
+        8
+      ],
+      "preview": "/collection/fixtures/token-0011.svg"
+    },
+    {
+      "id": 12,
+      "traits": [
+        19,
+        8,
+        15,
+        4,
+        1,
+        7,
+        44,
+        9
+      ],
+      "preview": "/collection/fixtures/token-0012.svg"
+    },
+    {
+      "id": 13,
+      "traits": [
+        8,
+        10,
+        21,
+        4,
+        1,
+        6,
+        31,
+        3
+      ],
+      "preview": "/collection/fixtures/token-0013.svg"
+    },
+    {
+      "id": 14,
+      "traits": [
+        19,
+        3,
+        6,
+        4,
+        2,
+        4,
+        0,
+        1
+      ],
+      "preview": "/collection/fixtures/token-0014.svg"
+    },
+    {
+      "id": 15,
+      "traits": [
+        17,
+        14,
+        0,
+        2,
+        0,
+        3,
+        47,
+        1
+      ],
+      "preview": "/collection/fixtures/token-0015.svg"
+    },
+    {
+      "id": 16,
+      "traits": [
+        9,
+        7,
+        13,
+        4,
+        1,
+        2,
+        3,
+        5
+      ],
+      "preview": "/collection/fixtures/token-0016.svg"
+    }
+  ],
+  "status": "PRELAUNCH"
+}

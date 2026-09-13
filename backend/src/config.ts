@@ -1,6 +1,11 @@
 import "dotenv/config";
 import { z } from "zod";
 
+const optionalAddress = z.preprocess(
+  (value) => value === "" ? undefined : value,
+  z.string().regex(/^0x[a-fA-F0-9]{40}$/).optional(),
+);
+
 const schema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
   PORT: z.coerce.number().int().positive().default(4000),
@@ -21,6 +26,11 @@ const schema = z.object({
   R2_PRIVATE_BUCKET: z.string().optional(),
   R2_PUBLIC_BUCKET: z.string().optional(),
   R2_PUBLIC_BASE_URL: z.string().url().optional(),
+  ARC_RPC_URL: z.string().url().default("https://rpc.testnet.arc.network"),
+  ARC_CHAIN_ID: z.coerce.number().int().positive().default(5042002),
+  ARC_DEPLOYMENT_BLOCK: z.coerce.number().int().nonnegative().default(0),
+  MASKBORN_CONTRACT_ADDRESS: optionalAddress,
+  MASKBORN_NAMES_ADDRESS: optionalAddress,
 }).superRefine((value, ctx) => {
   const r2Values = [
     value.R2_ACCOUNT_ID,

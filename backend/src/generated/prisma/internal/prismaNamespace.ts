@@ -401,6 +401,8 @@ export const ModelName = {
   SocialAccount: 'SocialAccount',
   Session: 'Session',
   Wallet: 'Wallet',
+  WalletChallenge: 'WalletChallenge',
+  WalletSession: 'WalletSession',
   Application: 'Application',
   Draft: 'Draft',
   DraftRevision: 'DraftRevision',
@@ -434,7 +436,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "socialAccount" | "session" | "wallet" | "application" | "draft" | "draftRevision" | "submission" | "submissionAccessory" | "submissionStatusEvent" | "vote" | "voteEvent" | "voteRestriction" | "riskEvent" | "galleryEntry" | "feeShare" | "tradeFeeEvent" | "creatorAccrual" | "payout" | "payoutItem" | "idempotencyRecord" | "adminAuditLog"
+    modelProps: "user" | "socialAccount" | "session" | "wallet" | "walletChallenge" | "walletSession" | "application" | "draft" | "draftRevision" | "submission" | "submissionAccessory" | "submissionStatusEvent" | "vote" | "voteEvent" | "voteRestriction" | "riskEvent" | "galleryEntry" | "feeShare" | "tradeFeeEvent" | "creatorAccrual" | "payout" | "payoutItem" | "idempotencyRecord" | "adminAuditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -731,6 +733,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.WalletCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.WalletCountAggregateOutputType> | number
+        }
+      }
+    }
+    WalletChallenge: {
+      payload: Prisma.$WalletChallengePayload<ExtArgs>
+      fields: Prisma.WalletChallengeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WalletChallengeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletChallengePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WalletChallengeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletChallengePayload>
+        }
+        findFirst: {
+          args: Prisma.WalletChallengeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletChallengePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WalletChallengeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletChallengePayload>
+        }
+        findMany: {
+          args: Prisma.WalletChallengeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletChallengePayload>[]
+        }
+        create: {
+          args: Prisma.WalletChallengeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletChallengePayload>
+        }
+        createMany: {
+          args: Prisma.WalletChallengeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WalletChallengeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletChallengePayload>[]
+        }
+        delete: {
+          args: Prisma.WalletChallengeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletChallengePayload>
+        }
+        update: {
+          args: Prisma.WalletChallengeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletChallengePayload>
+        }
+        deleteMany: {
+          args: Prisma.WalletChallengeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WalletChallengeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WalletChallengeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletChallengePayload>[]
+        }
+        upsert: {
+          args: Prisma.WalletChallengeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletChallengePayload>
+        }
+        aggregate: {
+          args: Prisma.WalletChallengeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWalletChallenge>
+        }
+        groupBy: {
+          args: Prisma.WalletChallengeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WalletChallengeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WalletChallengeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WalletChallengeCountAggregateOutputType> | number
+        }
+      }
+    }
+    WalletSession: {
+      payload: Prisma.$WalletSessionPayload<ExtArgs>
+      fields: Prisma.WalletSessionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WalletSessionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletSessionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WalletSessionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletSessionPayload>
+        }
+        findFirst: {
+          args: Prisma.WalletSessionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletSessionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WalletSessionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletSessionPayload>
+        }
+        findMany: {
+          args: Prisma.WalletSessionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletSessionPayload>[]
+        }
+        create: {
+          args: Prisma.WalletSessionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletSessionPayload>
+        }
+        createMany: {
+          args: Prisma.WalletSessionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WalletSessionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletSessionPayload>[]
+        }
+        delete: {
+          args: Prisma.WalletSessionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletSessionPayload>
+        }
+        update: {
+          args: Prisma.WalletSessionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletSessionPayload>
+        }
+        deleteMany: {
+          args: Prisma.WalletSessionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WalletSessionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WalletSessionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletSessionPayload>[]
+        }
+        upsert: {
+          args: Prisma.WalletSessionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletSessionPayload>
+        }
+        aggregate: {
+          args: Prisma.WalletSessionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWalletSession>
+        }
+        groupBy: {
+          args: Prisma.WalletSessionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WalletSessionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WalletSessionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WalletSessionCountAggregateOutputType> | number
         }
       }
     }
@@ -2159,6 +2309,35 @@ export const WalletScalarFieldEnum = {
 export type WalletScalarFieldEnum = (typeof WalletScalarFieldEnum)[keyof typeof WalletScalarFieldEnum]
 
 
+export const WalletChallengeScalarFieldEnum = {
+  id: 'id',
+  address: 'address',
+  normalized: 'normalized',
+  chainId: 'chainId',
+  nonceHash: 'nonceHash',
+  messageHash: 'messageHash',
+  expiresAt: 'expiresAt',
+  usedAt: 'usedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type WalletChallengeScalarFieldEnum = (typeof WalletChallengeScalarFieldEnum)[keyof typeof WalletChallengeScalarFieldEnum]
+
+
+export const WalletSessionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  walletId: 'walletId',
+  tokenHash: 'tokenHash',
+  expiresAt: 'expiresAt',
+  revokedAt: 'revokedAt',
+  lastSeenAt: 'lastSeenAt',
+  createdAt: 'createdAt'
+} as const
+
+export type WalletSessionScalarFieldEnum = (typeof WalletSessionScalarFieldEnum)[keyof typeof WalletSessionScalarFieldEnum]
+
+
 export const ApplicationScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -2570,6 +2749,20 @@ export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'Int[]'
+ */
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
  * Reference to a field of type 'Json'
  */
 export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
@@ -2608,20 +2801,6 @@ export type EnumSubmissionKindFieldRefInput<$PrismaModel> = FieldRefInputType<$P
  * Reference to a field of type 'SubmissionKind[]'
  */
 export type ListEnumSubmissionKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubmissionKind[]'>
-    
-
-
-/**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-/**
- * Reference to a field of type 'Int[]'
- */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
@@ -2933,6 +3112,8 @@ export type GlobalOmitConfig = {
   socialAccount?: Prisma.SocialAccountOmit
   session?: Prisma.SessionOmit
   wallet?: Prisma.WalletOmit
+  walletChallenge?: Prisma.WalletChallengeOmit
+  walletSession?: Prisma.WalletSessionOmit
   application?: Prisma.ApplicationOmit
   draft?: Prisma.DraftOmit
   draftRevision?: Prisma.DraftRevisionOmit

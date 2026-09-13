@@ -551,14 +551,6 @@ export type EnumSubmissionKindFieldUpdateOperationsInput = {
   set?: $Enums.SubmissionKind
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type DraftCreateNestedOneWithoutRevisionsInput = {
   create?: Prisma.XOR<Prisma.DraftCreateWithoutRevisionsInput, Prisma.DraftUncheckedCreateWithoutRevisionsInput>
   connectOrCreate?: Prisma.DraftCreateOrConnectWithoutRevisionsInput

@@ -16,6 +16,7 @@ const navItems = [
   { href: "/draw", label: "Draw", primary: false },
   { href: "/apply", label: "Apply", primary: true },
   { href: "/community", label: "Community gallery", primary: false },
+  { href: "/agents", label: "Agents", primary: true },
 ];
 
 export function SiteHeader() {

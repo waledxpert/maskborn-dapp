@@ -9,7 +9,7 @@ type CurrentUser = {
   displayName: string | null;
   avatarUrl: string | null;
   socialAccounts: Array<{ provider: "X_MANUAL" | "DISCORD"; username: string; verificationState: string }>;
-  wallets: Array<{ id: string; chain: "EVM" | "SOLANA"; address: string; isPrimary: boolean }>;
+  wallets: Array<{ id: string; chain: "EVM" | "SOLANA"; address: string; isPrimary: boolean; verifiedAt: string | null }>;
 };
 
 export function useCurrentUser() {

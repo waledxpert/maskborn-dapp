@@ -38,6 +38,16 @@ export type Session = Prisma.SessionModel
  */
 export type Wallet = Prisma.WalletModel
 /**
+ * Model WalletChallenge
+ * 
+ */
+export type WalletChallenge = Prisma.WalletChallengeModel
+/**
+ * Model WalletSession
+ * 
+ */
+export type WalletSession = Prisma.WalletSessionModel
+/**
  * Model Application
  * 
  */

@@ -37,6 +37,18 @@ describe("API shell", () => {
     expect(response.body.error.requestId).toBeTruthy();
   });
 
+  it("reports agent deployment status without inventing a collection address", async () => {
+    const response = await request(app).get("/api/agents/status");
+    expect(response.status).toBe(200);
+    expect(response.body).toMatchObject({
+      configured: false,
+      collectionAddress: null,
+      chainId: 5042002,
+      phase: 1,
+      awakening: "preview",
+    });
+  });
+
   it("keeps public viewing open but rejects unauthenticated actions", async () => {
     const response = await request(app)
       .put("/api/submissions/example/vote")
