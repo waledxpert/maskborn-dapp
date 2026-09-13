@@ -689,6 +689,8 @@ model TradeFeeEvent {
   tokenContract   String
   tokenId         String
   currency        String
+  currencySymbol  String?
+  currencyDecimals Int?
   grossAmount     Decimal  @db.Decimal(78, 0)
   platformFee     Decimal  @db.Decimal(78, 0)
   blockNumber     BigInt
@@ -722,6 +724,8 @@ model Payout {
   walletId    String
   chainId     Int
   currency    String
+  currencySymbol String?
+  currencyDecimals Int?
   totalAmount Decimal      @db.Decimal(78, 0)
   status      PayoutStatus @default(PENDING)
   txHash      String?

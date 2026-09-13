@@ -28,11 +28,13 @@ export type AggregatePayout = {
 
 export type PayoutAvgAggregateOutputType = {
   chainId: number | null
+  currencyDecimals: number | null
   totalAmount: runtime.Decimal | null
 }
 
 export type PayoutSumAggregateOutputType = {
   chainId: number | null
+  currencyDecimals: number | null
   totalAmount: runtime.Decimal | null
 }
 
@@ -42,6 +44,8 @@ export type PayoutMinAggregateOutputType = {
   walletId: string | null
   chainId: number | null
   currency: string | null
+  currencySymbol: string | null
+  currencyDecimals: number | null
   totalAmount: runtime.Decimal | null
   status: $Enums.PayoutStatus | null
   txHash: string | null
@@ -56,6 +60,8 @@ export type PayoutMaxAggregateOutputType = {
   walletId: string | null
   chainId: number | null
   currency: string | null
+  currencySymbol: string | null
+  currencyDecimals: number | null
   totalAmount: runtime.Decimal | null
   status: $Enums.PayoutStatus | null
   txHash: string | null
@@ -70,6 +76,8 @@ export type PayoutCountAggregateOutputType = {
   walletId: number
   chainId: number
   currency: number
+  currencySymbol: number
+  currencyDecimals: number
   totalAmount: number
   status: number
   txHash: number
@@ -82,11 +90,13 @@ export type PayoutCountAggregateOutputType = {
 
 export type PayoutAvgAggregateInputType = {
   chainId?: true
+  currencyDecimals?: true
   totalAmount?: true
 }
 
 export type PayoutSumAggregateInputType = {
   chainId?: true
+  currencyDecimals?: true
   totalAmount?: true
 }
 
@@ -96,6 +106,8 @@ export type PayoutMinAggregateInputType = {
   walletId?: true
   chainId?: true
   currency?: true
+  currencySymbol?: true
+  currencyDecimals?: true
   totalAmount?: true
   status?: true
   txHash?: true
@@ -110,6 +122,8 @@ export type PayoutMaxAggregateInputType = {
   walletId?: true
   chainId?: true
   currency?: true
+  currencySymbol?: true
+  currencyDecimals?: true
   totalAmount?: true
   status?: true
   txHash?: true
@@ -124,6 +138,8 @@ export type PayoutCountAggregateInputType = {
   walletId?: true
   chainId?: true
   currency?: true
+  currencySymbol?: true
+  currencyDecimals?: true
   totalAmount?: true
   status?: true
   txHash?: true
@@ -225,6 +241,8 @@ export type PayoutGroupByOutputType = {
   walletId: string
   chainId: number
   currency: string
+  currencySymbol: string | null
+  currencyDecimals: number | null
   totalAmount: runtime.Decimal
   status: $Enums.PayoutStatus
   txHash: string | null
@@ -262,6 +280,8 @@ export type PayoutWhereInput = {
   walletId?: Prisma.StringFilter<"Payout"> | string
   chainId?: Prisma.IntFilter<"Payout"> | number
   currency?: Prisma.StringFilter<"Payout"> | string
+  currencySymbol?: Prisma.StringNullableFilter<"Payout"> | string | null
+  currencyDecimals?: Prisma.IntNullableFilter<"Payout"> | number | null
   totalAmount?: Prisma.DecimalFilter<"Payout"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPayoutStatusFilter<"Payout"> | $Enums.PayoutStatus
   txHash?: Prisma.StringNullableFilter<"Payout"> | string | null
@@ -279,6 +299,8 @@ export type PayoutOrderByWithRelationInput = {
   walletId?: Prisma.SortOrder
   chainId?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  currencySymbol?: Prisma.SortOrderInput | Prisma.SortOrder
+  currencyDecimals?: Prisma.SortOrderInput | Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   txHash?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -299,6 +321,8 @@ export type PayoutWhereUniqueInput = Prisma.AtLeast<{
   walletId?: Prisma.StringFilter<"Payout"> | string
   chainId?: Prisma.IntFilter<"Payout"> | number
   currency?: Prisma.StringFilter<"Payout"> | string
+  currencySymbol?: Prisma.StringNullableFilter<"Payout"> | string | null
+  currencyDecimals?: Prisma.IntNullableFilter<"Payout"> | number | null
   totalAmount?: Prisma.DecimalFilter<"Payout"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPayoutStatusFilter<"Payout"> | $Enums.PayoutStatus
   txHash?: Prisma.StringNullableFilter<"Payout"> | string | null
@@ -316,6 +340,8 @@ export type PayoutOrderByWithAggregationInput = {
   walletId?: Prisma.SortOrder
   chainId?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  currencySymbol?: Prisma.SortOrderInput | Prisma.SortOrder
+  currencyDecimals?: Prisma.SortOrderInput | Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   txHash?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -338,6 +364,8 @@ export type PayoutScalarWhereWithAggregatesInput = {
   walletId?: Prisma.StringWithAggregatesFilter<"Payout"> | string
   chainId?: Prisma.IntWithAggregatesFilter<"Payout"> | number
   currency?: Prisma.StringWithAggregatesFilter<"Payout"> | string
+  currencySymbol?: Prisma.StringNullableWithAggregatesFilter<"Payout"> | string | null
+  currencyDecimals?: Prisma.IntNullableWithAggregatesFilter<"Payout"> | number | null
   totalAmount?: Prisma.DecimalWithAggregatesFilter<"Payout"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPayoutStatusWithAggregatesFilter<"Payout"> | $Enums.PayoutStatus
   txHash?: Prisma.StringNullableWithAggregatesFilter<"Payout"> | string | null
@@ -350,6 +378,8 @@ export type PayoutCreateInput = {
   id?: string
   chainId: number
   currency: string
+  currencySymbol?: string | null
+  currencyDecimals?: number | null
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PayoutStatus
   txHash?: string | null
@@ -367,6 +397,8 @@ export type PayoutUncheckedCreateInput = {
   walletId: string
   chainId: number
   currency: string
+  currencySymbol?: string | null
+  currencyDecimals?: number | null
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PayoutStatus
   txHash?: string | null
@@ -380,6 +412,8 @@ export type PayoutUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   chainId?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currencySymbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currencyDecimals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -397,6 +431,8 @@ export type PayoutUncheckedUpdateInput = {
   walletId?: Prisma.StringFieldUpdateOperationsInput | string
   chainId?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currencySymbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currencyDecimals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -412,6 +448,8 @@ export type PayoutCreateManyInput = {
   walletId: string
   chainId: number
   currency: string
+  currencySymbol?: string | null
+  currencyDecimals?: number | null
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PayoutStatus
   txHash?: string | null
@@ -424,6 +462,8 @@ export type PayoutUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   chainId?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currencySymbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currencyDecimals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -438,6 +478,8 @@ export type PayoutUncheckedUpdateManyInput = {
   walletId?: Prisma.StringFieldUpdateOperationsInput | string
   chainId?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currencySymbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currencyDecimals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -462,6 +504,8 @@ export type PayoutCountOrderByAggregateInput = {
   walletId?: Prisma.SortOrder
   chainId?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  currencySymbol?: Prisma.SortOrder
+  currencyDecimals?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   txHash?: Prisma.SortOrder
@@ -472,6 +516,7 @@ export type PayoutCountOrderByAggregateInput = {
 
 export type PayoutAvgOrderByAggregateInput = {
   chainId?: Prisma.SortOrder
+  currencyDecimals?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
 }
 
@@ -481,6 +526,8 @@ export type PayoutMaxOrderByAggregateInput = {
   walletId?: Prisma.SortOrder
   chainId?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  currencySymbol?: Prisma.SortOrder
+  currencyDecimals?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   txHash?: Prisma.SortOrder
@@ -495,6 +542,8 @@ export type PayoutMinOrderByAggregateInput = {
   walletId?: Prisma.SortOrder
   chainId?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  currencySymbol?: Prisma.SortOrder
+  currencyDecimals?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   txHash?: Prisma.SortOrder
@@ -505,6 +554,7 @@ export type PayoutMinOrderByAggregateInput = {
 
 export type PayoutSumOrderByAggregateInput = {
   chainId?: Prisma.SortOrder
+  currencyDecimals?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
 }
 
@@ -619,6 +669,8 @@ export type PayoutCreateWithoutUserInput = {
   id?: string
   chainId: number
   currency: string
+  currencySymbol?: string | null
+  currencyDecimals?: number | null
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PayoutStatus
   txHash?: string | null
@@ -634,6 +686,8 @@ export type PayoutUncheckedCreateWithoutUserInput = {
   walletId: string
   chainId: number
   currency: string
+  currencySymbol?: string | null
+  currencyDecimals?: number | null
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PayoutStatus
   txHash?: string | null
@@ -678,6 +732,8 @@ export type PayoutScalarWhereInput = {
   walletId?: Prisma.StringFilter<"Payout"> | string
   chainId?: Prisma.IntFilter<"Payout"> | number
   currency?: Prisma.StringFilter<"Payout"> | string
+  currencySymbol?: Prisma.StringNullableFilter<"Payout"> | string | null
+  currencyDecimals?: Prisma.IntNullableFilter<"Payout"> | number | null
   totalAmount?: Prisma.DecimalFilter<"Payout"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPayoutStatusFilter<"Payout"> | $Enums.PayoutStatus
   txHash?: Prisma.StringNullableFilter<"Payout"> | string | null
@@ -690,6 +746,8 @@ export type PayoutCreateWithoutWalletInput = {
   id?: string
   chainId: number
   currency: string
+  currencySymbol?: string | null
+  currencyDecimals?: number | null
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PayoutStatus
   txHash?: string | null
@@ -705,6 +763,8 @@ export type PayoutUncheckedCreateWithoutWalletInput = {
   userId: string
   chainId: number
   currency: string
+  currencySymbol?: string | null
+  currencyDecimals?: number | null
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PayoutStatus
   txHash?: string | null
@@ -744,6 +804,8 @@ export type PayoutCreateWithoutItemsInput = {
   id?: string
   chainId: number
   currency: string
+  currencySymbol?: string | null
+  currencyDecimals?: number | null
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PayoutStatus
   txHash?: string | null
@@ -760,6 +822,8 @@ export type PayoutUncheckedCreateWithoutItemsInput = {
   walletId: string
   chainId: number
   currency: string
+  currencySymbol?: string | null
+  currencyDecimals?: number | null
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PayoutStatus
   txHash?: string | null
@@ -788,6 +852,8 @@ export type PayoutUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   chainId?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currencySymbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currencyDecimals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -804,6 +870,8 @@ export type PayoutUncheckedUpdateWithoutItemsInput = {
   walletId?: Prisma.StringFieldUpdateOperationsInput | string
   chainId?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currencySymbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currencyDecimals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -817,6 +885,8 @@ export type PayoutCreateManyUserInput = {
   walletId: string
   chainId: number
   currency: string
+  currencySymbol?: string | null
+  currencyDecimals?: number | null
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PayoutStatus
   txHash?: string | null
@@ -829,6 +899,8 @@ export type PayoutUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   chainId?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currencySymbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currencyDecimals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -844,6 +916,8 @@ export type PayoutUncheckedUpdateWithoutUserInput = {
   walletId?: Prisma.StringFieldUpdateOperationsInput | string
   chainId?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currencySymbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currencyDecimals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -858,6 +932,8 @@ export type PayoutUncheckedUpdateManyWithoutUserInput = {
   walletId?: Prisma.StringFieldUpdateOperationsInput | string
   chainId?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currencySymbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currencyDecimals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -871,6 +947,8 @@ export type PayoutCreateManyWalletInput = {
   userId: string
   chainId: number
   currency: string
+  currencySymbol?: string | null
+  currencyDecimals?: number | null
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PayoutStatus
   txHash?: string | null
@@ -883,6 +961,8 @@ export type PayoutUpdateWithoutWalletInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   chainId?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currencySymbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currencyDecimals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -898,6 +978,8 @@ export type PayoutUncheckedUpdateWithoutWalletInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   chainId?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currencySymbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currencyDecimals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -912,6 +994,8 @@ export type PayoutUncheckedUpdateManyWithoutWalletInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   chainId?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currencySymbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currencyDecimals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -957,6 +1041,8 @@ export type PayoutSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   walletId?: boolean
   chainId?: boolean
   currency?: boolean
+  currencySymbol?: boolean
+  currencyDecimals?: boolean
   totalAmount?: boolean
   status?: boolean
   txHash?: boolean
@@ -975,6 +1061,8 @@ export type PayoutSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   walletId?: boolean
   chainId?: boolean
   currency?: boolean
+  currencySymbol?: boolean
+  currencyDecimals?: boolean
   totalAmount?: boolean
   status?: boolean
   txHash?: boolean
@@ -991,6 +1079,8 @@ export type PayoutSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   walletId?: boolean
   chainId?: boolean
   currency?: boolean
+  currencySymbol?: boolean
+  currencyDecimals?: boolean
   totalAmount?: boolean
   status?: boolean
   txHash?: boolean
@@ -1007,6 +1097,8 @@ export type PayoutSelectScalar = {
   walletId?: boolean
   chainId?: boolean
   currency?: boolean
+  currencySymbol?: boolean
+  currencyDecimals?: boolean
   totalAmount?: boolean
   status?: boolean
   txHash?: boolean
@@ -1015,7 +1107,7 @@ export type PayoutSelectScalar = {
   updatedAt?: boolean
 }
 
-export type PayoutOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "walletId" | "chainId" | "currency" | "totalAmount" | "status" | "txHash" | "failureCode" | "createdAt" | "updatedAt", ExtArgs["result"]["payout"]>
+export type PayoutOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "walletId" | "chainId" | "currency" | "currencySymbol" | "currencyDecimals" | "totalAmount" | "status" | "txHash" | "failureCode" | "createdAt" | "updatedAt", ExtArgs["result"]["payout"]>
 export type PayoutInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   wallet?: boolean | Prisma.WalletDefaultArgs<ExtArgs>
@@ -1044,6 +1136,8 @@ export type $PayoutPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     walletId: string
     chainId: number
     currency: string
+    currencySymbol: string | null
+    currencyDecimals: number | null
     totalAmount: runtime.Decimal
     status: $Enums.PayoutStatus
     txHash: string | null
@@ -1481,6 +1575,8 @@ export interface PayoutFieldRefs {
   readonly walletId: Prisma.FieldRef<"Payout", 'String'>
   readonly chainId: Prisma.FieldRef<"Payout", 'Int'>
   readonly currency: Prisma.FieldRef<"Payout", 'String'>
+  readonly currencySymbol: Prisma.FieldRef<"Payout", 'String'>
+  readonly currencyDecimals: Prisma.FieldRef<"Payout", 'Int'>
   readonly totalAmount: Prisma.FieldRef<"Payout", 'Decimal'>
   readonly status: Prisma.FieldRef<"Payout", 'PayoutStatus'>
   readonly txHash: Prisma.FieldRef<"Payout", 'String'>

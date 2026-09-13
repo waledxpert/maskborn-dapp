@@ -65,6 +65,19 @@ describe("API shell", () => {
     expect(chat.body.error.code).toBe("WALLET_AUTH_REQUIRED");
   });
 
+  it("reports Payday as undeployed without inventing rewards", async () => {
+    const response = await request(app).get("/api/payday/status");
+    expect(response.status).toBe(200);
+    expect(response.body).toMatchObject({
+      deployment: "NOT_DEPLOYED",
+      vaultAddress: null,
+      enrollmentAvailable: false,
+      claimsAvailable: false,
+      claimable: null,
+      estimate: null,
+    });
+  });
+
   it("keeps public viewing open but rejects unauthenticated actions", async () => {
     const response = await request(app)
       .put("/api/submissions/example/vote")

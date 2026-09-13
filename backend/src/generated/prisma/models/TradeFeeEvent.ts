@@ -29,6 +29,7 @@ export type AggregateTradeFeeEvent = {
 export type TradeFeeEventAvgAggregateOutputType = {
   chainId: number | null
   logIndex: number | null
+  currencyDecimals: number | null
   grossAmount: runtime.Decimal | null
   platformFee: runtime.Decimal | null
   blockNumber: number | null
@@ -37,6 +38,7 @@ export type TradeFeeEventAvgAggregateOutputType = {
 export type TradeFeeEventSumAggregateOutputType = {
   chainId: number | null
   logIndex: number | null
+  currencyDecimals: number | null
   grossAmount: runtime.Decimal | null
   platformFee: runtime.Decimal | null
   blockNumber: bigint | null
@@ -50,6 +52,8 @@ export type TradeFeeEventMinAggregateOutputType = {
   tokenContract: string | null
   tokenId: string | null
   currency: string | null
+  currencySymbol: string | null
+  currencyDecimals: number | null
   grossAmount: runtime.Decimal | null
   platformFee: runtime.Decimal | null
   blockNumber: bigint | null
@@ -65,6 +69,8 @@ export type TradeFeeEventMaxAggregateOutputType = {
   tokenContract: string | null
   tokenId: string | null
   currency: string | null
+  currencySymbol: string | null
+  currencyDecimals: number | null
   grossAmount: runtime.Decimal | null
   platformFee: runtime.Decimal | null
   blockNumber: bigint | null
@@ -80,6 +86,8 @@ export type TradeFeeEventCountAggregateOutputType = {
   tokenContract: number
   tokenId: number
   currency: number
+  currencySymbol: number
+  currencyDecimals: number
   grossAmount: number
   platformFee: number
   blockNumber: number
@@ -92,6 +100,7 @@ export type TradeFeeEventCountAggregateOutputType = {
 export type TradeFeeEventAvgAggregateInputType = {
   chainId?: true
   logIndex?: true
+  currencyDecimals?: true
   grossAmount?: true
   platformFee?: true
   blockNumber?: true
@@ -100,6 +109,7 @@ export type TradeFeeEventAvgAggregateInputType = {
 export type TradeFeeEventSumAggregateInputType = {
   chainId?: true
   logIndex?: true
+  currencyDecimals?: true
   grossAmount?: true
   platformFee?: true
   blockNumber?: true
@@ -113,6 +123,8 @@ export type TradeFeeEventMinAggregateInputType = {
   tokenContract?: true
   tokenId?: true
   currency?: true
+  currencySymbol?: true
+  currencyDecimals?: true
   grossAmount?: true
   platformFee?: true
   blockNumber?: true
@@ -128,6 +140,8 @@ export type TradeFeeEventMaxAggregateInputType = {
   tokenContract?: true
   tokenId?: true
   currency?: true
+  currencySymbol?: true
+  currencyDecimals?: true
   grossAmount?: true
   platformFee?: true
   blockNumber?: true
@@ -143,6 +157,8 @@ export type TradeFeeEventCountAggregateInputType = {
   tokenContract?: true
   tokenId?: true
   currency?: true
+  currencySymbol?: true
+  currencyDecimals?: true
   grossAmount?: true
   platformFee?: true
   blockNumber?: true
@@ -245,6 +261,8 @@ export type TradeFeeEventGroupByOutputType = {
   tokenContract: string
   tokenId: string
   currency: string
+  currencySymbol: string | null
+  currencyDecimals: number | null
   grossAmount: runtime.Decimal
   platformFee: runtime.Decimal
   blockNumber: bigint
@@ -283,6 +301,8 @@ export type TradeFeeEventWhereInput = {
   tokenContract?: Prisma.StringFilter<"TradeFeeEvent"> | string
   tokenId?: Prisma.StringFilter<"TradeFeeEvent"> | string
   currency?: Prisma.StringFilter<"TradeFeeEvent"> | string
+  currencySymbol?: Prisma.StringNullableFilter<"TradeFeeEvent"> | string | null
+  currencyDecimals?: Prisma.IntNullableFilter<"TradeFeeEvent"> | number | null
   grossAmount?: Prisma.DecimalFilter<"TradeFeeEvent"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   platformFee?: Prisma.DecimalFilter<"TradeFeeEvent"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   blockNumber?: Prisma.BigIntFilter<"TradeFeeEvent"> | bigint | number
@@ -299,6 +319,8 @@ export type TradeFeeEventOrderByWithRelationInput = {
   tokenContract?: Prisma.SortOrder
   tokenId?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  currencySymbol?: Prisma.SortOrderInput | Prisma.SortOrder
+  currencyDecimals?: Prisma.SortOrderInput | Prisma.SortOrder
   grossAmount?: Prisma.SortOrder
   platformFee?: Prisma.SortOrder
   blockNumber?: Prisma.SortOrder
@@ -319,6 +341,8 @@ export type TradeFeeEventWhereUniqueInput = Prisma.AtLeast<{
   tokenContract?: Prisma.StringFilter<"TradeFeeEvent"> | string
   tokenId?: Prisma.StringFilter<"TradeFeeEvent"> | string
   currency?: Prisma.StringFilter<"TradeFeeEvent"> | string
+  currencySymbol?: Prisma.StringNullableFilter<"TradeFeeEvent"> | string | null
+  currencyDecimals?: Prisma.IntNullableFilter<"TradeFeeEvent"> | number | null
   grossAmount?: Prisma.DecimalFilter<"TradeFeeEvent"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   platformFee?: Prisma.DecimalFilter<"TradeFeeEvent"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   blockNumber?: Prisma.BigIntFilter<"TradeFeeEvent"> | bigint | number
@@ -335,6 +359,8 @@ export type TradeFeeEventOrderByWithAggregationInput = {
   tokenContract?: Prisma.SortOrder
   tokenId?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  currencySymbol?: Prisma.SortOrderInput | Prisma.SortOrder
+  currencyDecimals?: Prisma.SortOrderInput | Prisma.SortOrder
   grossAmount?: Prisma.SortOrder
   platformFee?: Prisma.SortOrder
   blockNumber?: Prisma.SortOrder
@@ -358,6 +384,8 @@ export type TradeFeeEventScalarWhereWithAggregatesInput = {
   tokenContract?: Prisma.StringWithAggregatesFilter<"TradeFeeEvent"> | string
   tokenId?: Prisma.StringWithAggregatesFilter<"TradeFeeEvent"> | string
   currency?: Prisma.StringWithAggregatesFilter<"TradeFeeEvent"> | string
+  currencySymbol?: Prisma.StringNullableWithAggregatesFilter<"TradeFeeEvent"> | string | null
+  currencyDecimals?: Prisma.IntNullableWithAggregatesFilter<"TradeFeeEvent"> | number | null
   grossAmount?: Prisma.DecimalWithAggregatesFilter<"TradeFeeEvent"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   platformFee?: Prisma.DecimalWithAggregatesFilter<"TradeFeeEvent"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   blockNumber?: Prisma.BigIntWithAggregatesFilter<"TradeFeeEvent"> | bigint | number
@@ -373,6 +401,8 @@ export type TradeFeeEventCreateInput = {
   tokenContract: string
   tokenId: string
   currency: string
+  currencySymbol?: string | null
+  currencyDecimals?: number | null
   grossAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   platformFee: runtime.Decimal | runtime.DecimalJsLike | number | string
   blockNumber: bigint | number
@@ -389,6 +419,8 @@ export type TradeFeeEventUncheckedCreateInput = {
   tokenContract: string
   tokenId: string
   currency: string
+  currencySymbol?: string | null
+  currencyDecimals?: number | null
   grossAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   platformFee: runtime.Decimal | runtime.DecimalJsLike | number | string
   blockNumber: bigint | number
@@ -405,6 +437,8 @@ export type TradeFeeEventUpdateInput = {
   tokenContract?: Prisma.StringFieldUpdateOperationsInput | string
   tokenId?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currencySymbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currencyDecimals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   grossAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   platformFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   blockNumber?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -421,6 +455,8 @@ export type TradeFeeEventUncheckedUpdateInput = {
   tokenContract?: Prisma.StringFieldUpdateOperationsInput | string
   tokenId?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currencySymbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currencyDecimals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   grossAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   platformFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   blockNumber?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -437,6 +473,8 @@ export type TradeFeeEventCreateManyInput = {
   tokenContract: string
   tokenId: string
   currency: string
+  currencySymbol?: string | null
+  currencyDecimals?: number | null
   grossAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   platformFee: runtime.Decimal | runtime.DecimalJsLike | number | string
   blockNumber: bigint | number
@@ -452,6 +490,8 @@ export type TradeFeeEventUpdateManyMutationInput = {
   tokenContract?: Prisma.StringFieldUpdateOperationsInput | string
   tokenId?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currencySymbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currencyDecimals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   grossAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   platformFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   blockNumber?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -467,6 +507,8 @@ export type TradeFeeEventUncheckedUpdateManyInput = {
   tokenContract?: Prisma.StringFieldUpdateOperationsInput | string
   tokenId?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currencySymbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currencyDecimals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   grossAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   platformFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   blockNumber?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -488,6 +530,8 @@ export type TradeFeeEventCountOrderByAggregateInput = {
   tokenContract?: Prisma.SortOrder
   tokenId?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  currencySymbol?: Prisma.SortOrder
+  currencyDecimals?: Prisma.SortOrder
   grossAmount?: Prisma.SortOrder
   platformFee?: Prisma.SortOrder
   blockNumber?: Prisma.SortOrder
@@ -498,6 +542,7 @@ export type TradeFeeEventCountOrderByAggregateInput = {
 export type TradeFeeEventAvgOrderByAggregateInput = {
   chainId?: Prisma.SortOrder
   logIndex?: Prisma.SortOrder
+  currencyDecimals?: Prisma.SortOrder
   grossAmount?: Prisma.SortOrder
   platformFee?: Prisma.SortOrder
   blockNumber?: Prisma.SortOrder
@@ -511,6 +556,8 @@ export type TradeFeeEventMaxOrderByAggregateInput = {
   tokenContract?: Prisma.SortOrder
   tokenId?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  currencySymbol?: Prisma.SortOrder
+  currencyDecimals?: Prisma.SortOrder
   grossAmount?: Prisma.SortOrder
   platformFee?: Prisma.SortOrder
   blockNumber?: Prisma.SortOrder
@@ -526,6 +573,8 @@ export type TradeFeeEventMinOrderByAggregateInput = {
   tokenContract?: Prisma.SortOrder
   tokenId?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  currencySymbol?: Prisma.SortOrder
+  currencyDecimals?: Prisma.SortOrder
   grossAmount?: Prisma.SortOrder
   platformFee?: Prisma.SortOrder
   blockNumber?: Prisma.SortOrder
@@ -536,6 +585,7 @@ export type TradeFeeEventMinOrderByAggregateInput = {
 export type TradeFeeEventSumOrderByAggregateInput = {
   chainId?: Prisma.SortOrder
   logIndex?: Prisma.SortOrder
+  currencyDecimals?: Prisma.SortOrder
   grossAmount?: Prisma.SortOrder
   platformFee?: Prisma.SortOrder
   blockNumber?: Prisma.SortOrder
@@ -568,6 +618,8 @@ export type TradeFeeEventCreateWithoutAccrualsInput = {
   tokenContract: string
   tokenId: string
   currency: string
+  currencySymbol?: string | null
+  currencyDecimals?: number | null
   grossAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   platformFee: runtime.Decimal | runtime.DecimalJsLike | number | string
   blockNumber: bigint | number
@@ -583,6 +635,8 @@ export type TradeFeeEventUncheckedCreateWithoutAccrualsInput = {
   tokenContract: string
   tokenId: string
   currency: string
+  currencySymbol?: string | null
+  currencyDecimals?: number | null
   grossAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   platformFee: runtime.Decimal | runtime.DecimalJsLike | number | string
   blockNumber: bigint | number
@@ -614,6 +668,8 @@ export type TradeFeeEventUpdateWithoutAccrualsInput = {
   tokenContract?: Prisma.StringFieldUpdateOperationsInput | string
   tokenId?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currencySymbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currencyDecimals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   grossAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   platformFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   blockNumber?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -629,6 +685,8 @@ export type TradeFeeEventUncheckedUpdateWithoutAccrualsInput = {
   tokenContract?: Prisma.StringFieldUpdateOperationsInput | string
   tokenId?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currencySymbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currencyDecimals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   grossAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   platformFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   blockNumber?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -675,6 +733,8 @@ export type TradeFeeEventSelect<ExtArgs extends runtime.Types.Extensions.Interna
   tokenContract?: boolean
   tokenId?: boolean
   currency?: boolean
+  currencySymbol?: boolean
+  currencyDecimals?: boolean
   grossAmount?: boolean
   platformFee?: boolean
   blockNumber?: boolean
@@ -692,6 +752,8 @@ export type TradeFeeEventSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   tokenContract?: boolean
   tokenId?: boolean
   currency?: boolean
+  currencySymbol?: boolean
+  currencyDecimals?: boolean
   grossAmount?: boolean
   platformFee?: boolean
   blockNumber?: boolean
@@ -707,6 +769,8 @@ export type TradeFeeEventSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   tokenContract?: boolean
   tokenId?: boolean
   currency?: boolean
+  currencySymbol?: boolean
+  currencyDecimals?: boolean
   grossAmount?: boolean
   platformFee?: boolean
   blockNumber?: boolean
@@ -722,6 +786,8 @@ export type TradeFeeEventSelectScalar = {
   tokenContract?: boolean
   tokenId?: boolean
   currency?: boolean
+  currencySymbol?: boolean
+  currencyDecimals?: boolean
   grossAmount?: boolean
   platformFee?: boolean
   blockNumber?: boolean
@@ -729,7 +795,7 @@ export type TradeFeeEventSelectScalar = {
   indexedAt?: boolean
 }
 
-export type TradeFeeEventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "chainId" | "txHash" | "logIndex" | "tokenContract" | "tokenId" | "currency" | "grossAmount" | "platformFee" | "blockNumber" | "occurredAt" | "indexedAt", ExtArgs["result"]["tradeFeeEvent"]>
+export type TradeFeeEventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "chainId" | "txHash" | "logIndex" | "tokenContract" | "tokenId" | "currency" | "currencySymbol" | "currencyDecimals" | "grossAmount" | "platformFee" | "blockNumber" | "occurredAt" | "indexedAt", ExtArgs["result"]["tradeFeeEvent"]>
 export type TradeFeeEventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accruals?: boolean | Prisma.TradeFeeEvent$accrualsArgs<ExtArgs>
   _count?: boolean | Prisma.TradeFeeEventCountOutputTypeDefaultArgs<ExtArgs>
@@ -750,6 +816,8 @@ export type $TradeFeeEventPayload<ExtArgs extends runtime.Types.Extensions.Inter
     tokenContract: string
     tokenId: string
     currency: string
+    currencySymbol: string | null
+    currencyDecimals: number | null
     grossAmount: runtime.Decimal
     platformFee: runtime.Decimal
     blockNumber: bigint
@@ -1186,6 +1254,8 @@ export interface TradeFeeEventFieldRefs {
   readonly tokenContract: Prisma.FieldRef<"TradeFeeEvent", 'String'>
   readonly tokenId: Prisma.FieldRef<"TradeFeeEvent", 'String'>
   readonly currency: Prisma.FieldRef<"TradeFeeEvent", 'String'>
+  readonly currencySymbol: Prisma.FieldRef<"TradeFeeEvent", 'String'>
+  readonly currencyDecimals: Prisma.FieldRef<"TradeFeeEvent", 'Int'>
   readonly grossAmount: Prisma.FieldRef<"TradeFeeEvent", 'Decimal'>
   readonly platformFee: Prisma.FieldRef<"TradeFeeEvent", 'Decimal'>
   readonly blockNumber: Prisma.FieldRef<"TradeFeeEvent", 'BigInt'>

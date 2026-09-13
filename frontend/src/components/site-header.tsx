@@ -17,6 +17,7 @@ const navItems = [
   { href: "/apply", label: "Apply", primary: true },
   { href: "/community", label: "Community gallery", primary: false },
   { href: "/agents", label: "Agents", primary: true },
+  { href: "/payday", label: "Payday", primary: false },
 ];
 
 export function SiteHeader() {

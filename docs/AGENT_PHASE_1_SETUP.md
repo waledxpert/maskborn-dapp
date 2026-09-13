@@ -6,6 +6,8 @@ The second slice adds live owned-token discovery, unified Arc USDC monitoring, r
 
 The third slice adds the collection-wide ownership index and ownership-isolated persistent assistant conversations. Private chat remains disabled until an external provider is explicitly configured and each holder accepts the displayed data-sharing disclosure for the current ownership period.
 
+The fourth slice adds `/payday`: a public deployment/readiness view plus wallet-private creator fee-share, accrual, and payout records. It deliberately keeps creator obligations separate from future token-holder rewards and returns `null`, never zero, for unavailable claimable or estimated Payday values.
+
 ## Backend configuration
 
 Add these values to `backend/.env`:
@@ -82,6 +84,9 @@ Additional endpoints in the second slice:
 - `GET /api/agents/tokens/:tokenId/conversations`
 - `GET /api/agents/tokens/:tokenId/conversations/:conversationId`
 - `POST /api/agents/tokens/:tokenId/chat`
+- `GET /api/payday/status`
+- `GET /api/payday/me`
+- `GET /api/payday/tokens/:tokenId`
 
 ## Collection snapshot
 

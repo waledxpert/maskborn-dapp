@@ -19,6 +19,7 @@ import { agentsRouter } from "./modules/agents/router.js";
 import { walletAuthRouter } from "./modules/wallet-auth/router.js";
 import { notificationsRouter } from "./modules/notifications/router.js";
 import { assistantRouter } from "./modules/assistant/router.js";
+import { paydayRouter } from "./modules/payday/router.js";
 
 export const app = express();
 
@@ -47,6 +48,7 @@ app.use("/api", walletAuthRouter);
 app.use("/api", agentsRouter);
 app.use("/api", notificationsRouter);
 app.use("/api", assistantRouter);
+app.use("/api", paydayRouter);
 app.use("/api/mboadmin", adminRouter);
 
 app.use(notFound);
