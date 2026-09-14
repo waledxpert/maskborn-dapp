@@ -9,7 +9,7 @@ import { PixelArtwork } from "@/components/pixel-artwork";
 import { useCurrentUser } from "@/hooks/use-current-user";
 
 type EthereumProvider = { request(args: { method: string; params?: unknown[] }): Promise<unknown> };
-type AgentStatus = { configured: boolean; network: string; chainId: number; collectionAddress: string | null; agentRegistryAddress?: string | null; phase: number; awakening?: string };
+type AgentStatus = { configured: boolean; network: string; chainId: number; collectionAddress: string | null; agentRegistryAddress?: string | null; phase: number; awakening?: string; accountAbstraction?: { entryPoint: string; accountPath: string; directEntryPointSmoke: boolean; bundlerProvider: string; bundlerConfigured: boolean; paymasterProvider: string; sponsorship: boolean } };
 type AgentIndexStatus = { configured: boolean; latestBlock?: string; indexedThrough?: string | null; caughtUp?: boolean; lastError?: string | null };
 type AwakeningState = {
   configured: boolean;
@@ -22,7 +22,7 @@ type AwakeningState = {
   accountState?: null | {
     nativeUsdc: string; nativeUsdcBaseUnits: string; executionPaused: boolean; state: string; asOfBlock: string;
     checkpointSessions: { supported: boolean; maxDurationSeconds?: string; maxCalls?: string };
-    erc4337: { supported: boolean; version?: string; entryPoint?: string; userOpNonce?: string; executionScope?: string; sponsorship?: boolean };
+    erc4337: { supported: boolean; version?: string; entryPoint?: string; userOpNonce?: string; executionScope?: string; sponsorship?: boolean; bundlerProvider?: string; bundlerConfigured?: boolean; paymasterProvider?: string };
   };
 };
 type AgentPreview = {
@@ -390,7 +390,7 @@ export function AgentsWorkspace() {
           <p>{status.data?.configured
             ? `Collection connected on ${status.data.network}. ${indexStatus.data?.caughtUp ? `Ownership indexed through block ${indexStatus.data.indexedThrough}.` : "Ownership index is catching up."}`
             : "Waiting for the canonical collection deployment address."}</p>
-          <small>Phase {status.data?.phase ?? 1} · awakening preview</small>
+          <small>Phase {status.data?.phase ?? 1} · {status.data?.accountAbstraction?.bundlerConfigured ? `${status.data.accountAbstraction.bundlerProvider} bundler configured` : "managed bundler pending"}</small>
         </article>
       </div>
 
@@ -533,7 +533,7 @@ export function AgentsWorkspace() {
                 )}
                 <small>A transfer to a different owner disables the key. Because the original NFT has no transfer hook, buyers should still revoke visible sessions before funding the account.</small>
                 {preview.awakening.accountState.erc4337.supported && (
-                  <small>ERC-4337 v{preview.awakening.accountState.erc4337.version}: checkpoint-only UserOperations are supported through EntryPoint {compact(preview.awakening.accountState.erc4337.entryPoint!)}. Gas sponsorship is not enabled yet.</small>
+                  <small>ERC-4337 v{preview.awakening.accountState.erc4337.version}: checkpoint-only UserOperations are supported through EntryPoint {compact(preview.awakening.accountState.erc4337.entryPoint!)}. Managed bundler: {preview.awakening.accountState.erc4337.bundlerConfigured ? preview.awakening.accountState.erc4337.bundlerProvider : "not configured"}. Gas sponsorship is not enabled yet.</small>
                 )}
               </div>
             )}

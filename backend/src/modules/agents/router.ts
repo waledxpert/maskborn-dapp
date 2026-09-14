@@ -54,6 +54,15 @@ agentsRouter.get("/agents/status", (_req, res) => {
     phase: maskBornAgentRegistryAddress ? 2 : 1,
     awakening: maskBornAgentRegistryAddress ? "testnet" : "not_deployed",
     agentRegistryAddress: maskBornAgentRegistryAddress,
+    accountAbstraction: {
+      entryPoint: "0x433709009B8330FDa32311DF1C2AFA402eD8D009",
+      accountPath: "checkpoint-only",
+      directEntryPointSmoke: maskBornAgentRegistryAddress?.toLowerCase() === "0x7ce327dcd5148e2ea268595d804ca75b85c63326",
+      bundlerProvider: config.AGENT_BUNDLER_PROVIDER,
+      bundlerConfigured: config.AGENT_BUNDLER_PROVIDER !== "disabled",
+      paymasterProvider: config.AGENT_PAYMASTER_PROVIDER,
+      sponsorship: false,
+    },
   });
 });
 
@@ -137,6 +146,9 @@ agentsRouter.get("/agents/tokens/:tokenId/preview", requireWalletAuth, asyncRout
           userOpNonce: account.erc4337.userOpNonce.toString(),
           executionScope: "checkpoint-only",
           sponsorship: false,
+          bundlerProvider: config.AGENT_BUNDLER_PROVIDER,
+          bundlerConfigured: config.AGENT_BUNDLER_PROVIDER !== "disabled",
+          paymasterProvider: config.AGENT_PAYMASTER_PROVIDER,
         } : { supported: false },
         asOfBlock: account.blockNumber.toString(),
       } : null,
@@ -438,6 +450,9 @@ agentsRouter.get("/agents/public/tokens/:tokenId/card", asyncRoute(async (req, r
         userOpNonce: account.erc4337.userOpNonce.toString(),
         executionScope: "checkpoint-only",
         sponsorship: false,
+          bundlerProvider: config.AGENT_BUNDLER_PROVIDER,
+          bundlerConfigured: config.AGENT_BUNDLER_PROVIDER !== "disabled",
+          paymasterProvider: config.AGENT_PAYMASTER_PROVIDER,
       } : { supported: false },
     },
     constitutionHash: binding.constitutionHash,

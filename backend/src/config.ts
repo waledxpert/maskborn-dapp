@@ -44,6 +44,9 @@ const schema = z.object({
   AGENT_MODEL_BASE_URL: z.string().url().default("https://api.openai.com/v1"),
   AGENT_DAILY_REQUEST_LIMIT: z.coerce.number().int().min(1).max(1_000).default(25),
   AGENT_MAX_OWNER_SEND_USDC: z.string().regex(/^\d+(\.\d{1,18})?$/).default("1000"),
+  AGENT_BUNDLER_PROVIDER: z.enum(["disabled", "alchemy", "biconomy", "blockradar", "circle", "pimlico", "thirdweb", "turnkey", "zerodev", "custom"]).default("disabled"),
+  AGENT_BUNDLER_RPC_URL: z.preprocess((value) => value === "" ? undefined : value, z.string().url().optional()),
+  AGENT_PAYMASTER_PROVIDER: z.enum(["disabled", "alchemy", "biconomy", "pimlico", "thirdweb", "zerodev", "custom"]).default("disabled"),
 }).superRefine((value, ctx) => {
   const r2Values = [
     value.R2_ACCOUNT_ID,
@@ -89,6 +92,12 @@ const schema = z.object({
     if (value.NODE_ENV === "production" && origin.protocol !== "https:") {
       ctx.addIssue({ code: "custom", message: "AGENT_PUBLIC_ORIGIN must use HTTPS in production.", path: ["AGENT_PUBLIC_ORIGIN"] });
     }
+  }
+  if (value.AGENT_BUNDLER_PROVIDER !== "disabled" && !value.AGENT_BUNDLER_RPC_URL) {
+    ctx.addIssue({ code: "custom", message: "AGENT_BUNDLER_RPC_URL is required when AGENT_BUNDLER_PROVIDER is enabled.", path: ["AGENT_BUNDLER_RPC_URL"] });
+  }
+  if (value.AGENT_PAYMASTER_PROVIDER !== "disabled" && value.AGENT_BUNDLER_PROVIDER === "disabled") {
+    ctx.addIssue({ code: "custom", message: "Enable a bundler before enabling a paymaster provider.", path: ["AGENT_PAYMASTER_PROVIDER"] });
   }
   if (value.AGENT_MODEL_PROVIDER === "openai") {
     if (!value.AGENT_MODEL_API_KEY) ctx.addIssue({ code: "custom", message: "AGENT_MODEL_API_KEY is required when the agent model provider is enabled.", path: ["AGENT_MODEL_API_KEY"] });

@@ -91,6 +91,9 @@ In `maskborn/backend/.env`:
 MASKBORN_AGENT_REGISTRY_ADDRESS=<printed MaskBornAgentRegistry address>
 AGENT_PUBLIC_ORIGIN=https://<permanent-public-frontend-domain>
 AGENT_MAX_OWNER_SEND_USDC=1000
+AGENT_BUNDLER_PROVIDER=disabled
+AGENT_BUNDLER_RPC_URL=
+AGENT_PAYMASTER_PROVIDER=disabled
 ```
 
 `AGENT_PUBLIC_ORIGIN` becomes part of permanent onchain identity metadata. Do not use `localhost`, a preview deployment URL, or a domain you do not control for a public testnet awakening.
@@ -129,4 +132,4 @@ Do not fund accounts with meaningful value until the transfer tests, pause recov
 
 ## Next Phase 2 slice
 
-The direct EntryPoint smoke is complete for token `1`: awaken, one checkpoint UserOperation, revoke, deposit withdrawal, and account sweep all verified. The next production slice is managed-bundler compatibility with an Arc-supported provider; sponsored gas follows only after a real Arc bundler/paymaster is selected and concurrency-safe budget accounting is implemented.
+The direct EntryPoint smoke is complete for token `1`: awaken, one checkpoint UserOperation, revoke, deposit withdrawal, and account sweep all verified. The app now exposes managed-bundler readiness separately from EntryPoint support. Keep `AGENT_BUNDLER_PROVIDER=disabled` until you choose an Arc-supported ERC-4337 provider and have its bundler RPC URL. Sponsored gas follows only after a real Arc bundler/paymaster is selected and concurrency-safe budget accounting is implemented.
