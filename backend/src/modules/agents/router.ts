@@ -1,4 +1,4 @@
-import { Router, type Request } from "express";
+﻿import { Router, type Request } from "express";
 import { encodeFunctionData, formatUnits, getAddress, parseUnits, zeroAddress, type Address, type Hex } from "viem";
 import { z } from "zod";
 import { config } from "../../config.js";
@@ -25,6 +25,7 @@ import { collectionIndexStatus } from "../chain/collection-indexer.js";
 import { db } from "../../db.js";
 import { getAgentAction, listAgentActions, savePreparedAction, serializeAgentAction, submitAgentAction } from "./actions.js";
 import { erc4337EntryPoint, readBundlerStatus } from "../chain/bundler.js";
+import { readSponsorshipPolicy } from "./sponsorship.js";
 
 export const agentsRouter = Router();
 const tokenParams = z.object({ tokenId: z.coerce.bigint().refine((value) => value > 0n && value <= 10_000n) });
@@ -65,6 +66,10 @@ agentsRouter.get("/agents/status", asyncRoute(async (_req, res) => {
       sponsorship: false,
     },
   });
+}));
+
+agentsRouter.get("/agents/sponsorship/status", asyncRoute(async (_req, res) => {
+  res.json(readSponsorshipPolicy());
 }));
 
 agentsRouter.get("/agents/bundler/status", asyncRoute(async (_req, res) => {
@@ -547,3 +552,4 @@ function imageFromTokenURI(tokenURI: string) {
     return undefined;
   }
 }
+

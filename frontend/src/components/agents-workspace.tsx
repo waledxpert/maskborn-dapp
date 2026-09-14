@@ -9,8 +9,9 @@ import { PixelArtwork } from "@/components/pixel-artwork";
 import { useCurrentUser } from "@/hooks/use-current-user";
 
 type EthereumProvider = { request(args: { method: string; params?: unknown[] }): Promise<unknown> };
-type AgentStatus = { configured: boolean; network: string; chainId: number; collectionAddress: string | null; agentRegistryAddress?: string | null; phase: number; awakening?: string; accountAbstraction?: { entryPoint: string; accountPath: string; directEntryPointSmoke: boolean; bundlerProvider: string; bundlerConfigured: boolean; paymasterProvider: string; sponsorship: boolean } };
+type AgentStatus = { configured: boolean; network: string; chainId: number; collectionAddress: string | null; agentRegistryAddress?: string | null; phase: number; awakening?: string; accountAbstraction?: { entryPoint: string; accountPath: string; directEntryPointSmoke: boolean; bundlerProvider: string; bundlerConfigured: boolean; paymasterProvider: string; sponsorship: boolean; sponsorshipReason?: string | null; dailySponsorAllowance?: string; dailySponsorTransactions?: number } };
 type BundlerStatus = { configured: boolean; provider: string; chainId: number | null; expectedChainId: number; chainMatches: boolean; entryPoint: string; supportedEntryPoints: string[]; entryPointSupported: boolean; paymasterProvider: string; sponsorship: boolean };
+type SponsorshipStatus = { enabled: boolean; disabledReason: string | null; currency: string; gasAsset: string; dailyAllowance: string; dailyAllowanceBaseUnits: string; dailyTransactionLimit: number; reservationTtlSeconds: number; eligibleActions: string[]; excludedActions: string[]; bundlerProvider: string; paymasterProvider: string; accountingMode: string; settlementMode: string; notes: string[] };
 type AgentIndexStatus = { configured: boolean; latestBlock?: string; indexedThrough?: string | null; caughtUp?: boolean; lastError?: string | null };
 type AwakeningState = {
   configured: boolean;
@@ -147,6 +148,7 @@ export function AgentsWorkspace() {
   const [sessionState, setSessionState] = useState<CheckpointSessionState | null>(null);
   const status = useQuery({ queryKey: ["agent-status"], queryFn: () => apiFetch<AgentStatus>("/agents/status") });
   const bundlerStatus = useQuery({ queryKey: ["agent-bundler-status"], queryFn: () => apiFetch<BundlerStatus>("/agents/bundler/status"), enabled: Boolean(status.data?.accountAbstraction?.bundlerConfigured), retry: false, refetchInterval: 30_000 });
+  const sponsorshipStatus = useQuery({ queryKey: ["agent-sponsorship-status"], queryFn: () => apiFetch<SponsorshipStatus>("/agents/sponsorship/status"), retry: false, refetchInterval: 30_000 });
   const indexStatus = useQuery({ queryKey: ["agent-index-status"], queryFn: () => apiFetch<AgentIndexStatus>("/agents/index/status"), enabled: Boolean(status.data?.configured), refetchInterval: 15_000, retry: false });
   const chatStatus = useQuery({ queryKey: ["agent-chat-status"], queryFn: () => apiFetch<ChatStatus>("/agents/chat/status"), retry: false });
   const connectedAddress = walletAddress ?? session.data?.user?.wallets.find(
@@ -351,8 +353,8 @@ export function AgentsWorkspace() {
     { label: "Token awakened", ok: Boolean(preview?.awakening.awakened) },
     { label: "ERC-4337 checkpoint path", ok: Boolean(preview?.awakening.accountState?.erc4337.supported) },
     { label: "Pimlico bundler reachable", ok: Boolean(bundlerStatus.data?.configured && bundlerStatus.data.chainMatches && bundlerStatus.data.entryPointSupported) },
-    { label: "Sponsored gas intentionally off", ok: status.data?.accountAbstraction?.sponsorship === false && bundlerStatus.data?.sponsorship === false },
-  ], [bundlerStatus.data, connectedAddress, indexStatus.data?.caughtUp, preview, status.data]);
+    { label: sponsorshipStatus.data?.enabled ? "Sponsored gas enabled" : "Sponsored gas intentionally off", ok: sponsorshipStatus.data ? !sponsorshipStatus.data.enabled : status.data?.accountAbstraction?.sponsorship === false && bundlerStatus.data?.sponsorship === false },
+  ], [bundlerStatus.data, connectedAddress, indexStatus.data?.caughtUp, preview, sponsorshipStatus.data, status.data]);
 
   const submitToken = (event: FormEvent) => {
     event.preventDefault();
@@ -420,7 +422,8 @@ export function AgentsWorkspace() {
           <span>Bundler</span>
           <b>{status.data?.accountAbstraction?.bundlerConfigured ? status.data.accountAbstraction.bundlerProvider : "Not configured"}</b>
           <small>{bundlerStatus.isLoading ? "Checking live RPC…" : bundlerStatus.data ? `chain ${bundlerStatus.data.chainId ?? "unknown"} / EntryPoint ${bundlerStatus.data.entryPointSupported ? "supported" : "unsupported"}` : status.data?.accountAbstraction?.bundlerConfigured ? "Bundler status unavailable" : "Set AGENT_BUNDLER_PROVIDER and RPC URL to enable."}</small>
-          <small>Paymaster: {status.data?.accountAbstraction?.paymasterProvider ?? "disabled"} · sponsorship {status.data?.accountAbstraction?.sponsorship ? "on" : "off"}</small>
+          <small>Paymaster: {sponsorshipStatus.data?.paymasterProvider ?? status.data?.accountAbstraction?.paymasterProvider ?? "disabled"} · sponsorship {sponsorshipStatus.data?.enabled ? "on" : "off"}</small>
+          {sponsorshipStatus.data && <small>Budget rule: {sponsorshipStatus.data.dailyAllowance} {sponsorshipStatus.data.currency} / token / day · {sponsorshipStatus.data.dailyTransactionLimit} tx cap · {sponsorshipStatus.data.disabledReason ?? "ready"}</small>}
         </div>
       </article>
 
@@ -627,4 +630,5 @@ export function AgentsWorkspace() {
     </section>
   );
 }
+
 

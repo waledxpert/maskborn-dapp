@@ -1,4 +1,4 @@
-import "dotenv/config";
+﻿import "dotenv/config";
 import { z } from "zod";
 
 const optionalAddress = z.preprocess(
@@ -47,6 +47,10 @@ const schema = z.object({
   AGENT_BUNDLER_PROVIDER: z.enum(["disabled", "alchemy", "biconomy", "blockradar", "circle", "pimlico", "thirdweb", "turnkey", "zerodev", "custom"]).default("disabled"),
   AGENT_BUNDLER_RPC_URL: z.preprocess((value) => value === "" ? undefined : value, z.string().url().optional()),
   AGENT_PAYMASTER_PROVIDER: z.enum(["disabled", "alchemy", "biconomy", "pimlico", "thirdweb", "zerodev", "custom"]).default("disabled"),
+  AGENT_SPONSORSHIP_ENABLED: z.enum(["true", "false"]).default("false"),
+  AGENT_SPONSOR_DAILY_USDC_PER_TOKEN: z.string().regex(/^\d+(\.\d{1,18})?$/).default("0.25"),
+  AGENT_SPONSOR_DAILY_TX_PER_TOKEN: z.coerce.number().int().min(1).max(250).default(25),
+  AGENT_SPONSOR_RESERVATION_TTL_SECONDS: z.coerce.number().int().min(30).max(900).default(180),
 }).superRefine((value, ctx) => {
   const r2Values = [
     value.R2_ACCOUNT_ID,
@@ -110,3 +114,4 @@ export const config = schema.parse(process.env);
 export const adminDiscordIds = new Set(
   config.ADMIN_DISCORD_IDS.split(",").map((value) => value.trim()).filter(Boolean),
 );
+
