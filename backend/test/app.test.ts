@@ -14,6 +14,7 @@ process.env.DATABASE_URL_UNPOOLED = process.env.DATABASE_URL;
 process.env.NODE_ENV = "test";
 process.env.MASKBORN_CONTRACT_ADDRESS = "";
 process.env.MASKBORN_NAMES_ADDRESS = "";
+process.env.MASKBORN_AGENT_REGISTRY_ADDRESS = "";
 process.env.AGENT_MODEL_PROVIDER = "disabled";
 process.env.AGENT_MODEL_API_KEY = "";
 process.env.AGENT_MODEL_NAME = "";
