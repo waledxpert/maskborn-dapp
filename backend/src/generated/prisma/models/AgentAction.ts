@@ -407,6 +407,7 @@ export type AgentActionWhereInput = {
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   wallet?: Prisma.XOR<Prisma.WalletScalarRelationFilter, Prisma.WalletWhereInput>
   ownershipPeriod?: Prisma.XOR<Prisma.OwnershipPeriodScalarRelationFilter, Prisma.OwnershipPeriodWhereInput>
+  sponsorshipReservation?: Prisma.XOR<Prisma.SponsorshipReservationNullableScalarRelationFilter, Prisma.SponsorshipReservationWhereInput> | null
 }
 
 export type AgentActionOrderByWithRelationInput = {
@@ -440,6 +441,7 @@ export type AgentActionOrderByWithRelationInput = {
   user?: Prisma.UserOrderByWithRelationInput
   wallet?: Prisma.WalletOrderByWithRelationInput
   ownershipPeriod?: Prisma.OwnershipPeriodOrderByWithRelationInput
+  sponsorshipReservation?: Prisma.SponsorshipReservationOrderByWithRelationInput
 }
 
 export type AgentActionWhereUniqueInput = Prisma.AtLeast<{
@@ -477,6 +479,7 @@ export type AgentActionWhereUniqueInput = Prisma.AtLeast<{
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   wallet?: Prisma.XOR<Prisma.WalletScalarRelationFilter, Prisma.WalletWhereInput>
   ownershipPeriod?: Prisma.XOR<Prisma.OwnershipPeriodScalarRelationFilter, Prisma.OwnershipPeriodWhereInput>
+  sponsorshipReservation?: Prisma.XOR<Prisma.SponsorshipReservationNullableScalarRelationFilter, Prisma.SponsorshipReservationWhereInput> | null
 }, "id" | "chainId_txHash">
 
 export type AgentActionOrderByWithAggregationInput = {
@@ -575,6 +578,7 @@ export type AgentActionCreateInput = {
   user: Prisma.UserCreateNestedOneWithoutAgentActionsInput
   wallet: Prisma.WalletCreateNestedOneWithoutAgentActionsInput
   ownershipPeriod: Prisma.OwnershipPeriodCreateNestedOneWithoutAgentActionsInput
+  sponsorshipReservation?: Prisma.SponsorshipReservationCreateNestedOneWithoutAgentActionInput
 }
 
 export type AgentActionUncheckedCreateInput = {
@@ -605,6 +609,7 @@ export type AgentActionUncheckedCreateInput = {
   confirmedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  sponsorshipReservation?: Prisma.SponsorshipReservationUncheckedCreateNestedOneWithoutAgentActionInput
 }
 
 export type AgentActionUpdateInput = {
@@ -635,6 +640,7 @@ export type AgentActionUpdateInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutAgentActionsNestedInput
   wallet?: Prisma.WalletUpdateOneRequiredWithoutAgentActionsNestedInput
   ownershipPeriod?: Prisma.OwnershipPeriodUpdateOneRequiredWithoutAgentActionsNestedInput
+  sponsorshipReservation?: Prisma.SponsorshipReservationUpdateOneWithoutAgentActionNestedInput
 }
 
 export type AgentActionUncheckedUpdateInput = {
@@ -665,6 +671,7 @@ export type AgentActionUncheckedUpdateInput = {
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sponsorshipReservation?: Prisma.SponsorshipReservationUncheckedUpdateOneWithoutAgentActionNestedInput
 }
 
 export type AgentActionCreateManyInput = {
@@ -873,6 +880,11 @@ export type AgentActionSumOrderByAggregateInput = {
   receiptBlock?: Prisma.SortOrder
 }
 
+export type AgentActionNullableScalarRelationFilter = {
+  is?: Prisma.AgentActionWhereInput | null
+  isNot?: Prisma.AgentActionWhereInput | null
+}
+
 export type AgentActionCreateNestedManyWithoutUserInput = {
   create?: Prisma.XOR<Prisma.AgentActionCreateWithoutUserInput, Prisma.AgentActionUncheckedCreateWithoutUserInput> | Prisma.AgentActionCreateWithoutUserInput[] | Prisma.AgentActionUncheckedCreateWithoutUserInput[]
   connectOrCreate?: Prisma.AgentActionCreateOrConnectWithoutUserInput | Prisma.AgentActionCreateOrConnectWithoutUserInput[]
@@ -1023,6 +1035,22 @@ export type NullableDecimalFieldUpdateOperationsInput = {
   divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
+export type AgentActionCreateNestedOneWithoutSponsorshipReservationInput = {
+  create?: Prisma.XOR<Prisma.AgentActionCreateWithoutSponsorshipReservationInput, Prisma.AgentActionUncheckedCreateWithoutSponsorshipReservationInput>
+  connectOrCreate?: Prisma.AgentActionCreateOrConnectWithoutSponsorshipReservationInput
+  connect?: Prisma.AgentActionWhereUniqueInput
+}
+
+export type AgentActionUpdateOneWithoutSponsorshipReservationNestedInput = {
+  create?: Prisma.XOR<Prisma.AgentActionCreateWithoutSponsorshipReservationInput, Prisma.AgentActionUncheckedCreateWithoutSponsorshipReservationInput>
+  connectOrCreate?: Prisma.AgentActionCreateOrConnectWithoutSponsorshipReservationInput
+  upsert?: Prisma.AgentActionUpsertWithoutSponsorshipReservationInput
+  disconnect?: Prisma.AgentActionWhereInput | boolean
+  delete?: Prisma.AgentActionWhereInput | boolean
+  connect?: Prisma.AgentActionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AgentActionUpdateToOneWithWhereWithoutSponsorshipReservationInput, Prisma.AgentActionUpdateWithoutSponsorshipReservationInput>, Prisma.AgentActionUncheckedUpdateWithoutSponsorshipReservationInput>
+}
+
 export type AgentActionCreateWithoutUserInput = {
   id?: string
   chainId: number
@@ -1050,6 +1078,7 @@ export type AgentActionCreateWithoutUserInput = {
   updatedAt?: Date | string
   wallet: Prisma.WalletCreateNestedOneWithoutAgentActionsInput
   ownershipPeriod: Prisma.OwnershipPeriodCreateNestedOneWithoutAgentActionsInput
+  sponsorshipReservation?: Prisma.SponsorshipReservationCreateNestedOneWithoutAgentActionInput
 }
 
 export type AgentActionUncheckedCreateWithoutUserInput = {
@@ -1079,6 +1108,7 @@ export type AgentActionUncheckedCreateWithoutUserInput = {
   confirmedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  sponsorshipReservation?: Prisma.SponsorshipReservationUncheckedCreateNestedOneWithoutAgentActionInput
 }
 
 export type AgentActionCreateOrConnectWithoutUserInput = {
@@ -1167,6 +1197,7 @@ export type AgentActionCreateWithoutWalletInput = {
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutAgentActionsInput
   ownershipPeriod: Prisma.OwnershipPeriodCreateNestedOneWithoutAgentActionsInput
+  sponsorshipReservation?: Prisma.SponsorshipReservationCreateNestedOneWithoutAgentActionInput
 }
 
 export type AgentActionUncheckedCreateWithoutWalletInput = {
@@ -1196,6 +1227,7 @@ export type AgentActionUncheckedCreateWithoutWalletInput = {
   confirmedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  sponsorshipReservation?: Prisma.SponsorshipReservationUncheckedCreateNestedOneWithoutAgentActionInput
 }
 
 export type AgentActionCreateOrConnectWithoutWalletInput = {
@@ -1251,6 +1283,7 @@ export type AgentActionCreateWithoutOwnershipPeriodInput = {
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutAgentActionsInput
   wallet: Prisma.WalletCreateNestedOneWithoutAgentActionsInput
+  sponsorshipReservation?: Prisma.SponsorshipReservationCreateNestedOneWithoutAgentActionInput
 }
 
 export type AgentActionUncheckedCreateWithoutOwnershipPeriodInput = {
@@ -1280,6 +1313,7 @@ export type AgentActionUncheckedCreateWithoutOwnershipPeriodInput = {
   confirmedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  sponsorshipReservation?: Prisma.SponsorshipReservationUncheckedCreateNestedOneWithoutAgentActionInput
 }
 
 export type AgentActionCreateOrConnectWithoutOwnershipPeriodInput = {
@@ -1306,6 +1340,142 @@ export type AgentActionUpdateWithWhereUniqueWithoutOwnershipPeriodInput = {
 export type AgentActionUpdateManyWithWhereWithoutOwnershipPeriodInput = {
   where: Prisma.AgentActionScalarWhereInput
   data: Prisma.XOR<Prisma.AgentActionUpdateManyMutationInput, Prisma.AgentActionUncheckedUpdateManyWithoutOwnershipPeriodInput>
+}
+
+export type AgentActionCreateWithoutSponsorshipReservationInput = {
+  id?: string
+  chainId: number
+  collectionAddress: string
+  tokenId: string
+  accountAddress: string
+  type: $Enums.AgentActionType
+  status?: $Enums.AgentActionStatus
+  senderAddress: string
+  targetAddress: string
+  transactionValueBaseUnits: runtime.Decimal | runtime.DecimalJsLike | number | string
+  assetAmountBaseUnits?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  callData: string
+  calldataHash: string
+  payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sourceBlock: bigint | number
+  expiresAt: Date | string
+  txHash?: string | null
+  submittedAt?: Date | string | null
+  receiptBlock?: bigint | number | null
+  receiptBlockHash?: string | null
+  failureCode?: string | null
+  confirmedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutAgentActionsInput
+  wallet: Prisma.WalletCreateNestedOneWithoutAgentActionsInput
+  ownershipPeriod: Prisma.OwnershipPeriodCreateNestedOneWithoutAgentActionsInput
+}
+
+export type AgentActionUncheckedCreateWithoutSponsorshipReservationInput = {
+  id?: string
+  userId: string
+  walletId: string
+  ownershipPeriodId: string
+  chainId: number
+  collectionAddress: string
+  tokenId: string
+  accountAddress: string
+  type: $Enums.AgentActionType
+  status?: $Enums.AgentActionStatus
+  senderAddress: string
+  targetAddress: string
+  transactionValueBaseUnits: runtime.Decimal | runtime.DecimalJsLike | number | string
+  assetAmountBaseUnits?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  callData: string
+  calldataHash: string
+  payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sourceBlock: bigint | number
+  expiresAt: Date | string
+  txHash?: string | null
+  submittedAt?: Date | string | null
+  receiptBlock?: bigint | number | null
+  receiptBlockHash?: string | null
+  failureCode?: string | null
+  confirmedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type AgentActionCreateOrConnectWithoutSponsorshipReservationInput = {
+  where: Prisma.AgentActionWhereUniqueInput
+  create: Prisma.XOR<Prisma.AgentActionCreateWithoutSponsorshipReservationInput, Prisma.AgentActionUncheckedCreateWithoutSponsorshipReservationInput>
+}
+
+export type AgentActionUpsertWithoutSponsorshipReservationInput = {
+  update: Prisma.XOR<Prisma.AgentActionUpdateWithoutSponsorshipReservationInput, Prisma.AgentActionUncheckedUpdateWithoutSponsorshipReservationInput>
+  create: Prisma.XOR<Prisma.AgentActionCreateWithoutSponsorshipReservationInput, Prisma.AgentActionUncheckedCreateWithoutSponsorshipReservationInput>
+  where?: Prisma.AgentActionWhereInput
+}
+
+export type AgentActionUpdateToOneWithWhereWithoutSponsorshipReservationInput = {
+  where?: Prisma.AgentActionWhereInput
+  data: Prisma.XOR<Prisma.AgentActionUpdateWithoutSponsorshipReservationInput, Prisma.AgentActionUncheckedUpdateWithoutSponsorshipReservationInput>
+}
+
+export type AgentActionUpdateWithoutSponsorshipReservationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  chainId?: Prisma.IntFieldUpdateOperationsInput | number
+  collectionAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  tokenId?: Prisma.StringFieldUpdateOperationsInput | string
+  accountAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumAgentActionTypeFieldUpdateOperationsInput | $Enums.AgentActionType
+  status?: Prisma.EnumAgentActionStatusFieldUpdateOperationsInput | $Enums.AgentActionStatus
+  senderAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  targetAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  transactionValueBaseUnits?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  assetAmountBaseUnits?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  callData?: Prisma.StringFieldUpdateOperationsInput | string
+  calldataHash?: Prisma.StringFieldUpdateOperationsInput | string
+  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sourceBlock?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receiptBlock?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  receiptBlockHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  failureCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutAgentActionsNestedInput
+  wallet?: Prisma.WalletUpdateOneRequiredWithoutAgentActionsNestedInput
+  ownershipPeriod?: Prisma.OwnershipPeriodUpdateOneRequiredWithoutAgentActionsNestedInput
+}
+
+export type AgentActionUncheckedUpdateWithoutSponsorshipReservationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  walletId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownershipPeriodId?: Prisma.StringFieldUpdateOperationsInput | string
+  chainId?: Prisma.IntFieldUpdateOperationsInput | number
+  collectionAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  tokenId?: Prisma.StringFieldUpdateOperationsInput | string
+  accountAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumAgentActionTypeFieldUpdateOperationsInput | $Enums.AgentActionType
+  status?: Prisma.EnumAgentActionStatusFieldUpdateOperationsInput | $Enums.AgentActionStatus
+  senderAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  targetAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  transactionValueBaseUnits?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  assetAmountBaseUnits?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  callData?: Prisma.StringFieldUpdateOperationsInput | string
+  calldataHash?: Prisma.StringFieldUpdateOperationsInput | string
+  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sourceBlock?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receiptBlock?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  receiptBlockHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  failureCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AgentActionCreateManyUserInput = {
@@ -1364,6 +1534,7 @@ export type AgentActionUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   wallet?: Prisma.WalletUpdateOneRequiredWithoutAgentActionsNestedInput
   ownershipPeriod?: Prisma.OwnershipPeriodUpdateOneRequiredWithoutAgentActionsNestedInput
+  sponsorshipReservation?: Prisma.SponsorshipReservationUpdateOneWithoutAgentActionNestedInput
 }
 
 export type AgentActionUncheckedUpdateWithoutUserInput = {
@@ -1393,6 +1564,7 @@ export type AgentActionUncheckedUpdateWithoutUserInput = {
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sponsorshipReservation?: Prisma.SponsorshipReservationUncheckedUpdateOneWithoutAgentActionNestedInput
 }
 
 export type AgentActionUncheckedUpdateManyWithoutUserInput = {
@@ -1480,6 +1652,7 @@ export type AgentActionUpdateWithoutWalletInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutAgentActionsNestedInput
   ownershipPeriod?: Prisma.OwnershipPeriodUpdateOneRequiredWithoutAgentActionsNestedInput
+  sponsorshipReservation?: Prisma.SponsorshipReservationUpdateOneWithoutAgentActionNestedInput
 }
 
 export type AgentActionUncheckedUpdateWithoutWalletInput = {
@@ -1509,6 +1682,7 @@ export type AgentActionUncheckedUpdateWithoutWalletInput = {
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sponsorshipReservation?: Prisma.SponsorshipReservationUncheckedUpdateOneWithoutAgentActionNestedInput
 }
 
 export type AgentActionUncheckedUpdateManyWithoutWalletInput = {
@@ -1596,6 +1770,7 @@ export type AgentActionUpdateWithoutOwnershipPeriodInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutAgentActionsNestedInput
   wallet?: Prisma.WalletUpdateOneRequiredWithoutAgentActionsNestedInput
+  sponsorshipReservation?: Prisma.SponsorshipReservationUpdateOneWithoutAgentActionNestedInput
 }
 
 export type AgentActionUncheckedUpdateWithoutOwnershipPeriodInput = {
@@ -1625,6 +1800,7 @@ export type AgentActionUncheckedUpdateWithoutOwnershipPeriodInput = {
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sponsorshipReservation?: Prisma.SponsorshipReservationUncheckedUpdateOneWithoutAgentActionNestedInput
 }
 
 export type AgentActionUncheckedUpdateManyWithoutOwnershipPeriodInput = {
@@ -1689,6 +1865,7 @@ export type AgentActionSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   wallet?: boolean | Prisma.WalletDefaultArgs<ExtArgs>
   ownershipPeriod?: boolean | Prisma.OwnershipPeriodDefaultArgs<ExtArgs>
+  sponsorshipReservation?: boolean | Prisma.AgentAction$sponsorshipReservationArgs<ExtArgs>
 }, ExtArgs["result"]["agentAction"]>
 
 export type AgentActionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1792,6 +1969,7 @@ export type AgentActionInclude<ExtArgs extends runtime.Types.Extensions.Internal
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   wallet?: boolean | Prisma.WalletDefaultArgs<ExtArgs>
   ownershipPeriod?: boolean | Prisma.OwnershipPeriodDefaultArgs<ExtArgs>
+  sponsorshipReservation?: boolean | Prisma.AgentAction$sponsorshipReservationArgs<ExtArgs>
 }
 export type AgentActionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1810,6 +1988,7 @@ export type $AgentActionPayload<ExtArgs extends runtime.Types.Extensions.Interna
     user: Prisma.$UserPayload<ExtArgs>
     wallet: Prisma.$WalletPayload<ExtArgs>
     ownershipPeriod: Prisma.$OwnershipPeriodPayload<ExtArgs>
+    sponsorshipReservation: Prisma.$SponsorshipReservationPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2236,6 +2415,7 @@ export interface Prisma__AgentActionClient<T, Null = never, ExtArgs extends runt
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   wallet<T extends Prisma.WalletDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WalletDefaultArgs<ExtArgs>>): Prisma.Prisma__WalletClient<runtime.Types.Result.GetResult<Prisma.$WalletPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   ownershipPeriod<T extends Prisma.OwnershipPeriodDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OwnershipPeriodDefaultArgs<ExtArgs>>): Prisma.Prisma__OwnershipPeriodClient<runtime.Types.Result.GetResult<Prisma.$OwnershipPeriodPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  sponsorshipReservation<T extends Prisma.AgentAction$sponsorshipReservationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AgentAction$sponsorshipReservationArgs<ExtArgs>>): Prisma.Prisma__SponsorshipReservationClient<runtime.Types.Result.GetResult<Prisma.$SponsorshipReservationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2690,6 +2870,25 @@ export type AgentActionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many AgentActions to delete.
    */
   limit?: number
+}
+
+/**
+ * AgentAction.sponsorshipReservation
+ */
+export type AgentAction$sponsorshipReservationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SponsorshipReservation
+   */
+  select?: Prisma.SponsorshipReservationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SponsorshipReservation
+   */
+  omit?: Prisma.SponsorshipReservationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SponsorshipReservationInclude<ExtArgs> | null
+  where?: Prisma.SponsorshipReservationWhereInput
 }
 
 /**

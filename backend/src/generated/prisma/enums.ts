@@ -199,3 +199,16 @@ export const AgentActionStatus = {
 } as const
 
 export type AgentActionStatus = (typeof AgentActionStatus)[keyof typeof AgentActionStatus]
+
+
+export const SponsorshipReservationStatus = {
+  RESERVED: 'RESERVED',
+  ATTACHED: 'ATTACHED',
+  SETTLED: 'SETTLED',
+  EXPIRED: 'EXPIRED',
+  RELEASED: 'RELEASED',
+  FAILED: 'FAILED',
+  VOID: 'VOID'
+} as const
+
+export type SponsorshipReservationStatus = (typeof SponsorshipReservationStatus)[keyof typeof SponsorshipReservationStatus]

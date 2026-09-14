@@ -223,6 +223,7 @@ export type WalletWhereInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodListRelationFilter
   modelDataConsents?: Prisma.ModelDataConsentListRelationFilter
   agentActions?: Prisma.AgentActionListRelationFilter
+  sponsorshipReservations?: Prisma.SponsorshipReservationListRelationFilter
 }
 
 export type WalletOrderByWithRelationInput = {
@@ -244,6 +245,7 @@ export type WalletOrderByWithRelationInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodOrderByRelationAggregateInput
   modelDataConsents?: Prisma.ModelDataConsentOrderByRelationAggregateInput
   agentActions?: Prisma.AgentActionOrderByRelationAggregateInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationOrderByRelationAggregateInput
 }
 
 export type WalletWhereUniqueInput = Prisma.AtLeast<{
@@ -269,6 +271,7 @@ export type WalletWhereUniqueInput = Prisma.AtLeast<{
   ownershipPeriods?: Prisma.OwnershipPeriodListRelationFilter
   modelDataConsents?: Prisma.ModelDataConsentListRelationFilter
   agentActions?: Prisma.AgentActionListRelationFilter
+  sponsorshipReservations?: Prisma.SponsorshipReservationListRelationFilter
 }, "id" | "chain_normalized">
 
 export type WalletOrderByWithAggregationInput = {
@@ -319,6 +322,7 @@ export type WalletCreateInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutWalletInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutWalletInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutWalletInput
 }
 
 export type WalletUncheckedCreateInput = {
@@ -339,6 +343,7 @@ export type WalletUncheckedCreateInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutWalletInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutWalletInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutWalletInput
 }
 
 export type WalletUpdateInput = {
@@ -359,6 +364,7 @@ export type WalletUpdateInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutWalletNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutWalletNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletUncheckedUpdateInput = {
@@ -379,6 +385,7 @@ export type WalletUncheckedUpdateInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutWalletNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutWalletNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletCreateManyInput = {
@@ -561,6 +568,20 @@ export type WalletUpdateOneRequiredWithoutAgentActionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.WalletUpdateToOneWithWhereWithoutAgentActionsInput, Prisma.WalletUpdateWithoutAgentActionsInput>, Prisma.WalletUncheckedUpdateWithoutAgentActionsInput>
 }
 
+export type WalletCreateNestedOneWithoutSponsorshipReservationsInput = {
+  create?: Prisma.XOR<Prisma.WalletCreateWithoutSponsorshipReservationsInput, Prisma.WalletUncheckedCreateWithoutSponsorshipReservationsInput>
+  connectOrCreate?: Prisma.WalletCreateOrConnectWithoutSponsorshipReservationsInput
+  connect?: Prisma.WalletWhereUniqueInput
+}
+
+export type WalletUpdateOneRequiredWithoutSponsorshipReservationsNestedInput = {
+  create?: Prisma.XOR<Prisma.WalletCreateWithoutSponsorshipReservationsInput, Prisma.WalletUncheckedCreateWithoutSponsorshipReservationsInput>
+  connectOrCreate?: Prisma.WalletCreateOrConnectWithoutSponsorshipReservationsInput
+  upsert?: Prisma.WalletUpsertWithoutSponsorshipReservationsInput
+  connect?: Prisma.WalletWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.WalletUpdateToOneWithWhereWithoutSponsorshipReservationsInput, Prisma.WalletUpdateWithoutSponsorshipReservationsInput>, Prisma.WalletUncheckedUpdateWithoutSponsorshipReservationsInput>
+}
+
 export type WalletCreateNestedOneWithoutModelDataConsentsInput = {
   create?: Prisma.XOR<Prisma.WalletCreateWithoutModelDataConsentsInput, Prisma.WalletUncheckedCreateWithoutModelDataConsentsInput>
   connectOrCreate?: Prisma.WalletCreateOrConnectWithoutModelDataConsentsInput
@@ -662,6 +683,7 @@ export type WalletCreateWithoutUserInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutWalletInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutWalletInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutWalletInput
 }
 
 export type WalletUncheckedCreateWithoutUserInput = {
@@ -681,6 +703,7 @@ export type WalletUncheckedCreateWithoutUserInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutWalletInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutWalletInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutWalletInput
 }
 
 export type WalletCreateOrConnectWithoutUserInput = {
@@ -741,6 +764,7 @@ export type WalletCreateWithoutOwnershipPeriodsInput = {
   monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutWalletInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutWalletInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutWalletInput
 }
 
 export type WalletUncheckedCreateWithoutOwnershipPeriodsInput = {
@@ -760,6 +784,7 @@ export type WalletUncheckedCreateWithoutOwnershipPeriodsInput = {
   monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutWalletInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutWalletInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutWalletInput
 }
 
 export type WalletCreateOrConnectWithoutOwnershipPeriodsInput = {
@@ -795,6 +820,7 @@ export type WalletUpdateWithoutOwnershipPeriodsInput = {
   monitorRules?: Prisma.MonitorRuleUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutWalletNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutWalletNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletUncheckedUpdateWithoutOwnershipPeriodsInput = {
@@ -814,6 +840,7 @@ export type WalletUncheckedUpdateWithoutOwnershipPeriodsInput = {
   monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutWalletNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutWalletNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletCreateWithoutAgentActionsInput = {
@@ -833,6 +860,7 @@ export type WalletCreateWithoutAgentActionsInput = {
   monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutWalletInput
   ownershipPeriods?: Prisma.OwnershipPeriodCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutWalletInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutWalletInput
 }
 
 export type WalletUncheckedCreateWithoutAgentActionsInput = {
@@ -852,6 +880,7 @@ export type WalletUncheckedCreateWithoutAgentActionsInput = {
   monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutWalletInput
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutWalletInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutWalletInput
 }
 
 export type WalletCreateOrConnectWithoutAgentActionsInput = {
@@ -887,6 +916,7 @@ export type WalletUpdateWithoutAgentActionsInput = {
   monitorRules?: Prisma.MonitorRuleUpdateManyWithoutWalletNestedInput
   ownershipPeriods?: Prisma.OwnershipPeriodUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutWalletNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletUncheckedUpdateWithoutAgentActionsInput = {
@@ -906,6 +936,103 @@ export type WalletUncheckedUpdateWithoutAgentActionsInput = {
   monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutWalletNestedInput
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutWalletNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutWalletNestedInput
+}
+
+export type WalletCreateWithoutSponsorshipReservationsInput = {
+  id?: string
+  chain: $Enums.WalletChain
+  address: string
+  normalized: string
+  isPrimary?: boolean
+  verifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutWalletsInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutWalletInput
+  feeShares?: Prisma.FeeShareCreateNestedManyWithoutWalletInput
+  payouts?: Prisma.PayoutCreateNestedManyWithoutWalletInput
+  walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutWalletInput
+  monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutWalletInput
+  ownershipPeriods?: Prisma.OwnershipPeriodCreateNestedManyWithoutWalletInput
+  modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutWalletInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutWalletInput
+}
+
+export type WalletUncheckedCreateWithoutSponsorshipReservationsInput = {
+  id?: string
+  userId: string
+  chain: $Enums.WalletChain
+  address: string
+  normalized: string
+  isPrimary?: boolean
+  verifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutWalletInput
+  feeShares?: Prisma.FeeShareUncheckedCreateNestedManyWithoutWalletInput
+  payouts?: Prisma.PayoutUncheckedCreateNestedManyWithoutWalletInput
+  walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutWalletInput
+  monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutWalletInput
+  ownershipPeriods?: Prisma.OwnershipPeriodUncheckedCreateNestedManyWithoutWalletInput
+  modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutWalletInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutWalletInput
+}
+
+export type WalletCreateOrConnectWithoutSponsorshipReservationsInput = {
+  where: Prisma.WalletWhereUniqueInput
+  create: Prisma.XOR<Prisma.WalletCreateWithoutSponsorshipReservationsInput, Prisma.WalletUncheckedCreateWithoutSponsorshipReservationsInput>
+}
+
+export type WalletUpsertWithoutSponsorshipReservationsInput = {
+  update: Prisma.XOR<Prisma.WalletUpdateWithoutSponsorshipReservationsInput, Prisma.WalletUncheckedUpdateWithoutSponsorshipReservationsInput>
+  create: Prisma.XOR<Prisma.WalletCreateWithoutSponsorshipReservationsInput, Prisma.WalletUncheckedCreateWithoutSponsorshipReservationsInput>
+  where?: Prisma.WalletWhereInput
+}
+
+export type WalletUpdateToOneWithWhereWithoutSponsorshipReservationsInput = {
+  where?: Prisma.WalletWhereInput
+  data: Prisma.XOR<Prisma.WalletUpdateWithoutSponsorshipReservationsInput, Prisma.WalletUncheckedUpdateWithoutSponsorshipReservationsInput>
+}
+
+export type WalletUpdateWithoutSponsorshipReservationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  chain?: Prisma.EnumWalletChainFieldUpdateOperationsInput | $Enums.WalletChain
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  normalized?: Prisma.StringFieldUpdateOperationsInput | string
+  isPrimary?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutWalletsNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutWalletNestedInput
+  feeShares?: Prisma.FeeShareUpdateManyWithoutWalletNestedInput
+  payouts?: Prisma.PayoutUpdateManyWithoutWalletNestedInput
+  walletSessions?: Prisma.WalletSessionUpdateManyWithoutWalletNestedInput
+  monitorRules?: Prisma.MonitorRuleUpdateManyWithoutWalletNestedInput
+  ownershipPeriods?: Prisma.OwnershipPeriodUpdateManyWithoutWalletNestedInput
+  modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutWalletNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutWalletNestedInput
+}
+
+export type WalletUncheckedUpdateWithoutSponsorshipReservationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  chain?: Prisma.EnumWalletChainFieldUpdateOperationsInput | $Enums.WalletChain
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  normalized?: Prisma.StringFieldUpdateOperationsInput | string
+  isPrimary?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutWalletNestedInput
+  feeShares?: Prisma.FeeShareUncheckedUpdateManyWithoutWalletNestedInput
+  payouts?: Prisma.PayoutUncheckedUpdateManyWithoutWalletNestedInput
+  walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutWalletNestedInput
+  monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutWalletNestedInput
+  ownershipPeriods?: Prisma.OwnershipPeriodUncheckedUpdateManyWithoutWalletNestedInput
+  modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutWalletNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletCreateWithoutModelDataConsentsInput = {
@@ -925,6 +1052,7 @@ export type WalletCreateWithoutModelDataConsentsInput = {
   monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutWalletInput
   ownershipPeriods?: Prisma.OwnershipPeriodCreateNestedManyWithoutWalletInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutWalletInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutWalletInput
 }
 
 export type WalletUncheckedCreateWithoutModelDataConsentsInput = {
@@ -944,6 +1072,7 @@ export type WalletUncheckedCreateWithoutModelDataConsentsInput = {
   monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutWalletInput
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedCreateNestedManyWithoutWalletInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutWalletInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutWalletInput
 }
 
 export type WalletCreateOrConnectWithoutModelDataConsentsInput = {
@@ -979,6 +1108,7 @@ export type WalletUpdateWithoutModelDataConsentsInput = {
   monitorRules?: Prisma.MonitorRuleUpdateManyWithoutWalletNestedInput
   ownershipPeriods?: Prisma.OwnershipPeriodUpdateManyWithoutWalletNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutWalletNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletUncheckedUpdateWithoutModelDataConsentsInput = {
@@ -998,6 +1128,7 @@ export type WalletUncheckedUpdateWithoutModelDataConsentsInput = {
   monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutWalletNestedInput
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedUpdateManyWithoutWalletNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutWalletNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletCreateWithoutMonitorRulesInput = {
@@ -1017,6 +1148,7 @@ export type WalletCreateWithoutMonitorRulesInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutWalletInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutWalletInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutWalletInput
 }
 
 export type WalletUncheckedCreateWithoutMonitorRulesInput = {
@@ -1036,6 +1168,7 @@ export type WalletUncheckedCreateWithoutMonitorRulesInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutWalletInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutWalletInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutWalletInput
 }
 
 export type WalletCreateOrConnectWithoutMonitorRulesInput = {
@@ -1071,6 +1204,7 @@ export type WalletUpdateWithoutMonitorRulesInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutWalletNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutWalletNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletUncheckedUpdateWithoutMonitorRulesInput = {
@@ -1090,6 +1224,7 @@ export type WalletUncheckedUpdateWithoutMonitorRulesInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutWalletNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutWalletNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletCreateWithoutWalletSessionsInput = {
@@ -1109,6 +1244,7 @@ export type WalletCreateWithoutWalletSessionsInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutWalletInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutWalletInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutWalletInput
 }
 
 export type WalletUncheckedCreateWithoutWalletSessionsInput = {
@@ -1128,6 +1264,7 @@ export type WalletUncheckedCreateWithoutWalletSessionsInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutWalletInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutWalletInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutWalletInput
 }
 
 export type WalletCreateOrConnectWithoutWalletSessionsInput = {
@@ -1163,6 +1300,7 @@ export type WalletUpdateWithoutWalletSessionsInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutWalletNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutWalletNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletUncheckedUpdateWithoutWalletSessionsInput = {
@@ -1182,6 +1320,7 @@ export type WalletUncheckedUpdateWithoutWalletSessionsInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutWalletNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutWalletNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletCreateWithoutApplicationsInput = {
@@ -1201,6 +1340,7 @@ export type WalletCreateWithoutApplicationsInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutWalletInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutWalletInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutWalletInput
 }
 
 export type WalletUncheckedCreateWithoutApplicationsInput = {
@@ -1220,6 +1360,7 @@ export type WalletUncheckedCreateWithoutApplicationsInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutWalletInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutWalletInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutWalletInput
 }
 
 export type WalletCreateOrConnectWithoutApplicationsInput = {
@@ -1255,6 +1396,7 @@ export type WalletUpdateWithoutApplicationsInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutWalletNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutWalletNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletUncheckedUpdateWithoutApplicationsInput = {
@@ -1274,6 +1416,7 @@ export type WalletUncheckedUpdateWithoutApplicationsInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutWalletNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutWalletNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletCreateWithoutFeeSharesInput = {
@@ -1293,6 +1436,7 @@ export type WalletCreateWithoutFeeSharesInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutWalletInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutWalletInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutWalletInput
 }
 
 export type WalletUncheckedCreateWithoutFeeSharesInput = {
@@ -1312,6 +1456,7 @@ export type WalletUncheckedCreateWithoutFeeSharesInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutWalletInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutWalletInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutWalletInput
 }
 
 export type WalletCreateOrConnectWithoutFeeSharesInput = {
@@ -1347,6 +1492,7 @@ export type WalletUpdateWithoutFeeSharesInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutWalletNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutWalletNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletUncheckedUpdateWithoutFeeSharesInput = {
@@ -1366,6 +1512,7 @@ export type WalletUncheckedUpdateWithoutFeeSharesInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutWalletNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutWalletNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletCreateWithoutPayoutsInput = {
@@ -1385,6 +1532,7 @@ export type WalletCreateWithoutPayoutsInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutWalletInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutWalletInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutWalletInput
 }
 
 export type WalletUncheckedCreateWithoutPayoutsInput = {
@@ -1404,6 +1552,7 @@ export type WalletUncheckedCreateWithoutPayoutsInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedCreateNestedManyWithoutWalletInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutWalletInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutWalletInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutWalletInput
 }
 
 export type WalletCreateOrConnectWithoutPayoutsInput = {
@@ -1439,6 +1588,7 @@ export type WalletUpdateWithoutPayoutsInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutWalletNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutWalletNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletUncheckedUpdateWithoutPayoutsInput = {
@@ -1458,6 +1608,7 @@ export type WalletUncheckedUpdateWithoutPayoutsInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutWalletNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutWalletNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletCreateManyUserInput = {
@@ -1488,6 +1639,7 @@ export type WalletUpdateWithoutUserInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutWalletNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutWalletNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletUncheckedUpdateWithoutUserInput = {
@@ -1507,6 +1659,7 @@ export type WalletUncheckedUpdateWithoutUserInput = {
   ownershipPeriods?: Prisma.OwnershipPeriodUncheckedUpdateManyWithoutWalletNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutWalletNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutWalletNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutWalletNestedInput
 }
 
 export type WalletUncheckedUpdateManyWithoutUserInput = {
@@ -1534,6 +1687,7 @@ export type WalletCountOutputType = {
   ownershipPeriods: number
   modelDataConsents: number
   agentActions: number
+  sponsorshipReservations: number
 }
 
 export type WalletCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1545,6 +1699,7 @@ export type WalletCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   ownershipPeriods?: boolean | WalletCountOutputTypeCountOwnershipPeriodsArgs
   modelDataConsents?: boolean | WalletCountOutputTypeCountModelDataConsentsArgs
   agentActions?: boolean | WalletCountOutputTypeCountAgentActionsArgs
+  sponsorshipReservations?: boolean | WalletCountOutputTypeCountSponsorshipReservationsArgs
 }
 
 /**
@@ -1613,6 +1768,13 @@ export type WalletCountOutputTypeCountAgentActionsArgs<ExtArgs extends runtime.T
   where?: Prisma.AgentActionWhereInput
 }
 
+/**
+ * WalletCountOutputType without action
+ */
+export type WalletCountOutputTypeCountSponsorshipReservationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SponsorshipReservationWhereInput
+}
+
 
 export type WalletSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1633,6 +1795,7 @@ export type WalletSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   ownershipPeriods?: boolean | Prisma.Wallet$ownershipPeriodsArgs<ExtArgs>
   modelDataConsents?: boolean | Prisma.Wallet$modelDataConsentsArgs<ExtArgs>
   agentActions?: boolean | Prisma.Wallet$agentActionsArgs<ExtArgs>
+  sponsorshipReservations?: boolean | Prisma.Wallet$sponsorshipReservationsArgs<ExtArgs>
   _count?: boolean | Prisma.WalletCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["wallet"]>
 
@@ -1685,6 +1848,7 @@ export type WalletInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   ownershipPeriods?: boolean | Prisma.Wallet$ownershipPeriodsArgs<ExtArgs>
   modelDataConsents?: boolean | Prisma.Wallet$modelDataConsentsArgs<ExtArgs>
   agentActions?: boolean | Prisma.Wallet$agentActionsArgs<ExtArgs>
+  sponsorshipReservations?: boolean | Prisma.Wallet$sponsorshipReservationsArgs<ExtArgs>
   _count?: boolean | Prisma.WalletCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type WalletIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1706,6 +1870,7 @@ export type $WalletPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     ownershipPeriods: Prisma.$OwnershipPeriodPayload<ExtArgs>[]
     modelDataConsents: Prisma.$ModelDataConsentPayload<ExtArgs>[]
     agentActions: Prisma.$AgentActionPayload<ExtArgs>[]
+    sponsorshipReservations: Prisma.$SponsorshipReservationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2120,6 +2285,7 @@ export interface Prisma__WalletClient<T, Null = never, ExtArgs extends runtime.T
   ownershipPeriods<T extends Prisma.Wallet$ownershipPeriodsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wallet$ownershipPeriodsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OwnershipPeriodPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   modelDataConsents<T extends Prisma.Wallet$modelDataConsentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wallet$modelDataConsentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ModelDataConsentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   agentActions<T extends Prisma.Wallet$agentActionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wallet$agentActionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AgentActionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sponsorshipReservations<T extends Prisma.Wallet$sponsorshipReservationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wallet$sponsorshipReservationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SponsorshipReservationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2748,6 +2914,30 @@ export type Wallet$agentActionsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.AgentActionScalarFieldEnum | Prisma.AgentActionScalarFieldEnum[]
+}
+
+/**
+ * Wallet.sponsorshipReservations
+ */
+export type Wallet$sponsorshipReservationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SponsorshipReservation
+   */
+  select?: Prisma.SponsorshipReservationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SponsorshipReservation
+   */
+  omit?: Prisma.SponsorshipReservationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SponsorshipReservationInclude<ExtArgs> | null
+  where?: Prisma.SponsorshipReservationWhereInput
+  orderBy?: Prisma.SponsorshipReservationOrderByWithRelationInput | Prisma.SponsorshipReservationOrderByWithRelationInput[]
+  cursor?: Prisma.SponsorshipReservationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SponsorshipReservationScalarFieldEnum | Prisma.SponsorshipReservationScalarFieldEnum[]
 }
 
 /**

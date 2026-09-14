@@ -1,4 +1,4 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 :root {
   --bone: #edeae2;
@@ -4731,7 +4731,9 @@ body:has(.admin-shell) .site-footer {
 .agent-control-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 28px; margin-bottom: 28px; }
 .agent-control-heading h3 { margin: 10px 0 8px; font-size: clamp(30px, 4vw, 48px); }
 .agent-control-heading p:not(.eyebrow), .agent-control-grid p { color: var(--muted); line-height: 1.5; }
+.agent-account-stack { min-width: 240px; display: grid; gap: 12px; }
 .agent-account-balance { min-width: 240px; padding: 18px; border: 1px solid var(--line); display: grid; gap: 5px; }
+.agent-sponsor-budget { border-color: color-mix(in srgb, var(--amber) 30%, var(--line)); background: color-mix(in srgb, var(--amber) 4%, transparent); }
 .agent-account-balance span, .agent-account-balance small { color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: 11px; }
 .agent-account-balance b { color: var(--amber); font-size: 20px; }
 .agent-control-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--line); }
@@ -4835,7 +4837,7 @@ body:has(.admin-shell) .site-footer {
   .agent-profile-panel > .pixel-art { min-height: min(85vw, 520px); border-right: 0; border-bottom: 1px solid var(--line); }
   .agent-capabilities { border-left: 0; border-top: 1px solid var(--line); }
   .agent-control-heading { flex-direction: column; }
-  .agent-account-balance { width: 100%; }
+  .agent-account-stack, .agent-account-balance { width: 100%; }
   .agent-control-grid { grid-template-columns: 1fr; }
   .agent-control-grid > div + div { border-left: 0; border-top: 1px solid var(--line); }
   .agent-session-panel { grid-template-columns: 1fr; }

@@ -2,6 +2,7 @@ import { config } from "../config.js";
 import { db } from "../db.js";
 import { syncActiveMonitors } from "../modules/notifications/monitor-service.js";
 import { syncCollectionTransfers } from "../modules/chain/collection-indexer.js";
+import { expireStaleSponsorshipReservations } from "../modules/agents/sponsorship.js";
 
 let running = false;
 
@@ -10,6 +11,7 @@ async function tick() {
   running = true;
   try {
     await syncCollectionTransfers();
+    await expireStaleSponsorshipReservations();
     const results = await syncActiveMonitors();
     const failed = results.filter((result) => !result.ok);
     if (failed.length) console.error("Agent monitor failures", failed);

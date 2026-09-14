@@ -21,7 +21,7 @@ export type PreparedAgentAction = {
   payload: Record<string, string | number | boolean | null>;
 };
 
-type ActionAuth = { userId: string; walletId: string; walletAddress: string };
+export type ActionAuth = { userId: string; walletId: string; walletAddress: string };
 
 export async function currentOwnershipPeriod(tokenId: bigint, auth: ActionAuth) {
   if (!maskBornAddress) {

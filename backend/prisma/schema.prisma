@@ -139,47 +139,58 @@ enum AgentActionStatus {
   UNKNOWN
 }
 
+enum SponsorshipReservationStatus {
+  RESERVED
+  ATTACHED
+  SETTLED
+  EXPIRED
+  RELEASED
+  FAILED
+  VOID
+}
+
 model User {
-  id                  String                   @id @default(cuid())
-  role                Role                     @default(USER)
-  displayName         String?
-  avatarUrl           String?
-  createdAt           DateTime                 @default(now())
-  updatedAt           DateTime                 @updatedAt
-  socialAccounts      SocialAccount[]
-  sessions            Session[]
-  wallets             Wallet[]
-  applications        Application[]
-  drafts              Draft[]
-  submissions         Submission[]
-  votes               Vote[]
-  voteEvents          VoteEvent[]
-  restrictions        VoteRestriction[]
-  riskEvents          RiskEvent[]
-  statusEventsAuthored SubmissionStatusEvent[] @relation("StatusEventActor")
-  adminAudits         AdminAuditLog[]          @relation("AdminAuditActor")
-  idempotencyRecords  IdempotencyRecord[]
-  payouts             Payout[]
-  walletSessions      WalletSession[]
-  monitorRules        MonitorRule[]
-  agentNotifications  AgentNotification[]
-  conversations       Conversation[]
-  usageMeters         UsageMeter[]
-  modelDataConsents   ModelDataConsent[]
-  agentActions        AgentAction[]
+  id                      String                   @id @default(cuid())
+  role                    Role                     @default(USER)
+  displayName             String?
+  avatarUrl               String?
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @updatedAt
+  socialAccounts          SocialAccount[]
+  sessions                Session[]
+  wallets                 Wallet[]
+  applications            Application[]
+  drafts                  Draft[]
+  submissions             Submission[]
+  votes                   Vote[]
+  voteEvents              VoteEvent[]
+  restrictions            VoteRestriction[]
+  riskEvents              RiskEvent[]
+  statusEventsAuthored    SubmissionStatusEvent[]  @relation("StatusEventActor")
+  adminAudits             AdminAuditLog[]          @relation("AdminAuditActor")
+  idempotencyRecords      IdempotencyRecord[]
+  payouts                 Payout[]
+  walletSessions          WalletSession[]
+  monitorRules            MonitorRule[]
+  agentNotifications      AgentNotification[]
+  conversations           Conversation[]
+  usageMeters             UsageMeter[]
+  modelDataConsents       ModelDataConsent[]
+  agentActions            AgentAction[]
+  sponsorshipReservations SponsorshipReservation[]
 }
 
 model SocialAccount {
-  id                 String            @id @default(cuid())
-  userId             String
-  provider           String
-  providerAccountId  String
-  username           String
-  claimKey           String?           @unique
-  verificationState  VerificationState @default(UNVERIFIED)
-  createdAt          DateTime          @default(now())
-  updatedAt          DateTime          @updatedAt
-  user               User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String            @id @default(cuid())
+  userId            String
+  provider          String
+  providerAccountId String
+  username          String
+  claimKey          String?           @unique
+  verificationState VerificationState @default(UNVERIFIED)
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@index([provider, username])
@@ -200,31 +211,32 @@ model Session {
 }
 
 model Wallet {
-  id         String      @id @default(cuid())
-  userId     String
-  chain      WalletChain
-  address    String
-  normalized String
-  isPrimary  Boolean     @default(false)
-  verifiedAt DateTime?
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  applications Application[]
-  feeShares    FeeShare[]
-  payouts      Payout[]
-  walletSessions WalletSession[]
-  monitorRules   MonitorRule[]
-  ownershipPeriods OwnershipPeriod[]
-  modelDataConsents ModelDataConsent[]
-  agentActions      AgentAction[]
+  id                      String                   @id @default(cuid())
+  userId                  String
+  chain                   WalletChain
+  address                 String
+  normalized              String
+  isPrimary               Boolean                  @default(false)
+  verifiedAt              DateTime?
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @updatedAt
+  user                    User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  applications            Application[]
+  feeShares               FeeShare[]
+  payouts                 Payout[]
+  walletSessions          WalletSession[]
+  monitorRules            MonitorRule[]
+  ownershipPeriods        OwnershipPeriod[]
+  modelDataConsents       ModelDataConsent[]
+  agentActions            AgentAction[]
+  sponsorshipReservations SponsorshipReservation[]
 
   @@unique([chain, normalized])
   @@index([userId])
 }
 
 model ChainCursor {
-  id                String   @id @default(cuid())
+  id                String    @id @default(cuid())
   chainId           Int
   collectionAddress String
   stream            String
@@ -232,14 +244,14 @@ model ChainCursor {
   lastBlockHash     String?
   lastError         String?
   lastErrorAt       DateTime?
-  updatedAt         DateTime @updatedAt
-  createdAt         DateTime @default(now())
+  updatedAt         DateTime  @updatedAt
+  createdAt         DateTime  @default(now())
 
   @@unique([chainId, collectionAddress, stream])
 }
 
 model ChainEvent {
-  id                String   @id @default(cuid())
+  id                String    @id @default(cuid())
   chainId           Int
   collectionAddress String
   txHash            String
@@ -252,7 +264,7 @@ model ChainEvent {
   fromAddress       String
   toAddress         String
   blockTime         DateTime?
-  indexedAt         DateTime @default(now())
+  indexedAt         DateTime  @default(now())
 
   @@unique([chainId, txHash, logIndex])
   @@index([chainId, collectionAddress, tokenId, blockNumber])
@@ -260,26 +272,27 @@ model ChainEvent {
 }
 
 model OwnershipPeriod {
-  id                String   @id @default(cuid())
-  chainId           Int
-  collectionAddress String
-  tokenId           String
-  sequence          Int
-  ownerAddress      String
-  walletId          String?
-  startedBlock      BigInt
-  startedTxHash     String
-  startedLogIndex   Int
-  startedAt         DateTime?
-  endedBlock        BigInt?
-  endedTxHash       String?
-  endedLogIndex     Int?
-  endedAt           DateTime?
-  createdAt         DateTime @default(now())
-  wallet            Wallet?  @relation(fields: [walletId], references: [id], onDelete: SetNull)
-  conversations     Conversation[]
-  modelDataConsents ModelDataConsent[]
-  agentActions      AgentAction[]
+  id                      String                   @id @default(cuid())
+  chainId                 Int
+  collectionAddress       String
+  tokenId                 String
+  sequence                Int
+  ownerAddress            String
+  walletId                String?
+  startedBlock            BigInt
+  startedTxHash           String
+  startedLogIndex         Int
+  startedAt               DateTime?
+  endedBlock              BigInt?
+  endedTxHash             String?
+  endedLogIndex           Int?
+  endedAt                 DateTime?
+  createdAt               DateTime                 @default(now())
+  wallet                  Wallet?                  @relation(fields: [walletId], references: [id], onDelete: SetNull)
+  conversations           Conversation[]
+  modelDataConsents       ModelDataConsent[]
+  agentActions            AgentAction[]
+  sponsorshipReservations SponsorshipReservation[]
 
   @@unique([chainId, collectionAddress, tokenId, sequence])
   @@index([chainId, collectionAddress, tokenId, endedBlock])
@@ -288,36 +301,37 @@ model OwnershipPeriod {
 }
 
 model AgentAction {
-  id                String            @id @default(cuid())
-  userId            String
-  walletId          String
-  ownershipPeriodId String
-  chainId           Int
-  collectionAddress String
-  tokenId           String
-  accountAddress    String
-  type              AgentActionType
-  status            AgentActionStatus @default(PREPARED)
-  senderAddress     String
-  targetAddress     String
-  transactionValueBaseUnits Decimal   @db.Decimal(78, 0)
-  assetAmountBaseUnits Decimal?       @db.Decimal(78, 0)
-  callData          String
-  calldataHash      String
-  payload           Json
-  sourceBlock       BigInt
-  expiresAt         DateTime
-  txHash            String?
-  submittedAt       DateTime?
-  receiptBlock      BigInt?
-  receiptBlockHash  String?
-  failureCode       String?
-  confirmedAt       DateTime?
-  createdAt         DateTime          @default(now())
-  updatedAt         DateTime          @updatedAt
-  user              User              @relation(fields: [userId], references: [id], onDelete: Restrict)
-  wallet            Wallet            @relation(fields: [walletId], references: [id], onDelete: Restrict)
-  ownershipPeriod   OwnershipPeriod   @relation(fields: [ownershipPeriodId], references: [id], onDelete: Restrict)
+  id                        String                  @id @default(cuid())
+  userId                    String
+  walletId                  String
+  ownershipPeriodId         String
+  chainId                   Int
+  collectionAddress         String
+  tokenId                   String
+  accountAddress            String
+  type                      AgentActionType
+  status                    AgentActionStatus       @default(PREPARED)
+  senderAddress             String
+  targetAddress             String
+  transactionValueBaseUnits Decimal                 @db.Decimal(78, 0)
+  assetAmountBaseUnits      Decimal?                @db.Decimal(78, 0)
+  callData                  String
+  calldataHash              String
+  payload                   Json
+  sourceBlock               BigInt
+  expiresAt                 DateTime
+  txHash                    String?
+  submittedAt               DateTime?
+  receiptBlock              BigInt?
+  receiptBlockHash          String?
+  failureCode               String?
+  confirmedAt               DateTime?
+  createdAt                 DateTime                @default(now())
+  updatedAt                 DateTime                @updatedAt
+  user                      User                    @relation(fields: [userId], references: [id], onDelete: Restrict)
+  wallet                    Wallet                  @relation(fields: [walletId], references: [id], onDelete: Restrict)
+  ownershipPeriod           OwnershipPeriod         @relation(fields: [ownershipPeriodId], references: [id], onDelete: Restrict)
+  sponsorshipReservation    SponsorshipReservation?
 
   @@unique([chainId, txHash])
   @@index([userId, tokenId, createdAt])
@@ -325,16 +339,56 @@ model AgentAction {
   @@index([ownershipPeriodId, createdAt])
   @@index([status, expiresAt])
 }
+model SponsorshipReservation {
+  id                      String                       @id @default(cuid())
+  userId                  String
+  walletId                String
+  ownershipPeriodId       String
+  agentActionId           String?                      @unique
+  chainId                 Int
+  collectionAddress       String
+  tokenId                 String
+  accountAddress          String
+  actionType              AgentActionType
+  status                  SponsorshipReservationStatus @default(RESERVED)
+  currency                String                       @default("USDC")
+  gasAsset                String                       @default("native-USDC")
+  dailyBucket             DateTime
+  dailyAllowanceBaseUnits Decimal                      @db.Decimal(78, 0)
+  dailyTransactionLimit   Int
+  reservedCostBaseUnits   Decimal                      @db.Decimal(78, 0)
+  actualCostBaseUnits     Decimal?                     @db.Decimal(78, 0)
+  reservationKey          String                       @unique
+  userOperationHash       String?                      @unique
+  userOperationNonce      String?
+  txHash                  String?
+  receiptBlock            BigInt?
+  receiptBlockHash        String?
+  failureCode             String?
+  expiresAt               DateTime
+  settledAt               DateTime?
+  createdAt               DateTime                     @default(now())
+  updatedAt               DateTime                     @updatedAt
+  user                    User                         @relation(fields: [userId], references: [id], onDelete: Restrict)
+  wallet                  Wallet                       @relation(fields: [walletId], references: [id], onDelete: Restrict)
+  ownershipPeriod         OwnershipPeriod              @relation(fields: [ownershipPeriodId], references: [id], onDelete: Restrict)
+  agentAction             AgentAction?                 @relation(fields: [agentActionId], references: [id], onDelete: SetNull)
+
+  @@index([chainId, collectionAddress, tokenId, dailyBucket, status])
+  @@index([walletId, status, expiresAt])
+  @@index([userId, createdAt])
+  @@index([status, expiresAt])
+}
 
 model Conversation {
-  id                String   @id @default(cuid())
+  id                String                @id @default(cuid())
   userId            String
   ownershipPeriodId String
   title             String?
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  ownershipPeriod   OwnershipPeriod @relation(fields: [ownershipPeriodId], references: [id], onDelete: Restrict)
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+  user              User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ownershipPeriod   OwnershipPeriod       @relation(fields: [ownershipPeriodId], references: [id], onDelete: Restrict)
   messages          ConversationMessage[]
   toolRuns          ToolRun[]
 
@@ -360,16 +414,16 @@ model ConversationMessage {
 }
 
 model ToolRun {
-  id             String         @id @default(cuid())
+  id             String              @id @default(cuid())
   conversationId String
   messageId      String
   toolName       String
-  status         AgentRunStatus @default(RUNNING)
+  status         AgentRunStatus      @default(RUNNING)
   output         Json?
   errorCode      String?
-  startedAt      DateTime       @default(now())
+  startedAt      DateTime            @default(now())
   completedAt    DateTime?
-  conversation   Conversation   @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  conversation   Conversation        @relation(fields: [conversationId], references: [id], onDelete: Cascade)
   message        ConversationMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
 
   @@index([conversationId, startedAt])
@@ -392,18 +446,18 @@ model UsageMeter {
 }
 
 model ModelDataConsent {
-  id                String   @id @default(cuid())
+  id                String          @id @default(cuid())
   userId            String
   walletId          String
   ownershipPeriodId String
   provider          String
   modelName         String
   destinationOrigin String
-  disclosureVersion Int     @default(1)
-  acceptedAt        DateTime @default(now())
+  disclosureVersion Int             @default(1)
+  acceptedAt        DateTime        @default(now())
   revokedAt         DateTime?
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  wallet            Wallet   @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  user              User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wallet            Wallet          @relation(fields: [walletId], references: [id], onDelete: Cascade)
   ownershipPeriod   OwnershipPeriod @relation(fields: [ownershipPeriodId], references: [id], onDelete: Restrict)
 
   @@unique([userId, ownershipPeriodId, provider, disclosureVersion])
@@ -411,30 +465,30 @@ model ModelDataConsent {
 }
 
 model MonitorRule {
-  id               String           @id @default(cuid())
-  userId           String
-  walletId         String
-  chainId          Int
+  id                String              @id @default(cuid())
+  userId            String
+  walletId          String
+  chainId           Int
   collectionAddress String
-  tokenId          String
-  watchedAddress   String
-  direction        MonitorDirection @default(INCOMING)
-  counterparty     String?
-  minimumAmount    Decimal          @default(0) @db.Decimal(78, 0)
-  expectedAmount   Decimal?         @db.Decimal(78, 0)
-  cadence          MonitorCadence   @default(CONTINUOUS)
-  timezone         String           @default("UTC")
-  graceMinutes     Int              @default(60)
-  nextExpectedAt   DateTime?
-  cursorBlock      BigInt
-  isActive         Boolean          @default(true)
-  lastCheckedAt    DateTime?
-  createdAt        DateTime         @default(now())
-  updatedAt        DateTime         @updatedAt
-  user             User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  wallet           Wallet           @relation(fields: [walletId], references: [id], onDelete: Cascade)
-  matches          MonitorMatch[]
-  notifications    AgentNotification[]
+  tokenId           String
+  watchedAddress    String
+  direction         MonitorDirection    @default(INCOMING)
+  counterparty      String?
+  minimumAmount     Decimal             @default(0) @db.Decimal(78, 0)
+  expectedAmount    Decimal?            @db.Decimal(78, 0)
+  cadence           MonitorCadence      @default(CONTINUOUS)
+  timezone          String              @default("UTC")
+  graceMinutes      Int                 @default(60)
+  nextExpectedAt    DateTime?
+  cursorBlock       BigInt
+  isActive          Boolean             @default(true)
+  lastCheckedAt     DateTime?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wallet            Wallet              @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  matches           MonitorMatch[]
+  notifications     AgentNotification[]
 
   @@index([userId, isActive])
   @@index([walletId, isActive])
@@ -442,17 +496,17 @@ model MonitorRule {
 }
 
 model ObservedPayment {
-  id          String   @id @default(cuid())
-  chainId     Int
-  txHash      String
-  logIndex    Int
-  fromAddress String
-  toAddress   String
-  amount      Decimal  @db.Decimal(78, 0)
-  blockNumber BigInt
-  blockTime   DateTime?
-  observedAt  DateTime @default(now())
-  matches     MonitorMatch[]
+  id            String              @id @default(cuid())
+  chainId       Int
+  txHash        String
+  logIndex      Int
+  fromAddress   String
+  toAddress     String
+  amount        Decimal             @db.Decimal(78, 0)
+  blockNumber   BigInt
+  blockTime     DateTime?
+  observedAt    DateTime            @default(now())
+  matches       MonitorMatch[]
   notifications AgentNotification[]
 
   @@unique([chainId, txHash, logIndex])
@@ -461,19 +515,19 @@ model ObservedPayment {
 }
 
 model MonitorMatch {
-  monitorRuleId    String
+  monitorRuleId     String
   observedPaymentId String
-  direction        MonitorDirection
-  createdAt        DateTime        @default(now())
-  monitorRule      MonitorRule      @relation(fields: [monitorRuleId], references: [id], onDelete: Cascade)
-  observedPayment  ObservedPayment  @relation(fields: [observedPaymentId], references: [id], onDelete: Restrict)
+  direction         MonitorDirection
+  createdAt         DateTime         @default(now())
+  monitorRule       MonitorRule      @relation(fields: [monitorRuleId], references: [id], onDelete: Cascade)
+  observedPayment   ObservedPayment  @relation(fields: [observedPaymentId], references: [id], onDelete: Restrict)
 
   @@id([monitorRuleId, observedPaymentId])
   @@index([observedPaymentId])
 }
 
 model AgentNotification {
-  id                String                    @id @default(cuid())
+  id                String                @id @default(cuid())
   userId            String
   monitorRuleId     String?
   observedPaymentId String?
@@ -481,19 +535,19 @@ model AgentNotification {
   title             String
   body              String
   data              Json?
-  deliveryKey       String                    @unique
+  deliveryKey       String                @unique
   readAt            DateTime?
-  createdAt         DateTime                  @default(now())
-  user              User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  monitorRule       MonitorRule?               @relation(fields: [monitorRuleId], references: [id], onDelete: SetNull)
-  observedPayment   ObservedPayment?           @relation(fields: [observedPaymentId], references: [id], onDelete: SetNull)
+  createdAt         DateTime              @default(now())
+  user              User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  monitorRule       MonitorRule?          @relation(fields: [monitorRuleId], references: [id], onDelete: SetNull)
+  observedPayment   ObservedPayment?      @relation(fields: [observedPaymentId], references: [id], onDelete: SetNull)
 
   @@index([userId, readAt, createdAt])
   @@index([monitorRuleId, createdAt])
 }
 
 model WalletChallenge {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   address     String
   normalized  String
   chainId     Int
@@ -501,23 +555,23 @@ model WalletChallenge {
   messageHash String
   expiresAt   DateTime
   usedAt      DateTime?
-  createdAt   DateTime @default(now())
+  createdAt   DateTime  @default(now())
 
   @@index([normalized, expiresAt])
   @@index([expiresAt])
 }
 
 model WalletSession {
-  id         String   @id @default(cuid())
+  id         String    @id @default(cuid())
   userId     String
   walletId   String
-  tokenHash  String   @unique
+  tokenHash  String    @unique
   expiresAt  DateTime
   revokedAt  DateTime?
-  lastSeenAt DateTime @default(now())
-  createdAt  DateTime @default(now())
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  wallet     Wallet   @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  lastSeenAt DateTime  @default(now())
+  createdAt  DateTime  @default(now())
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wallet     Wallet    @relation(fields: [walletId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([walletId])
@@ -525,22 +579,22 @@ model WalletSession {
 }
 
 model Application {
-  id                    String             @id @default(cuid())
-  userId                String            @unique
-  walletId              String
-  quotePostUrl          String
-  quotePostId           String?            @unique
-  likedState            VerificationState  @default(PENDING_MANUAL)
-  repostedState         VerificationState  @default(PENDING_MANUAL)
-  commentedState        VerificationState  @default(PENDING_MANUAL)
-  quoteOwnershipState   VerificationState  @default(PENDING_MANUAL)
-  builderTraits         Json
-  previewAssetUrl       String?
-  status                ApplicationStatus  @default(PENDING)
-  submittedAt           DateTime           @default(now())
-  reviewedAt            DateTime?
-  user                  User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  wallet                Wallet             @relation(fields: [walletId], references: [id])
+  id                  String            @id @default(cuid())
+  userId              String            @unique
+  walletId            String
+  quotePostUrl        String
+  quotePostId         String?           @unique
+  likedState          VerificationState @default(PENDING_MANUAL)
+  repostedState       VerificationState @default(PENDING_MANUAL)
+  commentedState      VerificationState @default(PENDING_MANUAL)
+  quoteOwnershipState VerificationState @default(PENDING_MANUAL)
+  builderTraits       Json
+  previewAssetUrl     String?
+  status              ApplicationStatus @default(PENDING)
+  submittedAt         DateTime          @default(now())
+  reviewedAt          DateTime?
+  user                User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wallet              Wallet            @relation(fields: [walletId], references: [id])
 
   @@unique([quotePostUrl])
   @@index([userId, submittedAt])
@@ -548,19 +602,19 @@ model Application {
 }
 
 model Draft {
-  id              String         @id @default(cuid())
-  userId          String
-  kind            SubmissionKind
-  title           String
-  schemaVersion   Int            @default(1)
-  version         Int            @default(1)
+  id               String          @id @default(cuid())
+  userId           String
+  kind             SubmissionKind
+  title            String
+  schemaVersion    Int             @default(1)
+  version          Int             @default(1)
   generatorVersion String
-  payload         Json
-  previewAssetUrl String?
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
-  user            User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  revisions       DraftRevision[]
+  payload          Json
+  previewAssetUrl  String?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  user             User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  revisions        DraftRevision[]
 
   @@index([userId, updatedAt])
 }
@@ -577,33 +631,33 @@ model DraftRevision {
 }
 
 model Submission {
-  id               String                    @id @default(cuid())
-  slug             String                    @unique
+  id               String                  @id @default(cuid())
+  slug             String                  @unique
   userId           String
   kind             SubmissionKind
   title            String
-  titleClaim       String?                   @unique
+  titleClaim       String?                 @unique
   description      String
   generatorVersion String
   categories       GeneratorCategory[]
   pixelData        Json
-  pixelDataKey     String?                   @unique
+  pixelDataKey     String?                 @unique
   sourceHash       String?
   compatibility    Json?
   mediaHash        String
   previewAssetUrl  String
-  previewAssetKey  String?                   @unique
+  previewAssetKey  String?                 @unique
   previewVariants  Json?
-  storageProvider  String                    @default("DATABASE")
+  storageProvider  String                  @default("DATABASE")
   canonicalDataKey String?
   canonicalHash    String?
   sourcePostUrl    String?
-  status           SubmissionStatus          @default(PENDING)
-  publishedAt      DateTime                  @default(now())
-  updatedAt        DateTime                  @updatedAt
-  upvoteCount      Int                       @default(0)
-  downvoteCount    Int                       @default(0)
-  user             User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status           SubmissionStatus        @default(PENDING)
+  publishedAt      DateTime                @default(now())
+  updatedAt        DateTime                @updatedAt
+  upvoteCount      Int                     @default(0)
+  downvoteCount    Int                     @default(0)
+  user             User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
   votes            Vote[]
   voteEvents       VoteEvent[]
   statusEvents     SubmissionStatusEvent[]
@@ -630,30 +684,30 @@ model SubmissionAccessory {
 }
 
 model SubmissionStatusEvent {
-  id           String           @id @default(cuid())
+  id           String            @id @default(cuid())
   submissionId String
   actorId      String?
   fromStatus   SubmissionStatus?
   toStatus     SubmissionStatus
   note         String?
-  createdAt    DateTime         @default(now())
-  submission   Submission       @relation(fields: [submissionId], references: [id], onDelete: Cascade)
-  actor        User?            @relation("StatusEventActor", fields: [actorId], references: [id], onDelete: SetNull)
+  createdAt    DateTime          @default(now())
+  submission   Submission        @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  actor        User?             @relation("StatusEventActor", fields: [actorId], references: [id], onDelete: SetNull)
 
   @@index([submissionId, createdAt])
 }
 
 model Vote {
-  id           String     @id @default(cuid())
+  id           String             @id @default(cuid())
   submissionId String
   userId       String
   value        VoteValue
   category     GeneratorCategory?
-  categoryKey  String     @default("ONE_OF_ONE")
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  submission   Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
-  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categoryKey  String             @default("ONE_OF_ONE")
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  submission   Submission         @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  user         User               @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([submissionId, userId, categoryKey])
   @@index([userId, updatedAt])
@@ -661,7 +715,7 @@ model Vote {
 }
 
 model VoteEvent {
-  id           String      @id @default(cuid())
+  id           String             @id @default(cuid())
   submissionId String
   userId       String
   fromValue    VoteValue?
@@ -669,9 +723,9 @@ model VoteEvent {
   category     GeneratorCategory?
   signalHash   String
   requestId    String
-  createdAt    DateTime    @default(now())
-  submission   Submission  @relation(fields: [submissionId], references: [id], onDelete: Cascade)
-  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime           @default(now())
+  submission   Submission         @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  user         User               @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, createdAt])
   @@index([signalHash, createdAt])
@@ -679,16 +733,16 @@ model VoteEvent {
 }
 
 model VoteRestriction {
-  id          String          @id @default(cuid())
-  userId      String
-  type        RestrictionType @default(VOTE)
-  reasonCode  String
-  note        String?
-  startsAt    DateTime        @default(now())
-  expiresAt   DateTime
-  liftedAt    DateTime?
-  createdAt   DateTime        @default(now())
-  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id         String          @id @default(cuid())
+  userId     String
+  type       RestrictionType @default(VOTE)
+  reasonCode String
+  note       String?
+  startsAt   DateTime        @default(now())
+  expiresAt  DateTime
+  liftedAt   DateTime?
+  createdAt  DateTime        @default(now())
+  user       User            @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, type, expiresAt])
 }
@@ -708,19 +762,19 @@ model RiskEvent {
 }
 
 model GalleryEntry {
-  id               String             @id @default(cuid())
-  submissionId     String             @unique
+  id               String              @id @default(cuid())
+  submissionId     String              @unique
   kind             GalleryEntryKind
-  publicationState PublicationState   @default(GALLERY_ONLY)
+  publicationState PublicationState    @default(GALLERY_ONLY)
   categories       GeneratorCategory[]
-  displayOrder     Int                @default(0)
-  isVisible        Boolean            @default(true)
+  displayOrder     Int                 @default(0)
+  isVisible        Boolean             @default(true)
   tokenChainId     Int?
   tokenContract    String?
   tokenId          String?
   metadataUri      String?
-  addedAt          DateTime           @default(now())
-  submission       Submission         @relation(fields: [submissionId], references: [id], onDelete: Restrict)
+  addedAt          DateTime            @default(now())
+  submission       Submission          @relation(fields: [submissionId], references: [id], onDelete: Restrict)
   feeShare         FeeShare?
 
   @@unique([tokenChainId, tokenContract, tokenId])
@@ -728,35 +782,35 @@ model GalleryEntry {
 }
 
 model FeeShare {
-  id             String   @id @default(cuid())
-  galleryEntryId String   @unique
+  id             String           @id @default(cuid())
+  galleryEntryId String           @unique
   walletId       String
   basisPoints    Int
-  startsAt       DateTime @default(now())
+  startsAt       DateTime         @default(now())
   endsAt         DateTime?
-  galleryEntry   GalleryEntry @relation(fields: [galleryEntryId], references: [id], onDelete: Restrict)
-  wallet         Wallet       @relation(fields: [walletId], references: [id], onDelete: Restrict)
+  galleryEntry   GalleryEntry     @relation(fields: [galleryEntryId], references: [id], onDelete: Restrict)
+  wallet         Wallet           @relation(fields: [walletId], references: [id], onDelete: Restrict)
   accruals       CreatorAccrual[]
 
   @@index([walletId])
 }
 
 model TradeFeeEvent {
-  id              String   @id @default(cuid())
-  chainId         Int
-  txHash          String
-  logIndex        Int
-  tokenContract   String
-  tokenId         String
-  currency        String
-  currencySymbol  String?
+  id               String           @id @default(cuid())
+  chainId          Int
+  txHash           String
+  logIndex         Int
+  tokenContract    String
+  tokenId          String
+  currency         String
+  currencySymbol   String?
   currencyDecimals Int?
-  grossAmount     Decimal  @db.Decimal(78, 0)
-  platformFee     Decimal  @db.Decimal(78, 0)
-  blockNumber     BigInt
-  occurredAt      DateTime?
-  indexedAt       DateTime @default(now())
-  accruals        CreatorAccrual[]
+  grossAmount      Decimal          @db.Decimal(78, 0)
+  platformFee      Decimal          @db.Decimal(78, 0)
+  blockNumber      BigInt
+  occurredAt       DateTime?
+  indexedAt        DateTime         @default(now())
+  accruals         CreatorAccrual[]
 
   @@unique([chainId, txHash, logIndex])
   @@index([tokenContract, tokenId, blockNumber])
@@ -779,22 +833,22 @@ model CreatorAccrual {
 }
 
 model Payout {
-  id          String       @id @default(cuid())
-  userId      String
-  walletId    String
-  chainId     Int
-  currency    String
-  currencySymbol String?
+  id               String       @id @default(cuid())
+  userId           String
+  walletId         String
+  chainId          Int
+  currency         String
+  currencySymbol   String?
   currencyDecimals Int?
-  totalAmount Decimal      @db.Decimal(78, 0)
-  status      PayoutStatus @default(PENDING)
-  txHash      String?
-  failureCode String?
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  user        User         @relation(fields: [userId], references: [id], onDelete: Restrict)
-  wallet      Wallet       @relation(fields: [walletId], references: [id], onDelete: Restrict)
-  items       PayoutItem[]
+  totalAmount      Decimal      @db.Decimal(78, 0)
+  status           PayoutStatus @default(PENDING)
+  txHash           String?
+  failureCode      String?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  user             User         @relation(fields: [userId], references: [id], onDelete: Restrict)
+  wallet           Wallet       @relation(fields: [walletId], references: [id], onDelete: Restrict)
+  items            PayoutItem[]
 
   @@index([userId, status])
 }
@@ -826,17 +880,17 @@ model IdempotencyRecord {
 }
 
 model AdminAuditLog {
-  id           String   @id @default(cuid())
-  actorId      String
-  action       String
-  targetType   String
-  targetId     String
-  before       Json?
-  after        Json?
-  reason       String?
-  requestId    String
-  createdAt    DateTime @default(now())
-  actor        User     @relation("AdminAuditActor", fields: [actorId], references: [id], onDelete: Restrict)
+  id         String   @id @default(cuid())
+  actorId    String
+  action     String
+  targetType String
+  targetId   String
+  before     Json?
+  after      Json?
+  reason     String?
+  requestId  String
+  createdAt  DateTime @default(now())
+  actor      User     @relation("AdminAuditActor", fields: [actorId], references: [id], onDelete: Restrict)
 
   @@index([targetType, targetId, createdAt])
   @@index([actorId, createdAt])

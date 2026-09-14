@@ -59,6 +59,7 @@ export const ModelName = {
   ChainEvent: 'ChainEvent',
   OwnershipPeriod: 'OwnershipPeriod',
   AgentAction: 'AgentAction',
+  SponsorshipReservation: 'SponsorshipReservation',
   Conversation: 'Conversation',
   ConversationMessage: 'ConversationMessage',
   ToolRun: 'ToolRun',
@@ -249,6 +250,41 @@ export const AgentActionScalarFieldEnum = {
 } as const
 
 export type AgentActionScalarFieldEnum = (typeof AgentActionScalarFieldEnum)[keyof typeof AgentActionScalarFieldEnum]
+
+
+export const SponsorshipReservationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  walletId: 'walletId',
+  ownershipPeriodId: 'ownershipPeriodId',
+  agentActionId: 'agentActionId',
+  chainId: 'chainId',
+  collectionAddress: 'collectionAddress',
+  tokenId: 'tokenId',
+  accountAddress: 'accountAddress',
+  actionType: 'actionType',
+  status: 'status',
+  currency: 'currency',
+  gasAsset: 'gasAsset',
+  dailyBucket: 'dailyBucket',
+  dailyAllowanceBaseUnits: 'dailyAllowanceBaseUnits',
+  dailyTransactionLimit: 'dailyTransactionLimit',
+  reservedCostBaseUnits: 'reservedCostBaseUnits',
+  actualCostBaseUnits: 'actualCostBaseUnits',
+  reservationKey: 'reservationKey',
+  userOperationHash: 'userOperationHash',
+  userOperationNonce: 'userOperationNonce',
+  txHash: 'txHash',
+  receiptBlock: 'receiptBlock',
+  receiptBlockHash: 'receiptBlockHash',
+  failureCode: 'failureCode',
+  expiresAt: 'expiresAt',
+  settledAt: 'settledAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SponsorshipReservationScalarFieldEnum = (typeof SponsorshipReservationScalarFieldEnum)[keyof typeof SponsorshipReservationScalarFieldEnum]
 
 
 export const ConversationScalarFieldEnum = {

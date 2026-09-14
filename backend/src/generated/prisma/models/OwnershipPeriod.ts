@@ -328,6 +328,7 @@ export type OwnershipPeriodWhereInput = {
   conversations?: Prisma.ConversationListRelationFilter
   modelDataConsents?: Prisma.ModelDataConsentListRelationFilter
   agentActions?: Prisma.AgentActionListRelationFilter
+  sponsorshipReservations?: Prisma.SponsorshipReservationListRelationFilter
 }
 
 export type OwnershipPeriodOrderByWithRelationInput = {
@@ -351,6 +352,7 @@ export type OwnershipPeriodOrderByWithRelationInput = {
   conversations?: Prisma.ConversationOrderByRelationAggregateInput
   modelDataConsents?: Prisma.ModelDataConsentOrderByRelationAggregateInput
   agentActions?: Prisma.AgentActionOrderByRelationAggregateInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationOrderByRelationAggregateInput
 }
 
 export type OwnershipPeriodWhereUniqueInput = Prisma.AtLeast<{
@@ -378,6 +380,7 @@ export type OwnershipPeriodWhereUniqueInput = Prisma.AtLeast<{
   conversations?: Prisma.ConversationListRelationFilter
   modelDataConsents?: Prisma.ModelDataConsentListRelationFilter
   agentActions?: Prisma.AgentActionListRelationFilter
+  sponsorshipReservations?: Prisma.SponsorshipReservationListRelationFilter
 }, "id" | "chainId_collectionAddress_tokenId_sequence">
 
 export type OwnershipPeriodOrderByWithAggregationInput = {
@@ -446,6 +449,7 @@ export type OwnershipPeriodCreateInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutOwnershipPeriodInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutOwnershipPeriodInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutOwnershipPeriodInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutOwnershipPeriodInput
 }
 
 export type OwnershipPeriodUncheckedCreateInput = {
@@ -468,6 +472,7 @@ export type OwnershipPeriodUncheckedCreateInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutOwnershipPeriodInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutOwnershipPeriodInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutOwnershipPeriodInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutOwnershipPeriodInput
 }
 
 export type OwnershipPeriodUpdateInput = {
@@ -490,6 +495,7 @@ export type OwnershipPeriodUpdateInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutOwnershipPeriodNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutOwnershipPeriodNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutOwnershipPeriodNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutOwnershipPeriodNestedInput
 }
 
 export type OwnershipPeriodUncheckedUpdateInput = {
@@ -512,6 +518,7 @@ export type OwnershipPeriodUncheckedUpdateInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
 }
 
 export type OwnershipPeriodCreateManyInput = {
@@ -739,6 +746,20 @@ export type OwnershipPeriodUpdateOneRequiredWithoutAgentActionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OwnershipPeriodUpdateToOneWithWhereWithoutAgentActionsInput, Prisma.OwnershipPeriodUpdateWithoutAgentActionsInput>, Prisma.OwnershipPeriodUncheckedUpdateWithoutAgentActionsInput>
 }
 
+export type OwnershipPeriodCreateNestedOneWithoutSponsorshipReservationsInput = {
+  create?: Prisma.XOR<Prisma.OwnershipPeriodCreateWithoutSponsorshipReservationsInput, Prisma.OwnershipPeriodUncheckedCreateWithoutSponsorshipReservationsInput>
+  connectOrCreate?: Prisma.OwnershipPeriodCreateOrConnectWithoutSponsorshipReservationsInput
+  connect?: Prisma.OwnershipPeriodWhereUniqueInput
+}
+
+export type OwnershipPeriodUpdateOneRequiredWithoutSponsorshipReservationsNestedInput = {
+  create?: Prisma.XOR<Prisma.OwnershipPeriodCreateWithoutSponsorshipReservationsInput, Prisma.OwnershipPeriodUncheckedCreateWithoutSponsorshipReservationsInput>
+  connectOrCreate?: Prisma.OwnershipPeriodCreateOrConnectWithoutSponsorshipReservationsInput
+  upsert?: Prisma.OwnershipPeriodUpsertWithoutSponsorshipReservationsInput
+  connect?: Prisma.OwnershipPeriodWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OwnershipPeriodUpdateToOneWithWhereWithoutSponsorshipReservationsInput, Prisma.OwnershipPeriodUpdateWithoutSponsorshipReservationsInput>, Prisma.OwnershipPeriodUncheckedUpdateWithoutSponsorshipReservationsInput>
+}
+
 export type OwnershipPeriodCreateNestedOneWithoutConversationsInput = {
   create?: Prisma.XOR<Prisma.OwnershipPeriodCreateWithoutConversationsInput, Prisma.OwnershipPeriodUncheckedCreateWithoutConversationsInput>
   connectOrCreate?: Prisma.OwnershipPeriodCreateOrConnectWithoutConversationsInput
@@ -786,6 +807,7 @@ export type OwnershipPeriodCreateWithoutWalletInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutOwnershipPeriodInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutOwnershipPeriodInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutOwnershipPeriodInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutOwnershipPeriodInput
 }
 
 export type OwnershipPeriodUncheckedCreateWithoutWalletInput = {
@@ -807,6 +829,7 @@ export type OwnershipPeriodUncheckedCreateWithoutWalletInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutOwnershipPeriodInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutOwnershipPeriodInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutOwnershipPeriodInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutOwnershipPeriodInput
 }
 
 export type OwnershipPeriodCreateOrConnectWithoutWalletInput = {
@@ -876,6 +899,7 @@ export type OwnershipPeriodCreateWithoutAgentActionsInput = {
   wallet?: Prisma.WalletCreateNestedOneWithoutOwnershipPeriodsInput
   conversations?: Prisma.ConversationCreateNestedManyWithoutOwnershipPeriodInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutOwnershipPeriodInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutOwnershipPeriodInput
 }
 
 export type OwnershipPeriodUncheckedCreateWithoutAgentActionsInput = {
@@ -897,6 +921,7 @@ export type OwnershipPeriodUncheckedCreateWithoutAgentActionsInput = {
   createdAt?: Date | string
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutOwnershipPeriodInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutOwnershipPeriodInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutOwnershipPeriodInput
 }
 
 export type OwnershipPeriodCreateOrConnectWithoutAgentActionsInput = {
@@ -934,6 +959,7 @@ export type OwnershipPeriodUpdateWithoutAgentActionsInput = {
   wallet?: Prisma.WalletUpdateOneWithoutOwnershipPeriodsNestedInput
   conversations?: Prisma.ConversationUpdateManyWithoutOwnershipPeriodNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutOwnershipPeriodNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutOwnershipPeriodNestedInput
 }
 
 export type OwnershipPeriodUncheckedUpdateWithoutAgentActionsInput = {
@@ -955,6 +981,111 @@ export type OwnershipPeriodUncheckedUpdateWithoutAgentActionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
+}
+
+export type OwnershipPeriodCreateWithoutSponsorshipReservationsInput = {
+  id?: string
+  chainId: number
+  collectionAddress: string
+  tokenId: string
+  sequence: number
+  ownerAddress: string
+  startedBlock: bigint | number
+  startedTxHash: string
+  startedLogIndex: number
+  startedAt?: Date | string | null
+  endedBlock?: bigint | number | null
+  endedTxHash?: string | null
+  endedLogIndex?: number | null
+  endedAt?: Date | string | null
+  createdAt?: Date | string
+  wallet?: Prisma.WalletCreateNestedOneWithoutOwnershipPeriodsInput
+  conversations?: Prisma.ConversationCreateNestedManyWithoutOwnershipPeriodInput
+  modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutOwnershipPeriodInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutOwnershipPeriodInput
+}
+
+export type OwnershipPeriodUncheckedCreateWithoutSponsorshipReservationsInput = {
+  id?: string
+  chainId: number
+  collectionAddress: string
+  tokenId: string
+  sequence: number
+  ownerAddress: string
+  walletId?: string | null
+  startedBlock: bigint | number
+  startedTxHash: string
+  startedLogIndex: number
+  startedAt?: Date | string | null
+  endedBlock?: bigint | number | null
+  endedTxHash?: string | null
+  endedLogIndex?: number | null
+  endedAt?: Date | string | null
+  createdAt?: Date | string
+  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutOwnershipPeriodInput
+  modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutOwnershipPeriodInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutOwnershipPeriodInput
+}
+
+export type OwnershipPeriodCreateOrConnectWithoutSponsorshipReservationsInput = {
+  where: Prisma.OwnershipPeriodWhereUniqueInput
+  create: Prisma.XOR<Prisma.OwnershipPeriodCreateWithoutSponsorshipReservationsInput, Prisma.OwnershipPeriodUncheckedCreateWithoutSponsorshipReservationsInput>
+}
+
+export type OwnershipPeriodUpsertWithoutSponsorshipReservationsInput = {
+  update: Prisma.XOR<Prisma.OwnershipPeriodUpdateWithoutSponsorshipReservationsInput, Prisma.OwnershipPeriodUncheckedUpdateWithoutSponsorshipReservationsInput>
+  create: Prisma.XOR<Prisma.OwnershipPeriodCreateWithoutSponsorshipReservationsInput, Prisma.OwnershipPeriodUncheckedCreateWithoutSponsorshipReservationsInput>
+  where?: Prisma.OwnershipPeriodWhereInput
+}
+
+export type OwnershipPeriodUpdateToOneWithWhereWithoutSponsorshipReservationsInput = {
+  where?: Prisma.OwnershipPeriodWhereInput
+  data: Prisma.XOR<Prisma.OwnershipPeriodUpdateWithoutSponsorshipReservationsInput, Prisma.OwnershipPeriodUncheckedUpdateWithoutSponsorshipReservationsInput>
+}
+
+export type OwnershipPeriodUpdateWithoutSponsorshipReservationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  chainId?: Prisma.IntFieldUpdateOperationsInput | number
+  collectionAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  tokenId?: Prisma.StringFieldUpdateOperationsInput | string
+  sequence?: Prisma.IntFieldUpdateOperationsInput | number
+  ownerAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  startedBlock?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  startedTxHash?: Prisma.StringFieldUpdateOperationsInput | string
+  startedLogIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endedBlock?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  endedTxHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedLogIndex?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  wallet?: Prisma.WalletUpdateOneWithoutOwnershipPeriodsNestedInput
+  conversations?: Prisma.ConversationUpdateManyWithoutOwnershipPeriodNestedInput
+  modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutOwnershipPeriodNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutOwnershipPeriodNestedInput
+}
+
+export type OwnershipPeriodUncheckedUpdateWithoutSponsorshipReservationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  chainId?: Prisma.IntFieldUpdateOperationsInput | number
+  collectionAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  tokenId?: Prisma.StringFieldUpdateOperationsInput | string
+  sequence?: Prisma.IntFieldUpdateOperationsInput | number
+  ownerAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  walletId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startedBlock?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  startedTxHash?: Prisma.StringFieldUpdateOperationsInput | string
+  startedLogIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endedBlock?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  endedTxHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedLogIndex?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
+  modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
 }
 
 export type OwnershipPeriodCreateWithoutConversationsInput = {
@@ -976,6 +1107,7 @@ export type OwnershipPeriodCreateWithoutConversationsInput = {
   wallet?: Prisma.WalletCreateNestedOneWithoutOwnershipPeriodsInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutOwnershipPeriodInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutOwnershipPeriodInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutOwnershipPeriodInput
 }
 
 export type OwnershipPeriodUncheckedCreateWithoutConversationsInput = {
@@ -997,6 +1129,7 @@ export type OwnershipPeriodUncheckedCreateWithoutConversationsInput = {
   createdAt?: Date | string
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutOwnershipPeriodInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutOwnershipPeriodInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutOwnershipPeriodInput
 }
 
 export type OwnershipPeriodCreateOrConnectWithoutConversationsInput = {
@@ -1034,6 +1167,7 @@ export type OwnershipPeriodUpdateWithoutConversationsInput = {
   wallet?: Prisma.WalletUpdateOneWithoutOwnershipPeriodsNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutOwnershipPeriodNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutOwnershipPeriodNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutOwnershipPeriodNestedInput
 }
 
 export type OwnershipPeriodUncheckedUpdateWithoutConversationsInput = {
@@ -1055,6 +1189,7 @@ export type OwnershipPeriodUncheckedUpdateWithoutConversationsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
 }
 
 export type OwnershipPeriodCreateWithoutModelDataConsentsInput = {
@@ -1076,6 +1211,7 @@ export type OwnershipPeriodCreateWithoutModelDataConsentsInput = {
   wallet?: Prisma.WalletCreateNestedOneWithoutOwnershipPeriodsInput
   conversations?: Prisma.ConversationCreateNestedManyWithoutOwnershipPeriodInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutOwnershipPeriodInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutOwnershipPeriodInput
 }
 
 export type OwnershipPeriodUncheckedCreateWithoutModelDataConsentsInput = {
@@ -1097,6 +1233,7 @@ export type OwnershipPeriodUncheckedCreateWithoutModelDataConsentsInput = {
   createdAt?: Date | string
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutOwnershipPeriodInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutOwnershipPeriodInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutOwnershipPeriodInput
 }
 
 export type OwnershipPeriodCreateOrConnectWithoutModelDataConsentsInput = {
@@ -1134,6 +1271,7 @@ export type OwnershipPeriodUpdateWithoutModelDataConsentsInput = {
   wallet?: Prisma.WalletUpdateOneWithoutOwnershipPeriodsNestedInput
   conversations?: Prisma.ConversationUpdateManyWithoutOwnershipPeriodNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutOwnershipPeriodNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutOwnershipPeriodNestedInput
 }
 
 export type OwnershipPeriodUncheckedUpdateWithoutModelDataConsentsInput = {
@@ -1155,6 +1293,7 @@ export type OwnershipPeriodUncheckedUpdateWithoutModelDataConsentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
 }
 
 export type OwnershipPeriodCreateManyWalletInput = {
@@ -1194,6 +1333,7 @@ export type OwnershipPeriodUpdateWithoutWalletInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutOwnershipPeriodNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutOwnershipPeriodNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutOwnershipPeriodNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutOwnershipPeriodNestedInput
 }
 
 export type OwnershipPeriodUncheckedUpdateWithoutWalletInput = {
@@ -1215,6 +1355,7 @@ export type OwnershipPeriodUncheckedUpdateWithoutWalletInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutOwnershipPeriodNestedInput
 }
 
 export type OwnershipPeriodUncheckedUpdateManyWithoutWalletInput = {
@@ -1244,12 +1385,14 @@ export type OwnershipPeriodCountOutputType = {
   conversations: number
   modelDataConsents: number
   agentActions: number
+  sponsorshipReservations: number
 }
 
 export type OwnershipPeriodCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   conversations?: boolean | OwnershipPeriodCountOutputTypeCountConversationsArgs
   modelDataConsents?: boolean | OwnershipPeriodCountOutputTypeCountModelDataConsentsArgs
   agentActions?: boolean | OwnershipPeriodCountOutputTypeCountAgentActionsArgs
+  sponsorshipReservations?: boolean | OwnershipPeriodCountOutputTypeCountSponsorshipReservationsArgs
 }
 
 /**
@@ -1283,6 +1426,13 @@ export type OwnershipPeriodCountOutputTypeCountAgentActionsArgs<ExtArgs extends 
   where?: Prisma.AgentActionWhereInput
 }
 
+/**
+ * OwnershipPeriodCountOutputType without action
+ */
+export type OwnershipPeriodCountOutputTypeCountSponsorshipReservationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SponsorshipReservationWhereInput
+}
+
 
 export type OwnershipPeriodSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1305,6 +1455,7 @@ export type OwnershipPeriodSelect<ExtArgs extends runtime.Types.Extensions.Inter
   conversations?: boolean | Prisma.OwnershipPeriod$conversationsArgs<ExtArgs>
   modelDataConsents?: boolean | Prisma.OwnershipPeriod$modelDataConsentsArgs<ExtArgs>
   agentActions?: boolean | Prisma.OwnershipPeriod$agentActionsArgs<ExtArgs>
+  sponsorshipReservations?: boolean | Prisma.OwnershipPeriod$sponsorshipReservationsArgs<ExtArgs>
   _count?: boolean | Prisma.OwnershipPeriodCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["ownershipPeriod"]>
 
@@ -1373,6 +1524,7 @@ export type OwnershipPeriodInclude<ExtArgs extends runtime.Types.Extensions.Inte
   conversations?: boolean | Prisma.OwnershipPeriod$conversationsArgs<ExtArgs>
   modelDataConsents?: boolean | Prisma.OwnershipPeriod$modelDataConsentsArgs<ExtArgs>
   agentActions?: boolean | Prisma.OwnershipPeriod$agentActionsArgs<ExtArgs>
+  sponsorshipReservations?: boolean | Prisma.OwnershipPeriod$sponsorshipReservationsArgs<ExtArgs>
   _count?: boolean | Prisma.OwnershipPeriodCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OwnershipPeriodIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1389,6 +1541,7 @@ export type $OwnershipPeriodPayload<ExtArgs extends runtime.Types.Extensions.Int
     conversations: Prisma.$ConversationPayload<ExtArgs>[]
     modelDataConsents: Prisma.$ModelDataConsentPayload<ExtArgs>[]
     agentActions: Prisma.$AgentActionPayload<ExtArgs>[]
+    sponsorshipReservations: Prisma.$SponsorshipReservationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1805,6 +1958,7 @@ export interface Prisma__OwnershipPeriodClient<T, Null = never, ExtArgs extends 
   conversations<T extends Prisma.OwnershipPeriod$conversationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OwnershipPeriod$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   modelDataConsents<T extends Prisma.OwnershipPeriod$modelDataConsentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OwnershipPeriod$modelDataConsentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ModelDataConsentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   agentActions<T extends Prisma.OwnershipPeriod$agentActionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OwnershipPeriod$agentActionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AgentActionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sponsorshipReservations<T extends Prisma.OwnershipPeriod$sponsorshipReservationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OwnershipPeriod$sponsorshipReservationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SponsorshipReservationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2339,6 +2493,30 @@ export type OwnershipPeriod$agentActionsArgs<ExtArgs extends runtime.Types.Exten
   take?: number
   skip?: number
   distinct?: Prisma.AgentActionScalarFieldEnum | Prisma.AgentActionScalarFieldEnum[]
+}
+
+/**
+ * OwnershipPeriod.sponsorshipReservations
+ */
+export type OwnershipPeriod$sponsorshipReservationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SponsorshipReservation
+   */
+  select?: Prisma.SponsorshipReservationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SponsorshipReservation
+   */
+  omit?: Prisma.SponsorshipReservationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SponsorshipReservationInclude<ExtArgs> | null
+  where?: Prisma.SponsorshipReservationWhereInput
+  orderBy?: Prisma.SponsorshipReservationOrderByWithRelationInput | Prisma.SponsorshipReservationOrderByWithRelationInput[]
+  cursor?: Prisma.SponsorshipReservationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SponsorshipReservationScalarFieldEnum | Prisma.SponsorshipReservationScalarFieldEnum[]
 }
 
 /**

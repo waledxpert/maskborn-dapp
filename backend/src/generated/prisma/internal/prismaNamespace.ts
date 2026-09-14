@@ -405,6 +405,7 @@ export const ModelName = {
   ChainEvent: 'ChainEvent',
   OwnershipPeriod: 'OwnershipPeriod',
   AgentAction: 'AgentAction',
+  SponsorshipReservation: 'SponsorshipReservation',
   Conversation: 'Conversation',
   ConversationMessage: 'ConversationMessage',
   ToolRun: 'ToolRun',
@@ -449,7 +450,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "socialAccount" | "session" | "wallet" | "chainCursor" | "chainEvent" | "ownershipPeriod" | "agentAction" | "conversation" | "conversationMessage" | "toolRun" | "usageMeter" | "modelDataConsent" | "monitorRule" | "observedPayment" | "monitorMatch" | "agentNotification" | "walletChallenge" | "walletSession" | "application" | "draft" | "draftRevision" | "submission" | "submissionAccessory" | "submissionStatusEvent" | "vote" | "voteEvent" | "voteRestriction" | "riskEvent" | "galleryEntry" | "feeShare" | "tradeFeeEvent" | "creatorAccrual" | "payout" | "payoutItem" | "idempotencyRecord" | "adminAuditLog"
+    modelProps: "user" | "socialAccount" | "session" | "wallet" | "chainCursor" | "chainEvent" | "ownershipPeriod" | "agentAction" | "sponsorshipReservation" | "conversation" | "conversationMessage" | "toolRun" | "usageMeter" | "modelDataConsent" | "monitorRule" | "observedPayment" | "monitorMatch" | "agentNotification" | "walletChallenge" | "walletSession" | "application" | "draft" | "draftRevision" | "submission" | "submissionAccessory" | "submissionStatusEvent" | "vote" | "voteEvent" | "voteRestriction" | "riskEvent" | "galleryEntry" | "feeShare" | "tradeFeeEvent" | "creatorAccrual" | "payout" | "payoutItem" | "idempotencyRecord" | "adminAuditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1042,6 +1043,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.AgentActionCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.AgentActionCountAggregateOutputType> | number
+        }
+      }
+    }
+    SponsorshipReservation: {
+      payload: Prisma.$SponsorshipReservationPayload<ExtArgs>
+      fields: Prisma.SponsorshipReservationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SponsorshipReservationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorshipReservationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SponsorshipReservationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorshipReservationPayload>
+        }
+        findFirst: {
+          args: Prisma.SponsorshipReservationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorshipReservationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SponsorshipReservationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorshipReservationPayload>
+        }
+        findMany: {
+          args: Prisma.SponsorshipReservationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorshipReservationPayload>[]
+        }
+        create: {
+          args: Prisma.SponsorshipReservationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorshipReservationPayload>
+        }
+        createMany: {
+          args: Prisma.SponsorshipReservationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SponsorshipReservationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorshipReservationPayload>[]
+        }
+        delete: {
+          args: Prisma.SponsorshipReservationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorshipReservationPayload>
+        }
+        update: {
+          args: Prisma.SponsorshipReservationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorshipReservationPayload>
+        }
+        deleteMany: {
+          args: Prisma.SponsorshipReservationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SponsorshipReservationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SponsorshipReservationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorshipReservationPayload>[]
+        }
+        upsert: {
+          args: Prisma.SponsorshipReservationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorshipReservationPayload>
+        }
+        aggregate: {
+          args: Prisma.SponsorshipReservationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSponsorshipReservation>
+        }
+        groupBy: {
+          args: Prisma.SponsorshipReservationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SponsorshipReservationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SponsorshipReservationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SponsorshipReservationCountAggregateOutputType> | number
         }
       }
     }
@@ -3375,6 +3450,41 @@ export const AgentActionScalarFieldEnum = {
 export type AgentActionScalarFieldEnum = (typeof AgentActionScalarFieldEnum)[keyof typeof AgentActionScalarFieldEnum]
 
 
+export const SponsorshipReservationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  walletId: 'walletId',
+  ownershipPeriodId: 'ownershipPeriodId',
+  agentActionId: 'agentActionId',
+  chainId: 'chainId',
+  collectionAddress: 'collectionAddress',
+  tokenId: 'tokenId',
+  accountAddress: 'accountAddress',
+  actionType: 'actionType',
+  status: 'status',
+  currency: 'currency',
+  gasAsset: 'gasAsset',
+  dailyBucket: 'dailyBucket',
+  dailyAllowanceBaseUnits: 'dailyAllowanceBaseUnits',
+  dailyTransactionLimit: 'dailyTransactionLimit',
+  reservedCostBaseUnits: 'reservedCostBaseUnits',
+  actualCostBaseUnits: 'actualCostBaseUnits',
+  reservationKey: 'reservationKey',
+  userOperationHash: 'userOperationHash',
+  userOperationNonce: 'userOperationNonce',
+  txHash: 'txHash',
+  receiptBlock: 'receiptBlock',
+  receiptBlockHash: 'receiptBlockHash',
+  failureCode: 'failureCode',
+  expiresAt: 'expiresAt',
+  settledAt: 'settledAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SponsorshipReservationScalarFieldEnum = (typeof SponsorshipReservationScalarFieldEnum)[keyof typeof SponsorshipReservationScalarFieldEnum]
+
+
 export const ConversationScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -4046,6 +4156,20 @@ export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
 
 
 /**
+ * Reference to a field of type 'SponsorshipReservationStatus'
+ */
+export type EnumSponsorshipReservationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SponsorshipReservationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'SponsorshipReservationStatus[]'
+ */
+export type ListEnumSponsorshipReservationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SponsorshipReservationStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'ConversationRole'
  */
 export type EnumConversationRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ConversationRole'>
@@ -4427,6 +4551,7 @@ export type GlobalOmitConfig = {
   chainEvent?: Prisma.ChainEventOmit
   ownershipPeriod?: Prisma.OwnershipPeriodOmit
   agentAction?: Prisma.AgentActionOmit
+  sponsorshipReservation?: Prisma.SponsorshipReservationOmit
   conversation?: Prisma.ConversationOmit
   conversationMessage?: Prisma.ConversationMessageOmit
   toolRun?: Prisma.ToolRunOmit

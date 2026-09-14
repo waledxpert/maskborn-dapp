@@ -1,4 +1,4 @@
-﻿import { Router, type Request } from "express";
+import { Router, type Request } from "express";
 import { encodeFunctionData, formatUnits, getAddress, parseUnits, zeroAddress, type Address, type Hex } from "viem";
 import { z } from "zod";
 import { config } from "../../config.js";
@@ -25,7 +25,7 @@ import { collectionIndexStatus } from "../chain/collection-indexer.js";
 import { db } from "../../db.js";
 import { getAgentAction, listAgentActions, savePreparedAction, serializeAgentAction, submitAgentAction } from "./actions.js";
 import { erc4337EntryPoint, readBundlerStatus } from "../chain/bundler.js";
-import { readSponsorshipPolicy } from "./sponsorship.js";
+import { getTokenSponsorshipBudget, readSponsorshipPolicy, reserveSponsorshipForAction } from "./sponsorship.js";
 
 export const agentsRouter = Router();
 const tokenParams = z.object({ tokenId: z.coerce.bigint().refine((value) => value > 0n && value <= 10_000n) });
@@ -46,8 +46,14 @@ const grantSessionBody = z.object({
   maxCalls: z.coerce.number().int().min(1).max(1_000),
 });
 const revokeSessionBody = z.object({ sessionKey: z.string().regex(/^0x[a-fA-F0-9]{40}$/) });
+const sponsorshipReserveBody = z.object({
+  maxCostBaseUnits: z.string().regex(/^\d+$/).transform((value) => BigInt(value)).refine((value) => value > 0n),
+  userOperationHash: z.string().regex(/^0x[a-fA-F0-9]{64}$/).optional(),
+  userOperationNonce: z.string().regex(/^\d+$/).optional(),
+});
 
 agentsRouter.get("/agents/status", asyncRoute(async (_req, res) => {
+  const sponsorship = readSponsorshipPolicy();
   res.json({
     chainId: config.ARC_CHAIN_ID,
     network: config.ARC_CHAIN_ID === 5042002 ? "Arc Testnet" : "Arc",
@@ -63,13 +69,29 @@ agentsRouter.get("/agents/status", asyncRoute(async (_req, res) => {
       bundlerProvider: config.AGENT_BUNDLER_PROVIDER,
       bundlerConfigured: config.AGENT_BUNDLER_PROVIDER !== "disabled" && Boolean(config.AGENT_BUNDLER_RPC_URL),
       paymasterProvider: config.AGENT_PAYMASTER_PROVIDER,
-      sponsorship: false,
+      sponsorship: sponsorship.enabled,
+      sponsorshipReason: sponsorship.disabledReason,
+      dailySponsorAllowance: sponsorship.dailyAllowance,
+      dailySponsorTransactions: sponsorship.dailyTransactionLimit,
     },
   });
 }));
 
 agentsRouter.get("/agents/sponsorship/status", asyncRoute(async (_req, res) => {
   res.json(readSponsorshipPolicy());
+}));
+
+agentsRouter.get("/agents/tokens/:tokenId/sponsorship/budget", requireWalletAuth, asyncRoute(async (req, res) => {
+  const { tokenId } = tokenParams.parse(req.params);
+  const budget = await getTokenSponsorshipBudget(tokenId, actionAuth(req));
+  res.json(budget);
+}));
+
+agentsRouter.post("/agents/actions/:actionId/sponsorship/reserve", requireWalletAuth, asyncRoute(async (req, res) => {
+  const { actionId } = actionParams.parse(req.params);
+  const body = sponsorshipReserveBody.parse(req.body);
+  const reservation = await reserveSponsorshipForAction(actionId, actionAuth(req), body as { maxCostBaseUnits: bigint; userOperationHash?: Hex; userOperationNonce?: string });
+  res.json(reservation);
 }));
 
 agentsRouter.get("/agents/bundler/status", asyncRoute(async (_req, res) => {

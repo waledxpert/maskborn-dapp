@@ -82,6 +82,11 @@ export type OwnershipPeriod = Prisma.OwnershipPeriodModel
  */
 export type AgentAction = Prisma.AgentActionModel
 /**
+ * Model SponsorshipReservation
+ * 
+ */
+export type SponsorshipReservation = Prisma.SponsorshipReservationModel
+/**
  * Model Conversation
  * 
  */

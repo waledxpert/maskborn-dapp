@@ -211,6 +211,7 @@ export type UserWhereInput = {
   usageMeters?: Prisma.UsageMeterListRelationFilter
   modelDataConsents?: Prisma.ModelDataConsentListRelationFilter
   agentActions?: Prisma.AgentActionListRelationFilter
+  sponsorshipReservations?: Prisma.SponsorshipReservationListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -241,6 +242,7 @@ export type UserOrderByWithRelationInput = {
   usageMeters?: Prisma.UsageMeterOrderByRelationAggregateInput
   modelDataConsents?: Prisma.ModelDataConsentOrderByRelationAggregateInput
   agentActions?: Prisma.AgentActionOrderByRelationAggregateInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -274,6 +276,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   usageMeters?: Prisma.UsageMeterListRelationFilter
   modelDataConsents?: Prisma.ModelDataConsentListRelationFilter
   agentActions?: Prisma.AgentActionListRelationFilter
+  sponsorshipReservations?: Prisma.SponsorshipReservationListRelationFilter
 }, "id">
 
 export type UserOrderByWithAggregationInput = {
@@ -328,6 +331,7 @@ export type UserCreateInput = {
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -358,6 +362,7 @@ export type UserUncheckedCreateInput = {
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -388,6 +393,7 @@ export type UserUpdateInput = {
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -418,6 +424,7 @@ export type UserUncheckedUpdateInput = {
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -554,6 +561,20 @@ export type UserUpdateOneRequiredWithoutAgentActionsNestedInput = {
   upsert?: Prisma.UserUpsertWithoutAgentActionsInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAgentActionsInput, Prisma.UserUpdateWithoutAgentActionsInput>, Prisma.UserUncheckedUpdateWithoutAgentActionsInput>
+}
+
+export type UserCreateNestedOneWithoutSponsorshipReservationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSponsorshipReservationsInput, Prisma.UserUncheckedCreateWithoutSponsorshipReservationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSponsorshipReservationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutSponsorshipReservationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSponsorshipReservationsInput, Prisma.UserUncheckedCreateWithoutSponsorshipReservationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSponsorshipReservationsInput
+  upsert?: Prisma.UserUpsertWithoutSponsorshipReservationsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSponsorshipReservationsInput, Prisma.UserUpdateWithoutSponsorshipReservationsInput>, Prisma.UserUncheckedUpdateWithoutSponsorshipReservationsInput>
 }
 
 export type UserCreateNestedOneWithoutConversationsInput = {
@@ -825,6 +846,7 @@ export type UserCreateWithoutSocialAccountsInput = {
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSocialAccountsInput = {
@@ -854,6 +876,7 @@ export type UserUncheckedCreateWithoutSocialAccountsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSocialAccountsInput = {
@@ -899,6 +922,7 @@ export type UserUpdateWithoutSocialAccountsInput = {
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSocialAccountsInput = {
@@ -928,6 +952,7 @@ export type UserUncheckedUpdateWithoutSocialAccountsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSessionsInput = {
@@ -957,6 +982,7 @@ export type UserCreateWithoutSessionsInput = {
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -986,6 +1012,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -1031,6 +1058,7 @@ export type UserUpdateWithoutSessionsInput = {
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -1060,6 +1088,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutWalletsInput = {
@@ -1089,6 +1118,7 @@ export type UserCreateWithoutWalletsInput = {
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWalletsInput = {
@@ -1118,6 +1148,7 @@ export type UserUncheckedCreateWithoutWalletsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWalletsInput = {
@@ -1163,6 +1194,7 @@ export type UserUpdateWithoutWalletsInput = {
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWalletsInput = {
@@ -1192,6 +1224,7 @@ export type UserUncheckedUpdateWithoutWalletsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAgentActionsInput = {
@@ -1221,6 +1254,7 @@ export type UserCreateWithoutAgentActionsInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAgentActionsInput = {
@@ -1250,6 +1284,7 @@ export type UserUncheckedCreateWithoutAgentActionsInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAgentActionsInput = {
@@ -1295,6 +1330,7 @@ export type UserUpdateWithoutAgentActionsInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAgentActionsInput = {
@@ -1324,6 +1360,143 @@ export type UserUncheckedUpdateWithoutAgentActionsInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutSponsorshipReservationsInput = {
+  id?: string
+  role?: $Enums.Role
+  displayName?: string | null
+  avatarUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  socialAccounts?: Prisma.SocialAccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutUserInput
+  drafts?: Prisma.DraftCreateNestedManyWithoutUserInput
+  submissions?: Prisma.SubmissionCreateNestedManyWithoutUserInput
+  votes?: Prisma.VoteCreateNestedManyWithoutUserInput
+  voteEvents?: Prisma.VoteEventCreateNestedManyWithoutUserInput
+  restrictions?: Prisma.VoteRestrictionCreateNestedManyWithoutUserInput
+  riskEvents?: Prisma.RiskEventCreateNestedManyWithoutUserInput
+  statusEventsAuthored?: Prisma.SubmissionStatusEventCreateNestedManyWithoutActorInput
+  adminAudits?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutUserInput
+  payouts?: Prisma.PayoutCreateNestedManyWithoutUserInput
+  walletSessions?: Prisma.WalletSessionCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationCreateNestedManyWithoutUserInput
+  conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
+  usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
+  modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutSponsorshipReservationsInput = {
+  id?: string
+  role?: $Enums.Role
+  displayName?: string | null
+  avatarUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  socialAccounts?: Prisma.SocialAccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutUserInput
+  drafts?: Prisma.DraftUncheckedCreateNestedManyWithoutUserInput
+  submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutUserInput
+  votes?: Prisma.VoteUncheckedCreateNestedManyWithoutUserInput
+  voteEvents?: Prisma.VoteEventUncheckedCreateNestedManyWithoutUserInput
+  restrictions?: Prisma.VoteRestrictionUncheckedCreateNestedManyWithoutUserInput
+  riskEvents?: Prisma.RiskEventUncheckedCreateNestedManyWithoutUserInput
+  statusEventsAuthored?: Prisma.SubmissionStatusEventUncheckedCreateNestedManyWithoutActorInput
+  adminAudits?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutUserInput
+  payouts?: Prisma.PayoutUncheckedCreateNestedManyWithoutUserInput
+  walletSessions?: Prisma.WalletSessionUncheckedCreateNestedManyWithoutUserInput
+  monitorRules?: Prisma.MonitorRuleUncheckedCreateNestedManyWithoutUserInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedCreateNestedManyWithoutUserInput
+  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
+  usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
+  modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
+  agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutSponsorshipReservationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSponsorshipReservationsInput, Prisma.UserUncheckedCreateWithoutSponsorshipReservationsInput>
+}
+
+export type UserUpsertWithoutSponsorshipReservationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSponsorshipReservationsInput, Prisma.UserUncheckedUpdateWithoutSponsorshipReservationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSponsorshipReservationsInput, Prisma.UserUncheckedCreateWithoutSponsorshipReservationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSponsorshipReservationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSponsorshipReservationsInput, Prisma.UserUncheckedUpdateWithoutSponsorshipReservationsInput>
+}
+
+export type UserUpdateWithoutSponsorshipReservationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  socialAccounts?: Prisma.SocialAccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutUserNestedInput
+  drafts?: Prisma.DraftUpdateManyWithoutUserNestedInput
+  submissions?: Prisma.SubmissionUpdateManyWithoutUserNestedInput
+  votes?: Prisma.VoteUpdateManyWithoutUserNestedInput
+  voteEvents?: Prisma.VoteEventUpdateManyWithoutUserNestedInput
+  restrictions?: Prisma.VoteRestrictionUpdateManyWithoutUserNestedInput
+  riskEvents?: Prisma.RiskEventUpdateManyWithoutUserNestedInput
+  statusEventsAuthored?: Prisma.SubmissionStatusEventUpdateManyWithoutActorNestedInput
+  adminAudits?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutUserNestedInput
+  payouts?: Prisma.PayoutUpdateManyWithoutUserNestedInput
+  walletSessions?: Prisma.WalletSessionUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUpdateManyWithoutUserNestedInput
+  conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
+  usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
+  modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSponsorshipReservationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  socialAccounts?: Prisma.SocialAccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutUserNestedInput
+  drafts?: Prisma.DraftUncheckedUpdateManyWithoutUserNestedInput
+  submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutUserNestedInput
+  votes?: Prisma.VoteUncheckedUpdateManyWithoutUserNestedInput
+  voteEvents?: Prisma.VoteEventUncheckedUpdateManyWithoutUserNestedInput
+  restrictions?: Prisma.VoteRestrictionUncheckedUpdateManyWithoutUserNestedInput
+  riskEvents?: Prisma.RiskEventUncheckedUpdateManyWithoutUserNestedInput
+  statusEventsAuthored?: Prisma.SubmissionStatusEventUncheckedUpdateManyWithoutActorNestedInput
+  adminAudits?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutUserNestedInput
+  payouts?: Prisma.PayoutUncheckedUpdateManyWithoutUserNestedInput
+  walletSessions?: Prisma.WalletSessionUncheckedUpdateManyWithoutUserNestedInput
+  monitorRules?: Prisma.MonitorRuleUncheckedUpdateManyWithoutUserNestedInput
+  agentNotifications?: Prisma.AgentNotificationUncheckedUpdateManyWithoutUserNestedInput
+  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
+  usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
+  modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
+  agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutConversationsInput = {
@@ -1353,6 +1526,7 @@ export type UserCreateWithoutConversationsInput = {
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutConversationsInput = {
@@ -1382,6 +1556,7 @@ export type UserUncheckedCreateWithoutConversationsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutConversationsInput = {
@@ -1427,6 +1602,7 @@ export type UserUpdateWithoutConversationsInput = {
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutConversationsInput = {
@@ -1456,6 +1632,7 @@ export type UserUncheckedUpdateWithoutConversationsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutUsageMetersInput = {
@@ -1485,6 +1662,7 @@ export type UserCreateWithoutUsageMetersInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUsageMetersInput = {
@@ -1514,6 +1692,7 @@ export type UserUncheckedCreateWithoutUsageMetersInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUsageMetersInput = {
@@ -1559,6 +1738,7 @@ export type UserUpdateWithoutUsageMetersInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUsageMetersInput = {
@@ -1588,6 +1768,7 @@ export type UserUncheckedUpdateWithoutUsageMetersInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutModelDataConsentsInput = {
@@ -1617,6 +1798,7 @@ export type UserCreateWithoutModelDataConsentsInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutModelDataConsentsInput = {
@@ -1646,6 +1828,7 @@ export type UserUncheckedCreateWithoutModelDataConsentsInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutModelDataConsentsInput = {
@@ -1691,6 +1874,7 @@ export type UserUpdateWithoutModelDataConsentsInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutModelDataConsentsInput = {
@@ -1720,6 +1904,7 @@ export type UserUncheckedUpdateWithoutModelDataConsentsInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutMonitorRulesInput = {
@@ -1749,6 +1934,7 @@ export type UserCreateWithoutMonitorRulesInput = {
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMonitorRulesInput = {
@@ -1778,6 +1964,7 @@ export type UserUncheckedCreateWithoutMonitorRulesInput = {
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMonitorRulesInput = {
@@ -1823,6 +2010,7 @@ export type UserUpdateWithoutMonitorRulesInput = {
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMonitorRulesInput = {
@@ -1852,6 +2040,7 @@ export type UserUncheckedUpdateWithoutMonitorRulesInput = {
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAgentNotificationsInput = {
@@ -1881,6 +2070,7 @@ export type UserCreateWithoutAgentNotificationsInput = {
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAgentNotificationsInput = {
@@ -1910,6 +2100,7 @@ export type UserUncheckedCreateWithoutAgentNotificationsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAgentNotificationsInput = {
@@ -1955,6 +2146,7 @@ export type UserUpdateWithoutAgentNotificationsInput = {
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAgentNotificationsInput = {
@@ -1984,6 +2176,7 @@ export type UserUncheckedUpdateWithoutAgentNotificationsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutWalletSessionsInput = {
@@ -2013,6 +2206,7 @@ export type UserCreateWithoutWalletSessionsInput = {
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWalletSessionsInput = {
@@ -2042,6 +2236,7 @@ export type UserUncheckedCreateWithoutWalletSessionsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWalletSessionsInput = {
@@ -2087,6 +2282,7 @@ export type UserUpdateWithoutWalletSessionsInput = {
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWalletSessionsInput = {
@@ -2116,6 +2312,7 @@ export type UserUncheckedUpdateWithoutWalletSessionsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutApplicationsInput = {
@@ -2145,6 +2342,7 @@ export type UserCreateWithoutApplicationsInput = {
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutApplicationsInput = {
@@ -2174,6 +2372,7 @@ export type UserUncheckedCreateWithoutApplicationsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutApplicationsInput = {
@@ -2219,6 +2418,7 @@ export type UserUpdateWithoutApplicationsInput = {
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutApplicationsInput = {
@@ -2248,6 +2448,7 @@ export type UserUncheckedUpdateWithoutApplicationsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutDraftsInput = {
@@ -2277,6 +2478,7 @@ export type UserCreateWithoutDraftsInput = {
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDraftsInput = {
@@ -2306,6 +2508,7 @@ export type UserUncheckedCreateWithoutDraftsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDraftsInput = {
@@ -2351,6 +2554,7 @@ export type UserUpdateWithoutDraftsInput = {
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDraftsInput = {
@@ -2380,6 +2584,7 @@ export type UserUncheckedUpdateWithoutDraftsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSubmissionsInput = {
@@ -2409,6 +2614,7 @@ export type UserCreateWithoutSubmissionsInput = {
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSubmissionsInput = {
@@ -2438,6 +2644,7 @@ export type UserUncheckedCreateWithoutSubmissionsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSubmissionsInput = {
@@ -2483,6 +2690,7 @@ export type UserUpdateWithoutSubmissionsInput = {
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSubmissionsInput = {
@@ -2512,6 +2720,7 @@ export type UserUncheckedUpdateWithoutSubmissionsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutStatusEventsAuthoredInput = {
@@ -2541,6 +2750,7 @@ export type UserCreateWithoutStatusEventsAuthoredInput = {
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutStatusEventsAuthoredInput = {
@@ -2570,6 +2780,7 @@ export type UserUncheckedCreateWithoutStatusEventsAuthoredInput = {
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutStatusEventsAuthoredInput = {
@@ -2615,6 +2826,7 @@ export type UserUpdateWithoutStatusEventsAuthoredInput = {
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStatusEventsAuthoredInput = {
@@ -2644,6 +2856,7 @@ export type UserUncheckedUpdateWithoutStatusEventsAuthoredInput = {
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutVotesInput = {
@@ -2673,6 +2886,7 @@ export type UserCreateWithoutVotesInput = {
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutVotesInput = {
@@ -2702,6 +2916,7 @@ export type UserUncheckedCreateWithoutVotesInput = {
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutVotesInput = {
@@ -2747,6 +2962,7 @@ export type UserUpdateWithoutVotesInput = {
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutVotesInput = {
@@ -2776,6 +2992,7 @@ export type UserUncheckedUpdateWithoutVotesInput = {
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutVoteEventsInput = {
@@ -2805,6 +3022,7 @@ export type UserCreateWithoutVoteEventsInput = {
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutVoteEventsInput = {
@@ -2834,6 +3052,7 @@ export type UserUncheckedCreateWithoutVoteEventsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutVoteEventsInput = {
@@ -2879,6 +3098,7 @@ export type UserUpdateWithoutVoteEventsInput = {
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutVoteEventsInput = {
@@ -2908,6 +3128,7 @@ export type UserUncheckedUpdateWithoutVoteEventsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRestrictionsInput = {
@@ -2937,6 +3158,7 @@ export type UserCreateWithoutRestrictionsInput = {
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRestrictionsInput = {
@@ -2966,6 +3188,7 @@ export type UserUncheckedCreateWithoutRestrictionsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRestrictionsInput = {
@@ -3011,6 +3234,7 @@ export type UserUpdateWithoutRestrictionsInput = {
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRestrictionsInput = {
@@ -3040,6 +3264,7 @@ export type UserUncheckedUpdateWithoutRestrictionsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRiskEventsInput = {
@@ -3069,6 +3294,7 @@ export type UserCreateWithoutRiskEventsInput = {
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRiskEventsInput = {
@@ -3098,6 +3324,7 @@ export type UserUncheckedCreateWithoutRiskEventsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRiskEventsInput = {
@@ -3143,6 +3370,7 @@ export type UserUpdateWithoutRiskEventsInput = {
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRiskEventsInput = {
@@ -3172,6 +3400,7 @@ export type UserUncheckedUpdateWithoutRiskEventsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPayoutsInput = {
@@ -3201,6 +3430,7 @@ export type UserCreateWithoutPayoutsInput = {
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPayoutsInput = {
@@ -3230,6 +3460,7 @@ export type UserUncheckedCreateWithoutPayoutsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPayoutsInput = {
@@ -3275,6 +3506,7 @@ export type UserUpdateWithoutPayoutsInput = {
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPayoutsInput = {
@@ -3304,6 +3536,7 @@ export type UserUncheckedUpdateWithoutPayoutsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutIdempotencyRecordsInput = {
@@ -3333,6 +3566,7 @@ export type UserCreateWithoutIdempotencyRecordsInput = {
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutIdempotencyRecordsInput = {
@@ -3362,6 +3596,7 @@ export type UserUncheckedCreateWithoutIdempotencyRecordsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutIdempotencyRecordsInput = {
@@ -3407,6 +3642,7 @@ export type UserUpdateWithoutIdempotencyRecordsInput = {
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutIdempotencyRecordsInput = {
@@ -3436,6 +3672,7 @@ export type UserUncheckedUpdateWithoutIdempotencyRecordsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAdminAuditsInput = {
@@ -3465,6 +3702,7 @@ export type UserCreateWithoutAdminAuditsInput = {
   usageMeters?: Prisma.UsageMeterCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAdminAuditsInput = {
@@ -3494,6 +3732,7 @@ export type UserUncheckedCreateWithoutAdminAuditsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedCreateNestedManyWithoutUserInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedCreateNestedManyWithoutUserInput
   agentActions?: Prisma.AgentActionUncheckedCreateNestedManyWithoutUserInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAdminAuditsInput = {
@@ -3539,6 +3778,7 @@ export type UserUpdateWithoutAdminAuditsInput = {
   usageMeters?: Prisma.UsageMeterUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAdminAuditsInput = {
@@ -3568,6 +3808,7 @@ export type UserUncheckedUpdateWithoutAdminAuditsInput = {
   usageMeters?: Prisma.UsageMeterUncheckedUpdateManyWithoutUserNestedInput
   modelDataConsents?: Prisma.ModelDataConsentUncheckedUpdateManyWithoutUserNestedInput
   agentActions?: Prisma.AgentActionUncheckedUpdateManyWithoutUserNestedInput
+  sponsorshipReservations?: Prisma.SponsorshipReservationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -3597,6 +3838,7 @@ export type UserCountOutputType = {
   usageMeters: number
   modelDataConsents: number
   agentActions: number
+  sponsorshipReservations: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3621,6 +3863,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   usageMeters?: boolean | UserCountOutputTypeCountUsageMetersArgs
   modelDataConsents?: boolean | UserCountOutputTypeCountModelDataConsentsArgs
   agentActions?: boolean | UserCountOutputTypeCountAgentActionsArgs
+  sponsorshipReservations?: boolean | UserCountOutputTypeCountSponsorshipReservationsArgs
 }
 
 /**
@@ -3780,6 +4023,13 @@ export type UserCountOutputTypeCountAgentActionsArgs<ExtArgs extends runtime.Typ
   where?: Prisma.AgentActionWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSponsorshipReservationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SponsorshipReservationWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -3809,6 +4059,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   usageMeters?: boolean | Prisma.User$usageMetersArgs<ExtArgs>
   modelDataConsents?: boolean | Prisma.User$modelDataConsentsArgs<ExtArgs>
   agentActions?: boolean | Prisma.User$agentActionsArgs<ExtArgs>
+  sponsorshipReservations?: boolean | Prisma.User$sponsorshipReservationsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -3862,6 +4113,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   usageMeters?: boolean | Prisma.User$usageMetersArgs<ExtArgs>
   modelDataConsents?: boolean | Prisma.User$modelDataConsentsArgs<ExtArgs>
   agentActions?: boolean | Prisma.User$agentActionsArgs<ExtArgs>
+  sponsorshipReservations?: boolean | Prisma.User$sponsorshipReservationsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -3891,6 +4143,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     usageMeters: Prisma.$UsageMeterPayload<ExtArgs>[]
     modelDataConsents: Prisma.$ModelDataConsentPayload<ExtArgs>[]
     agentActions: Prisma.$AgentActionPayload<ExtArgs>[]
+    sponsorshipReservations: Prisma.$SponsorshipReservationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -4314,6 +4567,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   usageMeters<T extends Prisma.User$usageMetersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$usageMetersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UsageMeterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   modelDataConsents<T extends Prisma.User$modelDataConsentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$modelDataConsentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ModelDataConsentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   agentActions<T extends Prisma.User$agentActionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$agentActionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AgentActionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sponsorshipReservations<T extends Prisma.User$sponsorshipReservationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sponsorshipReservationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SponsorshipReservationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5243,6 +5497,30 @@ export type User$agentActionsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.AgentActionScalarFieldEnum | Prisma.AgentActionScalarFieldEnum[]
+}
+
+/**
+ * User.sponsorshipReservations
+ */
+export type User$sponsorshipReservationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SponsorshipReservation
+   */
+  select?: Prisma.SponsorshipReservationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SponsorshipReservation
+   */
+  omit?: Prisma.SponsorshipReservationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SponsorshipReservationInclude<ExtArgs> | null
+  where?: Prisma.SponsorshipReservationWhereInput
+  orderBy?: Prisma.SponsorshipReservationOrderByWithRelationInput | Prisma.SponsorshipReservationOrderByWithRelationInput[]
+  cursor?: Prisma.SponsorshipReservationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SponsorshipReservationScalarFieldEnum | Prisma.SponsorshipReservationScalarFieldEnum[]
 }
 
 /**

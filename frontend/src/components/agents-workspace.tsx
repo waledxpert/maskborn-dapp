@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ArrowRight, Bell, CheckCircle2, ExternalLink, LoaderCircle, MessageSquare, RefreshCw, ShieldCheck, Sparkles, Wallet } from "lucide-react";
@@ -12,6 +12,7 @@ type EthereumProvider = { request(args: { method: string; params?: unknown[] }):
 type AgentStatus = { configured: boolean; network: string; chainId: number; collectionAddress: string | null; agentRegistryAddress?: string | null; phase: number; awakening?: string; accountAbstraction?: { entryPoint: string; accountPath: string; directEntryPointSmoke: boolean; bundlerProvider: string; bundlerConfigured: boolean; paymasterProvider: string; sponsorship: boolean; sponsorshipReason?: string | null; dailySponsorAllowance?: string; dailySponsorTransactions?: number } };
 type BundlerStatus = { configured: boolean; provider: string; chainId: number | null; expectedChainId: number; chainMatches: boolean; entryPoint: string; supportedEntryPoints: string[]; entryPointSupported: boolean; paymasterProvider: string; sponsorship: boolean };
 type SponsorshipStatus = { enabled: boolean; disabledReason: string | null; currency: string; gasAsset: string; dailyAllowance: string; dailyAllowanceBaseUnits: string; dailyTransactionLimit: number; reservationTtlSeconds: number; eligibleActions: string[]; excludedActions: string[]; bundlerProvider: string; paymasterProvider: string; accountingMode: string; settlementMode: string; notes: string[] };
+type SponsorshipBudget = { policy: SponsorshipStatus; tokenId: string; dailyBucket: string; usedBaseUnits: string; remainingBaseUnits: string; usedTransactions: number; remainingTransactions: number; reservations: Array<{ id: string; status: string; actionType: string; reservedCostBaseUnits: string; actualCostBaseUnits: string | null; expiresAt: string; failureCode: string | null }> };
 type AgentIndexStatus = { configured: boolean; latestBlock?: string; indexedThrough?: string | null; caughtUp?: boolean; lastError?: string | null };
 type AwakeningState = {
   configured: boolean;
@@ -183,6 +184,13 @@ export function AgentsWorkspace() {
     queryFn: () => apiFetch<{ conversations: ConversationSummary[] }>(`/agents/tokens/${tokenId}/conversations`),
     enabled: Boolean(preview && tokenId && indexStatus.data?.caughtUp),
     retry: false,
+  });
+  const sponsorshipBudget = useQuery({
+    queryKey: ["agent-sponsorship-budget", tokenId],
+    queryFn: () => apiFetch<SponsorshipBudget>(`/agents/tokens/${tokenId}/sponsorship/budget`),
+    enabled: Boolean(preview?.awakening.awakened && tokenId && indexStatus.data?.caughtUp),
+    retry: false,
+    refetchInterval: 30_000,
   });
   const actions = useQuery({
     queryKey: ["agent-actions", tokenId],
@@ -490,10 +498,17 @@ export function AgentsWorkspace() {
                 <h3>Agent account</h3>
                 <p>Every change is simulated, shown for review, and only sent after your wallet confirms it.</p>
               </div>
-              <div className="agent-account-balance">
-                <span>Account balance</span>
-                <b>{preview.awakening.accountState.nativeUsdc} USDC</b>
-                <small>{preview.awakening.accountState.executionPaused ? "Execution paused" : "Execution active"}</small>
+              <div className="agent-account-stack">
+                <div className="agent-account-balance">
+                  <span>Account balance</span>
+                  <b>{preview.awakening.accountState.nativeUsdc} USDC</b>
+                  <small>{preview.awakening.accountState.executionPaused ? "Execution paused" : "Execution active"}</small>
+                </div>
+                <div className="agent-account-balance agent-sponsor-budget">
+                  <span>Sponsored gas</span>
+                  <b>{sponsorshipBudget.data ? `${sponsorshipBudget.data.policy.dailyAllowance} ${sponsorshipBudget.data.policy.currency}` : sponsorshipStatus.data ? `${sponsorshipStatus.data.dailyAllowance} ${sponsorshipStatus.data.currency}` : "0.25 USDC"}</b>
+                  <small>{sponsorshipBudget.data ? `${sponsorshipBudget.data.remainingTransactions} tx left today · sponsorship ${sponsorshipBudget.data.policy.enabled ? "on" : "off"}` : indexStatus.data?.caughtUp ? "Budget loading" : "Budget unlocks after index catch-up"}</small>
+                </div>
               </div>
             </div>
 

@@ -446,6 +446,23 @@ export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
   _max?: Prisma.NestedJsonFilter<$PrismaModel>
 }
 
+export type EnumSponsorshipReservationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.SponsorshipReservationStatus | Prisma.EnumSponsorshipReservationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SponsorshipReservationStatus[] | Prisma.ListEnumSponsorshipReservationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SponsorshipReservationStatus[] | Prisma.ListEnumSponsorshipReservationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSponsorshipReservationStatusFilter<$PrismaModel> | $Enums.SponsorshipReservationStatus
+}
+
+export type EnumSponsorshipReservationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SponsorshipReservationStatus | Prisma.EnumSponsorshipReservationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SponsorshipReservationStatus[] | Prisma.ListEnumSponsorshipReservationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SponsorshipReservationStatus[] | Prisma.ListEnumSponsorshipReservationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSponsorshipReservationStatusWithAggregatesFilter<$PrismaModel> | $Enums.SponsorshipReservationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSponsorshipReservationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSponsorshipReservationStatusFilter<$PrismaModel>
+}
+
 export type EnumConversationRoleFilter<$PrismaModel = never> = {
   equals?: $Enums.ConversationRole | Prisma.EnumConversationRoleFieldRefInput<$PrismaModel>
   in?: $Enums.ConversationRole[] | Prisma.ListEnumConversationRoleFieldRefInput<$PrismaModel>
@@ -1219,6 +1236,23 @@ export type NestedJsonFilterBase<$PrismaModel = never> = {
   gt?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   gte?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   not?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel> | Prisma.JsonNullValueFilter
+}
+
+export type NestedEnumSponsorshipReservationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.SponsorshipReservationStatus | Prisma.EnumSponsorshipReservationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SponsorshipReservationStatus[] | Prisma.ListEnumSponsorshipReservationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SponsorshipReservationStatus[] | Prisma.ListEnumSponsorshipReservationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSponsorshipReservationStatusFilter<$PrismaModel> | $Enums.SponsorshipReservationStatus
+}
+
+export type NestedEnumSponsorshipReservationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SponsorshipReservationStatus | Prisma.EnumSponsorshipReservationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SponsorshipReservationStatus[] | Prisma.ListEnumSponsorshipReservationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SponsorshipReservationStatus[] | Prisma.ListEnumSponsorshipReservationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSponsorshipReservationStatusWithAggregatesFilter<$PrismaModel> | $Enums.SponsorshipReservationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSponsorshipReservationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSponsorshipReservationStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumConversationRoleFilter<$PrismaModel = never> = {
