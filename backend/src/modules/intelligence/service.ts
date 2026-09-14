@@ -114,6 +114,13 @@ export async function generateReport(requestKey: string) {
   return serializeReport(report);
 }
 
+export async function getGeneratedReport(requestKey: string) {
+  const entitlement = await getEntitlementByRequestKey(requestKey);
+  if (!["PAID", "FULFILLED"].includes(entitlement.status)) throw new ApiError(402, "X402_PAYMENT_REQUIRED", "Payment verification is required before this report can be viewed.");
+  if (!entitlement.report || entitlement.report.status !== "READY") throw new ApiError(404, "REPORT_NOT_GENERATED", "Generate this report before reading it.");
+  return serializeReport(entitlement.report);
+}
+
 async function buildReportContent(kind: IntelligenceReportKind, tokenId?: bigint, walletAddress?: string) {
   const token = tokenId ? await readToken(tokenId).catch(() => null) : null;
   const binding = tokenId ? await readAgentBinding(tokenId).catch(() => null) : null;

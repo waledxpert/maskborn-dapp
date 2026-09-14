@@ -1,13 +1,11 @@
 import { Router } from "express";
 import { getAddress } from "viem";
 import { z } from "zod";
-import { config } from "../../config.js";
-import { db } from "../../db.js";
 import { ApiError } from "../../errors.js";
 import { requireWalletAuth } from "../../middleware/auth.js";
 import { asyncRoute } from "../../utils.js";
-import { maskBornAddress, readToken } from "../chain/client.js";
-import { REPORT_CATALOG, createIntelligenceQuote, generateReport, getEntitlementByRequestKey, readIntelligenceStatus, serializeEntitlement } from "./service.js";
+import { readToken } from "../chain/client.js";
+import { REPORT_CATALOG, createIntelligenceQuote, generateReport, getEntitlementByRequestKey, getGeneratedReport, readIntelligenceStatus, serializeEntitlement } from "./service.js";
 
 export const intelligenceRouter = Router();
 
@@ -69,6 +67,6 @@ intelligenceRouter.post("/intelligence/reports/:requestKey/generate", requireWal
 intelligenceRouter.get("/intelligence/reports/:requestKey", requireWalletAuth, asyncRoute(async (req, res) => {
   const { requestKey } = requestParams.parse(req.params);
   await assertEntitlementOwner(requestKey, { userId: req.auth!.userId, walletId: req.auth!.walletId! });
-  const report = await generateReport(requestKey);
+  const report = await getGeneratedReport(requestKey);
   res.json(report);
 }));
