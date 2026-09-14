@@ -844,6 +844,11 @@ export const maskBornAccountV2Abi = [
         "name": "identityRegistry_",
         "type": "address",
         "internalType": "address"
+      },
+      {
+        "name": "entryPoint_",
+        "type": "address",
+        "internalType": "address"
       }
     ],
     "stateMutability": "nonpayable"
@@ -1067,6 +1072,19 @@ export const maskBornAccountV2Abi = [
   },
   {
     "type": "function",
+    "name": "entryPoint",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "contract IERC4337EntryPoint"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
     "name": "execute",
     "inputs": [
       {
@@ -1101,6 +1119,29 @@ export const maskBornAccountV2Abi = [
   },
   {
     "type": "function",
+    "name": "executeCheckpointUserOp",
+    "inputs": [
+      {
+        "name": "sessionKey",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "category",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      },
+      {
+        "name": "payloadHash",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
     "name": "executionPaused",
     "inputs": [],
     "outputs": [
@@ -1108,6 +1149,19 @@ export const maskBornAccountV2Abi = [
         "name": "",
         "type": "bool",
         "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getUserOpNonce",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
       }
     ],
     "stateMutability": "view"
@@ -1385,6 +1439,82 @@ export const maskBornAccountV2Abi = [
     "stateMutability": "nonpayable"
   },
   {
+    "type": "function",
+    "name": "validateUserOp",
+    "inputs": [
+      {
+        "name": "userOp",
+        "type": "tuple",
+        "internalType": "struct PackedUserOperation",
+        "components": [
+          {
+            "name": "sender",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "nonce",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "initCode",
+            "type": "bytes",
+            "internalType": "bytes"
+          },
+          {
+            "name": "callData",
+            "type": "bytes",
+            "internalType": "bytes"
+          },
+          {
+            "name": "accountGasLimits",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "preVerificationGas",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "gasFees",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "paymasterAndData",
+            "type": "bytes",
+            "internalType": "bytes"
+          },
+          {
+            "name": "signature",
+            "type": "bytes",
+            "internalType": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "userOpHash",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      },
+      {
+        "name": "missingAccountFunds",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "validationData",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable"
+  },
+  {
     "type": "event",
     "name": "AccountAwakened",
     "inputs": [
@@ -1613,6 +1743,11 @@ export const maskBornAccountV2Abi = [
   },
   {
     "type": "error",
+    "name": "InvalidEntryPoint",
+    "inputs": []
+  },
+  {
+    "type": "error",
     "name": "InvalidSessionCallLimit",
     "inputs": []
   },
@@ -1634,6 +1769,11 @@ export const maskBornAccountV2Abi = [
   {
     "type": "error",
     "name": "OnlyAwakeningRegistry",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "OnlyEntryPoint",
     "inputs": []
   },
   {

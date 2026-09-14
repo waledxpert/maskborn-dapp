@@ -130,6 +130,14 @@ agentsRouter.get("/agents/tokens/:tokenId/preview", requireWalletAuth, asyncRout
           maxDurationSeconds: account.checkpointSessions.maxDurationSeconds.toString(),
           maxCalls: account.checkpointSessions.maxCalls.toString(),
         } : { supported: false },
+        erc4337: account.erc4337 ? {
+          supported: true,
+          version: "0.9",
+          entryPoint: account.erc4337.entryPoint,
+          userOpNonce: account.erc4337.userOpNonce.toString(),
+          executionScope: "checkpoint-only",
+          sponsorship: false,
+        } : { supported: false },
         asOfBlock: account.blockNumber.toString(),
       } : null,
     } : { configured: false },
@@ -423,6 +431,14 @@ agentsRouter.get("/agents/public/tokens/:tokenId/card", asyncRoute(async (req, r
         financialExecution: false,
         allowedCategories: ["monitor-observation", "report-digest", "liveness"],
       } : { supported: false },
+      erc4337: account?.erc4337 ? {
+        supported: true,
+        version: "0.9",
+        entryPoint: account.erc4337.entryPoint,
+        userOpNonce: account.erc4337.userOpNonce.toString(),
+        executionScope: "checkpoint-only",
+        sponsorship: false,
+      } : { supported: false },
     },
     constitutionHash: binding.constitutionHash,
     endpoints: {
@@ -434,6 +450,7 @@ agentsRouter.get("/agents/public/tokens/:tokenId/card", asyncRoute(async (req, r
       { id: "public-persona", available: true },
       { id: "public-account-state", available: Boolean(account) },
       { id: "bounded-checkpoint-sessions", available: Boolean(account?.checkpointSessions) },
+      { id: "erc4337-checkpoints", available: Boolean(account?.erc4337) },
       { id: "autonomous-execution", available: false },
     ],
   });

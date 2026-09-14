@@ -22,6 +22,7 @@ type AwakeningState = {
   accountState?: null | {
     nativeUsdc: string; nativeUsdcBaseUnits: string; executionPaused: boolean; state: string; asOfBlock: string;
     checkpointSessions: { supported: boolean; maxDurationSeconds?: string; maxCalls?: string };
+    erc4337: { supported: boolean; version?: string; entryPoint?: string; userOpNonce?: string; executionScope?: string; sponsorship?: boolean };
   };
 };
 type AgentPreview = {
@@ -512,7 +513,7 @@ export function AgentsWorkspace() {
                   <p>This key can only publish monitor-observation, report-digest, or liveness hashes. It cannot call another contract, transfer USDC, update the identity, or change permissions.</p>
                 </div>
                 <div className="agent-session-form">
-                  <label>Session-key address<input value={sessionKey} onChange={(event) => { setSessionKey(event.target.value); setSessionState(null); }} placeholder="Separate 0x address" /></label>
+                  <label>Session-key EOA address<input value={sessionKey} onChange={(event) => { setSessionKey(event.target.value); setSessionState(null); }} placeholder="Separate signer 0x address" /></label>
                   <label>Lifetime in hours<input value={sessionHours} onChange={(event) => setSessionHours(event.target.value)} inputMode="numeric" /></label>
                   <label>Maximum checkpoints<input value={sessionMaxCalls} onChange={(event) => setSessionMaxCalls(event.target.value)} inputMode="numeric" /></label>
                   <div>
@@ -531,6 +532,9 @@ export function AgentsWorkspace() {
                   </div>
                 )}
                 <small>A transfer to a different owner disables the key. Because the original NFT has no transfer hook, buyers should still revoke visible sessions before funding the account.</small>
+                {preview.awakening.accountState.erc4337.supported && (
+                  <small>ERC-4337 v{preview.awakening.accountState.erc4337.version}: checkpoint-only UserOperations are supported through EntryPoint {compact(preview.awakening.accountState.erc4337.entryPoint!)}. Gas sponsorship is not enabled yet.</small>
+                )}
               </div>
             )}
 

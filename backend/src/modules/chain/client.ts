@@ -113,7 +113,7 @@ export async function readNativeUsdc(address: Address) {
 
 export async function readAgentAccount(account: Address) {
   const blockNumber = await arcClient.getBlockNumber();
-  const [balance, paused, state, agentId, agentURIHash, maxSessionDuration, maxSessionCalls] = await Promise.all([
+  const [balance, paused, state, agentId, agentURIHash, maxSessionDuration, maxSessionCalls, entryPoint, userOpNonce] = await Promise.all([
     arcClient.getBalance({ address: account, blockNumber }),
     arcClient.readContract({ address: account, abi: maskBornAccountV1Abi, functionName: "executionPaused", blockNumber }),
     arcClient.readContract({ address: account, abi: maskBornAccountV1Abi, functionName: "state", blockNumber }),
@@ -121,11 +121,16 @@ export async function readAgentAccount(account: Address) {
     arcClient.readContract({ address: account, abi: maskBornAccountV1Abi, functionName: "agentURIHash", blockNumber }),
     arcClient.readContract({ address: account, abi: maskBornAccountV2Abi, functionName: "MAX_SESSION_DURATION", blockNumber }).catch(() => null),
     arcClient.readContract({ address: account, abi: maskBornAccountV2Abi, functionName: "MAX_SESSION_CALLS", blockNumber }).catch(() => null),
+    arcClient.readContract({ address: account, abi: maskBornAccountV2Abi, functionName: "entryPoint", blockNumber }).catch(() => null),
+    arcClient.readContract({ address: account, abi: maskBornAccountV2Abi, functionName: "getUserOpNonce", blockNumber }).catch(() => null),
   ]);
   return {
     balance, paused, state, agentId, agentURIHash, blockNumber,
     checkpointSessions: maxSessionDuration !== null && maxSessionCalls !== null
       ? { maxDurationSeconds: maxSessionDuration, maxCalls: maxSessionCalls }
+      : null,
+    erc4337: entryPoint !== null && userOpNonce !== null
+      ? { entryPoint: getAddress(entryPoint), userOpNonce }
       : null,
   };
 }
