@@ -20,6 +20,7 @@ This slice adds a real onchain awakening path while keeping every value-moving a
 - Owner controls for pause/unpause, ERC-8004 URI updates, and native-USDC sends from the token-bound account.
 - V2 checkpoint-session grants, inspection, and immediate revocation. Sessions can publish monitor-observation, report-digest, or liveness hashes only; they have no external-call or asset-transfer function.
 - ERC-4337 v0.9 validation for those checkpoint calls only. Public discovery reports the EntryPoint, nonce, checkpoint-only scope, Pimlico bundler readiness, and sponsorship as disabled.
+- A holder-facing Phase 2 readiness panel on `/agents` checks wallet sign-in, collection/index state, token selection, awakening, ERC-4337 checkpoint support, live bundler reachability, and the intentionally disabled sponsorship state.
 
 ## Current Arc testnet deployment
 
@@ -135,5 +136,6 @@ Do not fund accounts with meaningful value until the transfer tests, pause recov
 
 ## Next Phase 2 slice
 
-The direct EntryPoint smoke and Pimlico managed-bundler smoke are complete for token `1`: awaken, checkpoint UserOperations, revoke, deposit withdrawal, and account sweep all verified. The app now exposes managed-bundler readiness separately from EntryPoint support. Keep `AGENT_PAYMASTER_PROVIDER=disabled` until a real Arc paymaster/sponsorship path is selected and concurrency-safe budget accounting is implemented. Sponsored gas is the next separate slice, not part of the current checkpoint-only bundler proof.
+The direct EntryPoint smoke and Pimlico managed-bundler smoke are complete for token `1`: awaken, checkpoint UserOperations, revoke, deposit withdrawal, and account sweep all verified. The `/agents` page now includes a browser-smoke checklist so the holder test can be performed from the UI. The app now exposes managed-bundler readiness separately from EntryPoint support. Keep `AGENT_PAYMASTER_PROVIDER=disabled` until a real Arc paymaster/sponsorship path is selected and concurrency-safe budget accounting is implemented. Sponsored gas is the next separate slice, not part of the current checkpoint-only bundler proof.
+
 

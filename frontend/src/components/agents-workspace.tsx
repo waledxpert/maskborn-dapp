@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ArrowRight, Bell, CheckCircle2, ExternalLink, LoaderCircle, MessageSquare, RefreshCw, ShieldCheck, Sparkles, Wallet } from "lucide-react";
@@ -10,6 +10,7 @@ import { useCurrentUser } from "@/hooks/use-current-user";
 
 type EthereumProvider = { request(args: { method: string; params?: unknown[] }): Promise<unknown> };
 type AgentStatus = { configured: boolean; network: string; chainId: number; collectionAddress: string | null; agentRegistryAddress?: string | null; phase: number; awakening?: string; accountAbstraction?: { entryPoint: string; accountPath: string; directEntryPointSmoke: boolean; bundlerProvider: string; bundlerConfigured: boolean; paymasterProvider: string; sponsorship: boolean } };
+type BundlerStatus = { configured: boolean; provider: string; chainId: number | null; expectedChainId: number; chainMatches: boolean; entryPoint: string; supportedEntryPoints: string[]; entryPointSupported: boolean; paymasterProvider: string; sponsorship: boolean };
 type AgentIndexStatus = { configured: boolean; latestBlock?: string; indexedThrough?: string | null; caughtUp?: boolean; lastError?: string | null };
 type AwakeningState = {
   configured: boolean;
@@ -79,7 +80,7 @@ type ConversationMessage = { id: string; role: "USER" | "ASSISTANT"; content: st
 
 declare global { interface Window { ethereum?: EthereumProvider } }
 
-function compact(address: string) { return `${address.slice(0, 7)}…${address.slice(-5)}`; }
+function compact(address: string) { return `${address.slice(0, 7)}â€¦${address.slice(-5)}`; }
 
 async function submitPrepared(provider: EthereumProvider, prepared: Pick<AgentAction, "id" | "chainId" | "from" | "to" | "data" | "value" | "expiresAt">, onSubmitted?: (hash: string) => void) {
   if (Date.now() >= Date.parse(prepared.expiresAt)) throw new Error("This preparation expired. Prepare it again.");
@@ -145,6 +146,7 @@ export function AgentsWorkspace() {
   const [sessionMaxCalls, setSessionMaxCalls] = useState("24");
   const [sessionState, setSessionState] = useState<CheckpointSessionState | null>(null);
   const status = useQuery({ queryKey: ["agent-status"], queryFn: () => apiFetch<AgentStatus>("/agents/status") });
+  const bundlerStatus = useQuery({ queryKey: ["agent-bundler-status"], queryFn: () => apiFetch<BundlerStatus>("/agents/bundler/status"), enabled: Boolean(status.data?.accountAbstraction?.bundlerConfigured), retry: false, refetchInterval: 30_000 });
   const indexStatus = useQuery({ queryKey: ["agent-index-status"], queryFn: () => apiFetch<AgentIndexStatus>("/agents/index/status"), enabled: Boolean(status.data?.configured), refetchInterval: 15_000, retry: false });
   const chatStatus = useQuery({ queryKey: ["agent-chat-status"], queryFn: () => apiFetch<ChatStatus>("/agents/chat/status"), retry: false });
   const connectedAddress = walletAddress ?? session.data?.user?.wallets.find(
@@ -341,6 +343,16 @@ export function AgentsWorkspace() {
     if (!preview?.persona) return undefined;
     return composeMaskbornDataUrl(preview.persona.traits.map((trait) => trait.index) as TraitSelection);
   }, [preview]);
+  const smokeChecks = useMemo(() => [
+    { label: "Wallet signed in", ok: Boolean(connectedAddress) },
+    { label: "Collection configured", ok: Boolean(status.data?.configured) },
+    { label: "Ownership index caught up", ok: Boolean(indexStatus.data?.caughtUp) },
+    { label: "Token selected", ok: Boolean(preview) },
+    { label: "Token awakened", ok: Boolean(preview?.awakening.awakened) },
+    { label: "ERC-4337 checkpoint path", ok: Boolean(preview?.awakening.accountState?.erc4337.supported) },
+    { label: "Pimlico bundler reachable", ok: Boolean(bundlerStatus.data?.configured && bundlerStatus.data.chainMatches && bundlerStatus.data.entryPointSupported) },
+    { label: "Sponsored gas intentionally off", ok: status.data?.accountAbstraction?.sponsorship === false && bundlerStatus.data?.sponsorship === false },
+  ], [bundlerStatus.data, connectedAddress, indexStatus.data?.caughtUp, preview, status.data]);
 
   const submitToken = (event: FormEvent) => {
     event.preventDefault();
@@ -390,11 +402,27 @@ export function AgentsWorkspace() {
           <p>{status.data?.configured
             ? `Collection connected on ${status.data.network}. ${indexStatus.data?.caughtUp ? `Ownership indexed through block ${indexStatus.data.indexedThrough}.` : "Ownership index is catching up."}`
             : "Waiting for the canonical collection deployment address."}</p>
-          <small>Phase {status.data?.phase ?? 1} · {status.data?.accountAbstraction?.bundlerConfigured ? `${status.data.accountAbstraction.bundlerProvider} bundler configured` : "managed bundler pending"}</small>
+          <small>Phase {status.data?.phase ?? 1} Â· {status.data?.accountAbstraction?.bundlerConfigured ? `${status.data.accountAbstraction.bundlerProvider} bundler configured` : "managed bundler pending"}</small>
         </article>
       </div>
 
       {error && <p className="agent-error" role="alert">{error}</p>}
+      <article className="agent-readiness-panel">
+        <div>
+          <p className="eyebrow">Phase 2 readiness</p>
+          <h3>Browser smoke checklist</h3>
+          <p>This is the holder-facing proof layer: it confirms the app can see the collection, awakened account, checkpoint-only ERC-4337 path, and configured Pimlico bundler without implying sponsored gas is live.</p>
+        </div>
+        <div className="agent-readiness-grid">
+          {smokeChecks.map((check) => <span key={check.label} className={check.ok ? "ready" : "waiting"}>{check.ok ? "✓" : "–"} {check.label}</span>)}
+        </div>
+        <div className="agent-bundler-card">
+          <span>Bundler</span>
+          <b>{status.data?.accountAbstraction?.bundlerConfigured ? status.data.accountAbstraction.bundlerProvider : "Not configured"}</b>
+          <small>{bundlerStatus.isLoading ? "Checking live RPC…" : bundlerStatus.data ? `chain ${bundlerStatus.data.chainId ?? "unknown"} / EntryPoint ${bundlerStatus.data.entryPointSupported ? "supported" : "unsupported"}` : status.data?.accountAbstraction?.bundlerConfigured ? "Bundler status unavailable" : "Set AGENT_BUNDLER_PROVIDER and RPC URL to enable."}</small>
+          <small>Paymaster: {status.data?.accountAbstraction?.paymasterProvider ?? "disabled"} · sponsorship {status.data?.accountAbstraction?.sponsorship ? "on" : "off"}</small>
+        </div>
+      </article>
 
       {preview && (
         <>
@@ -484,7 +512,7 @@ export function AgentsWorkspace() {
                 <div>
                   <strong>Send native USDC</strong>
                   <p>Transfer from the token-bound account. The transaction itself sends 0 USDC to the contract.</p>
-                  <input value={sendRecipient} onChange={(event) => setSendRecipient(event.target.value)} placeholder="Recipient 0x…" />
+                  <input value={sendRecipient} onChange={(event) => setSendRecipient(event.target.value)} placeholder="Recipient 0xâ€¦" />
                   <input value={sendAmount} onChange={(event) => setSendAmount(event.target.value)} placeholder="Amount in USDC" inputMode="decimal" />
                   <button className="button button-amber" disabled={!sendRecipient || !sendAmount || prepareControl.isPending || preview.awakening.accountState.executionPaused} onClick={() => prepareControl.mutate({ path: "send", body: { recipient: sendRecipient, amount: sendAmount } })}>Prepare transfer</button>
                 </div>
@@ -558,7 +586,7 @@ export function AgentsWorkspace() {
             </>}
             <button className="button button-amber" onClick={() => createMonitor.mutate()} disabled={createMonitor.isPending || (cadence !== "CONTINUOUS" && (!expectedAmount || !nextExpectedAt))}>Create monitor</button>
             <div className="agent-monitor-list">
-              {monitors.data?.rules.filter((rule) => rule.isActive).map((rule) => <div key={rule.id}><span>{rule.cadence.toLowerCase()} · ≥ {rule.minimumAmount} USDC</span><button onClick={() => syncMonitor.mutate(rule.id)} disabled={syncMonitor.isPending}><RefreshCw size={14} /> Sync</button></div>)}
+              {monitors.data?.rules.filter((rule) => rule.isActive).map((rule) => <div key={rule.id}><span>{rule.cadence.toLowerCase()} Â· â‰¥ {rule.minimumAmount} USDC</span><button onClick={() => syncMonitor.mutate(rule.id)} disabled={syncMonitor.isPending}><RefreshCw size={14} /> Sync</button></div>)}
               {!monitors.isLoading && !monitors.data?.rules.some((rule) => rule.isActive) && <small>No active monitors.</small>}
             </div>
           </article>
@@ -588,7 +616,7 @@ export function AgentsWorkspace() {
                   {chatMessages.map((message) => <div key={message.id} className={message.role.toLowerCase()}><small>{message.role === "USER" ? "You" : preview.persona?.name ?? "Mask Born"}</small><p>{message.content}</p></div>)}
                   {!chatMessages.length && <p className="agent-chat-empty">Ask about traits, balances, recent USDC activity, monitors, or Payday status.</p>}
                 </div>
-                <form onSubmit={(event) => { event.preventDefault(); if (chatText.trim()) sendChat.mutate(); }}><textarea value={chatText} onChange={(event) => setChatText(event.target.value)} maxLength={2000} placeholder="Ask your Mask Born…" /><button className="button button-amber" disabled={!chatText.trim() || sendChat.isPending}>{sendChat.isPending ? <LoaderCircle className="spin" size={16} /> : "Send"}</button></form>
+                <form onSubmit={(event) => { event.preventDefault(); if (chatText.trim()) sendChat.mutate(); }}><textarea value={chatText} onChange={(event) => setChatText(event.target.value)} maxLength={2000} placeholder="Ask your Mask Bornâ€¦" /><button className="button button-amber" disabled={!chatText.trim() || sendChat.isPending}>{sendChat.isPending ? <LoaderCircle className="spin" size={16} /> : "Send"}</button></form>
                 <button className="agent-revoke-consent" onClick={() => revokeModelConsent.mutate()}>Revoke model data access</button>
               </div>
             </div>}
@@ -599,3 +627,4 @@ export function AgentsWorkspace() {
     </section>
   );
 }
+

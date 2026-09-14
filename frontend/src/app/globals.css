@@ -1,4 +1,4 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 :root {
   --bone: #edeae2;
@@ -4690,6 +4690,18 @@ body:has(.admin-shell) .site-footer {
 .agent-status-dot.ready { background: #2f8a58; box-shadow: 0 0 0 7px rgb(47 138 88 / 12%); }
 .agent-status-card small { text-transform: uppercase; letter-spacing: .09em; color: var(--muted); }
 .agent-error { margin: 18px 0 0; padding: 14px 17px; border-left: 4px solid #a83d2f; background: rgb(168 61 47 / 8%); }
+.agent-readiness-panel { margin-top: 18px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(260px, .9fr) minmax(240px, .65fr); gap: 0; border: 1px solid var(--line); background: var(--paper); }
+.agent-readiness-panel > div { padding: 22px; }
+.agent-readiness-panel > div + div { border-left: 1px solid var(--line); }
+.agent-readiness-panel h3 { margin: 8px 0 10px; font-size: clamp(26px, 3vw, 38px); }
+.agent-readiness-panel p:not(.eyebrow), .agent-bundler-card small { color: var(--muted); line-height: 1.55; }
+.agent-readiness-grid { display: grid; align-content: start; gap: 9px; }
+.agent-readiness-grid span { display: flex; align-items: center; gap: 8px; padding: 9px 11px; border: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+.agent-readiness-grid span.ready { border-color: rgb(47 138 88 / 44%); color: #69c882; background: rgb(47 138 88 / 8%); }
+.agent-readiness-grid span.waiting { border-color: rgb(140 136 125 / 36%); }
+.agent-bundler-card { display: grid; align-content: start; gap: 8px; }
+.agent-bundler-card span { color: var(--muted); text-transform: uppercase; letter-spacing: .08em; font-size: 11px; }
+.agent-bundler-card b { color: var(--amber); font-size: 20px; }
 .spin { animation: agent-spin .8s linear infinite; }
 
 .agent-profile-panel {
@@ -4815,9 +4827,10 @@ body:has(.admin-shell) .site-footer {
 @keyframes agent-spin { to { transform: rotate(360deg); } }
 
 @media (max-width: 900px) {
-  .agent-lab-rail { grid-template-columns: 1fr; }
+  .agent-lab-rail, .agent-readiness-panel { grid-template-columns: 1fr; }
   .agent-step-card { min-height: 230px; border-right: 0; border-bottom: 1px solid var(--line); }
   .agent-step-card:last-child { border-bottom: 0; }
+  .agent-readiness-panel > div + div { border-left: 0; border-top: 1px solid var(--line); }
   .agent-profile-panel { grid-template-columns: 1fr; }
   .agent-profile-panel > .pixel-art { min-height: min(85vw, 520px); border-right: 0; border-bottom: 1px solid var(--line); }
   .agent-capabilities { border-left: 0; border-top: 1px solid var(--line); }
@@ -4835,3 +4848,4 @@ body:has(.admin-shell) .site-footer {
   .payday-status-grid, .payday-section-head, .payday-ledger-grid { grid-template-columns: 1fr; }
   .payday-boundary-card, .payday-ledger-grid > article + article { border-left: 0; border-top: 1px solid var(--line); }
 }
+
