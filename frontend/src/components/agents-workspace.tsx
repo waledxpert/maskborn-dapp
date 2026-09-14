@@ -19,7 +19,10 @@ type AwakeningState = {
   constitutionHash?: string | null;
   awakenedAtBlock?: string | null;
   asOfBlock?: string;
-  accountState?: null | { nativeUsdc: string; nativeUsdcBaseUnits: string; executionPaused: boolean; state: string; asOfBlock: string };
+  accountState?: null | {
+    nativeUsdc: string; nativeUsdcBaseUnits: string; executionPaused: boolean; state: string; asOfBlock: string;
+    checkpointSessions: { supported: boolean; maxDurationSeconds?: string; maxCalls?: string };
+  };
 };
 type AgentPreview = {
   token: { tokenId: string; owner: string; revealed: boolean; asOfBlock: string };
@@ -50,10 +53,14 @@ type PreparedAwakening = {
 };
 type AgentAction = {
   id: string; status: "prepared" | "submitted" | "confirmed" | "failed" | "expired" | "unknown";
-  type: "AWAKEN" | "SET_EXECUTION_PAUSED" | "UPDATE_AGENT_URI" | "SEND_NATIVE_USDC";
+  type: "AWAKEN" | "SET_EXECUTION_PAUSED" | "UPDATE_AGENT_URI" | "SEND_NATIVE_USDC" | "GRANT_CHECKPOINT_SESSION" | "REVOKE_CHECKPOINT_SESSION";
   chainId: number; tokenId: string; account: string; from: string; to: string; data: string; value: string;
   assetAmountBaseUnits: string | null; payload: Record<string, string | number | boolean | null>;
   gasEstimate: string | null; expiresAt: string; txHash: string | null; failureCode: string | null; createdAt: string;
+};
+type CheckpointSessionState = {
+  sessionKey: string; authorizedOwner: string | null; validAfter: string; validUntil: string;
+  maxCalls: string; calls: string; revoked: boolean; active: boolean; asOfBlock: string;
 };
 type OwnedTokens = { tokenIds: string[]; asOfBlock: string };
 type MonitorRule = {
@@ -132,6 +139,10 @@ export function AgentsWorkspace() {
   const [sendAmount, setSendAmount] = useState("");
   const [controlTxHash, setControlTxHash] = useState<string | null>(null);
   const [controlTxStatus, setControlTxStatus] = useState<AgentAction["status"] | "idle">("idle");
+  const [sessionKey, setSessionKey] = useState("");
+  const [sessionHours, setSessionHours] = useState("6");
+  const [sessionMaxCalls, setSessionMaxCalls] = useState("24");
+  const [sessionState, setSessionState] = useState<CheckpointSessionState | null>(null);
   const status = useQuery({ queryKey: ["agent-status"], queryFn: () => apiFetch<AgentStatus>("/agents/status") });
   const indexStatus = useQuery({ queryKey: ["agent-index-status"], queryFn: () => apiFetch<AgentIndexStatus>("/agents/index/status"), enabled: Boolean(status.data?.configured), refetchInterval: 15_000, retry: false });
   const chatStatus = useQuery({ queryKey: ["agent-chat-status"], queryFn: () => apiFetch<ChatStatus>("/agents/chat/status"), retry: false });
@@ -266,7 +277,7 @@ export function AgentsWorkspace() {
 
   const inspect = useMutation({
     mutationFn: (id: string) => apiFetch<AgentPreview>(`/agents/tokens/${id}/preview`),
-    onSuccess: (data) => { setPreview(data); setPreparedAwakening(null); setPreparedControl(null); setError(""); },
+    onSuccess: (data) => { setPreview(data); setPreparedAwakening(null); setPreparedControl(null); setSessionState(null); setError(""); },
     onError: (requestError) => { setPreview(null); setError((requestError as Error).message); },
   });
 
@@ -317,6 +328,12 @@ export function AgentsWorkspace() {
       if (action.status === "confirmed") inspect.mutate(tokenId);
     },
     onError: (requestError) => { setControlTxStatus("failed"); setError((requestError as Error).message); },
+  });
+
+  const inspectSession = useMutation({
+    mutationFn: () => apiFetch<CheckpointSessionState>(`/agents/tokens/${tokenId}/controls/sessions/${sessionKey}`),
+    onSuccess: (result) => { setSessionState(result); setError(""); },
+    onError: (requestError) => { setSessionState(null); setError((requestError as Error).message); },
   });
 
   const image = useMemo(() => {
@@ -484,6 +501,36 @@ export function AgentsWorkspace() {
                   <button className="button button-amber" onClick={() => submitControl.mutate()} disabled={submitControl.isPending}>{submitControl.isPending ? <LoaderCircle className="spin" size={16} /> : <Wallet size={16} />} Confirm in wallet</button>
                   <button className="agent-revoke-consent" onClick={() => setPreparedControl(null)}>Cancel</button>
                 </div>
+              </div>
+            )}
+
+            {preview.awakening.accountState.checkpointSessions.supported && !preparedControl && (
+              <div className="agent-session-panel">
+                <div>
+                  <p className="eyebrow">Bounded checkpoint session</p>
+                  <h4>Let the runtime prove work, never spend</h4>
+                  <p>This key can only publish monitor-observation, report-digest, or liveness hashes. It cannot call another contract, transfer USDC, update the identity, or change permissions.</p>
+                </div>
+                <div className="agent-session-form">
+                  <label>Session-key address<input value={sessionKey} onChange={(event) => { setSessionKey(event.target.value); setSessionState(null); }} placeholder="Separate 0x address" /></label>
+                  <label>Lifetime in hours<input value={sessionHours} onChange={(event) => setSessionHours(event.target.value)} inputMode="numeric" /></label>
+                  <label>Maximum checkpoints<input value={sessionMaxCalls} onChange={(event) => setSessionMaxCalls(event.target.value)} inputMode="numeric" /></label>
+                  <div>
+                    <button className="button button-amber" disabled={!sessionKey || prepareControl.isPending} onClick={() => prepareControl.mutate({ path: "sessions/grant", body: { sessionKey, durationHours: sessionHours, maxCalls: sessionMaxCalls } })}>Prepare grant</button>
+                    <button className="agent-revoke-consent" disabled={!sessionKey || prepareControl.isPending} onClick={() => prepareControl.mutate({ path: "sessions/revoke", body: { sessionKey } })}>Prepare revoke</button>
+                    <button className="agent-revoke-consent" disabled={!sessionKey || inspectSession.isPending} onClick={() => inspectSession.mutate()}>Inspect key</button>
+                  </div>
+                </div>
+                {sessionState && (
+                  <div className="agent-session-state">
+                    <strong>{sessionState.active ? "Active" : sessionState.revoked ? "Revoked" : "Inactive"}</strong>
+                    <span>Owner <b>{sessionState.authorizedOwner ? compact(sessionState.authorizedOwner) : "None"}</b></span>
+                    <span>Calls <b>{sessionState.calls} / {sessionState.maxCalls}</b></span>
+                    <span>Expires <b>{sessionState.validUntil === "0" ? "Never granted" : new Date(Number(sessionState.validUntil) * 1000).toLocaleString()}</b></span>
+                    <small>Verified at Arc block {sessionState.asOfBlock}</small>
+                  </div>
+                )}
+                <small>A transfer to a different owner disables the key. Because the original NFT has no transfer hook, buyers should still revoke visible sessions before funding the account.</small>
               </div>
             )}
 

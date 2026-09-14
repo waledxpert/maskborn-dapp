@@ -18,6 +18,7 @@ This slice adds a real onchain awakening path while keeping every value-moving a
 - Public Mask Born discovery profiles at `/.well-known/agent-card/maskborn/{tokenId}.json`; these honestly report A2A and x402 as disabled.
 - Durable action records scoped to the holder's current ownership period, with independent sender/target/calldata/value and receipt reconciliation.
 - Owner controls for pause/unpause, ERC-8004 URI updates, and native-USDC sends from the token-bound account.
+- V2 checkpoint-session grants, inspection, and immediate revocation. Sessions can publish monitor-observation, report-digest, or liveness hashes only; they have no external-call or asset-transfer function.
 
 Contract source lives only in `arcOne/contracts/src/agent`. The app does not contain a second Solidity copy.
 
@@ -66,7 +67,9 @@ TOKEN=<canonical Mask Born testnet collection>
 & "$env:USERPROFILE\.foundry\bin\forge.exe" script script/DeployAgents.s.sol --rpc-url arcTestnet --broadcast -vvvv
 ```
 
-Record the printed `MaskBornAccountV1` and `MaskBornAgentRegistry` addresses in a versioned deployment manifest. Deployment is not an upgrade to the NFT contract and does not alter existing tokens or art.
+Record the printed `MaskBornAccountV2` and `MaskBornAgentRegistry` addresses in a versioned deployment manifest. Deployment is not an upgrade to the NFT contract and does not alter existing tokens or art.
+
+The script now deploys V2. If the earlier V1 registry was deployed but no token awakened, replace the application registry address with the reviewed V2 deployment. If any token already awakened on V1, do not imply that changing an ABI upgrades it: its immutable account and ERC-8004 identity remain on V1 until an explicit migration design exists.
 
 ## 4. Configure the application
 
@@ -103,6 +106,8 @@ npx prisma generate
 7. Fund only a disposable test account, then test pause, unpause, URI update, and a tiny USDC transfer. Confirm each action appears in the current-holder history with the correct Arcscan transaction.
 8. Change one reviewed field in a local/API test and confirm reconciliation rejects the mismatched transaction.
 9. Transfer a test NFT to another wallet and confirm the old owner cannot execute while the new owner can and cannot see the prior ownership period's action history.
+10. Grant a disposable checkpoint key for one hour and two calls; publish two test hashes and verify the third call fails.
+11. Verify pause blocks the key, revocation is immediate, and transferring the NFT to another address makes the granting-owner check fail.
 
 ## Important safety boundary
 
@@ -112,4 +117,4 @@ Do not fund accounts with meaningful value until the transfer tests, pause recov
 
 ## Next Phase 2 slice
 
-The next implementation slice is scoped, non-value session permissions and revocation. ERC-4337 and sponsored gas remain last because they depend on a verified Arc bundler/paymaster combination and concurrency-safe budget accounting.
+The next implementation slice is ERC-4337 compatibility investigation and a user-paid UserOperation proof. Sponsored gas follows only after a real Arc bundler/paymaster is selected and concurrency-safe budget accounting is implemented.

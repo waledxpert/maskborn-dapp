@@ -9,6 +9,7 @@ const output = path.resolve(scriptsDir, "../backend/src/generated/agent-contract
 const artifacts = [
   ["maskBornAgentRegistryAbi", "MaskBornAgentRegistry.sol/MaskBornAgentRegistry.json"],
   ["maskBornAccountV1Abi", "MaskBornAccountV1.sol/MaskBornAccountV1.json"],
+  ["maskBornAccountV2Abi", "MaskBornAccountV2.sol/MaskBornAccountV2.json"],
 ];
 
 const exports = [];

@@ -1,8 +1,8 @@
 import { createPublicClient, defineChain, getAddress, http, parseAbiItem, type Address, type Hex } from "viem";
 import { config } from "../../config.js";
-import { maskBornAccountV1Abi, maskBornAgentRegistryAbi } from "../../generated/agent-contracts.js";
+import { maskBornAccountV1Abi, maskBornAccountV2Abi, maskBornAgentRegistryAbi } from "../../generated/agent-contracts.js";
 
-export { maskBornAccountV1Abi, maskBornAgentRegistryAbi };
+export { maskBornAccountV1Abi, maskBornAccountV2Abi, maskBornAgentRegistryAbi };
 
 export const arcChain = defineChain({
   id: config.ARC_CHAIN_ID,
@@ -113,12 +113,35 @@ export async function readNativeUsdc(address: Address) {
 
 export async function readAgentAccount(account: Address) {
   const blockNumber = await arcClient.getBlockNumber();
-  const [balance, paused, state, agentId, agentURIHash] = await Promise.all([
+  const [balance, paused, state, agentId, agentURIHash, maxSessionDuration, maxSessionCalls] = await Promise.all([
     arcClient.getBalance({ address: account, blockNumber }),
     arcClient.readContract({ address: account, abi: maskBornAccountV1Abi, functionName: "executionPaused", blockNumber }),
     arcClient.readContract({ address: account, abi: maskBornAccountV1Abi, functionName: "state", blockNumber }),
     arcClient.readContract({ address: account, abi: maskBornAccountV1Abi, functionName: "agentId", blockNumber }),
     arcClient.readContract({ address: account, abi: maskBornAccountV1Abi, functionName: "agentURIHash", blockNumber }),
+    arcClient.readContract({ address: account, abi: maskBornAccountV2Abi, functionName: "MAX_SESSION_DURATION", blockNumber }).catch(() => null),
+    arcClient.readContract({ address: account, abi: maskBornAccountV2Abi, functionName: "MAX_SESSION_CALLS", blockNumber }).catch(() => null),
   ]);
-  return { balance, paused, state, agentId, agentURIHash, blockNumber };
+  return {
+    balance, paused, state, agentId, agentURIHash, blockNumber,
+    checkpointSessions: maxSessionDuration !== null && maxSessionCalls !== null
+      ? { maxDurationSeconds: maxSessionDuration, maxCalls: maxSessionCalls }
+      : null,
+  };
+}
+
+export async function readCheckpointSession(account: Address, sessionKey: Address) {
+  const blockNumber = await arcClient.getBlockNumber();
+  const [permission, block] = await Promise.all([
+    arcClient.readContract({
+      address: account,
+      abi: maskBornAccountV2Abi,
+      functionName: "checkpointSessions",
+      args: [sessionKey],
+      blockNumber,
+    }),
+    arcClient.getBlock({ blockNumber }),
+  ]);
+  const [authorizedOwner, validAfter, validUntil, maxCalls, calls, revoked] = permission;
+  return { authorizedOwner: getAddress(authorizedOwner), validAfter, validUntil, maxCalls, calls, revoked, blockNumber, blockTimestamp: block.timestamp };
 }

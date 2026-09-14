@@ -11,7 +11,7 @@ const UNKNOWN_AFTER_MS = 15 * 60_000;
 export type PreparedAgentAction = {
   tokenId: bigint;
   accountAddress: Address;
-  type: "AWAKEN" | "SET_EXECUTION_PAUSED" | "UPDATE_AGENT_URI" | "SEND_NATIVE_USDC";
+  type: "AWAKEN" | "SET_EXECUTION_PAUSED" | "UPDATE_AGENT_URI" | "SEND_NATIVE_USDC" | "GRANT_CHECKPOINT_SESSION" | "REVOKE_CHECKPOINT_SESSION";
   targetAddress: Address;
   data: Hex;
   sourceBlock: bigint;

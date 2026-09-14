@@ -9,10 +9,12 @@ import {
   arcClient,
   maskBornAddress,
   maskBornAccountV1Abi,
+  maskBornAccountV2Abi,
   maskBornAgentRegistryAbi,
   maskBornAgentRegistryAddress,
   readAgentBinding,
   readAgentAccount,
+  readCheckpointSession,
   readNativeUsdc,
   readOwnedTokenIds,
   readToken,
@@ -35,6 +37,13 @@ const sendBody = z.object({
   recipient: z.string().regex(/^0x[a-fA-F0-9]{40}$/),
   amount: z.string().regex(/^\d+(\.\d{1,18})?$/),
 });
+const sessionKeyParams = z.object({ sessionKey: z.string().regex(/^0x[a-fA-F0-9]{40}$/) });
+const grantSessionBody = z.object({
+  sessionKey: z.string().regex(/^0x[a-fA-F0-9]{40}$/),
+  durationHours: z.coerce.number().int().min(1).max(24),
+  maxCalls: z.coerce.number().int().min(1).max(1_000),
+});
+const revokeSessionBody = z.object({ sessionKey: z.string().regex(/^0x[a-fA-F0-9]{40}$/) });
 
 agentsRouter.get("/agents/status", (_req, res) => {
   res.json({
@@ -116,6 +125,11 @@ agentsRouter.get("/agents/tokens/:tokenId/preview", requireWalletAuth, asyncRout
         nativeUsdcBaseUnits: account.balance.toString(),
         executionPaused: account.paused,
         state: account.state.toString(),
+        checkpointSessions: account.checkpointSessions ? {
+          supported: true,
+          maxDurationSeconds: account.checkpointSessions.maxDurationSeconds.toString(),
+          maxCalls: account.checkpointSessions.maxCalls.toString(),
+        } : { supported: false },
         asOfBlock: account.blockNumber.toString(),
       } : null,
     } : { configured: false },
@@ -243,6 +257,84 @@ agentsRouter.post("/agents/tokens/:tokenId/controls/send/prepare", requireWallet
   res.json(serializeAgentAction(saved.action, saved.gasEstimate));
 }));
 
+agentsRouter.post("/agents/tokens/:tokenId/controls/sessions/grant/prepare", requireWalletAuth, asyncRoute(async (req, res) => {
+  const { tokenId } = tokenParams.parse(req.params);
+  const body = grantSessionBody.parse(req.body);
+  const sessionKey = getAddress(body.sessionKey);
+  const { walletAddress, binding, account } = await requireAwakenedOwner(tokenId, req.auth!.walletAddress!);
+  if (!account.checkpointSessions) {
+    throw new ApiError(409, "CHECKPOINT_SESSIONS_UNSUPPORTED", "This agent account predates checkpoint sessions and cannot grant one.");
+  }
+  const blocked = [walletAddress, binding.account, binding.identityRegistry, maskBornAddress, maskBornAgentRegistryAddress]
+    .filter(Boolean).map((value) => value!.toLowerCase());
+  if (blocked.includes(sessionKey.toLowerCase())) throw new ApiError(422, "INVALID_SESSION_KEY", "Choose a separate session-key address.");
+
+  const block = await arcClient.getBlock({ blockNumber: account.blockNumber }).catch(() => {
+    throw new ApiError(503, "ARC_READ_UNAVAILABLE", "The Arc block timestamp is temporarily unavailable.");
+  });
+  const validAfter = block.timestamp;
+  const validUntil = validAfter + BigInt(body.durationHours * 60 * 60);
+  const data = encodeFunctionData({
+    abi: maskBornAccountV2Abi,
+    functionName: "grantCheckpointSession",
+    args: [sessionKey, validAfter, validUntil, body.maxCalls],
+  });
+  const gas = await simulateOwnerAction(walletAddress, binding.account, data);
+  const saved = await savePreparedAction(actionAuth(req), {
+    tokenId, accountAddress: binding.account, type: "GRANT_CHECKPOINT_SESSION", targetAddress: binding.account,
+    data, sourceBlock: account.blockNumber, gasEstimate: gas,
+    payload: {
+      sessionKey,
+      validAfter: validAfter.toString(),
+      validUntil: validUntil.toString(),
+      durationHours: body.durationHours,
+      maxCalls: body.maxCalls,
+      capability: "publish hashed checkpoints only",
+    },
+  });
+  res.json(serializeAgentAction(saved.action, saved.gasEstimate));
+}));
+
+agentsRouter.post("/agents/tokens/:tokenId/controls/sessions/revoke/prepare", requireWalletAuth, asyncRoute(async (req, res) => {
+  const { tokenId } = tokenParams.parse(req.params);
+  const { sessionKey: rawSessionKey } = revokeSessionBody.parse(req.body);
+  const sessionKey = getAddress(rawSessionKey);
+  if (sessionKey === zeroAddress) throw new ApiError(422, "INVALID_SESSION_KEY", "Choose a nonzero session-key address.");
+  const { walletAddress, binding, account } = await requireAwakenedOwner(tokenId, req.auth!.walletAddress!);
+  if (!account.checkpointSessions) throw new ApiError(409, "CHECKPOINT_SESSIONS_UNSUPPORTED", "This agent account does not support checkpoint sessions.");
+  const data = encodeFunctionData({ abi: maskBornAccountV2Abi, functionName: "revokeCheckpointSession", args: [sessionKey] });
+  const gas = await simulateOwnerAction(walletAddress, binding.account, data);
+  const saved = await savePreparedAction(actionAuth(req), {
+    tokenId, accountAddress: binding.account, type: "REVOKE_CHECKPOINT_SESSION", targetAddress: binding.account,
+    data, sourceBlock: account.blockNumber, gasEstimate: gas, payload: { sessionKey },
+  });
+  res.json(serializeAgentAction(saved.action, saved.gasEstimate));
+}));
+
+agentsRouter.get("/agents/tokens/:tokenId/controls/sessions/:sessionKey", requireWalletAuth, asyncRoute(async (req, res) => {
+  const { tokenId } = tokenParams.parse(req.params);
+  const { sessionKey: rawSessionKey } = sessionKeyParams.parse(req.params);
+  const sessionKey = getAddress(rawSessionKey);
+  const { binding, account } = await requireAwakenedOwner(tokenId, req.auth!.walletAddress!);
+  if (!account.checkpointSessions) throw new ApiError(409, "CHECKPOINT_SESSIONS_UNSUPPORTED", "This agent account does not support checkpoint sessions.");
+  const permission = await readCheckpointSession(binding.account, sessionKey).catch(() => {
+    throw new ApiError(503, "ARC_READ_UNAVAILABLE", "The checkpoint session is temporarily unavailable.");
+  });
+  const now = permission.blockTimestamp;
+  res.json({
+    sessionKey,
+    authorizedOwner: permission.authorizedOwner === zeroAddress ? null : permission.authorizedOwner,
+    validAfter: permission.validAfter.toString(),
+    validUntil: permission.validUntil.toString(),
+    maxCalls: permission.maxCalls.toString(),
+    calls: permission.calls.toString(),
+    revoked: permission.revoked,
+    active: !permission.revoked && permission.validAfter <= now && now < permission.validUntil
+      && permission.authorizedOwner.toLowerCase() === req.auth!.walletAddress!.toLowerCase(),
+    asOfBlock: permission.blockNumber.toString(),
+  });
+}));
+
 agentsRouter.post("/agents/actions/:actionId/submitted", requireWalletAuth, asyncRoute(async (req, res) => {
   const { actionId } = actionParams.parse(req.params);
   const { txHash } = transactionBody.parse(req.body);
@@ -320,7 +412,18 @@ agentsRouter.get("/agents/public/tokens/:tokenId/card", asyncRoute(async (req, r
     ...(metadata?.configured ? { image: imageFromTokenURI(metadata.tokenURI) } : {}),
     nft: { chainId: config.ARC_CHAIN_ID, collection: maskBornAddress, tokenId: tokenId.toString(), owner: token.owner },
     identity: { standard: "ERC-8004", registry: binding.identityRegistry, agentId: binding.agentId.toString() },
-    account: { standard: "ERC-6551", address: binding.account, nativeCurrency: "USDC", balance: account ? formatUnits(account.balance, 18) : null, executionPaused: account?.paused ?? null },
+    account: {
+      standard: "ERC-6551", address: binding.account, nativeCurrency: "USDC",
+      balance: account ? formatUnits(account.balance, 18) : null,
+      executionPaused: account?.paused ?? null,
+      checkpointSessions: account?.checkpointSessions ? {
+        supported: true,
+        maxDurationSeconds: account.checkpointSessions.maxDurationSeconds.toString(),
+        maxCalls: account.checkpointSessions.maxCalls.toString(),
+        financialExecution: false,
+        allowedCategories: ["monitor-observation", "report-digest", "liveness"],
+      } : { supported: false },
+    },
     constitutionHash: binding.constitutionHash,
     endpoints: {
       registration: `${publicOrigin}/.well-known/agent-registration/maskborn/${tokenId}.json`,
@@ -330,6 +433,7 @@ agentsRouter.get("/agents/public/tokens/:tokenId/card", asyncRoute(async (req, r
     capabilities: [
       { id: "public-persona", available: true },
       { id: "public-account-state", available: Boolean(account) },
+      { id: "bounded-checkpoint-sessions", available: Boolean(account?.checkpointSessions) },
       { id: "autonomous-execution", available: false },
     ],
   });

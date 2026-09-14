@@ -4737,6 +4737,18 @@ body:has(.admin-shell) .site-footer {
 .agent-action-history small { text-transform: uppercase; letter-spacing: .06em; }
 .agent-action-confirmed { color: #69c882; }
 .agent-action-failed, .agent-action-expired { color: #e26f6f; }
+.agent-session-panel { margin-top: 28px; padding: 22px; border: 1px solid color-mix(in srgb, var(--amber) 26%, var(--line)); display: grid; grid-template-columns: minmax(0, .9fr) minmax(300px, 1.1fr); gap: 24px; }
+.agent-session-panel h4 { margin: 8px 0; font-size: 24px; }
+.agent-session-panel p:not(.eyebrow), .agent-session-panel > small { color: var(--muted); line-height: 1.5; }
+.agent-session-panel > small { grid-column: 1 / -1; }
+.agent-session-form { display: grid; grid-template-columns: 1fr 130px 170px; gap: 10px; }
+.agent-session-form label { display: grid; gap: 6px; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+.agent-session-form label:first-child { grid-column: 1 / -1; }
+.agent-session-form input { width: 100%; border: 1px solid var(--line); background: var(--background); color: var(--text); padding: 11px; font: inherit; }
+.agent-session-form > div { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.agent-session-state { grid-column: 1 / -1; display: flex; gap: 18px; align-items: center; flex-wrap: wrap; padding-top: 16px; border-top: 1px solid var(--line); }
+.agent-session-state strong { color: var(--amber); }
+.agent-session-state span { color: var(--muted); font-size: 13px; }
 .agent-traits { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px; }
 .agent-traits span { padding: 7px 10px; border: 1px solid var(--line); font-size: 12px; }
 .agent-capabilities { border-left: 1px solid var(--line); }
@@ -4813,6 +4825,9 @@ body:has(.admin-shell) .site-footer {
   .agent-account-balance { width: 100%; }
   .agent-control-grid { grid-template-columns: 1fr; }
   .agent-control-grid > div + div { border-left: 0; border-top: 1px solid var(--line); }
+  .agent-session-panel { grid-template-columns: 1fr; }
+  .agent-session-form { grid-template-columns: 1fr; }
+  .agent-session-form label, .agent-session-form label:first-child, .agent-session-form > div, .agent-session-state, .agent-session-panel > small { grid-column: 1; }
   .agent-utility-grid { grid-template-columns: 1fr; }
   .agent-utility-card + .agent-utility-card { border-left: 0; border-top: 1px solid var(--line); }
   .agent-chat-shell { grid-template-columns: 1fr; }
