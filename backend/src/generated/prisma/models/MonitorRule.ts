@@ -58,6 +58,8 @@ export type MonitorRuleMinAggregateOutputType = {
   timezone: string | null
   graceMinutes: number | null
   nextExpectedAt: Date | null
+  checkpointSessionKey: string | null
+  checkpointOnMatch: boolean | null
   cursorBlock: bigint | null
   isActive: boolean | null
   lastCheckedAt: Date | null
@@ -81,6 +83,8 @@ export type MonitorRuleMaxAggregateOutputType = {
   timezone: string | null
   graceMinutes: number | null
   nextExpectedAt: Date | null
+  checkpointSessionKey: string | null
+  checkpointOnMatch: boolean | null
   cursorBlock: bigint | null
   isActive: boolean | null
   lastCheckedAt: Date | null
@@ -104,6 +108,8 @@ export type MonitorRuleCountAggregateOutputType = {
   timezone: number
   graceMinutes: number
   nextExpectedAt: number
+  checkpointSessionKey: number
+  checkpointOnMatch: number
   cursorBlock: number
   isActive: number
   lastCheckedAt: number
@@ -145,6 +151,8 @@ export type MonitorRuleMinAggregateInputType = {
   timezone?: true
   graceMinutes?: true
   nextExpectedAt?: true
+  checkpointSessionKey?: true
+  checkpointOnMatch?: true
   cursorBlock?: true
   isActive?: true
   lastCheckedAt?: true
@@ -168,6 +176,8 @@ export type MonitorRuleMaxAggregateInputType = {
   timezone?: true
   graceMinutes?: true
   nextExpectedAt?: true
+  checkpointSessionKey?: true
+  checkpointOnMatch?: true
   cursorBlock?: true
   isActive?: true
   lastCheckedAt?: true
@@ -191,6 +201,8 @@ export type MonitorRuleCountAggregateInputType = {
   timezone?: true
   graceMinutes?: true
   nextExpectedAt?: true
+  checkpointSessionKey?: true
+  checkpointOnMatch?: true
   cursorBlock?: true
   isActive?: true
   lastCheckedAt?: true
@@ -301,6 +313,8 @@ export type MonitorRuleGroupByOutputType = {
   timezone: string
   graceMinutes: number
   nextExpectedAt: Date | null
+  checkpointSessionKey: string | null
+  checkpointOnMatch: boolean
   cursorBlock: bigint
   isActive: boolean
   lastCheckedAt: Date | null
@@ -347,6 +361,8 @@ export type MonitorRuleWhereInput = {
   timezone?: Prisma.StringFilter<"MonitorRule"> | string
   graceMinutes?: Prisma.IntFilter<"MonitorRule"> | number
   nextExpectedAt?: Prisma.DateTimeNullableFilter<"MonitorRule"> | Date | string | null
+  checkpointSessionKey?: Prisma.StringNullableFilter<"MonitorRule"> | string | null
+  checkpointOnMatch?: Prisma.BoolFilter<"MonitorRule"> | boolean
   cursorBlock?: Prisma.BigIntFilter<"MonitorRule"> | bigint | number
   isActive?: Prisma.BoolFilter<"MonitorRule"> | boolean
   lastCheckedAt?: Prisma.DateTimeNullableFilter<"MonitorRule"> | Date | string | null
@@ -374,6 +390,8 @@ export type MonitorRuleOrderByWithRelationInput = {
   timezone?: Prisma.SortOrder
   graceMinutes?: Prisma.SortOrder
   nextExpectedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  checkpointSessionKey?: Prisma.SortOrderInput | Prisma.SortOrder
+  checkpointOnMatch?: Prisma.SortOrder
   cursorBlock?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   lastCheckedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -404,6 +422,8 @@ export type MonitorRuleWhereUniqueInput = Prisma.AtLeast<{
   timezone?: Prisma.StringFilter<"MonitorRule"> | string
   graceMinutes?: Prisma.IntFilter<"MonitorRule"> | number
   nextExpectedAt?: Prisma.DateTimeNullableFilter<"MonitorRule"> | Date | string | null
+  checkpointSessionKey?: Prisma.StringNullableFilter<"MonitorRule"> | string | null
+  checkpointOnMatch?: Prisma.BoolFilter<"MonitorRule"> | boolean
   cursorBlock?: Prisma.BigIntFilter<"MonitorRule"> | bigint | number
   isActive?: Prisma.BoolFilter<"MonitorRule"> | boolean
   lastCheckedAt?: Prisma.DateTimeNullableFilter<"MonitorRule"> | Date | string | null
@@ -431,6 +451,8 @@ export type MonitorRuleOrderByWithAggregationInput = {
   timezone?: Prisma.SortOrder
   graceMinutes?: Prisma.SortOrder
   nextExpectedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  checkpointSessionKey?: Prisma.SortOrderInput | Prisma.SortOrder
+  checkpointOnMatch?: Prisma.SortOrder
   cursorBlock?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   lastCheckedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -462,6 +484,8 @@ export type MonitorRuleScalarWhereWithAggregatesInput = {
   timezone?: Prisma.StringWithAggregatesFilter<"MonitorRule"> | string
   graceMinutes?: Prisma.IntWithAggregatesFilter<"MonitorRule"> | number
   nextExpectedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"MonitorRule"> | Date | string | null
+  checkpointSessionKey?: Prisma.StringNullableWithAggregatesFilter<"MonitorRule"> | string | null
+  checkpointOnMatch?: Prisma.BoolWithAggregatesFilter<"MonitorRule"> | boolean
   cursorBlock?: Prisma.BigIntWithAggregatesFilter<"MonitorRule"> | bigint | number
   isActive?: Prisma.BoolWithAggregatesFilter<"MonitorRule"> | boolean
   lastCheckedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"MonitorRule"> | Date | string | null
@@ -483,6 +507,8 @@ export type MonitorRuleCreateInput = {
   timezone?: string
   graceMinutes?: number
   nextExpectedAt?: Date | string | null
+  checkpointSessionKey?: string | null
+  checkpointOnMatch?: boolean
   cursorBlock: bigint | number
   isActive?: boolean
   lastCheckedAt?: Date | string | null
@@ -510,6 +536,8 @@ export type MonitorRuleUncheckedCreateInput = {
   timezone?: string
   graceMinutes?: number
   nextExpectedAt?: Date | string | null
+  checkpointSessionKey?: string | null
+  checkpointOnMatch?: boolean
   cursorBlock: bigint | number
   isActive?: boolean
   lastCheckedAt?: Date | string | null
@@ -533,6 +561,8 @@ export type MonitorRuleUpdateInput = {
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   graceMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   nextExpectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkpointSessionKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkpointOnMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cursorBlock?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastCheckedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -560,6 +590,8 @@ export type MonitorRuleUncheckedUpdateInput = {
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   graceMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   nextExpectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkpointSessionKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkpointOnMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cursorBlock?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastCheckedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -585,6 +617,8 @@ export type MonitorRuleCreateManyInput = {
   timezone?: string
   graceMinutes?: number
   nextExpectedAt?: Date | string | null
+  checkpointSessionKey?: string | null
+  checkpointOnMatch?: boolean
   cursorBlock: bigint | number
   isActive?: boolean
   lastCheckedAt?: Date | string | null
@@ -606,6 +640,8 @@ export type MonitorRuleUpdateManyMutationInput = {
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   graceMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   nextExpectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkpointSessionKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkpointOnMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cursorBlock?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastCheckedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -629,6 +665,8 @@ export type MonitorRuleUncheckedUpdateManyInput = {
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   graceMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   nextExpectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkpointSessionKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkpointOnMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cursorBlock?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastCheckedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -662,6 +700,8 @@ export type MonitorRuleCountOrderByAggregateInput = {
   timezone?: Prisma.SortOrder
   graceMinutes?: Prisma.SortOrder
   nextExpectedAt?: Prisma.SortOrder
+  checkpointSessionKey?: Prisma.SortOrder
+  checkpointOnMatch?: Prisma.SortOrder
   cursorBlock?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   lastCheckedAt?: Prisma.SortOrder
@@ -693,6 +733,8 @@ export type MonitorRuleMaxOrderByAggregateInput = {
   timezone?: Prisma.SortOrder
   graceMinutes?: Prisma.SortOrder
   nextExpectedAt?: Prisma.SortOrder
+  checkpointSessionKey?: Prisma.SortOrder
+  checkpointOnMatch?: Prisma.SortOrder
   cursorBlock?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   lastCheckedAt?: Prisma.SortOrder
@@ -716,6 +758,8 @@ export type MonitorRuleMinOrderByAggregateInput = {
   timezone?: Prisma.SortOrder
   graceMinutes?: Prisma.SortOrder
   nextExpectedAt?: Prisma.SortOrder
+  checkpointSessionKey?: Prisma.SortOrder
+  checkpointOnMatch?: Prisma.SortOrder
   cursorBlock?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   lastCheckedAt?: Prisma.SortOrder
@@ -877,6 +921,8 @@ export type MonitorRuleCreateWithoutUserInput = {
   timezone?: string
   graceMinutes?: number
   nextExpectedAt?: Date | string | null
+  checkpointSessionKey?: string | null
+  checkpointOnMatch?: boolean
   cursorBlock: bigint | number
   isActive?: boolean
   lastCheckedAt?: Date | string | null
@@ -902,6 +948,8 @@ export type MonitorRuleUncheckedCreateWithoutUserInput = {
   timezone?: string
   graceMinutes?: number
   nextExpectedAt?: Date | string | null
+  checkpointSessionKey?: string | null
+  checkpointOnMatch?: boolean
   cursorBlock: bigint | number
   isActive?: boolean
   lastCheckedAt?: Date | string | null
@@ -956,6 +1004,8 @@ export type MonitorRuleScalarWhereInput = {
   timezone?: Prisma.StringFilter<"MonitorRule"> | string
   graceMinutes?: Prisma.IntFilter<"MonitorRule"> | number
   nextExpectedAt?: Prisma.DateTimeNullableFilter<"MonitorRule"> | Date | string | null
+  checkpointSessionKey?: Prisma.StringNullableFilter<"MonitorRule"> | string | null
+  checkpointOnMatch?: Prisma.BoolFilter<"MonitorRule"> | boolean
   cursorBlock?: Prisma.BigIntFilter<"MonitorRule"> | bigint | number
   isActive?: Prisma.BoolFilter<"MonitorRule"> | boolean
   lastCheckedAt?: Prisma.DateTimeNullableFilter<"MonitorRule"> | Date | string | null
@@ -977,6 +1027,8 @@ export type MonitorRuleCreateWithoutWalletInput = {
   timezone?: string
   graceMinutes?: number
   nextExpectedAt?: Date | string | null
+  checkpointSessionKey?: string | null
+  checkpointOnMatch?: boolean
   cursorBlock: bigint | number
   isActive?: boolean
   lastCheckedAt?: Date | string | null
@@ -1002,6 +1054,8 @@ export type MonitorRuleUncheckedCreateWithoutWalletInput = {
   timezone?: string
   graceMinutes?: number
   nextExpectedAt?: Date | string | null
+  checkpointSessionKey?: string | null
+  checkpointOnMatch?: boolean
   cursorBlock: bigint | number
   isActive?: boolean
   lastCheckedAt?: Date | string | null
@@ -1051,6 +1105,8 @@ export type MonitorRuleCreateWithoutMatchesInput = {
   timezone?: string
   graceMinutes?: number
   nextExpectedAt?: Date | string | null
+  checkpointSessionKey?: string | null
+  checkpointOnMatch?: boolean
   cursorBlock: bigint | number
   isActive?: boolean
   lastCheckedAt?: Date | string | null
@@ -1077,6 +1133,8 @@ export type MonitorRuleUncheckedCreateWithoutMatchesInput = {
   timezone?: string
   graceMinutes?: number
   nextExpectedAt?: Date | string | null
+  checkpointSessionKey?: string | null
+  checkpointOnMatch?: boolean
   cursorBlock: bigint | number
   isActive?: boolean
   lastCheckedAt?: Date | string | null
@@ -1115,6 +1173,8 @@ export type MonitorRuleUpdateWithoutMatchesInput = {
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   graceMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   nextExpectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkpointSessionKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkpointOnMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cursorBlock?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastCheckedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1141,6 +1201,8 @@ export type MonitorRuleUncheckedUpdateWithoutMatchesInput = {
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   graceMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   nextExpectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkpointSessionKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkpointOnMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cursorBlock?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastCheckedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1163,6 +1225,8 @@ export type MonitorRuleCreateWithoutNotificationsInput = {
   timezone?: string
   graceMinutes?: number
   nextExpectedAt?: Date | string | null
+  checkpointSessionKey?: string | null
+  checkpointOnMatch?: boolean
   cursorBlock: bigint | number
   isActive?: boolean
   lastCheckedAt?: Date | string | null
@@ -1189,6 +1253,8 @@ export type MonitorRuleUncheckedCreateWithoutNotificationsInput = {
   timezone?: string
   graceMinutes?: number
   nextExpectedAt?: Date | string | null
+  checkpointSessionKey?: string | null
+  checkpointOnMatch?: boolean
   cursorBlock: bigint | number
   isActive?: boolean
   lastCheckedAt?: Date | string | null
@@ -1227,6 +1293,8 @@ export type MonitorRuleUpdateWithoutNotificationsInput = {
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   graceMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   nextExpectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkpointSessionKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkpointOnMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cursorBlock?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastCheckedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1253,6 +1321,8 @@ export type MonitorRuleUncheckedUpdateWithoutNotificationsInput = {
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   graceMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   nextExpectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkpointSessionKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkpointOnMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cursorBlock?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastCheckedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1276,6 +1346,8 @@ export type MonitorRuleCreateManyUserInput = {
   timezone?: string
   graceMinutes?: number
   nextExpectedAt?: Date | string | null
+  checkpointSessionKey?: string | null
+  checkpointOnMatch?: boolean
   cursorBlock: bigint | number
   isActive?: boolean
   lastCheckedAt?: Date | string | null
@@ -1297,6 +1369,8 @@ export type MonitorRuleUpdateWithoutUserInput = {
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   graceMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   nextExpectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkpointSessionKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkpointOnMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cursorBlock?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastCheckedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1322,6 +1396,8 @@ export type MonitorRuleUncheckedUpdateWithoutUserInput = {
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   graceMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   nextExpectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkpointSessionKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkpointOnMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cursorBlock?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastCheckedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1346,6 +1422,8 @@ export type MonitorRuleUncheckedUpdateManyWithoutUserInput = {
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   graceMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   nextExpectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkpointSessionKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkpointOnMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cursorBlock?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastCheckedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1368,6 +1446,8 @@ export type MonitorRuleCreateManyWalletInput = {
   timezone?: string
   graceMinutes?: number
   nextExpectedAt?: Date | string | null
+  checkpointSessionKey?: string | null
+  checkpointOnMatch?: boolean
   cursorBlock: bigint | number
   isActive?: boolean
   lastCheckedAt?: Date | string | null
@@ -1389,6 +1469,8 @@ export type MonitorRuleUpdateWithoutWalletInput = {
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   graceMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   nextExpectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkpointSessionKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkpointOnMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cursorBlock?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastCheckedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1414,6 +1496,8 @@ export type MonitorRuleUncheckedUpdateWithoutWalletInput = {
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   graceMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   nextExpectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkpointSessionKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkpointOnMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cursorBlock?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastCheckedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1438,6 +1522,8 @@ export type MonitorRuleUncheckedUpdateManyWithoutWalletInput = {
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   graceMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   nextExpectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkpointSessionKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkpointOnMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cursorBlock?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastCheckedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1501,6 +1587,8 @@ export type MonitorRuleSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   timezone?: boolean
   graceMinutes?: boolean
   nextExpectedAt?: boolean
+  checkpointSessionKey?: boolean
+  checkpointOnMatch?: boolean
   cursorBlock?: boolean
   isActive?: boolean
   lastCheckedAt?: boolean
@@ -1529,6 +1617,8 @@ export type MonitorRuleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   timezone?: boolean
   graceMinutes?: boolean
   nextExpectedAt?: boolean
+  checkpointSessionKey?: boolean
+  checkpointOnMatch?: boolean
   cursorBlock?: boolean
   isActive?: boolean
   lastCheckedAt?: boolean
@@ -1554,6 +1644,8 @@ export type MonitorRuleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   timezone?: boolean
   graceMinutes?: boolean
   nextExpectedAt?: boolean
+  checkpointSessionKey?: boolean
+  checkpointOnMatch?: boolean
   cursorBlock?: boolean
   isActive?: boolean
   lastCheckedAt?: boolean
@@ -1579,6 +1671,8 @@ export type MonitorRuleSelectScalar = {
   timezone?: boolean
   graceMinutes?: boolean
   nextExpectedAt?: boolean
+  checkpointSessionKey?: boolean
+  checkpointOnMatch?: boolean
   cursorBlock?: boolean
   isActive?: boolean
   lastCheckedAt?: boolean
@@ -1586,7 +1680,7 @@ export type MonitorRuleSelectScalar = {
   updatedAt?: boolean
 }
 
-export type MonitorRuleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "walletId" | "chainId" | "collectionAddress" | "tokenId" | "watchedAddress" | "direction" | "counterparty" | "minimumAmount" | "expectedAmount" | "cadence" | "timezone" | "graceMinutes" | "nextExpectedAt" | "cursorBlock" | "isActive" | "lastCheckedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["monitorRule"]>
+export type MonitorRuleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "walletId" | "chainId" | "collectionAddress" | "tokenId" | "watchedAddress" | "direction" | "counterparty" | "minimumAmount" | "expectedAmount" | "cadence" | "timezone" | "graceMinutes" | "nextExpectedAt" | "checkpointSessionKey" | "checkpointOnMatch" | "cursorBlock" | "isActive" | "lastCheckedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["monitorRule"]>
 export type MonitorRuleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   wallet?: boolean | Prisma.WalletDefaultArgs<ExtArgs>
@@ -1627,6 +1721,8 @@ export type $MonitorRulePayload<ExtArgs extends runtime.Types.Extensions.Interna
     timezone: string
     graceMinutes: number
     nextExpectedAt: Date | null
+    checkpointSessionKey: string | null
+    checkpointOnMatch: boolean
     cursorBlock: bigint
     isActive: boolean
     lastCheckedAt: Date | null
@@ -2074,6 +2170,8 @@ export interface MonitorRuleFieldRefs {
   readonly timezone: Prisma.FieldRef<"MonitorRule", 'String'>
   readonly graceMinutes: Prisma.FieldRef<"MonitorRule", 'Int'>
   readonly nextExpectedAt: Prisma.FieldRef<"MonitorRule", 'DateTime'>
+  readonly checkpointSessionKey: Prisma.FieldRef<"MonitorRule", 'String'>
+  readonly checkpointOnMatch: Prisma.FieldRef<"MonitorRule", 'Boolean'>
   readonly cursorBlock: Prisma.FieldRef<"MonitorRule", 'BigInt'>
   readonly isActive: Prisma.FieldRef<"MonitorRule", 'Boolean'>
   readonly lastCheckedAt: Prisma.FieldRef<"MonitorRule", 'DateTime'>

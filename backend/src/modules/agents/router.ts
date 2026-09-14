@@ -25,7 +25,9 @@ import { collectionIndexStatus } from "../chain/collection-indexer.js";
 import { db } from "../../db.js";
 import { getAgentAction, listAgentActions, savePreparedAction, serializeAgentAction, submitAgentAction } from "./actions.js";
 import { erc4337EntryPoint, readBundlerStatus } from "../chain/bundler.js";
+import { readPaymasterStatus } from "../chain/paymaster.js";
 import { getTokenSponsorshipBudget, readSponsorshipPolicy, reserveSponsorshipForAction } from "./sponsorship.js";
+import { preflightCheckpointSponsorship } from "./checkpoint-preflight.js";
 
 export const agentsRouter = Router();
 const tokenParams = z.object({ tokenId: z.coerce.bigint().refine((value) => value > 0n && value <= 10_000n) });
@@ -50,6 +52,11 @@ const sponsorshipReserveBody = z.object({
   maxCostBaseUnits: z.string().regex(/^\d+$/).transform((value) => BigInt(value)).refine((value) => value > 0n),
   userOperationHash: z.string().regex(/^0x[a-fA-F0-9]{64}$/).optional(),
   userOperationNonce: z.string().regex(/^\d+$/).optional(),
+});
+const checkpointSponsorBody = z.object({
+  sessionKey: z.string().regex(/^0x[a-fA-F0-9]{40}$/),
+  category: z.enum(["monitor", "report", "liveness"]),
+  payloadHash: z.string().regex(/^0x[a-fA-F0-9]{64}$/),
 });
 
 agentsRouter.get("/agents/status", asyncRoute(async (_req, res) => {
@@ -86,12 +93,29 @@ agentsRouter.get("/agents/tokens/:tokenId/sponsorship/budget", requireWalletAuth
   const budget = await getTokenSponsorshipBudget(tokenId, actionAuth(req));
   res.json(budget);
 }));
+agentsRouter.post("/agents/tokens/:tokenId/sponsorship/checkpoint/preflight", requireWalletAuth, asyncRoute(async (req, res) => {
+  const { tokenId } = tokenParams.parse(req.params);
+  const body = checkpointSponsorBody.parse(req.body);
+  const preflight = await preflightCheckpointSponsorship({
+    tokenId,
+    walletAddress: req.auth!.walletAddress!,
+    auth: actionAuth(req),
+    sessionKey: getAddress(body.sessionKey),
+    categoryName: body.category,
+    payloadHash: body.payloadHash.toLowerCase() as Hex,
+  });
+  res.json(preflight);
+}));
 
 agentsRouter.post("/agents/actions/:actionId/sponsorship/reserve", requireWalletAuth, asyncRoute(async (req, res) => {
   const { actionId } = actionParams.parse(req.params);
   const body = sponsorshipReserveBody.parse(req.body);
   const reservation = await reserveSponsorshipForAction(actionId, actionAuth(req), body as { maxCostBaseUnits: bigint; userOperationHash?: Hex; userOperationNonce?: string });
   res.json(reservation);
+}));
+
+agentsRouter.get("/agents/paymaster/status", asyncRoute(async (_req, res) => {
+  res.json(readPaymasterStatus());
 }));
 
 agentsRouter.get("/agents/bundler/status", asyncRoute(async (_req, res) => {
@@ -542,6 +566,7 @@ async function simulateOwnerAction(walletAddress: Address, target: Address, data
     throw new ApiError(422, "AGENT_ACTION_SIMULATION_FAILED", "Arc rejected this agent action simulation. No transaction was submitted.");
   });
 }
+
 
 function actionAuth(req: Request) {
   return {

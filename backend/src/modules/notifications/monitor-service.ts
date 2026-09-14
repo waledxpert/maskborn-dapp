@@ -1,8 +1,9 @@
-import { formatUnits, getAddress, type Address } from "viem";
+import { formatUnits, getAddress, keccak256, stringToHex, type Address } from "viem";
 import type { MonitorRule } from "../../generated/prisma/client.js";
 import { db } from "../../db.js";
 import { arcClient, arcUsdcAddress, readToken, transferEvent } from "../chain/client.js";
 import { acceptsPayment, directionFor, nextOccurrence, previousOccurrence, type PaymentDirection } from "./monitor-domain.js";
+import { preflightCheckpointSponsorship } from "../agents/checkpoint-preflight.js";
 
 const BLOCK_BATCH = 2_000n;
 
@@ -122,6 +123,60 @@ async function evaluateLateWindows(rule: MonitorRule, now: Date) {
   }
 }
 
+async function preflightMonitorCheckpoint(rule: MonitorRule, payments: number, throughBlock: bigint) {
+  if (!rule.checkpointOnMatch || !rule.checkpointSessionKey || payments <= 0) return;
+  const payload = {
+    kind: "MASKBORN_MONITOR_OBSERVATION_V1",
+    ruleId: rule.id,
+    tokenId: rule.tokenId,
+    chainId: rule.chainId,
+    throughBlock: throughBlock.toString(),
+    payments,
+  };
+  const payloadHash = keccak256(stringToHex(JSON.stringify(payload)));
+  const deliveryKey = `checkpoint-preflight:${rule.id}:${throughBlock.toString()}:${payloadHash}`;
+  try {
+    const preflight = await preflightCheckpointSponsorship({
+      tokenId: BigInt(rule.tokenId),
+      walletAddress: rule.watchedAddress,
+      auth: { userId: rule.userId, walletId: rule.walletId, walletAddress: rule.watchedAddress },
+      sessionKey: getAddress(rule.checkpointSessionKey),
+      categoryName: "monitor",
+      payloadHash,
+    });
+    await db.agentNotification.upsert({
+      where: { deliveryKey },
+      create: {
+        userId: rule.userId,
+        monitorRuleId: rule.id,
+        type: "MONITOR_CHECKPOINT_READY",
+        title: preflight.canSponsor ? "Monitor checkpoint ready" : "Monitor checkpoint prepared",
+        body: preflight.canSponsor
+          ? "A monitor checkpoint is eligible for sponsored publishing once the session signer submits it."
+          : `A monitor checkpoint was prepared, but sponsorship is blocked by ${preflight.blockers.join(", ")}.`,
+        deliveryKey,
+        data: { payload, preflight },
+      },
+      update: {},
+    });
+  } catch (error) {
+    const code = error && typeof error === "object" && "code" in error ? String((error as { code?: unknown }).code) : "CHECKPOINT_PREFLIGHT_FAILED";
+    await db.agentNotification.upsert({
+      where: { deliveryKey },
+      create: {
+        userId: rule.userId,
+        monitorRuleId: rule.id,
+        type: "MONITOR_ERROR",
+        title: "Monitor checkpoint preflight failed",
+        body: code,
+        deliveryKey,
+        data: { payload, error: code },
+      },
+      update: {},
+    });
+  }
+}
+
 export async function syncMonitor(rule: MonitorRule) {
   if (!rule.isActive) return { payments: 0, throughBlock: rule.cursorBlock };
   const token = await readToken(BigInt(rule.tokenId));
@@ -142,6 +197,7 @@ export async function syncMonitor(rule: MonitorRule) {
     await db.monitorRule.update({ where: { id: rule.id }, data: { cursorBlock: cursor, lastCheckedAt: new Date() } });
   }
   await evaluateLateWindows(rule, new Date());
+  await preflightMonitorCheckpoint(rule, payments, cursor);
   return { payments, throughBlock: cursor };
 }
 

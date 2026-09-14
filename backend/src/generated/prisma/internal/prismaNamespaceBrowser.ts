@@ -377,6 +377,8 @@ export const MonitorRuleScalarFieldEnum = {
   timezone: 'timezone',
   graceMinutes: 'graceMinutes',
   nextExpectedAt: 'nextExpectedAt',
+  checkpointSessionKey: 'checkpointSessionKey',
+  checkpointOnMatch: 'checkpointOnMatch',
   cursorBlock: 'cursorBlock',
   isActive: 'isActive',
   lastCheckedAt: 'lastCheckedAt',

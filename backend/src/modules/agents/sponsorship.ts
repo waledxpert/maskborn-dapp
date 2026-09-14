@@ -4,15 +4,18 @@ import { config } from "../../config.js";
 import { db } from "../../db.js";
 import { ApiError } from "../../errors.js";
 import { currentOwnershipPeriod, type ActionAuth } from "./actions.js";
+import { readPaymasterStatus } from "../chain/paymaster.js";
 
-const ELIGIBLE_ACTIONS = [
+const ELIGIBLE_OPERATIONS = ["PUBLISH_CHECKPOINT"] as const;
+const ELIGIBLE_ACTIONS = [] as const;
+const EXCLUDED_ACTIONS = [
   "AWAKEN",
   "SET_EXECUTION_PAUSED",
   "UPDATE_AGENT_URI",
+  "SEND_NATIVE_USDC",
   "GRANT_CHECKPOINT_SESSION",
   "REVOKE_CHECKPOINT_SESSION",
 ] as const;
-const EXCLUDED_ACTIONS = ["SEND_NATIVE_USDC"] as const;
 const ACTIVE_BUDGET_STATUSES = ["RESERVED", "ATTACHED", "SETTLED", "FAILED"] as const;
 const OPEN_RESERVATION_STATUSES = ["RESERVED", "ATTACHED"] as const;
 
@@ -33,7 +36,8 @@ function bigintFromDecimal(value: { toString(): string } | string | number | big
 
 export function readSponsorshipPolicy() {
   const bundlerReady = config.AGENT_BUNDLER_PROVIDER !== "disabled" && Boolean(config.AGENT_BUNDLER_RPC_URL);
-  const paymasterReady = config.AGENT_PAYMASTER_PROVIDER !== "disabled";
+  const paymaster = readPaymasterStatus();
+  const paymasterReady = paymaster.configured;
   const requested = config.AGENT_SPONSORSHIP_ENABLED === "true";
   const enabled = requested && bundlerReady && paymasterReady;
   const disabledReason = enabled ? null
@@ -52,15 +56,19 @@ export function readSponsorshipPolicy() {
     dailyTransactionLimit: config.AGENT_SPONSOR_DAILY_TX_PER_TOKEN,
     reservationTtlSeconds: config.AGENT_SPONSOR_RESERVATION_TTL_SECONDS,
     eligibleActions: [...ELIGIBLE_ACTIONS],
+    eligibleOperations: [...ELIGIBLE_OPERATIONS],
     excludedActions: [...EXCLUDED_ACTIONS],
     bundlerProvider: config.AGENT_BUNDLER_PROVIDER,
     paymasterProvider: config.AGENT_PAYMASTER_PROVIDER,
+    paymasterConfigured: paymaster.configured,
+    paymasterPolicyConfigured: paymaster.policyConfigured,
     accountingMode: "reservation-required",
     settlementMode: "receipt-reconciled",
     notes: [
       "The model never receives a spending key.",
-      "Sponsored gas is limited to reviewed account operations, not arbitrary transfers.",
-      "A future reservation must bind chain, account, token, nonce, action, and UserOperation hash before paymaster approval.",
+      "Sponsored gas is limited to checkpoint-publishing UserOperations in the current V2 account.",
+      "Owner-control actions still require the holder wallet until a future account version adds reviewed ERC-4337 control calls.",
+      "A future reservation must bind chain, account, token, nonce, operation, and UserOperation hash before paymaster approval.",
     ],
   };
 }
@@ -109,16 +117,16 @@ export async function getTokenSponsorshipBudget(tokenId: bigint, auth: ActionAut
 
 export async function reserveSponsorshipForAction(actionId: string, auth: ActionAuth, input: SponsorshipInput) {
   const policy = readSponsorshipPolicy();
-  if (!policy.enabled) {
-    throw new ApiError(409, policy.disabledReason ?? "SPONSORSHIP_DISABLED", "Sponsored gas is not enabled yet. The reservation policy is visible, but no paymaster approval is issued.");
-  }
   if (input.maxCostBaseUnits <= 0n) throw new ApiError(400, "INVALID_SPONSORSHIP_COST", "Reservation cost must be greater than zero.");
   if (!input.userOperationHash) throw new ApiError(400, "USER_OPERATION_HASH_REQUIRED", "A sponsorship reservation must be bound to a UserOperation hash.");
 
   const action = await db.agentAction.findFirst({ where: { id: actionId, userId: auth.userId, walletId: auth.walletId } });
   if (!action) throw new ApiError(404, "ACTION_NOT_FOUND", "That agent action was not found.");
-  if (!ELIGIBLE_ACTIONS.includes(action.type as (typeof ELIGIBLE_ACTIONS)[number])) {
-    throw new ApiError(422, "ACTION_NOT_SPONSORABLE", "This action is not eligible for sponsored gas.");
+  if (!ELIGIBLE_ACTIONS.includes(action.type as never)) {
+    throw new ApiError(422, "ACTION_NOT_SPONSORABLE", "This V2 sponsorship policy only covers checkpoint UserOperations, not owner-control actions.");
+  }
+  if (!policy.enabled) {
+    throw new ApiError(409, policy.disabledReason ?? "SPONSORSHIP_DISABLED", "Sponsored gas is not enabled yet. The reservation policy is visible, but no paymaster approval is issued.");
   }
   if (!["PREPARED", "EXPIRED"].includes(action.status)) {
     throw new ApiError(409, "ACTION_NOT_SPONSORABLE", "Only reviewed, unsubmitted actions can reserve sponsored gas.");

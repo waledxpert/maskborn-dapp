@@ -1,4 +1,4 @@
-﻿import "dotenv/config";
+import "dotenv/config";
 import { z } from "zod";
 
 const optionalAddress = z.preprocess(
@@ -47,6 +47,8 @@ const schema = z.object({
   AGENT_BUNDLER_PROVIDER: z.enum(["disabled", "alchemy", "biconomy", "blockradar", "circle", "pimlico", "thirdweb", "turnkey", "zerodev", "custom"]).default("disabled"),
   AGENT_BUNDLER_RPC_URL: z.preprocess((value) => value === "" ? undefined : value, z.string().url().optional()),
   AGENT_PAYMASTER_PROVIDER: z.enum(["disabled", "alchemy", "biconomy", "pimlico", "thirdweb", "zerodev", "custom"]).default("disabled"),
+  AGENT_PAYMASTER_RPC_URL: z.preprocess((value) => value === "" ? undefined : value, z.string().url().optional()),
+  AGENT_PAYMASTER_POLICY_ID: z.preprocess((value) => value === "" ? undefined : value, z.string().min(1).max(256).optional()),
   AGENT_SPONSORSHIP_ENABLED: z.enum(["true", "false"]).default("false"),
   AGENT_SPONSOR_DAILY_USDC_PER_TOKEN: z.string().regex(/^\d+(\.\d{1,18})?$/).default("0.25"),
   AGENT_SPONSOR_DAILY_TX_PER_TOKEN: z.coerce.number().int().min(1).max(250).default(25),

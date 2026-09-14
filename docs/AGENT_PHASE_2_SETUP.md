@@ -1,10 +1,10 @@
 # Agent Phase 2: awakening setup
 
-This slice adds a real onchain awakening path while keeping every value-moving action holder-confirmed. V2 supports checkpoint-only ERC-4337 UserOperations. It does **not** enable autonomous spending, session-key transfers, a paymaster, or sponsored gas yet.
+This slice adds a real onchain awakening path while keeping every value-moving action holder-confirmed. V2 supports checkpoint-only ERC-4337 UserOperations. It does **not** enable autonomous spending, session-key transfers, or live paymaster-sponsored gas yet.
 
 ## What is implemented
 
-- One immutable Mask Born Ã¢â€ â€™ ERC-6551 account Ã¢â€ â€™ ERC-8004 identity binding.
+- One immutable Mask Born -> ERC-6551 account -> ERC-8004 identity binding.
 - Deterministic account address before deployment.
 - Atomic account creation and identity registration in one holder transaction.
 - Dynamic authority: control follows the current Mask Born owner.
@@ -21,8 +21,8 @@ This slice adds a real onchain awakening path while keeping every value-moving a
 - V2 checkpoint-session grants, inspection, and immediate revocation. Sessions can publish monitor-observation, report-digest, or liveness hashes only; they have no external-call or asset-transfer function.
 - ERC-4337 v0.9 validation for those checkpoint calls only. Public discovery reports the EntryPoint, nonce, checkpoint-only scope, Pimlico bundler readiness, and sponsorship as disabled.
 - A holder-facing Phase 2 readiness panel on `/agents` checks wallet sign-in, collection/index state, token selection, awakening, ERC-4337 checkpoint support, live bundler reachability, and the intentionally disabled sponsorship state.
-- `/api/agents/sponsorship/status` exposes the disabled-mode sponsored-gas policy: `0.25` native USDC per token per day, `25` sponsored transactions per day, `180` second reservation TTL, reviewed account actions only, and no sponsorship for `SEND_NATIVE_USDC`.
-- Sponsorship reservations now have database storage, per-token/day budget reads at `/api/agents/tokens/:tokenId/sponsorship/budget`, and a guarded reservation endpoint at `/api/agents/actions/:actionId/sponsorship/reserve`. The reservation endpoint still refuses while sponsorship is disabled, so no paymaster authorization is issued yet. The `/agents` UI shows the holder budget card after awakened-token selection and ownership index catch-up, and the agent worker expires stale reservations on every tick.
+- `/api/agents/sponsorship/status` exposes the disabled-mode sponsored-gas policy: `0.25` native USDC per token per day, `25` sponsored transactions per day, `180` second reservation TTL, and the current V2 allowlist of `PUBLISH_CHECKPOINT` only. Owner-control actions still require the holder wallet.
+- Sponsorship reservations now have database storage, per-token/day budget reads at `/api/agents/tokens/:tokenId/sponsorship/budget`, and a guarded reservation endpoint at `/api/agents/actions/:actionId/sponsorship/reserve`. Because V2 sponsorship is checkpoint-only, owner-control action reservations return `ACTION_NOT_SPONSORABLE`. A checkpoint preflight endpoint now exists at `/api/agents/tokens/:tokenId/sponsorship/checkpoint/preflight`; it validates owner, awakened account, EntryPoint, checkpoint session, category, payload hash, nonce and daily budget, then returns callData plus sponsorship blockers. Monitor rules can also opt into checkpoint preflight by storing a checkpoint session-key address. When a matching USDC payment is observed, the worker hashes a deterministic monitor-observation payload and writes a `MONITOR_CHECKPOINT_READY` notification with the payload hash, callData, nonce and blockers. The `/agents` UI shows the holder budget card after awakened-token selection and ownership index catch-up, and the agent worker expires stale reservations on every tick. `/api/agents/paymaster/status` reports provider readiness; the paymaster client supports `pm_sponsorUserOperation` with an optional sponsorship policy ID but is not called while the paymaster provider/RPC are disabled.
 
 ## Current Arc testnet deployment
 
@@ -138,7 +138,7 @@ Do not fund accounts with meaningful value until the transfer tests, pause recov
 
 ## Next Phase 2 slice
 
-The direct EntryPoint smoke and Pimlico managed-bundler smoke are complete for token `1`: awaken, checkpoint UserOperations, revoke, deposit withdrawal, and account sweep all verified. The `/agents` page now includes a browser-smoke checklist so the holder test can be performed from the UI. The app now exposes managed-bundler readiness separately from EntryPoint support. Keep `AGENT_PAYMASTER_PROVIDER=disabled` until a real Arc paymaster/sponsorship path is selected and concurrency-safe budget accounting is implemented. Sponsored gas execution is the next separate slice, not part of the current checkpoint-only bundler proof. The policy surface and reservation ledger exist, but paymaster signing is still disabled until a provider-backed authorization path is reviewed.
+The direct EntryPoint smoke and Pimlico managed-bundler smoke are complete for token `1`: awaken, checkpoint UserOperations, revoke, deposit withdrawal, and account sweep all verified. The `/agents` page now includes a browser-smoke checklist so the holder test can be performed from the UI. The app now exposes managed-bundler readiness separately from EntryPoint support. Keep `AGENT_PAYMASTER_PROVIDER=disabled` until a real Arc paymaster/sponsorship path is selected and concurrency-safe budget accounting is implemented. Sponsored gas execution is the next separate slice, not part of the current checkpoint-only bundler proof. The policy surface, budget ledger, checkpoint preflight and monitor-triggered checkpoint-ready notifications exist, but paymaster signing is still disabled until a provider-backed authorization path is reviewed.
 
 
 

@@ -20,6 +20,8 @@ const createRule = z.object({
   expectedAmount: amount.optional(),
   cadence: z.enum(["CONTINUOUS", "DAILY", "WEEKLY"]).default("CONTINUOUS"),
   nextExpectedAt: z.coerce.date().optional(),
+  checkpointSessionKey: z.string().regex(/^0x[a-fA-F0-9]{40}$/).optional(),
+  checkpointOnMatch: z.boolean().default(false),
   graceMinutes: z.coerce.number().int().min(0).max(10_080).default(60),
   lookbackBlocks: z.coerce.number().int().min(0).max(50_000).default(5_000),
 }).superRefine((value, ctx) => {
@@ -41,7 +43,8 @@ async function assertTokenOwner(tokenId: bigint, walletAddress: string) {
 function presentRule(rule: {
   id: string; tokenId: string; direction: string; counterparty: string | null; minimumAmount: { toString(): string };
   expectedAmount: { toString(): string } | null; cadence: string; timezone: string; graceMinutes: number;
-  nextExpectedAt: Date | null; cursorBlock: bigint; isActive: boolean; lastCheckedAt: Date | null; createdAt: Date;
+  nextExpectedAt: Date | null; checkpointSessionKey: string | null; checkpointOnMatch: boolean;
+  cursorBlock: bigint; isActive: boolean; lastCheckedAt: Date | null; createdAt: Date;
 }) {
   return {
     id: rule.id,
@@ -54,6 +57,8 @@ function presentRule(rule: {
     timezone: rule.timezone,
     graceMinutes: rule.graceMinutes,
     nextExpectedAt: rule.nextExpectedAt,
+    checkpointSessionKey: rule.checkpointSessionKey,
+    checkpointOnMatch: rule.checkpointOnMatch,
     cursorBlock: rule.cursorBlock.toString(),
     isActive: rule.isActive,
     lastCheckedAt: rule.lastCheckedAt,
@@ -94,6 +99,8 @@ notificationsRouter.post("/agents/tokens/:tokenId/monitors", requireWalletAuth, 
       timezone: "UTC",
       graceMinutes: input.graceMinutes,
       nextExpectedAt: input.nextExpectedAt ?? null,
+      checkpointSessionKey: input.checkpointSessionKey ? getAddress(input.checkpointSessionKey) : null,
+      checkpointOnMatch: input.checkpointOnMatch && Boolean(input.checkpointSessionKey),
       cursorBlock,
     },
   });

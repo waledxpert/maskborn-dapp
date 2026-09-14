@@ -107,6 +107,7 @@ enum AgentNotificationType {
   PAYMENT_RECEIVED
   PAYMENT_SENT
   PAYMENT_LATE
+  MONITOR_CHECKPOINT_READY
   MONITOR_ERROR
 }
 
@@ -480,6 +481,8 @@ model MonitorRule {
   timezone          String              @default("UTC")
   graceMinutes      Int                 @default(60)
   nextExpectedAt    DateTime?
+  checkpointSessionKey String?
+  checkpointOnMatch Boolean             @default(false)
   cursorBlock       BigInt
   isActive          Boolean             @default(true)
   lastCheckedAt     DateTime?

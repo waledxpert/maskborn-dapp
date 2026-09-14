@@ -11,7 +11,7 @@ import { useCurrentUser } from "@/hooks/use-current-user";
 type EthereumProvider = { request(args: { method: string; params?: unknown[] }): Promise<unknown> };
 type AgentStatus = { configured: boolean; network: string; chainId: number; collectionAddress: string | null; agentRegistryAddress?: string | null; phase: number; awakening?: string; accountAbstraction?: { entryPoint: string; accountPath: string; directEntryPointSmoke: boolean; bundlerProvider: string; bundlerConfigured: boolean; paymasterProvider: string; sponsorship: boolean; sponsorshipReason?: string | null; dailySponsorAllowance?: string; dailySponsorTransactions?: number } };
 type BundlerStatus = { configured: boolean; provider: string; chainId: number | null; expectedChainId: number; chainMatches: boolean; entryPoint: string; supportedEntryPoints: string[]; entryPointSupported: boolean; paymasterProvider: string; sponsorship: boolean };
-type SponsorshipStatus = { enabled: boolean; disabledReason: string | null; currency: string; gasAsset: string; dailyAllowance: string; dailyAllowanceBaseUnits: string; dailyTransactionLimit: number; reservationTtlSeconds: number; eligibleActions: string[]; excludedActions: string[]; bundlerProvider: string; paymasterProvider: string; accountingMode: string; settlementMode: string; notes: string[] };
+type SponsorshipStatus = { enabled: boolean; disabledReason: string | null; currency: string; gasAsset: string; dailyAllowance: string; dailyAllowanceBaseUnits: string; dailyTransactionLimit: number; reservationTtlSeconds: number; eligibleActions: string[]; eligibleOperations?: string[]; excludedActions: string[]; bundlerProvider: string; paymasterProvider: string; paymasterConfigured?: boolean; paymasterPolicyConfigured?: boolean; accountingMode: string; settlementMode: string; notes: string[] };
 type SponsorshipBudget = { policy: SponsorshipStatus; tokenId: string; dailyBucket: string; usedBaseUnits: string; remainingBaseUnits: string; usedTransactions: number; remainingTransactions: number; reservations: Array<{ id: string; status: string; actionType: string; reservedCostBaseUnits: string; actualCostBaseUnits: string | null; expiresAt: string; failureCode: string | null }> };
 type AgentIndexStatus = { configured: boolean; latestBlock?: string; indexedThrough?: string | null; caughtUp?: boolean; lastError?: string | null };
 type AwakeningState = {
@@ -70,7 +70,8 @@ type OwnedTokens = { tokenIds: string[]; asOfBlock: string };
 type MonitorRule = {
   id: string; direction: "INCOMING" | "OUTGOING" | "BOTH"; minimumAmount: string;
   expectedAmount: string | null; cadence: "CONTINUOUS" | "DAILY" | "WEEKLY";
-  nextExpectedAt: string | null; isActive: boolean; lastCheckedAt: string | null;
+  nextExpectedAt: string | null; checkpointSessionKey: string | null; checkpointOnMatch: boolean;
+  isActive: boolean; lastCheckedAt: string | null;
 };
 type AgentNotification = {
   id: string; type: string; title: string; body: string; readAt: string | null; createdAt: string;
@@ -82,7 +83,7 @@ type ConversationMessage = { id: string; role: "USER" | "ASSISTANT"; content: st
 
 declare global { interface Window { ethereum?: EthereumProvider } }
 
-function compact(address: string) { return `${address.slice(0, 7)}â€¦${address.slice(-5)}`; }
+function compact(address: string) { return `${address.slice(0, 7)}Ã¢â‚¬Â¦${address.slice(-5)}`; }
 
 async function submitPrepared(provider: EthereumProvider, prepared: Pick<AgentAction, "id" | "chainId" | "from" | "to" | "data" | "value" | "expiresAt">, onSubmitted?: (hash: string) => void) {
   if (Date.now() >= Date.parse(prepared.expiresAt)) throw new Error("This preparation expired. Prepare it again.");
@@ -130,6 +131,8 @@ export function AgentsWorkspace() {
   const [expectedAmount, setExpectedAmount] = useState("");
   const [cadence, setCadence] = useState<"CONTINUOUS" | "DAILY" | "WEEKLY">("CONTINUOUS");
   const [nextExpectedAt, setNextExpectedAt] = useState("");
+  const [checkpointOnMatch, setCheckpointOnMatch] = useState(false);
+  const [monitorCheckpointSessionKey, setMonitorCheckpointSessionKey] = useState("");
   const [chatText, setChatText] = useState("");
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [chatMessages, setChatMessages] = useState<ConversationMessage[]>([]);
@@ -231,6 +234,8 @@ export function AgentsWorkspace() {
         direction: "INCOMING",
         minimumAmount,
         cadence,
+        checkpointOnMatch,
+        ...(checkpointOnMatch && monitorCheckpointSessionKey ? { checkpointSessionKey: monitorCheckpointSessionKey } : {}),
         ...(cadence === "CONTINUOUS" ? {} : { expectedAmount, nextExpectedAt: new Date(nextExpectedAt).toISOString() }),
       }),
     }),
@@ -412,7 +417,7 @@ export function AgentsWorkspace() {
           <p>{status.data?.configured
             ? `Collection connected on ${status.data.network}. ${indexStatus.data?.caughtUp ? `Ownership indexed through block ${indexStatus.data.indexedThrough}.` : "Ownership index is catching up."}`
             : "Waiting for the canonical collection deployment address."}</p>
-          <small>Phase {status.data?.phase ?? 1} Â· {status.data?.accountAbstraction?.bundlerConfigured ? `${status.data.accountAbstraction.bundlerProvider} bundler configured` : "managed bundler pending"}</small>
+          <small>Phase {status.data?.phase ?? 1} Ã‚Â· {status.data?.accountAbstraction?.bundlerConfigured ? `${status.data.accountAbstraction.bundlerProvider} bundler configured` : "managed bundler pending"}</small>
         </article>
       </div>
 
@@ -424,14 +429,15 @@ export function AgentsWorkspace() {
           <p>This is the holder-facing proof layer: it confirms the app can see the collection, awakened account, checkpoint-only ERC-4337 path, and configured Pimlico bundler without implying sponsored gas is live.</p>
         </div>
         <div className="agent-readiness-grid">
-          {smokeChecks.map((check) => <span key={check.label} className={check.ok ? "ready" : "waiting"}>{check.ok ? "✓" : "–"} {check.label}</span>)}
+          {smokeChecks.map((check) => <span key={check.label} className={check.ok ? "ready" : "waiting"}>{check.ok ? "âœ“" : "â€“"} {check.label}</span>)}
         </div>
         <div className="agent-bundler-card">
           <span>Bundler</span>
           <b>{status.data?.accountAbstraction?.bundlerConfigured ? status.data.accountAbstraction.bundlerProvider : "Not configured"}</b>
-          <small>{bundlerStatus.isLoading ? "Checking live RPC…" : bundlerStatus.data ? `chain ${bundlerStatus.data.chainId ?? "unknown"} / EntryPoint ${bundlerStatus.data.entryPointSupported ? "supported" : "unsupported"}` : status.data?.accountAbstraction?.bundlerConfigured ? "Bundler status unavailable" : "Set AGENT_BUNDLER_PROVIDER and RPC URL to enable."}</small>
-          <small>Paymaster: {sponsorshipStatus.data?.paymasterProvider ?? status.data?.accountAbstraction?.paymasterProvider ?? "disabled"} · sponsorship {sponsorshipStatus.data?.enabled ? "on" : "off"}</small>
-          {sponsorshipStatus.data && <small>Budget rule: {sponsorshipStatus.data.dailyAllowance} {sponsorshipStatus.data.currency} / token / day · {sponsorshipStatus.data.dailyTransactionLimit} tx cap · {sponsorshipStatus.data.disabledReason ?? "ready"}</small>}
+          <small>{bundlerStatus.isLoading ? "Checking live RPCâ€¦" : bundlerStatus.data ? `chain ${bundlerStatus.data.chainId ?? "unknown"} / EntryPoint ${bundlerStatus.data.entryPointSupported ? "supported" : "unsupported"}` : status.data?.accountAbstraction?.bundlerConfigured ? "Bundler status unavailable" : "Set AGENT_BUNDLER_PROVIDER and RPC URL to enable."}</small>
+          <small>Paymaster: {sponsorshipStatus.data?.paymasterProvider ?? status.data?.accountAbstraction?.paymasterProvider ?? "disabled"} Â· sponsorship {sponsorshipStatus.data?.enabled ? "on" : "off"}</small>
+          {sponsorshipStatus.data?.eligibleOperations?.length ? <small>Eligible now: {sponsorshipStatus.data.eligibleOperations.join(", ")}</small> : null}
+          {sponsorshipStatus.data && <small>Budget rule: {sponsorshipStatus.data.dailyAllowance} {sponsorshipStatus.data.currency} / token / day Â· {sponsorshipStatus.data.dailyTransactionLimit} tx cap Â· {sponsorshipStatus.data.disabledReason ?? "ready"}</small>}
         </div>
       </article>
 
@@ -507,7 +513,8 @@ export function AgentsWorkspace() {
                 <div className="agent-account-balance agent-sponsor-budget">
                   <span>Sponsored gas</span>
                   <b>{sponsorshipBudget.data ? `${sponsorshipBudget.data.policy.dailyAllowance} ${sponsorshipBudget.data.policy.currency}` : sponsorshipStatus.data ? `${sponsorshipStatus.data.dailyAllowance} ${sponsorshipStatus.data.currency}` : "0.25 USDC"}</b>
-                  <small>{sponsorshipBudget.data ? `${sponsorshipBudget.data.remainingTransactions} tx left today · sponsorship ${sponsorshipBudget.data.policy.enabled ? "on" : "off"}` : indexStatus.data?.caughtUp ? "Budget loading" : "Budget unlocks after index catch-up"}</small>
+                  {sponsorshipBudget.data?.policy.eligibleOperations?.length ? <small>Eligible: {sponsorshipBudget.data.policy.eligibleOperations.join(", ")}</small> : null}
+                  <small>{sponsorshipBudget.data ? `${sponsorshipBudget.data.remainingTransactions} tx left today Â· sponsorship ${sponsorshipBudget.data.policy.enabled ? "on" : "off"}` : indexStatus.data?.caughtUp ? "Budget loading" : "Budget unlocks after index catch-up"}</small>
                 </div>
               </div>
             </div>
@@ -530,7 +537,7 @@ export function AgentsWorkspace() {
                 <div>
                   <strong>Send native USDC</strong>
                   <p>Transfer from the token-bound account. The transaction itself sends 0 USDC to the contract.</p>
-                  <input value={sendRecipient} onChange={(event) => setSendRecipient(event.target.value)} placeholder="Recipient 0xâ€¦" />
+                  <input value={sendRecipient} onChange={(event) => setSendRecipient(event.target.value)} placeholder="Recipient 0xÃ¢â‚¬Â¦" />
                   <input value={sendAmount} onChange={(event) => setSendAmount(event.target.value)} placeholder="Amount in USDC" inputMode="decimal" />
                   <button className="button button-amber" disabled={!sendRecipient || !sendAmount || prepareControl.isPending || preview.awakening.accountState.executionPaused} onClick={() => prepareControl.mutate({ path: "send", body: { recipient: sendRecipient, amount: sendAmount } })}>Prepare transfer</button>
                 </div>
@@ -602,9 +609,11 @@ export function AgentsWorkspace() {
               <label>Expected USDC<input value={expectedAmount} onChange={(event) => setExpectedAmount(event.target.value)} inputMode="decimal" /></label>
               <label>Next due<input type="datetime-local" value={nextExpectedAt} onChange={(event) => setNextExpectedAt(event.target.value)} /></label>
             </>}
+            <label className="agent-checkbox-row"><input type="checkbox" checked={checkpointOnMatch} onChange={(event) => setCheckpointOnMatch(event.target.checked)} /> Prepare onchain checkpoint when a match is found</label>
+            {checkpointOnMatch && <label>Checkpoint session key<input value={monitorCheckpointSessionKey} onChange={(event) => setMonitorCheckpointSessionKey(event.target.value)} placeholder="0x..." /></label>}
             <button className="button button-amber" onClick={() => createMonitor.mutate()} disabled={createMonitor.isPending || (cadence !== "CONTINUOUS" && (!expectedAmount || !nextExpectedAt))}>Create monitor</button>
             <div className="agent-monitor-list">
-              {monitors.data?.rules.filter((rule) => rule.isActive).map((rule) => <div key={rule.id}><span>{rule.cadence.toLowerCase()} Â· â‰¥ {rule.minimumAmount} USDC</span><button onClick={() => syncMonitor.mutate(rule.id)} disabled={syncMonitor.isPending}><RefreshCw size={14} /> Sync</button></div>)}
+              {monitors.data?.rules.filter((rule) => rule.isActive).map((rule) => <div key={rule.id}><span>{rule.cadence.toLowerCase()} Ã‚Â· Ã¢â€°Â¥ {rule.minimumAmount} USDC{rule.checkpointOnMatch ? " · checkpoint preflight" : ""}</span><button onClick={() => syncMonitor.mutate(rule.id)} disabled={syncMonitor.isPending}><RefreshCw size={14} /> Sync</button></div>)}
               {!monitors.isLoading && !monitors.data?.rules.some((rule) => rule.isActive) && <small>No active monitors.</small>}
             </div>
           </article>
@@ -634,7 +643,7 @@ export function AgentsWorkspace() {
                   {chatMessages.map((message) => <div key={message.id} className={message.role.toLowerCase()}><small>{message.role === "USER" ? "You" : preview.persona?.name ?? "Mask Born"}</small><p>{message.content}</p></div>)}
                   {!chatMessages.length && <p className="agent-chat-empty">Ask about traits, balances, recent USDC activity, monitors, or Payday status.</p>}
                 </div>
-                <form onSubmit={(event) => { event.preventDefault(); if (chatText.trim()) sendChat.mutate(); }}><textarea value={chatText} onChange={(event) => setChatText(event.target.value)} maxLength={2000} placeholder="Ask your Mask Bornâ€¦" /><button className="button button-amber" disabled={!chatText.trim() || sendChat.isPending}>{sendChat.isPending ? <LoaderCircle className="spin" size={16} /> : "Send"}</button></form>
+                <form onSubmit={(event) => { event.preventDefault(); if (chatText.trim()) sendChat.mutate(); }}><textarea value={chatText} onChange={(event) => setChatText(event.target.value)} maxLength={2000} placeholder="Ask your Mask BornÃ¢â‚¬Â¦" /><button className="button button-amber" disabled={!chatText.trim() || sendChat.isPending}>{sendChat.isPending ? <LoaderCircle className="spin" size={16} /> : "Send"}</button></form>
                 <button className="agent-revoke-consent" onClick={() => revokeModelConsent.mutate()}>Revoke model data access</button>
               </div>
             </div>}
