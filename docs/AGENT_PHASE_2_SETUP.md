@@ -1,10 +1,10 @@
-# Agent Phase 2: awakening setup
+﻿# Agent Phase 2: awakening setup
 
 This slice adds a real onchain awakening path while keeping every value-moving action holder-confirmed. V2 supports checkpoint-only ERC-4337 UserOperations. It does **not** enable autonomous spending, session-key transfers, a paymaster, or sponsored gas yet.
 
 ## What is implemented
 
-- One immutable Mask Born → ERC-6551 account → ERC-8004 identity binding.
+- One immutable Mask Born â†’ ERC-6551 account â†’ ERC-8004 identity binding.
 - Deterministic account address before deployment.
 - Atomic account creation and identity registration in one holder transaction.
 - Dynamic authority: control follows the current Mask Born owner.
@@ -19,7 +19,7 @@ This slice adds a real onchain awakening path while keeping every value-moving a
 - Durable action records scoped to the holder's current ownership period, with independent sender/target/calldata/value and receipt reconciliation.
 - Owner controls for pause/unpause, ERC-8004 URI updates, and native-USDC sends from the token-bound account.
 - V2 checkpoint-session grants, inspection, and immediate revocation. Sessions can publish monitor-observation, report-digest, or liveness hashes only; they have no external-call or asset-transfer function.
-- ERC-4337 v0.9 validation for those checkpoint calls only. Public discovery reports the EntryPoint, nonce, checkpoint-only scope, and sponsorship as disabled.
+- ERC-4337 v0.9 validation for those checkpoint calls only. Public discovery reports the EntryPoint, nonce, checkpoint-only scope, Pimlico bundler readiness, and sponsorship as disabled.
 
 ## Current Arc testnet deployment
 
@@ -28,8 +28,11 @@ This slice adds a real onchain awakening path while keeping every value-moving a
 - `EntryPoint v0.9`: `0x433709009B8330FDa32311DF1C2AFA402eD8D009`
 - Deployment blocks: `62025198` and `62025200`
 - Smoke account for token `1`: `0x7Ffdedc044290B3E3FAd5527d551081674E4E8Bb`
-- Smoke UserOperation hash: `0xb212dda4e89f6c340a87eb74e7c1026c391f72d7358ad94a9e04ffe179ee67f2`
-- Successful `handleOps` tx: `0x650681695c79c29e3db50f2375306c2f9da464bf2834c734e611c9d85c329a5f`
+- Direct EntryPoint smoke UserOperation hash: `0xb212dda4e89f6c340a87eb74e7c1026c391f72d7358ad94a9e04ffe179ee67f2`
+- Successful direct `handleOps` tx: `0x650681695c79c29e3db50f2375306c2f9da464bf2834c734e611c9d85c329a5f`
+- Pimlico managed-bundler UserOperation hash: `0xa240b1707178511bfa87b62a5363229612fdb1a68df78213509286d880aa7afa`
+- Pimlico EntryPoint tx: `0x9edec7413acce9815564829b221882745c21cb3fcc1b823a011d9a6e725cff8b`
+- Final smoke cleanup: latest session revoked, total checkpoint calls `2`, UserOperation nonce `2`, EntryPoint deposit `0`, account balance `0`
 - Versioned record: `arcOne/contracts/deployed-agents-arcTestnet.json`
 
 Contract source lives only in `arcOne/contracts/src/agent`. The app does not contain a second Solidity copy.
@@ -132,4 +135,5 @@ Do not fund accounts with meaningful value until the transfer tests, pause recov
 
 ## Next Phase 2 slice
 
-The direct EntryPoint smoke is complete for token `1`: awaken, one checkpoint UserOperation, revoke, deposit withdrawal, and account sweep all verified. The app now exposes managed-bundler readiness separately from EntryPoint support. Keep `AGENT_BUNDLER_PROVIDER=disabled` until you choose an Arc-supported ERC-4337 provider and have its bundler RPC URL. Sponsored gas follows only after a real Arc bundler/paymaster is selected and concurrency-safe budget accounting is implemented.
+The direct EntryPoint smoke and Pimlico managed-bundler smoke are complete for token `1`: awaken, checkpoint UserOperations, revoke, deposit withdrawal, and account sweep all verified. The app now exposes managed-bundler readiness separately from EntryPoint support. Keep `AGENT_PAYMASTER_PROVIDER=disabled` until a real Arc paymaster/sponsorship path is selected and concurrency-safe budget accounting is implemented. Sponsored gas is the next separate slice, not part of the current checkpoint-only bundler proof.
+

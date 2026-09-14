@@ -24,6 +24,7 @@ import { buildConstitution, buildPersona } from "./persona.js";
 import { collectionIndexStatus } from "../chain/collection-indexer.js";
 import { db } from "../../db.js";
 import { getAgentAction, listAgentActions, savePreparedAction, serializeAgentAction, submitAgentAction } from "./actions.js";
+import { erc4337EntryPoint, readBundlerStatus } from "../chain/bundler.js";
 
 export const agentsRouter = Router();
 const tokenParams = z.object({ tokenId: z.coerce.bigint().refine((value) => value > 0n && value <= 10_000n) });
@@ -45,7 +46,7 @@ const grantSessionBody = z.object({
 });
 const revokeSessionBody = z.object({ sessionKey: z.string().regex(/^0x[a-fA-F0-9]{40}$/) });
 
-agentsRouter.get("/agents/status", (_req, res) => {
+agentsRouter.get("/agents/status", asyncRoute(async (_req, res) => {
   res.json({
     chainId: config.ARC_CHAIN_ID,
     network: config.ARC_CHAIN_ID === 5042002 ? "Arc Testnet" : "Arc",
@@ -55,16 +56,23 @@ agentsRouter.get("/agents/status", (_req, res) => {
     awakening: maskBornAgentRegistryAddress ? "testnet" : "not_deployed",
     agentRegistryAddress: maskBornAgentRegistryAddress,
     accountAbstraction: {
-      entryPoint: "0x433709009B8330FDa32311DF1C2AFA402eD8D009",
+      entryPoint: erc4337EntryPoint,
       accountPath: "checkpoint-only",
       directEntryPointSmoke: maskBornAgentRegistryAddress?.toLowerCase() === "0x7ce327dcd5148e2ea268595d804ca75b85c63326",
       bundlerProvider: config.AGENT_BUNDLER_PROVIDER,
-      bundlerConfigured: config.AGENT_BUNDLER_PROVIDER !== "disabled",
+      bundlerConfigured: config.AGENT_BUNDLER_PROVIDER !== "disabled" && Boolean(config.AGENT_BUNDLER_RPC_URL),
       paymasterProvider: config.AGENT_PAYMASTER_PROVIDER,
       sponsorship: false,
     },
   });
-});
+}));
+
+agentsRouter.get("/agents/bundler/status", asyncRoute(async (_req, res) => {
+  const status = await readBundlerStatus().catch((error) => {
+    throw new ApiError(503, "BUNDLER_UNAVAILABLE", (error as Error).message);
+  });
+  res.json(status);
+}));
 
 agentsRouter.get("/agents/index/status", asyncRoute(async (_req, res) => {
   const status = await collectionIndexStatus().catch(() => {
