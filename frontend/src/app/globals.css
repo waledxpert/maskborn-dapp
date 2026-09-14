@@ -4786,6 +4786,9 @@ body:has(.admin-shell) .site-footer {
 .agent-inbox small { color: var(--muted); }
 .agent-checkpoint-details { display: grid; gap: 7px; margin: 10px 0; padding: 10px; border: 1px dashed var(--line); }
 .agent-checkpoint-details .button { width: fit-content; padding: 8px 12px; font-size: 12px; }
+.agent-report-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+.agent-report-preview { margin-top: 14px; padding: 14px; border: 1px solid var(--line); background: color-mix(in srgb, var(--foreground) 4%, transparent); }
+.agent-report-preview p { color: var(--muted); }
 .agent-chat-card { grid-column: 1 / -1; border-top: 1px solid var(--line); }
 .agent-consent { max-width: 760px; }
 .agent-consent > p, .agent-consent li { color: var(--muted); line-height: 1.55; }

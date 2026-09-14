@@ -108,6 +108,16 @@ export type MonitorMatch = Prisma.MonitorMatchModel
  */
 export type AgentNotification = Prisma.AgentNotificationModel
 /**
+ * Model IntelligenceEntitlement
+ * 
+ */
+export type IntelligenceEntitlement = Prisma.IntelligenceEntitlementModel
+/**
+ * Model IntelligenceReport
+ * 
+ */
+export type IntelligenceReport = Prisma.IntelligenceReportModel
+/**
  * Model WalletChallenge
  * 
  */

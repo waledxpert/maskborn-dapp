@@ -150,6 +150,29 @@ enum SponsorshipReservationStatus {
   VOID
 }
 
+enum IntelligenceReportKind {
+  COLLECTION_HEALTH
+  WALLET_ACTIVITY
+  USDC_STREAM_SUMMARY
+  AGENT_PROFILE
+  CHECKPOINT_SUMMARY
+}
+
+enum IntelligenceEntitlementStatus {
+  QUOTED
+  PAYMENT_REQUIRED
+  PAID
+  FULFILLED
+  EXPIRED
+  FAILED
+}
+
+enum IntelligenceReportStatus {
+  PENDING
+  READY
+  FAILED
+}
+
 model User {
   id                      String                   @id @default(cuid())
   role                    Role                     @default(USER)
@@ -547,6 +570,56 @@ model AgentNotification {
 
   @@index([userId, readAt, createdAt])
   @@index([monitorRuleId, createdAt])
+}
+
+model IntelligenceEntitlement {
+  id                    String                        @id @default(cuid())
+  requestKey            String                        @unique
+  kind                  IntelligenceReportKind
+  tokenId               String?
+  walletAddress         String?
+  userId                String?
+  walletId              String?
+  status                IntelligenceEntitlementStatus @default(QUOTED)
+  currency              String                        @default("USDC")
+  publicPriceBaseUnits  Decimal                       @db.Decimal(78, 0)
+  holderPriceBaseUnits  Decimal                       @db.Decimal(78, 0)
+  chargedPriceBaseUnits Decimal                       @db.Decimal(78, 0)
+  isHolderRate          Boolean                       @default(false)
+  paymentMode           String                        @default("disabled")
+  x402Resource          String?
+  x402PaymentHeader     String?
+  paymentTxHash         String?
+  paymentNetwork        String?
+  expiresAt             DateTime
+  fulfilledAt           DateTime?
+  failureCode           String?
+  createdAt             DateTime                      @default(now())
+  updatedAt             DateTime                      @updatedAt
+  report                IntelligenceReport?
+
+  @@index([userId, createdAt])
+  @@index([walletAddress, createdAt])
+  @@index([kind, status, createdAt])
+  @@index([status, expiresAt])
+}
+
+model IntelligenceReport {
+  id            String                   @id @default(cuid())
+  entitlementId String                   @unique
+  kind          IntelligenceReportKind
+  status        IntelligenceReportStatus @default(PENDING)
+  title         String
+  summary       String
+  content       Json
+  sourceRefs    Json?
+  generatedAt   DateTime?
+  failureCode   String?
+  createdAt     DateTime                 @default(now())
+  updatedAt     DateTime                 @updatedAt
+  entitlement   IntelligenceEntitlement  @relation(fields: [entitlementId], references: [id], onDelete: Cascade)
+
+  @@index([kind, status, createdAt])
 }
 
 model WalletChallenge {

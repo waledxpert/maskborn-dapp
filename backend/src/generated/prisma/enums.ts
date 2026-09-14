@@ -213,3 +213,35 @@ export const SponsorshipReservationStatus = {
 } as const
 
 export type SponsorshipReservationStatus = (typeof SponsorshipReservationStatus)[keyof typeof SponsorshipReservationStatus]
+
+
+export const IntelligenceReportKind = {
+  COLLECTION_HEALTH: 'COLLECTION_HEALTH',
+  WALLET_ACTIVITY: 'WALLET_ACTIVITY',
+  USDC_STREAM_SUMMARY: 'USDC_STREAM_SUMMARY',
+  AGENT_PROFILE: 'AGENT_PROFILE',
+  CHECKPOINT_SUMMARY: 'CHECKPOINT_SUMMARY'
+} as const
+
+export type IntelligenceReportKind = (typeof IntelligenceReportKind)[keyof typeof IntelligenceReportKind]
+
+
+export const IntelligenceEntitlementStatus = {
+  QUOTED: 'QUOTED',
+  PAYMENT_REQUIRED: 'PAYMENT_REQUIRED',
+  PAID: 'PAID',
+  FULFILLED: 'FULFILLED',
+  EXPIRED: 'EXPIRED',
+  FAILED: 'FAILED'
+} as const
+
+export type IntelligenceEntitlementStatus = (typeof IntelligenceEntitlementStatus)[keyof typeof IntelligenceEntitlementStatus]
+
+
+export const IntelligenceReportStatus = {
+  PENDING: 'PENDING',
+  READY: 'READY',
+  FAILED: 'FAILED'
+} as const
+
+export type IntelligenceReportStatus = (typeof IntelligenceReportStatus)[keyof typeof IntelligenceReportStatus]

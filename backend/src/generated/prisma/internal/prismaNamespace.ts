@@ -415,6 +415,8 @@ export const ModelName = {
   ObservedPayment: 'ObservedPayment',
   MonitorMatch: 'MonitorMatch',
   AgentNotification: 'AgentNotification',
+  IntelligenceEntitlement: 'IntelligenceEntitlement',
+  IntelligenceReport: 'IntelligenceReport',
   WalletChallenge: 'WalletChallenge',
   WalletSession: 'WalletSession',
   Application: 'Application',
@@ -450,7 +452,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "socialAccount" | "session" | "wallet" | "chainCursor" | "chainEvent" | "ownershipPeriod" | "agentAction" | "sponsorshipReservation" | "conversation" | "conversationMessage" | "toolRun" | "usageMeter" | "modelDataConsent" | "monitorRule" | "observedPayment" | "monitorMatch" | "agentNotification" | "walletChallenge" | "walletSession" | "application" | "draft" | "draftRevision" | "submission" | "submissionAccessory" | "submissionStatusEvent" | "vote" | "voteEvent" | "voteRestriction" | "riskEvent" | "galleryEntry" | "feeShare" | "tradeFeeEvent" | "creatorAccrual" | "payout" | "payoutItem" | "idempotencyRecord" | "adminAuditLog"
+    modelProps: "user" | "socialAccount" | "session" | "wallet" | "chainCursor" | "chainEvent" | "ownershipPeriod" | "agentAction" | "sponsorshipReservation" | "conversation" | "conversationMessage" | "toolRun" | "usageMeter" | "modelDataConsent" | "monitorRule" | "observedPayment" | "monitorMatch" | "agentNotification" | "intelligenceEntitlement" | "intelligenceReport" | "walletChallenge" | "walletSession" | "application" | "draft" | "draftRevision" | "submission" | "submissionAccessory" | "submissionStatusEvent" | "vote" | "voteEvent" | "voteRestriction" | "riskEvent" | "galleryEntry" | "feeShare" | "tradeFeeEvent" | "creatorAccrual" | "payout" | "payoutItem" | "idempotencyRecord" | "adminAuditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1783,6 +1785,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.AgentNotificationCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.AgentNotificationCountAggregateOutputType> | number
+        }
+      }
+    }
+    IntelligenceEntitlement: {
+      payload: Prisma.$IntelligenceEntitlementPayload<ExtArgs>
+      fields: Prisma.IntelligenceEntitlementFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.IntelligenceEntitlementFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntelligenceEntitlementPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.IntelligenceEntitlementFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntelligenceEntitlementPayload>
+        }
+        findFirst: {
+          args: Prisma.IntelligenceEntitlementFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntelligenceEntitlementPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.IntelligenceEntitlementFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntelligenceEntitlementPayload>
+        }
+        findMany: {
+          args: Prisma.IntelligenceEntitlementFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntelligenceEntitlementPayload>[]
+        }
+        create: {
+          args: Prisma.IntelligenceEntitlementCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntelligenceEntitlementPayload>
+        }
+        createMany: {
+          args: Prisma.IntelligenceEntitlementCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.IntelligenceEntitlementCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntelligenceEntitlementPayload>[]
+        }
+        delete: {
+          args: Prisma.IntelligenceEntitlementDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntelligenceEntitlementPayload>
+        }
+        update: {
+          args: Prisma.IntelligenceEntitlementUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntelligenceEntitlementPayload>
+        }
+        deleteMany: {
+          args: Prisma.IntelligenceEntitlementDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.IntelligenceEntitlementUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.IntelligenceEntitlementUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntelligenceEntitlementPayload>[]
+        }
+        upsert: {
+          args: Prisma.IntelligenceEntitlementUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntelligenceEntitlementPayload>
+        }
+        aggregate: {
+          args: Prisma.IntelligenceEntitlementAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateIntelligenceEntitlement>
+        }
+        groupBy: {
+          args: Prisma.IntelligenceEntitlementGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IntelligenceEntitlementGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.IntelligenceEntitlementCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IntelligenceEntitlementCountAggregateOutputType> | number
+        }
+      }
+    }
+    IntelligenceReport: {
+      payload: Prisma.$IntelligenceReportPayload<ExtArgs>
+      fields: Prisma.IntelligenceReportFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.IntelligenceReportFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntelligenceReportPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.IntelligenceReportFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntelligenceReportPayload>
+        }
+        findFirst: {
+          args: Prisma.IntelligenceReportFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntelligenceReportPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.IntelligenceReportFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntelligenceReportPayload>
+        }
+        findMany: {
+          args: Prisma.IntelligenceReportFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntelligenceReportPayload>[]
+        }
+        create: {
+          args: Prisma.IntelligenceReportCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntelligenceReportPayload>
+        }
+        createMany: {
+          args: Prisma.IntelligenceReportCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.IntelligenceReportCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntelligenceReportPayload>[]
+        }
+        delete: {
+          args: Prisma.IntelligenceReportDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntelligenceReportPayload>
+        }
+        update: {
+          args: Prisma.IntelligenceReportUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntelligenceReportPayload>
+        }
+        deleteMany: {
+          args: Prisma.IntelligenceReportDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.IntelligenceReportUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.IntelligenceReportUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntelligenceReportPayload>[]
+        }
+        upsert: {
+          args: Prisma.IntelligenceReportUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntelligenceReportPayload>
+        }
+        aggregate: {
+          args: Prisma.IntelligenceReportAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateIntelligenceReport>
+        }
+        groupBy: {
+          args: Prisma.IntelligenceReportGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IntelligenceReportGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.IntelligenceReportCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IntelligenceReportCountAggregateOutputType> | number
         }
       }
     }
@@ -3630,6 +3780,53 @@ export const AgentNotificationScalarFieldEnum = {
 export type AgentNotificationScalarFieldEnum = (typeof AgentNotificationScalarFieldEnum)[keyof typeof AgentNotificationScalarFieldEnum]
 
 
+export const IntelligenceEntitlementScalarFieldEnum = {
+  id: 'id',
+  requestKey: 'requestKey',
+  kind: 'kind',
+  tokenId: 'tokenId',
+  walletAddress: 'walletAddress',
+  userId: 'userId',
+  walletId: 'walletId',
+  status: 'status',
+  currency: 'currency',
+  publicPriceBaseUnits: 'publicPriceBaseUnits',
+  holderPriceBaseUnits: 'holderPriceBaseUnits',
+  chargedPriceBaseUnits: 'chargedPriceBaseUnits',
+  isHolderRate: 'isHolderRate',
+  paymentMode: 'paymentMode',
+  x402Resource: 'x402Resource',
+  x402PaymentHeader: 'x402PaymentHeader',
+  paymentTxHash: 'paymentTxHash',
+  paymentNetwork: 'paymentNetwork',
+  expiresAt: 'expiresAt',
+  fulfilledAt: 'fulfilledAt',
+  failureCode: 'failureCode',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type IntelligenceEntitlementScalarFieldEnum = (typeof IntelligenceEntitlementScalarFieldEnum)[keyof typeof IntelligenceEntitlementScalarFieldEnum]
+
+
+export const IntelligenceReportScalarFieldEnum = {
+  id: 'id',
+  entitlementId: 'entitlementId',
+  kind: 'kind',
+  status: 'status',
+  title: 'title',
+  summary: 'summary',
+  content: 'content',
+  sourceRefs: 'sourceRefs',
+  generatedAt: 'generatedAt',
+  failureCode: 'failureCode',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type IntelligenceReportScalarFieldEnum = (typeof IntelligenceReportScalarFieldEnum)[keyof typeof IntelligenceReportScalarFieldEnum]
+
+
 export const WalletChallengeScalarFieldEnum = {
   id: 'id',
   address: 'address',
@@ -4242,6 +4439,48 @@ export type ListEnumAgentNotificationTypeFieldRefInput<$PrismaModel> = FieldRefI
 
 
 /**
+ * Reference to a field of type 'IntelligenceReportKind'
+ */
+export type EnumIntelligenceReportKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IntelligenceReportKind'>
+    
+
+
+/**
+ * Reference to a field of type 'IntelligenceReportKind[]'
+ */
+export type ListEnumIntelligenceReportKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IntelligenceReportKind[]'>
+    
+
+
+/**
+ * Reference to a field of type 'IntelligenceEntitlementStatus'
+ */
+export type EnumIntelligenceEntitlementStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IntelligenceEntitlementStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'IntelligenceEntitlementStatus[]'
+ */
+export type ListEnumIntelligenceEntitlementStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IntelligenceEntitlementStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'IntelligenceReportStatus'
+ */
+export type EnumIntelligenceReportStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IntelligenceReportStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'IntelligenceReportStatus[]'
+ */
+export type ListEnumIntelligenceReportStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IntelligenceReportStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'ApplicationStatus'
  */
 export type EnumApplicationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApplicationStatus'>
@@ -4563,6 +4802,8 @@ export type GlobalOmitConfig = {
   observedPayment?: Prisma.ObservedPaymentOmit
   monitorMatch?: Prisma.MonitorMatchOmit
   agentNotification?: Prisma.AgentNotificationOmit
+  intelligenceEntitlement?: Prisma.IntelligenceEntitlementOmit
+  intelligenceReport?: Prisma.IntelligenceReportOmit
   walletChallenge?: Prisma.WalletChallengeOmit
   walletSession?: Prisma.WalletSessionOmit
   application?: Prisma.ApplicationOmit

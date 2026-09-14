@@ -599,6 +599,57 @@ export type EnumAgentNotificationTypeWithAggregatesFilter<$PrismaModel = never> 
   _max?: Prisma.NestedEnumAgentNotificationTypeFilter<$PrismaModel>
 }
 
+export type EnumIntelligenceReportKindFilter<$PrismaModel = never> = {
+  equals?: $Enums.IntelligenceReportKind | Prisma.EnumIntelligenceReportKindFieldRefInput<$PrismaModel>
+  in?: $Enums.IntelligenceReportKind[] | Prisma.ListEnumIntelligenceReportKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.IntelligenceReportKind[] | Prisma.ListEnumIntelligenceReportKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumIntelligenceReportKindFilter<$PrismaModel> | $Enums.IntelligenceReportKind
+}
+
+export type EnumIntelligenceEntitlementStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.IntelligenceEntitlementStatus | Prisma.EnumIntelligenceEntitlementStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.IntelligenceEntitlementStatus[] | Prisma.ListEnumIntelligenceEntitlementStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.IntelligenceEntitlementStatus[] | Prisma.ListEnumIntelligenceEntitlementStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumIntelligenceEntitlementStatusFilter<$PrismaModel> | $Enums.IntelligenceEntitlementStatus
+}
+
+export type EnumIntelligenceReportKindWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.IntelligenceReportKind | Prisma.EnumIntelligenceReportKindFieldRefInput<$PrismaModel>
+  in?: $Enums.IntelligenceReportKind[] | Prisma.ListEnumIntelligenceReportKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.IntelligenceReportKind[] | Prisma.ListEnumIntelligenceReportKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumIntelligenceReportKindWithAggregatesFilter<$PrismaModel> | $Enums.IntelligenceReportKind
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumIntelligenceReportKindFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumIntelligenceReportKindFilter<$PrismaModel>
+}
+
+export type EnumIntelligenceEntitlementStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.IntelligenceEntitlementStatus | Prisma.EnumIntelligenceEntitlementStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.IntelligenceEntitlementStatus[] | Prisma.ListEnumIntelligenceEntitlementStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.IntelligenceEntitlementStatus[] | Prisma.ListEnumIntelligenceEntitlementStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumIntelligenceEntitlementStatusWithAggregatesFilter<$PrismaModel> | $Enums.IntelligenceEntitlementStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumIntelligenceEntitlementStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumIntelligenceEntitlementStatusFilter<$PrismaModel>
+}
+
+export type EnumIntelligenceReportStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.IntelligenceReportStatus | Prisma.EnumIntelligenceReportStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.IntelligenceReportStatus[] | Prisma.ListEnumIntelligenceReportStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.IntelligenceReportStatus[] | Prisma.ListEnumIntelligenceReportStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumIntelligenceReportStatusFilter<$PrismaModel> | $Enums.IntelligenceReportStatus
+}
+
+export type EnumIntelligenceReportStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.IntelligenceReportStatus | Prisma.EnumIntelligenceReportStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.IntelligenceReportStatus[] | Prisma.ListEnumIntelligenceReportStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.IntelligenceReportStatus[] | Prisma.ListEnumIntelligenceReportStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumIntelligenceReportStatusWithAggregatesFilter<$PrismaModel> | $Enums.IntelligenceReportStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumIntelligenceReportStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumIntelligenceReportStatusFilter<$PrismaModel>
+}
+
 export type EnumApplicationStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.ApplicationStatus | Prisma.EnumApplicationStatusFieldRefInput<$PrismaModel>
   in?: $Enums.ApplicationStatus[] | Prisma.ListEnumApplicationStatusFieldRefInput<$PrismaModel>
@@ -1362,6 +1413,57 @@ export type NestedEnumAgentNotificationTypeWithAggregatesFilter<$PrismaModel = n
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumAgentNotificationTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumAgentNotificationTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumIntelligenceReportKindFilter<$PrismaModel = never> = {
+  equals?: $Enums.IntelligenceReportKind | Prisma.EnumIntelligenceReportKindFieldRefInput<$PrismaModel>
+  in?: $Enums.IntelligenceReportKind[] | Prisma.ListEnumIntelligenceReportKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.IntelligenceReportKind[] | Prisma.ListEnumIntelligenceReportKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumIntelligenceReportKindFilter<$PrismaModel> | $Enums.IntelligenceReportKind
+}
+
+export type NestedEnumIntelligenceEntitlementStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.IntelligenceEntitlementStatus | Prisma.EnumIntelligenceEntitlementStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.IntelligenceEntitlementStatus[] | Prisma.ListEnumIntelligenceEntitlementStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.IntelligenceEntitlementStatus[] | Prisma.ListEnumIntelligenceEntitlementStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumIntelligenceEntitlementStatusFilter<$PrismaModel> | $Enums.IntelligenceEntitlementStatus
+}
+
+export type NestedEnumIntelligenceReportKindWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.IntelligenceReportKind | Prisma.EnumIntelligenceReportKindFieldRefInput<$PrismaModel>
+  in?: $Enums.IntelligenceReportKind[] | Prisma.ListEnumIntelligenceReportKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.IntelligenceReportKind[] | Prisma.ListEnumIntelligenceReportKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumIntelligenceReportKindWithAggregatesFilter<$PrismaModel> | $Enums.IntelligenceReportKind
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumIntelligenceReportKindFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumIntelligenceReportKindFilter<$PrismaModel>
+}
+
+export type NestedEnumIntelligenceEntitlementStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.IntelligenceEntitlementStatus | Prisma.EnumIntelligenceEntitlementStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.IntelligenceEntitlementStatus[] | Prisma.ListEnumIntelligenceEntitlementStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.IntelligenceEntitlementStatus[] | Prisma.ListEnumIntelligenceEntitlementStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumIntelligenceEntitlementStatusWithAggregatesFilter<$PrismaModel> | $Enums.IntelligenceEntitlementStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumIntelligenceEntitlementStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumIntelligenceEntitlementStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumIntelligenceReportStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.IntelligenceReportStatus | Prisma.EnumIntelligenceReportStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.IntelligenceReportStatus[] | Prisma.ListEnumIntelligenceReportStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.IntelligenceReportStatus[] | Prisma.ListEnumIntelligenceReportStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumIntelligenceReportStatusFilter<$PrismaModel> | $Enums.IntelligenceReportStatus
+}
+
+export type NestedEnumIntelligenceReportStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.IntelligenceReportStatus | Prisma.EnumIntelligenceReportStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.IntelligenceReportStatus[] | Prisma.ListEnumIntelligenceReportStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.IntelligenceReportStatus[] | Prisma.ListEnumIntelligenceReportStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumIntelligenceReportStatusWithAggregatesFilter<$PrismaModel> | $Enums.IntelligenceReportStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumIntelligenceReportStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumIntelligenceReportStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumApplicationStatusFilter<$PrismaModel = never> = {

@@ -69,6 +69,8 @@ export const ModelName = {
   ObservedPayment: 'ObservedPayment',
   MonitorMatch: 'MonitorMatch',
   AgentNotification: 'AgentNotification',
+  IntelligenceEntitlement: 'IntelligenceEntitlement',
+  IntelligenceReport: 'IntelligenceReport',
   WalletChallenge: 'WalletChallenge',
   WalletSession: 'WalletSession',
   Application: 'Application',
@@ -430,6 +432,53 @@ export const AgentNotificationScalarFieldEnum = {
 } as const
 
 export type AgentNotificationScalarFieldEnum = (typeof AgentNotificationScalarFieldEnum)[keyof typeof AgentNotificationScalarFieldEnum]
+
+
+export const IntelligenceEntitlementScalarFieldEnum = {
+  id: 'id',
+  requestKey: 'requestKey',
+  kind: 'kind',
+  tokenId: 'tokenId',
+  walletAddress: 'walletAddress',
+  userId: 'userId',
+  walletId: 'walletId',
+  status: 'status',
+  currency: 'currency',
+  publicPriceBaseUnits: 'publicPriceBaseUnits',
+  holderPriceBaseUnits: 'holderPriceBaseUnits',
+  chargedPriceBaseUnits: 'chargedPriceBaseUnits',
+  isHolderRate: 'isHolderRate',
+  paymentMode: 'paymentMode',
+  x402Resource: 'x402Resource',
+  x402PaymentHeader: 'x402PaymentHeader',
+  paymentTxHash: 'paymentTxHash',
+  paymentNetwork: 'paymentNetwork',
+  expiresAt: 'expiresAt',
+  fulfilledAt: 'fulfilledAt',
+  failureCode: 'failureCode',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type IntelligenceEntitlementScalarFieldEnum = (typeof IntelligenceEntitlementScalarFieldEnum)[keyof typeof IntelligenceEntitlementScalarFieldEnum]
+
+
+export const IntelligenceReportScalarFieldEnum = {
+  id: 'id',
+  entitlementId: 'entitlementId',
+  kind: 'kind',
+  status: 'status',
+  title: 'title',
+  summary: 'summary',
+  content: 'content',
+  sourceRefs: 'sourceRefs',
+  generatedAt: 'generatedAt',
+  failureCode: 'failureCode',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type IntelligenceReportScalarFieldEnum = (typeof IntelligenceReportScalarFieldEnum)[keyof typeof IntelligenceReportScalarFieldEnum]
 
 
 export const WalletChallengeScalarFieldEnum = {

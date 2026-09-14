@@ -103,6 +103,10 @@ AGENT_BUNDLER_RPC_URL=
 AGENT_PAYMASTER_PROVIDER=disabled
 AGENT_CHECKPOINT_SIGNER_PRIVATE_KEY=
 AGENT_CHECKPOINT_AUTOSUBMIT=false
+INTELLIGENCE_X402_MODE=disabled
+INTELLIGENCE_PUBLIC_PRICE_USDC=0.10
+INTELLIGENCE_HOLDER_PRICE_USDC=0.02
+INTELLIGENCE_RECEIVER_ADDRESS=
 ```
 
 `AGENT_PUBLIC_ORIGIN` becomes part of permanent onchain identity metadata. Do not use `localhost`, a preview deployment URL, or a domain you do not control for a public testnet awakening.
@@ -120,6 +124,8 @@ npx prisma generate
 `AGENT_MAX_OWNER_SEND_USDC` is a backend/UI preparation guardrail, not an onchain spending policy. The current owner can still call the account contract directly; enforceable delegation limits arrive with scoped account permissions.
 
 `AGENT_CHECKPOINT_SIGNER_PRIVATE_KEY` is optional and must be a disposable session key that was already granted through the holder wallet. It is not the holder wallet key. When unset, the app can preflight checkpoint UserOperations but cannot submit them. `AGENT_CHECKPOINT_AUTOSUBMIT=true` lets the worker submit monitor checkpoints automatically after a match, but only through the checkpoint-only session route.
+
+`INTELLIGENCE_X402_MODE=disabled` keeps the paid-report flow in safe test mode: holder-authenticated quotes are created as already available, so the product path can be tested without live x402 payment verification. `live` mode must not be enabled until a receiver address, facilitator verification and entitlement reconciliation are reviewed.
 
 ## 5. Holder test
 
@@ -146,6 +152,8 @@ Do not fund accounts with meaningful value until the transfer tests, pause recov
 The direct EntryPoint smoke and Pimlico managed-bundler smoke are complete for token `1`: awaken, checkpoint UserOperations, revoke, deposit withdrawal, and account sweep all verified. The `/agents` page now includes a browser-smoke checklist and deterministic briefing card so the holder test can be performed from the UI. The app now exposes managed-bundler readiness separately from EntryPoint support. Keep `AGENT_PAYMASTER_PROVIDER=disabled` until a real Arc paymaster/sponsorship path is selected and concurrency-safe budget accounting is implemented. The policy surface, budget ledger, checkpoint preflight, monitor-triggered checkpoint-ready notifications, session-key checkpoint submitter and assistant context exist. Paymaster signing remains disabled until a provider-backed authorization path is reviewed.
 
 Checkpoint-ready inbox alerts now show the payload hash, session key, nonce and sponsorship state. A holder can click **Submit checkpoint** from the alert when the backend has the matching disposable `AGENT_CHECKPOINT_SIGNER_PRIVATE_KEY` configured. If the signer is missing or mismatched, the endpoint returns a setup blocker and no transaction is submitted.
+
+The x402 intelligence skeleton is also available from `/agents`: it exposes a catalog, holder-rate quote, entitlement and report generation flow for collection health, wallet activity, USDC stream, agent profile and checkpoint summaries. These reports are wallet-authenticated and token-owner protected in the current build; public paid reports wait for live x402 verification.
 
 
 

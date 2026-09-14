@@ -103,6 +103,10 @@ type ChatStatus = { configured: boolean; provider: string; model: string | null;
 type ModelConsent = { consented: boolean; provider: ChatStatus; sharedFields: string[] };
 type ConversationSummary = { id: string; title: string | null; updatedAt: string };
 type ConversationMessage = { id: string; role: "USER" | "ASSISTANT"; content: string; createdAt: string };
+type IntelligenceReportKind = "COLLECTION_HEALTH" | "WALLET_ACTIVITY" | "USDC_STREAM_SUMMARY" | "AGENT_PROFILE" | "CHECKPOINT_SUMMARY";
+type IntelligenceCatalog = { reports: Array<{ kind: IntelligenceReportKind; title: string; description: string }>; status: { mode: string; publicPrice: string; holderPrice: string; x402Verification: string } };
+type IntelligenceQuote = { requestKey: string; kind: IntelligenceReportKind; status: string; chargedPrice: string; currency: string; isHolderRate: boolean; paymentMode: string; expiresAt: string };
+type IntelligenceReport = { id: string; kind: IntelligenceReportKind; status: string; title: string; summary: string; content: unknown; generatedAt: string | null };
 
 declare global { interface Window { ethereum?: EthereumProvider } }
 
@@ -180,6 +184,9 @@ export function AgentsWorkspace() {
   const [sessionHours, setSessionHours] = useState("6");
   const [sessionMaxCalls, setSessionMaxCalls] = useState("24");
   const [sessionState, setSessionState] = useState<CheckpointSessionState | null>(null);
+  const [reportKind, setReportKind] = useState<IntelligenceReportKind>("USDC_STREAM_SUMMARY");
+  const [reportQuote, setReportQuote] = useState<IntelligenceQuote | null>(null);
+  const [report, setReport] = useState<IntelligenceReport | null>(null);
   const status = useQuery({ queryKey: ["agent-status"], queryFn: () => apiFetch<AgentStatus>("/agents/status") });
   const bundlerStatus = useQuery({ queryKey: ["agent-bundler-status"], queryFn: () => apiFetch<BundlerStatus>("/agents/bundler/status"), enabled: Boolean(status.data?.accountAbstraction?.bundlerConfigured), retry: false, refetchInterval: 30_000 });
   const sponsorshipStatus = useQuery({ queryKey: ["agent-sponsorship-status"], queryFn: () => apiFetch<SponsorshipStatus>("/agents/sponsorship/status"), retry: false, refetchInterval: 30_000 });
@@ -231,6 +238,11 @@ export function AgentsWorkspace() {
     enabled: Boolean(preview?.awakening.awakened && tokenId && indexStatus.data?.caughtUp),
     retry: false,
     refetchInterval: 30_000,
+  });
+  const intelligenceCatalog = useQuery({
+    queryKey: ["intelligence-catalog"],
+    queryFn: () => apiFetch<IntelligenceCatalog>("/intelligence/catalog"),
+    retry: false,
   });
   const actions = useQuery({
     queryKey: ["agent-actions", tokenId],
@@ -311,6 +323,28 @@ export function AgentsWorkspace() {
         queryClient.invalidateQueries({ queryKey: ["agent-briefing", tokenId] }),
         queryClient.invalidateQueries({ queryKey: ["agent-sponsorship-budget", tokenId] }),
       ]);
+    },
+    onError: (requestError) => setError((requestError as Error).message),
+  });
+
+  const quoteReport = useMutation({
+    mutationFn: () => apiFetch<IntelligenceQuote>("/intelligence/quote", {
+      method: "POST",
+      body: JSON.stringify({ kind: reportKind, tokenId }),
+    }),
+    onSuccess: (quote) => {
+      setReportQuote(quote);
+      setReport(null);
+      setError("");
+    },
+    onError: (requestError) => setError((requestError as Error).message),
+  });
+
+  const generateIntelligenceReport = useMutation({
+    mutationFn: (requestKey: string) => apiFetch<IntelligenceReport>(`/intelligence/reports/${requestKey}/generate`, { method: "POST" }),
+    onSuccess: (generated) => {
+      setReport(generated);
+      setError("");
     },
     onError: (requestError) => setError((requestError as Error).message),
   });
@@ -672,6 +706,23 @@ export function AgentsWorkspace() {
                 </ul>
               </>
             ) : <small>{indexStatus.data?.caughtUp ? "Loading briefing" : "Briefing unlocks after ownership index catch-up."}</small>}
+          </article>
+          <article className="agent-utility-card">
+            <p className="eyebrow">x402 intelligence</p>
+            <h3>Paid report testbed</h3>
+            <p>Quote a holder-rate report now. Real x402 verification is config-gated; disabled/test mode lets us validate the product flow safely.</p>
+            <label>Report type
+              <select value={reportKind} onChange={(event) => setReportKind(event.target.value as IntelligenceReportKind)}>
+                {(intelligenceCatalog.data?.reports ?? []).map((item) => <option key={item.kind} value={item.kind}>{item.title}</option>)}
+              </select>
+            </label>
+            {intelligenceCatalog.data && <small>Mode: {intelligenceCatalog.data.status.mode} · holder {intelligenceCatalog.data.status.holderPrice} USDC · public {intelligenceCatalog.data.status.publicPrice} USDC</small>}
+            <div className="agent-report-actions">
+              <button className="button button-amber" onClick={() => quoteReport.mutate()} disabled={quoteReport.isPending || !tokenId}>Quote report</button>
+              {reportQuote && <button className="button button-ghost" onClick={() => generateIntelligenceReport.mutate(reportQuote.requestKey)} disabled={generateIntelligenceReport.isPending}>Generate</button>}
+            </div>
+            {reportQuote && <small>Quote: {reportQuote.chargedPrice} {reportQuote.currency} · {reportQuote.isHolderRate ? "holder rate" : "public rate"} · {reportQuote.status}</small>}
+            {report && <div className="agent-report-preview"><strong>{report.title}</strong><p>{report.summary}</p><small>{report.generatedAt ? new Date(report.generatedAt).toLocaleString() : "generated"}</small></div>}
           </article>
           <article className="agent-utility-card">
             <p className="eyebrow">USDC stream monitor</p>

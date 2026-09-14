@@ -59,6 +59,11 @@ const schema = z.object({
   AGENT_SPONSOR_RESERVATION_TTL_SECONDS: z.coerce.number().int().min(30).max(900).default(180),
   AGENT_CHECKPOINT_SIGNER_PRIVATE_KEY: optionalPrivateKey,
   AGENT_CHECKPOINT_AUTOSUBMIT: z.enum(["true", "false"]).default("false"),
+  INTELLIGENCE_X402_MODE: z.enum(["disabled", "test", "live"]).default("disabled"),
+  INTELLIGENCE_PUBLIC_PRICE_USDC: z.string().regex(/^\d+(\.\d{1,6})?$/).default("0.10"),
+  INTELLIGENCE_HOLDER_PRICE_USDC: z.string().regex(/^\d+(\.\d{1,6})?$/).default("0.02"),
+  INTELLIGENCE_QUOTE_TTL_SECONDS: z.coerce.number().int().min(60).max(86_400).default(900),
+  INTELLIGENCE_RECEIVER_ADDRESS: optionalAddress,
 }).superRefine((value, ctx) => {
   const r2Values = [
     value.R2_ACCOUNT_ID,
@@ -114,6 +119,9 @@ const schema = z.object({
   if (value.AGENT_MODEL_PROVIDER === "openai") {
     if (!value.AGENT_MODEL_API_KEY) ctx.addIssue({ code: "custom", message: "AGENT_MODEL_API_KEY is required when the agent model provider is enabled.", path: ["AGENT_MODEL_API_KEY"] });
     if (!value.AGENT_MODEL_NAME) ctx.addIssue({ code: "custom", message: "AGENT_MODEL_NAME must explicitly select a model.", path: ["AGENT_MODEL_NAME"] });
+  }
+  if (value.INTELLIGENCE_X402_MODE === "live" && !value.INTELLIGENCE_RECEIVER_ADDRESS) {
+    ctx.addIssue({ code: "custom", message: "INTELLIGENCE_RECEIVER_ADDRESS is required before live x402 intelligence payments.", path: ["INTELLIGENCE_RECEIVER_ADDRESS"] });
   }
 });
 
