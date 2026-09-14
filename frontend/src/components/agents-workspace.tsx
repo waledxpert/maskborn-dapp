@@ -74,7 +74,30 @@ type MonitorRule = {
   isActive: boolean; lastCheckedAt: string | null;
 };
 type AgentNotification = {
-  id: string; type: string; title: string; body: string; readAt: string | null; createdAt: string;
+  id: string; type: string; title: string; body: string; readAt: string | null; createdAt: string; data?: unknown;
+};
+type CheckpointNotificationData = {
+  preflight?: {
+    account?: string;
+    entryPoint?: string;
+    nonce?: string;
+    callData?: string;
+    categoryName?: "monitor" | "report" | "liveness";
+    payloadHash?: string;
+    canSponsor?: boolean;
+    blockers?: string[];
+    userOperationHash?: string;
+    session?: { sessionKey?: string; validUntil?: string; calls?: string; maxCalls?: string };
+  };
+};
+type AgentBriefing = {
+  wallet: { nativeUsdc: string | null; asOfBlock: string | null };
+  agent: { awakened: boolean; account: string | null; agentId: string | null };
+  account: null | { executionPaused: boolean; nativeUsdc: string; checkpointSessions: boolean; erc4337: { supported: boolean; userOpNonce?: string; entryPoint?: string }; asOfBlock: string };
+  monitoring: { activeRules: number; checkpointEnabledRules: number; unreadNotifications: number; checkpointReady: number };
+  sponsorship: { enabled: boolean; disabledReason: string | null; eligibleOperations: string[]; remainingUsdc: string | null; remainingTransactions: number | null };
+  checkpointSubmitter: { configured: boolean; signerAddress: string | null; autosubmit: boolean; scope: string };
+  suggestions: string[];
 };
 type ChatStatus = { configured: boolean; provider: string; model: string | null; destinationOrigin: string | null; dailyRequestLimit: number; readOnly: boolean; sharedFields: string[] };
 type ModelConsent = { consented: boolean; provider: ChatStatus; sharedFields: string[] };
@@ -85,6 +108,13 @@ declare global { interface Window { ethereum?: EthereumProvider } }
 
 function compact(address: string) { return `${address.slice(0, 7)}Ã¢â‚¬Â¦${address.slice(-5)}`; }
 
+function checkpointNotificationData(notification: AgentNotification) {
+  if (notification.type !== "MONITOR_CHECKPOINT_READY" || !notification.data || typeof notification.data !== "object") return null;
+  const data = notification.data as CheckpointNotificationData;
+  const preflight = data.preflight;
+  if (!preflight?.payloadHash || !preflight.categoryName || !preflight.session?.sessionKey) return null;
+  return preflight;
+}
 async function submitPrepared(provider: EthereumProvider, prepared: Pick<AgentAction, "id" | "chainId" | "from" | "to" | "data" | "value" | "expiresAt">, onSubmitted?: (hash: string) => void) {
   if (Date.now() >= Date.parse(prepared.expiresAt)) throw new Error("This preparation expired. Prepare it again.");
   const requiredChain = `0x${prepared.chainId.toString(16)}`;
@@ -176,6 +206,13 @@ export function AgentsWorkspace() {
     enabled: Boolean(connectedAddress && preview),
     retry: false,
   });
+  const briefing = useQuery({
+    queryKey: ["agent-briefing", tokenId],
+    queryFn: () => apiFetch<AgentBriefing>(`/agents/tokens/${tokenId}/briefing`),
+    enabled: Boolean(preview && tokenId && connectedAddress && indexStatus.data?.caughtUp),
+    retry: false,
+    refetchInterval: 30_000,
+  });
   const modelConsent = useQuery({
     queryKey: ["agent-model-consent", tokenId],
     queryFn: () => apiFetch<ModelConsent>(`/agents/tokens/${tokenId}/model-consent`),
@@ -252,6 +289,27 @@ export function AgentsWorkspace() {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ["agent-monitors", tokenId] }),
         queryClient.invalidateQueries({ queryKey: ["agent-notifications"] }),
+      ]);
+    },
+    onError: (requestError) => setError((requestError as Error).message),
+  });
+
+  const submitCheckpoint = useMutation({
+    mutationFn: (preflight: NonNullable<ReturnType<typeof checkpointNotificationData>>) => apiFetch(`/agents/tokens/${tokenId}/sponsorship/checkpoint/submit`, {
+      method: "POST",
+      body: JSON.stringify({
+        sessionKey: preflight.session!.sessionKey,
+        category: preflight.categoryName,
+        payloadHash: preflight.payloadHash,
+        waitForReceipt: false,
+      }),
+    }),
+    onSuccess: async () => {
+      setError("");
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["agent-notifications"] }),
+        queryClient.invalidateQueries({ queryKey: ["agent-briefing", tokenId] }),
+        queryClient.invalidateQueries({ queryKey: ["agent-sponsorship-budget", tokenId] }),
       ]);
     },
     onError: (requestError) => setError((requestError as Error).message),
@@ -601,6 +659,21 @@ export function AgentsWorkspace() {
         )}
         <div className="agent-utility-grid">
           <article className="agent-utility-card">
+            <p className="eyebrow">Agent briefing</p>
+            <h3>Today at a glance</h3>
+            {briefing.data ? (
+              <>
+                <p>{briefing.data.monitoring.activeRules} active monitor{briefing.data.monitoring.activeRules === 1 ? "" : "s"} · {briefing.data.monitoring.checkpointReady} checkpoint-ready alert{briefing.data.monitoring.checkpointReady === 1 ? "" : "s"}.</p>
+                <p>Sponsored gas: {briefing.data.sponsorship.enabled ? "enabled" : briefing.data.sponsorship.disabledReason ?? "off"}{briefing.data.sponsorship.remainingUsdc ? ` · ${briefing.data.sponsorship.remainingUsdc} USDC left` : ""}.</p>
+                <p>Submitter: {briefing.data.checkpointSubmitter.configured ? "session key configured" : "no session key configured"} · autosubmit {briefing.data.checkpointSubmitter.autosubmit ? "on" : "off"}.</p>
+                <ul className="agent-briefing-list">
+                  {briefing.data.suggestions.slice(0, 3).map((suggestion) => <li key={suggestion}>{suggestion}</li>)}
+                  {!briefing.data.suggestions.length && <li>No urgent setup suggestion right now.</li>}
+                </ul>
+              </>
+            ) : <small>{indexStatus.data?.caughtUp ? "Loading briefing" : "Briefing unlocks after ownership index catch-up."}</small>}
+          </article>
+          <article className="agent-utility-card">
             <p className="eyebrow">USDC stream monitor</p>
             <h3>Watch incoming payments</h3>
             <label>Minimum payment<input value={minimumAmount} onChange={(event) => setMinimumAmount(event.target.value)} inputMode="decimal" /></label>
@@ -621,7 +694,28 @@ export function AgentsWorkspace() {
             <p className="eyebrow"><Bell size={14} /> Inbox</p>
             <h3>Payment activity</h3>
             <div className="agent-inbox">
-              {notifications.data?.notifications.map((notification) => <div key={notification.id} className={notification.readAt ? "read" : ""}><strong>{notification.title}</strong><p>{notification.body}</p><small>{new Date(notification.createdAt).toLocaleString()}</small></div>)}
+              {notifications.data?.notifications.map((notification) => {
+                const checkpoint = checkpointNotificationData(notification);
+                return (
+                  <div key={notification.id} className={notification.readAt ? "read" : ""}>
+                    <strong>{notification.title}</strong>
+                    <p>{notification.body}</p>
+                    {checkpoint && (
+                      <div className="agent-checkpoint-details">
+                        <small>Payload: {compact(checkpoint.payloadHash!)}</small>
+                        <small>Session: {compact(checkpoint.session!.sessionKey!)}</small>
+                        <small>Nonce: {checkpoint.nonce ?? "unknown"} · {checkpoint.canSponsor ? "sponsor-ready" : checkpoint.blockers?.join(", ") ?? "sponsorship off"}</small>
+                        {checkpoint.userOperationHash ? (
+                          <a href={`https://testnet.arcscan.app/userOp/${checkpoint.userOperationHash}`} target="_blank" rel="noreferrer">submitted UserOp <ExternalLink size={11} /></a>
+                        ) : (
+                          <button className="button button-ghost" onClick={() => submitCheckpoint.mutate(checkpoint)} disabled={submitCheckpoint.isPending}>Submit checkpoint</button>
+                        )}
+                      </div>
+                    )}
+                    <small>{new Date(notification.createdAt).toLocaleString()}</small>
+                  </div>
+                );
+              })}
               {!notifications.isLoading && !notifications.data?.notifications.length && <small>No payment alerts yet.</small>}
             </div>
           </article>

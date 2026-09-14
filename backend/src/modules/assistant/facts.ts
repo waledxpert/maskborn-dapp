@@ -3,7 +3,9 @@ import { config } from "../../config.js";
 import { db } from "../../db.js";
 import { Prisma } from "../../generated/prisma/client.js";
 import { buildPersona } from "../agents/persona.js";
-import { maskBornAddress, readNativeUsdc, readToken } from "../chain/client.js";
+import { readCheckpointSubmitterStatus } from "../agents/checkpoint-submit.js";
+import { getTokenSponsorshipBudget, readSponsorshipPolicy } from "../agents/sponsorship.js";
+import { maskBornAddress, readAgentAccount, readAgentBinding, readNativeUsdc, readToken } from "../chain/client.js";
 
 type JsonObject = Record<string, unknown>;
 
@@ -40,6 +42,34 @@ export async function gatherAgentFacts(input: {
       revealed: token.revealed,
       asOfBlock: token.blockNumber.toString(),
       persona,
+    };
+  });
+
+  const account = await recordedTool(input.conversationId, input.messageId, "readAgentAccount", async () => {
+    const binding = await readAgentBinding(input.tokenId);
+    if (!binding.configured) return { status: "unavailable", reason: "registry_not_configured" };
+    if (!binding.awakened) return { status: "not_awakened" };
+    const state = await readAgentAccount(binding.account);
+    return {
+      status: "available",
+      account: binding.account,
+      agentId: binding.agentId.toString(),
+      executionPaused: state.paused,
+      nativeUsdcBaseUnits: state.balance.toString(),
+      nativeUsdc: formatUnits(state.balance, 18),
+      state: state.state.toString(),
+      checkpointSessions: state.checkpointSessions ? {
+        supported: true,
+        maxDurationSeconds: state.checkpointSessions.maxDurationSeconds.toString(),
+        maxCalls: state.checkpointSessions.maxCalls.toString(),
+      } : { supported: false },
+      erc4337: state.erc4337 ? {
+        supported: true,
+        entryPoint: state.erc4337.entryPoint,
+        userOpNonce: state.erc4337.userOpNonce.toString(),
+        executionScope: "checkpoint-only",
+      } : { supported: false },
+      asOfBlock: state.blockNumber.toString(),
     };
   });
 
@@ -89,12 +119,18 @@ export async function gatherAgentFacts(input: {
   });
 
   const monitoring = await recordedTool(input.conversationId, input.messageId, "readMonitoring", async () => {
-    const [rules, unread] = await Promise.all([
+    const [rules, unread, checkpointNotifications] = await Promise.all([
       db.monitorRule.findMany({
         where: { walletId: input.walletId, tokenId: input.tokenId.toString(), isActive: true },
-        select: { id: true, direction: true, minimumAmount: true, expectedAmount: true, cadence: true, nextExpectedAt: true, lastCheckedAt: true },
+        select: { id: true, direction: true, minimumAmount: true, expectedAmount: true, cadence: true, nextExpectedAt: true, lastCheckedAt: true, checkpointOnMatch: true, checkpointSessionKey: true },
       }),
       db.agentNotification.count({ where: { userId: input.userId, readAt: null, monitorRule: { walletId: input.walletId } } }),
+      db.agentNotification.findMany({
+        where: { userId: input.userId, type: "MONITOR_CHECKPOINT_READY", monitorRule: { walletId: input.walletId, tokenId: input.tokenId.toString() } },
+        orderBy: { createdAt: "desc" },
+        take: 5,
+        select: { title: true, body: true, data: true, createdAt: true, readAt: true },
+      }),
     ]);
     return {
       status: "available",
@@ -102,8 +138,31 @@ export async function gatherAgentFacts(input: {
         ...rule,
         minimumAmount: formatUnits(BigInt(rule.minimumAmount.toString()), 6),
         expectedAmount: rule.expectedAmount ? formatUnits(BigInt(rule.expectedAmount.toString()), 6) : null,
+        checkpointSessionKey: rule.checkpointSessionKey ? getAddress(rule.checkpointSessionKey) : null,
       })),
       unreadNotifications: unread,
+      recentCheckpointNotifications: checkpointNotifications,
+    };
+  });
+
+  const sponsorship = await recordedTool(input.conversationId, input.messageId, "readSponsorship", async () => {
+    const policy = readSponsorshipPolicy();
+    const budget = await getTokenSponsorshipBudget(input.tokenId, {
+      userId: input.userId,
+      walletId: input.walletId,
+      walletAddress: input.walletAddress,
+    }).catch(() => null);
+    return {
+      status: "available",
+      policy,
+      budget: budget ? {
+        dailyBucket: budget.dailyBucket,
+        remainingBaseUnits: budget.remainingBaseUnits,
+        remainingDisplayAmount: formatUnits(BigInt(budget.remainingBaseUnits), 18),
+        remainingTransactions: budget.remainingTransactions,
+        usedTransactions: budget.usedTransactions,
+      } : null,
+      checkpointSubmitter: readCheckpointSubmitterStatus(),
     };
   });
 
@@ -114,12 +173,14 @@ export async function gatherAgentFacts(input: {
   }));
 
   return {
-    facts: { agent, balances, activity, monitoring, payday },
+    facts: { agent, account, balances, activity, monitoring, sponsorship, payday },
     sources: [
       { tool: "readAgent", source: "Arc contract reads", asOfBlock: "asOfBlock" in agent ? agent.asOfBlock : null },
+      { tool: "readAgentAccount", source: "Arc agent registry and account reads", asOfBlock: "asOfBlock" in account ? account.asOfBlock : null },
       { tool: "readBalances", source: "Arc eth_getBalance", asOfBlock: "asOfBlock" in balances ? balances.asOfBlock : null },
       { tool: "readActivity", source: "Mask Born ownership index and unified Arc USDC Transfer events" },
       { tool: "readMonitoring", source: "Holder-private monitoring records" },
+      { tool: "readSponsorship", source: "Sponsorship policy, budget ledger and checkpoint submitter status" },
       { tool: "readPayday", source: "Deployment configuration" },
     ],
   };

@@ -21,6 +21,7 @@ This slice adds a real onchain awakening path while keeping every value-moving a
 - V2 checkpoint-session grants, inspection, and immediate revocation. Sessions can publish monitor-observation, report-digest, or liveness hashes only; they have no external-call or asset-transfer function.
 - ERC-4337 v0.9 validation for those checkpoint calls only. Public discovery reports the EntryPoint, nonce, checkpoint-only scope, Pimlico bundler readiness, and sponsorship as disabled.
 - A holder-facing Phase 2 readiness panel on `/agents` checks wallet sign-in, collection/index state, token selection, awakening, ERC-4337 checkpoint support, live bundler reachability, and the intentionally disabled sponsorship state.
+- A deterministic holder briefing endpoint at `/api/agents/tokens/:tokenId/briefing` summarizes wallet/account USDC, awakening, checkpoint support, monitor counts, checkpoint-ready notifications, sponsorship status, submitter status and suggested next steps even when the external AI model is disabled.
 - `/api/agents/sponsorship/status` exposes the disabled-mode sponsored-gas policy: `0.25` native USDC per token per day, `25` sponsored transactions per day, `180` second reservation TTL, and the current V2 allowlist of `PUBLISH_CHECKPOINT` only. Owner-control actions still require the holder wallet.
 - Sponsorship reservations now have database storage, per-token/day budget reads at `/api/agents/tokens/:tokenId/sponsorship/budget`, and a guarded reservation endpoint at `/api/agents/actions/:actionId/sponsorship/reserve`. Because V2 sponsorship is checkpoint-only, owner-control action reservations return `ACTION_NOT_SPONSORABLE`. A checkpoint preflight endpoint now exists at `/api/agents/tokens/:tokenId/sponsorship/checkpoint/preflight`; it validates owner, awakened account, EntryPoint, checkpoint session, category, payload hash, nonce and daily budget, then returns callData plus sponsorship blockers. Monitor rules can also opt into checkpoint preflight by storing a checkpoint session-key address. When a matching USDC payment is observed, the worker hashes a deterministic monitor-observation payload and writes a `MONITOR_CHECKPOINT_READY` notification with the payload hash, callData, nonce and blockers. The `/agents` UI shows the holder budget card after awakened-token selection and ownership index catch-up, and the agent worker expires stale reservations on every tick. `/api/agents/paymaster/status` reports provider readiness; the paymaster client supports `pm_sponsorUserOperation` with an optional sponsorship policy ID but is not called while the paymaster provider/RPC are disabled.
 
@@ -100,6 +101,8 @@ AGENT_MAX_OWNER_SEND_USDC=1000
 AGENT_BUNDLER_PROVIDER=disabled
 AGENT_BUNDLER_RPC_URL=
 AGENT_PAYMASTER_PROVIDER=disabled
+AGENT_CHECKPOINT_SIGNER_PRIVATE_KEY=
+AGENT_CHECKPOINT_AUTOSUBMIT=false
 ```
 
 `AGENT_PUBLIC_ORIGIN` becomes part of permanent onchain identity metadata. Do not use `localhost`, a preview deployment URL, or a domain you do not control for a public testnet awakening.
@@ -115,6 +118,8 @@ npx prisma generate
 ```
 
 `AGENT_MAX_OWNER_SEND_USDC` is a backend/UI preparation guardrail, not an onchain spending policy. The current owner can still call the account contract directly; enforceable delegation limits arrive with scoped account permissions.
+
+`AGENT_CHECKPOINT_SIGNER_PRIVATE_KEY` is optional and must be a disposable session key that was already granted through the holder wallet. It is not the holder wallet key. When unset, the app can preflight checkpoint UserOperations but cannot submit them. `AGENT_CHECKPOINT_AUTOSUBMIT=true` lets the worker submit monitor checkpoints automatically after a match, but only through the checkpoint-only session route.
 
 ## 5. Holder test
 
@@ -138,7 +143,9 @@ Do not fund accounts with meaningful value until the transfer tests, pause recov
 
 ## Next Phase 2 slice
 
-The direct EntryPoint smoke and Pimlico managed-bundler smoke are complete for token `1`: awaken, checkpoint UserOperations, revoke, deposit withdrawal, and account sweep all verified. The `/agents` page now includes a browser-smoke checklist so the holder test can be performed from the UI. The app now exposes managed-bundler readiness separately from EntryPoint support. Keep `AGENT_PAYMASTER_PROVIDER=disabled` until a real Arc paymaster/sponsorship path is selected and concurrency-safe budget accounting is implemented. Sponsored gas execution is the next separate slice, not part of the current checkpoint-only bundler proof. The policy surface, budget ledger, checkpoint preflight and monitor-triggered checkpoint-ready notifications exist, but paymaster signing is still disabled until a provider-backed authorization path is reviewed.
+The direct EntryPoint smoke and Pimlico managed-bundler smoke are complete for token `1`: awaken, checkpoint UserOperations, revoke, deposit withdrawal, and account sweep all verified. The `/agents` page now includes a browser-smoke checklist and deterministic briefing card so the holder test can be performed from the UI. The app now exposes managed-bundler readiness separately from EntryPoint support. Keep `AGENT_PAYMASTER_PROVIDER=disabled` until a real Arc paymaster/sponsorship path is selected and concurrency-safe budget accounting is implemented. The policy surface, budget ledger, checkpoint preflight, monitor-triggered checkpoint-ready notifications, session-key checkpoint submitter and assistant context exist. Paymaster signing remains disabled until a provider-backed authorization path is reviewed.
+
+Checkpoint-ready inbox alerts now show the payload hash, session key, nonce and sponsorship state. A holder can click **Submit checkpoint** from the alert when the backend has the matching disposable `AGENT_CHECKPOINT_SIGNER_PRIVATE_KEY` configured. If the signer is missing or mismatched, the endpoint returns a setup blocker and no transaction is submitted.
 
 
 

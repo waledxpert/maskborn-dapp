@@ -4,6 +4,7 @@ import { db } from "../../db.js";
 import { arcClient, arcUsdcAddress, readToken, transferEvent } from "../chain/client.js";
 import { acceptsPayment, directionFor, nextOccurrence, previousOccurrence, type PaymentDirection } from "./monitor-domain.js";
 import { preflightCheckpointSponsorship } from "../agents/checkpoint-preflight.js";
+import { readCheckpointSubmitterStatus, submitCheckpointUserOperation } from "../agents/checkpoint-submit.js";
 
 const BLOCK_BATCH = 2_000n;
 
@@ -136,26 +137,32 @@ async function preflightMonitorCheckpoint(rule: MonitorRule, payments: number, t
   const payloadHash = keccak256(stringToHex(JSON.stringify(payload)));
   const deliveryKey = `checkpoint-preflight:${rule.id}:${throughBlock.toString()}:${payloadHash}`;
   try {
-    const preflight = await preflightCheckpointSponsorship({
+    const submitter = readCheckpointSubmitterStatus();
+    const request = {
       tokenId: BigInt(rule.tokenId),
       walletAddress: rule.watchedAddress,
       auth: { userId: rule.userId, walletId: rule.walletId, walletAddress: rule.watchedAddress },
       sessionKey: getAddress(rule.checkpointSessionKey),
       categoryName: "monitor",
       payloadHash,
-    });
+    } as const;
+    const result = submitter.autosubmit && submitter.configured
+      ? await submitCheckpointUserOperation({ ...request, waitForReceipt: false })
+      : await preflightCheckpointSponsorship(request);
     await db.agentNotification.upsert({
       where: { deliveryKey },
       create: {
         userId: rule.userId,
         monitorRuleId: rule.id,
         type: "MONITOR_CHECKPOINT_READY",
-        title: preflight.canSponsor ? "Monitor checkpoint ready" : "Monitor checkpoint prepared",
-        body: preflight.canSponsor
-          ? "A monitor checkpoint is eligible for sponsored publishing once the session signer submits it."
-          : `A monitor checkpoint was prepared, but sponsorship is blocked by ${preflight.blockers.join(", ")}.`,
+        title: "userOperationHash" in result ? "Monitor checkpoint submitted" : result.canSponsor ? "Monitor checkpoint ready" : "Monitor checkpoint prepared",
+        body: "userOperationHash" in result
+          ? `Checkpoint UserOperation submitted: ${result.userOperationHash}.`
+          : result.canSponsor
+            ? "A monitor checkpoint is eligible for sponsored publishing once the session signer submits it."
+            : `A monitor checkpoint was prepared, but sponsorship is blocked by ${result.blockers.join(", ")}.`,
         deliveryKey,
-        data: { payload, preflight },
+        data: { payload, preflight: result },
       },
       update: {},
     });

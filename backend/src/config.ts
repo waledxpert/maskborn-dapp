@@ -5,6 +5,10 @@ const optionalAddress = z.preprocess(
   (value) => value === "" ? undefined : value,
   z.string().regex(/^0x[a-fA-F0-9]{40}$/).optional(),
 );
+const optionalPrivateKey = z.preprocess(
+  (value) => value === "" ? undefined : value,
+  z.string().regex(/^0x[a-fA-F0-9]{64}$/).optional(),
+);
 
 const schema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
@@ -53,6 +57,8 @@ const schema = z.object({
   AGENT_SPONSOR_DAILY_USDC_PER_TOKEN: z.string().regex(/^\d+(\.\d{1,18})?$/).default("0.25"),
   AGENT_SPONSOR_DAILY_TX_PER_TOKEN: z.coerce.number().int().min(1).max(250).default(25),
   AGENT_SPONSOR_RESERVATION_TTL_SECONDS: z.coerce.number().int().min(30).max(900).default(180),
+  AGENT_CHECKPOINT_SIGNER_PRIVATE_KEY: optionalPrivateKey,
+  AGENT_CHECKPOINT_AUTOSUBMIT: z.enum(["true", "false"]).default("false"),
 }).superRefine((value, ctx) => {
   const r2Values = [
     value.R2_ACCOUNT_ID,

@@ -28,6 +28,7 @@ import { erc4337EntryPoint, readBundlerStatus } from "../chain/bundler.js";
 import { readPaymasterStatus } from "../chain/paymaster.js";
 import { getTokenSponsorshipBudget, readSponsorshipPolicy, reserveSponsorshipForAction } from "./sponsorship.js";
 import { preflightCheckpointSponsorship } from "./checkpoint-preflight.js";
+import { readCheckpointSubmitterStatus, submitCheckpointUserOperation } from "./checkpoint-submit.js";
 
 export const agentsRouter = Router();
 const tokenParams = z.object({ tokenId: z.coerce.bigint().refine((value) => value > 0n && value <= 10_000n) });
@@ -57,6 +58,7 @@ const checkpointSponsorBody = z.object({
   sessionKey: z.string().regex(/^0x[a-fA-F0-9]{40}$/),
   category: z.enum(["monitor", "report", "liveness"]),
   payloadHash: z.string().regex(/^0x[a-fA-F0-9]{64}$/),
+  waitForReceipt: z.boolean().default(false),
 });
 
 agentsRouter.get("/agents/status", asyncRoute(async (_req, res) => {
@@ -105,6 +107,25 @@ agentsRouter.post("/agents/tokens/:tokenId/sponsorship/checkpoint/preflight", re
     payloadHash: body.payloadHash.toLowerCase() as Hex,
   });
   res.json(preflight);
+}));
+
+agentsRouter.get("/agents/checkpoint-submitter/status", asyncRoute(async (_req, res) => {
+  res.json(readCheckpointSubmitterStatus());
+}));
+
+agentsRouter.post("/agents/tokens/:tokenId/sponsorship/checkpoint/submit", requireWalletAuth, asyncRoute(async (req, res) => {
+  const { tokenId } = tokenParams.parse(req.params);
+  const body = checkpointSponsorBody.parse(req.body);
+  const result = await submitCheckpointUserOperation({
+    tokenId,
+    walletAddress: req.auth!.walletAddress!,
+    auth: actionAuth(req),
+    sessionKey: getAddress(body.sessionKey),
+    categoryName: body.category,
+    payloadHash: body.payloadHash.toLowerCase() as Hex,
+    waitForReceipt: body.waitForReceipt,
+  });
+  res.json(result);
 }));
 
 agentsRouter.post("/agents/actions/:actionId/sponsorship/reserve", requireWalletAuth, asyncRoute(async (req, res) => {

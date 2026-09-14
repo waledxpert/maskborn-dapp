@@ -4774,6 +4774,8 @@ body:has(.admin-shell) .site-footer {
 .agent-utility-card h3 { margin: 12px 0 24px; font-size: clamp(26px, 3vw, 38px); }
 .agent-utility-card label { display: grid; gap: 7px; margin: 13px 0; color: var(--muted); font-size: 13px; text-transform: uppercase; letter-spacing: .06em; }
 .agent-utility-card .agent-checkbox-row { display: flex; align-items: center; gap: 10px; text-transform: none; letter-spacing: 0; }
+.agent-briefing-list { margin: 12px 0 0; padding-left: 18px; color: var(--muted); }
+.agent-briefing-list li { margin: 6px 0; }
 .agent-utility-card input, .agent-utility-card select { width: 100%; border: 1px solid var(--line); background: var(--background); color: var(--text); padding: 12px; font: inherit; }
 .agent-monitor-list, .agent-inbox { display: grid; gap: 10px; margin-top: 22px; max-height: 360px; overflow: auto; }
 .agent-monitor-list > div { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); }
@@ -4782,6 +4784,8 @@ body:has(.admin-shell) .site-footer {
 .agent-inbox > div.read { opacity: .62; }
 .agent-inbox p { margin: 6px 0; color: var(--muted); }
 .agent-inbox small { color: var(--muted); }
+.agent-checkpoint-details { display: grid; gap: 7px; margin: 10px 0; padding: 10px; border: 1px dashed var(--line); }
+.agent-checkpoint-details .button { width: fit-content; padding: 8px 12px; font-size: 12px; }
 .agent-chat-card { grid-column: 1 / -1; border-top: 1px solid var(--line); }
 .agent-consent { max-width: 760px; }
 .agent-consent > p, .agent-consent li { color: var(--muted); line-height: 1.55; }
